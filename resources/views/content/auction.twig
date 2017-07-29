@@ -22,12 +22,12 @@
         <h1 class="header">Helper</h1>
 
         <ul class="tasks">
-            {% if tasks is not null %}
-                {% for task in tasks %}
+            {% if auctions is not null %}
+                {% for auction in auctions %}
                     <li>
-                        <span>{{ task.id }}, </span>
-                        <span>{{ task.itemId }}, </span>
-                        <span>{{ task.startDate }}</span>
+                        <span>{{ auction.id }}, </span>
+                        <span>{{ auction.itemId }}, </span>
+                        <span>{{ auction.createdAt }}</span>
                     </li>
                 {% endfor %}
             {% endif %}
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <!-- Enable adding, updating and deleting tasks in the To Do list without reloading the page -->
+    <!-- Enable adding, updating and deleting auctions in the To Do list without reloading the page -->
     <script src="{{ plugin_path('PluginAuctions') }}/js/auction.js"></script>
 </body>
 </html>
