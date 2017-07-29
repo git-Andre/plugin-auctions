@@ -8,6 +8,6 @@
     "price"             :   "0",
     "categories"        :   "[]",
     "type"              :   "general",
-    "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider"
-    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateToDoTable"]
+    "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
+    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateAuctionTable"]
 }
