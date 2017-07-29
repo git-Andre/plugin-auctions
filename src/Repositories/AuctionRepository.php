@@ -35,8 +35,8 @@ class AuctionRepository implements AuctionsRepositoryContract
 
         $auction = pluginApp(Auction::class);
 
-        $auction->itemId = $data.itemId;
-        $auction->startDate = $data.startDate;
+//        $auction->itemId = $data.itemId;
+//        $auction->startDate = $data.startDate;
 
         $auction->createdAt = time();
 
