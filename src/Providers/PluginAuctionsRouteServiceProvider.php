@@ -16,6 +16,6 @@ class PluginAuctionsRouteServiceProvider extends RouteServiceProvider
      */
     public function map(Router $router)
     {
-        $router->get('hello-world','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+        $router->get('hello','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
     }
 }
