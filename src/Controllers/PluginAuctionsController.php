@@ -24,7 +24,7 @@ class PluginAuctionsController extends Controller
      */
     public function showAuction(Twig $twig, AuctionsRepositoryContract $auctionRepo): string
     {
-        $auctionList = $auctionRepo->getPluginAuctions();
+        $auctionList = $auctionRepo->getAuctions();
         $templateData = array("tasks" => $auctionList);
         return $twig->render('PluginAuctions::content.auction', $templateData);
     }

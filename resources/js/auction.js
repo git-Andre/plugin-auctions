@@ -1,8 +1,8 @@
 // Add a new task to the Auction list when clicking on the submit button
 $('#addTask').click(function(){
-    var nameInput = $("[name='taskDescription']");
+    var itemIdInput = $("[name='itemId']");
     var data = {
-        'taskDescription': nameInput.val()
+        'taskDescription': itemIdInput.val()
     };
     $.ajax({
         type: "POST",
@@ -14,9 +14,9 @@ $('#addTask').click(function(){
             $("ul.tasks").append('' +
                 '<li>' +
                 '   <span class="task">' + data.taskDescription + '</span> ' +
-                '   <button id="' + data.id + '"class="done-button">Mark as done</button>' +
+                '   <button id="' + data.id + '" class="done-button">Mark as done</button>' +
                 '</li>');
-            nameInput.val("");
+            itemIdInput.val("");
         },
         error: function(data)
         {

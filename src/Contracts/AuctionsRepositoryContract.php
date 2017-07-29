@@ -23,7 +23,7 @@ interface AuctionsRepositoryContract
      *
      * @return Auction[]
      */
-    public function getPluginAuctions(): array;
+    public function getAuctions(): array;
 
     /**
      * Update the status of the task

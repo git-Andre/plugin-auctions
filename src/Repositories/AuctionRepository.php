@@ -50,7 +50,7 @@ class AuctionRepository implements AuctionsRepositoryContract
      *
      * @return Auction[]
      */
-    public function getPluginAuctions(): array
+    public function getAuctions(): array
     {
         $database = pluginApp(DataBase::class);
 
