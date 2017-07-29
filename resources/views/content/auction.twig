@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <!-- To Do list -->
+    <!-- Auction list -->
     <div class="list">
         <h1 class="header">Things to do</h1>
 
@@ -38,12 +38,12 @@
 
         <!-- Text field and submit button -->
         <div class="task-add">
-            <input type="text" name="taskDescription" placeholder="Enter a new task here." class="input" autocomplete="off">
+            <input type="text" name="itemId" placeholder="Enter a Item ID here." class="input" autocomplete="off">
             <input type="submit" id="addTask" value="Add" class="submit">
         </div>
     </div>
 
     <!-- Enable adding, updating and deleting tasks in the To Do list without reloading the page -->
-    <script src="{{ plugin_path('AuctionList') }}/js/todo.js"></script>
+    <script src="{{ plugin_path('AuctionList') }}/js/auction.js"></script>
 </body>
 </html>

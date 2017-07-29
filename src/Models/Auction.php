@@ -9,7 +9,7 @@
      *
      * @property int $id
      * @property int $createdAt
-     * @property int $itemId
+     * @property string $itemId
      * @property int $startDate
      * @property int $startHour
      * @property int $startMinute
@@ -25,7 +25,7 @@
          */
         public $id = 0;
         public $createdAt = 0;
-        public $itemId = 0;
+        public $itemId = '0';
         public $startDate = 0;
         public $startHour = 0;
         public $startMinute = 0;
