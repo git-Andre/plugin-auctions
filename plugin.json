@@ -1,0 +1,12 @@
+{
+    "version"           :   "0.0.1",
+    "license"           :   "MIT",
+    "name"              :   "PluginAuctions",
+    "shortDescription"  :   "Auktionen für Plentymarkets Ceres Webshops",
+    "namespace"         :   "PluginAuctions",
+    "author"            :   "Andre Oelschlaegel",
+    "price"             :   "0",
+    "categories"        :   "[]",
+    "type"              :   "general",
+    "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider"
+}

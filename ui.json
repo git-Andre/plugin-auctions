@@ -1,0 +1,12 @@
+{
+  "defaultEntryPoint": "index.html",
+  "namespace": "PluginAuctions",
+  "menuEntries": [
+    {
+      "label": "Auktionen 0.1",
+      "menu": "item",
+      "urlKey": "auctions",
+      "entryPoint": "index.html"
+    }
+  ]
+}
