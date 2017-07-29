@@ -25,7 +25,9 @@
             {% if tasks is not null %}
                 {% for task in tasks %}
                     <li>
-                        <span class="task {% if task.isDone == 1 %} done {% endif %}">{{ task.itemId }}</span>
+                        <span>{{ task.id }}, </span>
+                        <span>{{ task.itemId }}, </span>
+                        <span>{{ task.startDate }}</span>
                     </li>
                 {% endfor %}
             {% endif %}
