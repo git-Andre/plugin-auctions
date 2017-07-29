@@ -3,7 +3,9 @@
 namespace PluginAuctions\Controllers;
 
 use Plenty\Plugin\Controller;
+use Plenty\Plugin\Http\Request;
 use Plenty\Plugin\Templates\Twig;
+use PluginAuctions\Contracts\AuctionsRepositoryContract;
 
 class PluginAuctionsController extends Controller
 {
@@ -32,7 +34,7 @@ class PluginAuctionsController extends Controller
      * @param AuctionRepositoryContract       $auctionRepo
      * @return string
      */
-    public function createAuction(Request $request, AuctionRepositoryContract $auctionRepo): string
+    public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo): string
     {
         $newAuction = $auctionRepo->createTask($request->all());
         return json_encode($newAuction);
@@ -43,7 +45,7 @@ class PluginAuctionsController extends Controller
      * @param AuctionRepositoryContract $auctionRepo
      * @return string
      */
-    public function updateAuction(int $id, AuctionRepositoryContract $auctionRepo): string
+    public function updateAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
     {
         $updateAuction = $auctionRepo->updateTask($id);
         return json_encode($updateAuction);
@@ -54,7 +56,7 @@ class PluginAuctionsController extends Controller
      * @param AuctionRepositoryContract $auctionRepo
      * @return string
      */
-    public function deleteAuction(int $id, AuctionRepositoryContract $auctionRepo): string
+    public function deleteAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
     {
         $deleteAuction = $auctionRepo->deleteTask($id);
         return json_encode($deleteAuction);
