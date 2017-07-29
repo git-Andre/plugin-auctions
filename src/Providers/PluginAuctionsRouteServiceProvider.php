@@ -16,6 +16,12 @@ class PluginAuctionsRouteServiceProvider extends RouteServiceProvider
      */
     public function map(Router $router)
     {
-        $router->get('hello','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+        $router->get('hi','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+
+        $router->get('auction', 'PluginAuctions\Controllers\ContentController@showAuction');
+        $router->post('auction', 'PluginAuctions\Controllers\ContentController@createAuction');
+        $router->put('auction/{id}', 'PluginAuctions\Controllers\ContentController@updateAuction')->where('id', '\d+');
+        $router->delete('auction/{id}', 'PluginAuctions\Controllers\ContentController@deleteAuction')->where('id', '\d+');
+
     }
 }

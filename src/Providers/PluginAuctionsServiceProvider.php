@@ -3,6 +3,8 @@
 namespace PluginAuctions\Providers;
 
 use Plenty\Plugin\ServiceProvider;
+use PluginAuctions\Contracts\AuctionsRepositoryContract;
+use PluginAuctions\Repositories\AuctionRepository;
 
 /**
  * Class PluginAuctionsServiceProvider
@@ -16,5 +18,7 @@ class PluginAuctionsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->getApplication()->register(PluginAuctionsRouteServiceProvider::class);
+        $this->getApplication()->bind(AuctionsRepositoryContract::class, AuctionRepository::class);
     }
+
 }

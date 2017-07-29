@@ -9,4 +9,5 @@
     "categories"        :   "[]",
     "type"              :   "general",
     "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider"
+    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateToDoTable"]
 }
