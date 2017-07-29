@@ -25,12 +25,7 @@
             {% if tasks is not null %}
                 {% for task in tasks %}
                     <li>
-                        <span class="task {% if task.isDone == 1 %} done {% endif %}">{{ task.taskDescription }}</span>
-                        {% if task.isDone == 1 %}
-                            <button id="{{ task.id }}" class="delete-button">Delete from list</button>
-                        {% else %}
-                            <button id="{{ task.id }}" class="done-button">Mark as done</button>
-                        {% endif %}
+                        <span class="task {% if task.isDone == 1 %} done {% endif %}">{{ task.itemId }}</span>
                     </li>
                 {% endfor %}
             {% endif %}
