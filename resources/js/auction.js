@@ -13,8 +13,8 @@ $('#addTask').click(function(){
             var data = jQuery.parseJSON( data );
             $("ul.tasks").append('' +
                 '<li>' +
-                '   <span class="task">' + data.taskDescription + '</span> ' +
-                '   <button id="' + data.id + '" class="done-button">Mark as done</button>' +
+                '   <span class="task">' + data.itemId + '</span> ' +
+                '   <button id="' + data.id + '" class="done-button">getan?</button>' +
                 '</li>');
             itemIdInput.val("");
         },
