@@ -9,7 +9,7 @@
      *
      * @property int $id
      * @property int $createdAt
-     * @property string $itemId
+     * @property int $itemId
      * @property int $startDate
      * @property int $startHour
      * @property int $startMinute
@@ -25,12 +25,12 @@
          */
         public $id = 0;
         public $createdAt = 0;
-        public $itemId = '0';
+        public $itemId = 0;
         public $startDate = 0;
-        public $startHour = 0;
-        public $startMinute = 0;
-        public $auctionDuration = 0;
-        public $startPrice = 0;
+        public $startHour = 19;
+        public $startMinute = 1;
+        public $auctionDuration = 10;
+        public $startPrice = 1.99;
         public $buyNowPrice = 0;
 
     /**

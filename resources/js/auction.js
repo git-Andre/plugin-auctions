@@ -2,7 +2,7 @@
 $('#addTask').click(function(){
     var itemIdInput = $("[name='itemId']");
     var data = {
-        'taskDescription': itemIdInput.val()
+        'itemId': itemIdInput.val()
     };
     $.ajax({
         type: "POST",
