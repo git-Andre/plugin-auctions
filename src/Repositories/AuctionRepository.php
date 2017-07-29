@@ -22,11 +22,11 @@ class AuctionRepository implements AuctionsRepositoryContract
      */
     public function createTask(array $data): Auction
     {
-        try {
-            AuctionValidator::validateOrFail($data);
-        } catch (ValidationException $e) {
-            throw $e;
-        }
+//        try {
+//            AuctionValidator::validateOrFail($data);
+//        } catch (ValidationException $e) {
+//            throw $e;
+//        }
 
         /**
          * @var DataBase $database
@@ -36,8 +36,8 @@ class AuctionRepository implements AuctionsRepositoryContract
         $auction = pluginApp(Auction::class);
 
 // ToDo:       $auction->taskDescription = $data['taskDescription'];
-        $auction->itemId = $data['itemId'];
-        $auction->startDate = $data['startDate'];
+        $auction->itemId = $data.itemId;
+        $auction->startDate = $data.startDate;
 
         $auction->createdAt = time();
 
