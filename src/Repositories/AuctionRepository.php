@@ -30,24 +30,23 @@
             /**
              * @var DataBase $database
              */
-//            $database = pluginApp(DataBase::class);
-//
-//            $auction = pluginApp(Auction::class);
-//
-//            $auction -> itemId = $auctionData -> itemId;
-//            $auction -> itemId = $auctionData -> itemId;
-////            $auction -> startDate = $auctionData -> startDate;
-////            $auction -> startHour = $auctionData -> startHour;
-////            $auction -> startMinute = $auctionData -> startMinute;
-////            $auction -> auctionDuration = $auctionData -> auctionDuration;
-////            $auction -> startPrice = $auctionData -> startPrice;
-////            $auction -> buyNowPrice = $auctionData -> buyNowPrice;
-//
-//            $auction -> createdAt = time();
-//
-//            $database -> save($auction);
+            $database = pluginApp(DataBase::class);
 
-            return $auctionData;
+            $auction = pluginApp(Auction::class);
+
+//            $auction -> itemId = $auctionData -> itemId;
+//            $auction -> startDate = $auctionData -> startDate;
+//            $auction -> startHour = $auctionData -> startHour;
+//            $auction -> startMinute = $auctionData -> startMinute;
+//            $auction -> auctionDuration = $auctionData -> auctionDuration;
+//            $auction -> startPrice = $auctionData -> startPrice;
+//            $auction -> buyNowPrice = $auctionData -> buyNowPrice;
+
+            $auction -> createdAt = time();
+
+            $database -> save($auction);
+
+            return $auction;
         }
 
         /**
