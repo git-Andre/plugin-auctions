@@ -19,7 +19,7 @@
          * @return Auction
          * @throws ValidationException
          */
-        public function createTask(array $data) : Auction
+        public function createTask(Auction $auction) : Auction
         {
 //        try {
 //            AuctionValidator::validateOrFail($data);

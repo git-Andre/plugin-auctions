@@ -16,7 +16,7 @@ interface AuctionsRepositoryContract
      * @param array $data
      * @return Auction
      */
-    public function createTask(array $data): Auction;
+    public function createTask(Auction $auction): Auction;
 
     /**
      * List all tasks of the Auction list
