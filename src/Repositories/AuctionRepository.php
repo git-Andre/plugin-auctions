@@ -33,7 +33,6 @@
             $database = pluginApp(DataBase::class);
 
             $auction = pluginApp(Auction::class);
-            $auction = $auctionData;
 
             $auction -> itemId = $auctionData -> itemId;
             $auction -> startDate = $auctionData -> startDate;

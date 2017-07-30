@@ -35,7 +35,7 @@ class PluginAuctionsController extends Controller
      */
     public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo): string
     {
-        $newAuction = $auctionRepo->createTask($request->all());
+        $newAuction = $auctionRepo->createAuction($request->all());
         return json_encode($newAuction);
     }
 
@@ -46,7 +46,7 @@ class PluginAuctionsController extends Controller
      */
     public function updateAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
     {
-        $updateAuction = $auctionRepo->updateTask($id);
+        $updateAuction = $auctionRepo->updateAuction($id);
         return json_encode($updateAuction);
     }
 
@@ -57,7 +57,7 @@ class PluginAuctionsController extends Controller
      */
     public function deleteAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
     {
-        $deleteAuction = $auctionRepo->deleteTask($id);
+        $deleteAuction = $auctionRepo->deleteAuction($id);
         return json_encode($deleteAuction);
     }
 
