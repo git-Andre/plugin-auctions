@@ -34,13 +34,13 @@
 
             $auction = pluginApp(Auction::class);
 
-            $auction -> itemId = $data -> itemId;
-            $auction -> startDate = $data -> startDate;
-            $auction -> startHour = $data -> startHour;
-            $auction -> startMinute = $data -> startMinute;
-            $auction -> auctionDuration = $data -> auctionDuration;
-            $auction -> startPrice = $data -> startPrice;
-            $auction -> buyNowPrice = $data -> buyNowPrice;
+//            $auction -> itemId = $data -> itemId;
+//            $auction -> startDate = $data -> startDate;
+//            $auction -> startHour = $data -> startHour;
+//            $auction -> startMinute = $data -> startMinute;
+//            $auction -> auctionDuration = $data -> auctionDuration;
+//            $auction -> startPrice = $data -> startPrice;
+//            $auction -> buyNowPrice = $data -> buyNowPrice;
 
             $auction -> createdAt = time();
 
