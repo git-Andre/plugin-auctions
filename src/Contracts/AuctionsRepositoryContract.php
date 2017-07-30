@@ -16,7 +16,7 @@ interface AuctionsRepositoryContract
      * @param array $data
      * @return Auction
      */
-    public function createTask(Auction $auction): string;
+    public function createTask(Auction $auction): Auction;
 
     /**
      * List all tasks of the Auction list
@@ -31,7 +31,7 @@ interface AuctionsRepositoryContract
      * @param int $id
      * @return Auction
      */
-    public function updateTask($id): string;
+    public function updateTask($id): Auction;
 
     /**
      * Delete a task from the Auction list
@@ -39,5 +39,5 @@ interface AuctionsRepositoryContract
      * @param int $id
      * @return Auction
      */
-    public function deleteTask($id): string;
+    public function deleteTask($id): Auction;
 }

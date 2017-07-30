@@ -19,7 +19,7 @@
          * @return Auction
          * @throws ValidationException
          */
-        public function createTask(Auction $auction) : string
+        public function createTask(Auction $auctionVar) : Auction
         {
 //        try {
 //            AuctionValidator::validateOrFail($data);
@@ -33,6 +33,7 @@
             $database = pluginApp(DataBase::class);
 
             $auction = pluginApp(Auction::class);
+            $auction = $auctionVar;
 
 //            $auction -> itemId = $data -> itemId;
 //            $auction -> startDate = $data -> startDate;
@@ -73,7 +74,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateTask($id) : string
+        public function updateTask($id) : Auction
         {
             /**
              * @var DataBase $database
@@ -85,7 +86,7 @@
                 -> get();
 
             $auction = $auctionList[0];
-            $auction -> isDone = true;
+//            $auction -> isDone = true;
             $database -> save($auction);
 
             return $auction;
@@ -97,7 +98,7 @@
          * @param int $id
          * @return Auction
          */
-        public function deleteTask($id) : string
+        public function deleteTask($id) : Auction
         {
             /**
              * @var DataBase $database
