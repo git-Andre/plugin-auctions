@@ -24,9 +24,7 @@ class PluginAuctionsController extends Controller
      * @return string
      */
     public function showAuctions(AuctionsRepositoryContract $auctionRepo): array {
-
         $auctionList = $auctionRepo->getAuctions();
-//        $templateData = array("auctions" => $auctionList);
         return $auctionList;
     }
 
