@@ -2,12 +2,12 @@
 
     namespace PluginAuctions\Repositories;
 
-    use Plenty\Exceptions\ValidationException;
-    use Plenty\Modules\Frontend\Services\AccountService;
+//    use Plenty\Exceptions\ValidationException;
+//    use Plenty\Modules\Frontend\Services\AccountService;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
     use PluginAuctions\Models\Auction;
-    use PluginAuctions\Validators\AuctionValidator;
+//    use PluginAuctions\Validators\AuctionValidator;
 
 
     class AuctionRepository implements AuctionsRepositoryContract {
@@ -19,7 +19,7 @@
          * @return Auction
          * @throws ValidationException
          */
-        public function createTask(Auction $auctionVar) : Auction
+        public function createAuction(array $auctionData) : Auction
         {
 //        try {
 //            AuctionValidator::validateOrFail($data);
@@ -33,15 +33,15 @@
             $database = pluginApp(DataBase::class);
 
             $auction = pluginApp(Auction::class);
-            $auction = $auctionVar;
+            $auction = $auctionData;
 
-//            $auction -> itemId = $data -> itemId;
-//            $auction -> startDate = $data -> startDate;
-//            $auction -> startHour = $data -> startHour;
-//            $auction -> startMinute = $data -> startMinute;
-//            $auction -> auctionDuration = $data -> auctionDuration;
-//            $auction -> startPrice = $data -> startPrice;
-//            $auction -> buyNowPrice = $data -> buyNowPrice;
+            $auction -> itemId = $auctionData -> itemId;
+            $auction -> startDate = $auctionData -> startDate;
+            $auction -> startHour = $auctionData -> startHour;
+            $auction -> startMinute = $auctionData -> startMinute;
+            $auction -> auctionDuration = $auctionData -> auctionDuration;
+            $auction -> startPrice = $auctionData -> startPrice;
+            $auction -> buyNowPrice = $auctionData -> buyNowPrice;
 
             $auction -> createdAt = time();
 
@@ -74,7 +74,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateTask($id) : Auction
+        public function updateAuction($id) : Auction
         {
             /**
              * @var DataBase $database
@@ -98,7 +98,7 @@
          * @param int $id
          * @return Auction
          */
-        public function deleteTask($id) : Auction
+        public function deleteAuction($id) : Auction
         {
             /**
              * @var DataBase $database
