@@ -3,9 +3,8 @@
     namespace PluginAuctions\Providers;
 
     use Plenty\Plugin\RouteServiceProvider;
-    use Plenty\Plugin\Routing\Router;
     use Plenty\Plugin\Routing\ApiRouter;
-
+    use Plenty\Plugin\Routing\Router;
 
 
     /**
@@ -17,19 +16,14 @@
         /**
          * @param Router $router
          */
-        public function map(Router $router, ApiRouter $apiRouter)
+        public function map(Router $router)
         {
-            $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
-                function ($apiRouter) {
-
-                    $apiRouter -> get('api/auctions', 'PluginAuctionsController@showAuctions');
-                    $apiRouter -> post('api/auction', 'PluginAuctionsController@createAuction');
-                    $apiRouter -> put('api/auction/{id}', 'PluginAuctionsController@updateAuction') -> where('id', '\d+');
-                    $apiRouter -> delete('api/auction/{id}', 'PluginAuctionsController@deleteAuction') -> where('id', '\d+');
-                });
-
-
             $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+
+            $router -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@showAuctions');
+            $router -> post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
+            $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction') -> where('id', '\d+');
+            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction') -> where('id', '\d+');
 
         }
     }
