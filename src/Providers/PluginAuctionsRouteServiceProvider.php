@@ -18,16 +18,16 @@
          */
         public function map(Router $router, ApiRouter $apiRouter)
         {
-            $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
-                function ($apiRouter) {
+            $apiRouter -> version(['v1'], ['middleware' => 'oauth']); /*'namespace' => 'PluginAuctions\Controllers', */
+//                function ($apiRouter) {
 
-                    $router -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
-                    $router -> post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
-                    $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction') -> where('id', '\d+');
-                    $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction') -> where('id', '\d+');
-                });
+            $apiRouter -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
+            $apiRouter -> post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
+            $apiRouter -> get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction') -> where('id', '\d+');
+            $apiRouter -> put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction') -> where('id', '\d+');
+            $apiRouter -> delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction') -> where('id', '\d+');
+//                });
             $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
-            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction') -> where('id', '\d+');
 
 
         }
