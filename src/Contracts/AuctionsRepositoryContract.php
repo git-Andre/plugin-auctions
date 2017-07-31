@@ -31,7 +31,7 @@ interface AuctionsRepositoryContract
      * @return Auction
      */
 
-    public function createAuction(array $auctionData): Auction;
+    public function createAuction(array $auctionData): array ;
 
 
     /**

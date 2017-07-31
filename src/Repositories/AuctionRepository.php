@@ -7,19 +7,60 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
     use PluginAuctions\Models\Auction;
-//    use PluginAuctions\Validators\AuctionValidator;
+
+    //    use PluginAuctions\Validators\AuctionValidator;
 
 
     class AuctionRepository implements AuctionsRepositoryContract {
+
+        /**
+         * List all items of the Auction list
+         *
+         * @return Auction[]
+         */
+        public function getAuctions() : array
+        {
+
+            $database = pluginApp(DataBase::class);
+
+            /**
+             * @var Auction[] $auctionList
+             */
+            $auctionList = $database -> query(Auction::class) -> get();
+
+            return $auctionList;
+        }
+
+        /**
+         * List an item of the Auction list
+         *
+         * @return Auction[]
+         */
+        public function getAuction($id) : Auction
+        {
+            /**
+             * @var DataBase $database
+             */
+            $database = pluginApp(DataBase::class);
+
+            $auctionList = $database -> query(Auction::class)
+                -> where('id', '=', $id)
+                -> get();
+
+            $auction = $auctionList[0];
+
+            return $auction;
+        }
+
 
         /**
          * Add a new item to the Auction list
          *
          * @param array $data
          * @return Auction
-         * @throws ValidationException
+         * @throws ValidationException ToDo:
          */
-        public function createAuction(array $auctionData) : Auction
+        public function createAuction(array $auctionData) : array
         {
             /**
              * @var DataBase $database
@@ -40,7 +81,7 @@
 
             $database -> save($auction);
 
-            return $auction;
+            return $auctionData;
         }
 
         /**
@@ -78,44 +119,6 @@
             return $auction;
         }
 
-        /**
-         * List all items of the Auction list
-         *
-         * @return Auction[]
-         */
-        public function getAuctions() : array
-        {
-            $database = pluginApp(DataBase::class);
-
-//        $id = $this->getCurrentContactId();
-            /**
-             * @var Auction[] $auctionList
-             */
-            $auctionList = $database -> query(Auction::class) -> get();
-
-            return $auctionList;
-        }
-
-        /**
-         * List an item of the Auction list
-         *
-         * @return Auction[]
-         */
-        public function getAuction($id) : Auction
-        {
-            /**
-             * @var DataBase $database
-             */
-            $database = pluginApp(DataBase::class);
-
-            $auctionList = $database -> query(Auction::class)
-                -> where('id', '=', $id)
-                -> get();
-
-            $auction = $auctionList[0];
-
-            return $auction;
-        }
 
         /**
          * Delete an item from the Auction list
