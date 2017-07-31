@@ -21,6 +21,7 @@
             $apiRouter -> version(['v1'], ['middleware' => ['oauth']],
                 function ($routerApi) {
 
+                    /** @var ApiRouter $routerApi*/
                     $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
                     $routerApi -> post('api/auction', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@createAuction']);
 //                    $routerApi -> get('api/auction/{id}', 'PluginAuctionsController@getAuction') -> where('id', '\d+');
@@ -28,7 +29,7 @@
 //                    $routerApi -> delete('api/auction/{id}', 'PluginAuctionsController@deleteAuction') -> where('id', '\d+');
                 });
 
-            $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+//            $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
         }
     }
