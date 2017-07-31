@@ -32,6 +32,7 @@
 //                    $routerApi -> put('api/auction/{id}', 'PluginAuctionsController@updateAuction') -> where('id', '\d+');
 //                    $routerApi -> delete('api/auction/{id}', 'PluginAuctionsController@deleteAuction') -> where('id', '\d+');
 //                });
+            $router -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
 
             $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
