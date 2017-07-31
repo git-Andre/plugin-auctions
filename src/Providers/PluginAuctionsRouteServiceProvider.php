@@ -18,12 +18,12 @@
          */
         public function map(Router $router, ApiRouter $api)
         {
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
-
-                function ($api) {
-                    $api -> get('api/auctions', 'PluginAuctionsController@getAuctions');
-                });
-
+//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
+//
+//                function ($api) {
+//                    $api -> get('api/auctions', 'PluginAuctionsController@getAuctions');
+//                });
+//
             /** @var ApiRouter $routerApi */
 //                    $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
 //                    $routerApi -> post('api/auction', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@createAuction']);
