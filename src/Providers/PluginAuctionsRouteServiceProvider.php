@@ -21,8 +21,8 @@
             $apiRouter -> version(['v1'], ['middleware' => ['oauth']],
                 function ($routerApi) {
 
-                    $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Providers\PluginAuctionsController@getAuctions']);
-                    $routerApi -> post('api/auction', ['uses' => 'PluginAuctions\Providers\PluginAuctionsController@@createAuction']);
+                    $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
+                    $routerApi -> post('api/auction', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@createAuction']);
 //                    $routerApi -> get('api/auction/{id}', 'PluginAuctionsController@getAuction') -> where('id', '\d+');
 //                    $routerApi -> put('api/auction/{id}', 'PluginAuctionsController@updateAuction') -> where('id', '\d+');
 //                    $routerApi -> delete('api/auction/{id}', 'PluginAuctionsController@deleteAuction') -> where('id', '\d+');
