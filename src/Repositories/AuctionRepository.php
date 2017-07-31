@@ -21,12 +21,6 @@
          */
         public function createAuction(array $auctionData) : Auction
         {
-//        try {
-//            AuctionValidator::validateOrFail($data);
-//        } catch (ValidationException $e) {
-//            throw $e;
-//        }
-
             /**
              * @var DataBase $database
              */

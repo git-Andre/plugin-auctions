@@ -34,6 +34,12 @@ class PluginAuctionsController extends Controller
 
     }
 
+    public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
+    {
+        $getAuction = $auctionRepo->getAuction($id);
+        return json_encode($getAuction);
+    }
+
     /**
      * @param  \Plenty\Plugin\Http\Request $request
      * @param AuctionRepositoryContract       $auctionRepo
@@ -50,9 +56,9 @@ class PluginAuctionsController extends Controller
      * @param AuctionRepositoryContract $auctionRepo
      * @return string
      */
-    public function updateAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
+    public function updateAuction(int $id, Request $request, AuctionsRepositoryContract $auctionRepo): string
     {
-        $updateAuction = $auctionRepo->updateAuction($id);
+        $updateAuction = $auctionRepo->updateAuction($id, $request->all());
         return json_encode($updateAuction);
     }
 
@@ -67,11 +73,6 @@ class PluginAuctionsController extends Controller
         return json_encode($deleteAuction);
     }
 
-    public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
-    {
-        $getAuction = $auctionRepo->getAuction($id);
-        return json_encode($getAuction);
-    }
     /**
      * @param Twig $twig
      * @return string

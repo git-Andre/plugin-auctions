@@ -10,13 +10,6 @@ use PluginAuctions\Models\Auction;
  */
 interface AuctionsRepositoryContract
 {
-    /**
-     * Add a new task to the Auction list
-     *
-     * @param array $data
-     * @return Auction
-     */
-    public function createAuction(array $auctionData): Auction;
 
     /**
      * List all tasks of the Auction list
@@ -26,19 +19,28 @@ interface AuctionsRepositoryContract
     public function getAuctions(): array;
 
     /**
-     * List all tasks of the Auction list
+     * List an item of the Auction list
      *
      * @return Auction
      */
-    public function getAuction(): Auction;
+    public function getAuction($id): Auction;
+    /**
+     * Add a new task to the Auction list
+     *
+     * @param array $data
+     * @return Auction
+     */
+
+    public function createAuction(array $auctionData): Auction;
+
 
     /**
-     * Update the status of the task
+     * Update the status of the Auction
      *
      * @param int $id
      * @return Auction
      */
-    public function updateAuction($id): Auction;
+    public function updateAuction($id, array $auctionData): Auction;
 
     /**
      * Delete a task from the Auction list
