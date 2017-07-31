@@ -13,7 +13,7 @@
     class AuctionRepository implements AuctionsRepositoryContract {
 
         /**
-         * Add a new item to the To Do list
+         * Add a new item to the Auction list
          *
          * @param array $data
          * @return Auction
@@ -34,15 +34,50 @@
 
             $auction = pluginApp(Auction::class);
 
-//            $auction -> itemId = $auctionData -> itemId;
-//            $auction -> startDate = $auctionData -> startDate;
-//            $auction -> startHour = $auctionData -> startHour;
-//            $auction -> startMinute = $auctionData -> startMinute;
-//            $auction -> auctionDuration = $auctionData -> auctionDuration;
-//            $auction -> startPrice = $auctionData -> startPrice;
-//            $auction -> buyNowPrice = $auctionData -> buyNowPrice;
+            $auction -> itemId = $auctionData ['itemId'];
+            $auction -> startDate = $auctionData ['startDate'];
+            $auction -> startHour = $auctionData ['startHour'];
+            $auction -> startMinute = $auctionData ['startMinute'];
+            $auction -> auctionDuration = $auctionData ['auctionDuration'];
+            $auction -> startPrice = $auctionData ['startPrice'];
+            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
 
             $auction -> createdAt = time();
+
+            $database -> save($auction);
+
+            return $auction;
+        }
+
+        /**
+         * Update the status of the item
+         *
+         * @param int $id
+         * @return Auction
+         */
+        public function updateAuction($id, array $auctionData) : Auction
+        {
+            /**
+             * @var DataBase $database
+             */
+            $database = pluginApp(DataBase::class);
+
+            $auctionList = $database -> query(Auction::class)
+                -> where('id', '=', $id)
+                -> get();
+
+            $auction = $auctionList[0];
+
+            $auction -> itemId = $auctionData ['itemId'];
+            $auction -> startDate = $auctionData ['startDate'];
+            $auction -> startHour = $auctionData ['startHour'];
+            $auction -> startMinute = $auctionData ['startMinute'];
+            $auction -> auctionDuration = $auctionData ['auctionDuration'];
+            $auction -> startPrice = $auctionData ['startPrice'];
+            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+
+            $auction -> createdAt = time();
+
 
             $database -> save($auction);
 
@@ -68,12 +103,11 @@
         }
 
         /**
-         * Update the status of the item
+         * List an item of the Auction list
          *
-         * @param int $id
-         * @return Auction
+         * @return Auction[]
          */
-        public function updateAuction($id) : Auction
+        public function getAuction($id) : Auction
         {
             /**
              * @var DataBase $database
@@ -85,8 +119,6 @@
                 -> get();
 
             $auction = $auctionList[0];
-//            $auction -> isDone = true;
-            $database -> save($auction);
 
             return $auction;
         }

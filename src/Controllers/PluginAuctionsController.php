@@ -66,6 +66,12 @@ class PluginAuctionsController extends Controller
         $deleteAuction = $auctionRepo->deleteAuction($id);
         return json_encode($deleteAuction);
     }
+
+    public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
+    {
+        $getAuction = $auctionRepo->getAuction($id);
+        return json_encode($getAuction);
+    }
     /**
      * @param Twig $twig
      * @return string

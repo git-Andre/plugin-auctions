@@ -26,6 +26,13 @@ interface AuctionsRepositoryContract
     public function getAuctions(): array;
 
     /**
+     * List all tasks of the Auction list
+     *
+     * @return Auction
+     */
+    public function getAuction(): Auction;
+
+    /**
      * Update the status of the task
      *
      * @param int $id
