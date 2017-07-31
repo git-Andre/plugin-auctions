@@ -18,7 +18,7 @@
          */
         public function map(Router $router)
         {
-            $router->get('hallo','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+            $router->get('halli','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
             $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@showAuctions');
             $router->post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
