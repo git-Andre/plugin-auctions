@@ -79,7 +79,7 @@
 
             $auction -> createdAt = time();
 
-//            $database -> save($auction);
+            $database -> save($auction);
 
             return $auctionData;
         }
