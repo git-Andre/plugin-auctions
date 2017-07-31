@@ -18,7 +18,9 @@
          */
         public function map(Router $router, ApiRouter $apiRouter)
         {
-            $apiRouter -> version(['v1'], ['middleware' => ['oauth']],[]);
+            $apiRouter -> version(['v1'], ['middleware' => ['oauth']],[
+                ($routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']))
+            ]);
 //                function ($routerApi) {
 
                     /** @var ApiRouter $routerApi*/
