@@ -60,7 +60,7 @@
          * @return Auction
          * @throws ValidationException ToDo:
          */
-        public function createAuction(array $auctionData) : array
+        public function createAuction(array $auctionData) : string
         {
             /**
              * @var DataBase $database
@@ -80,9 +80,15 @@
             $auction -> createdAt = time();
             $auction -> updatedAt = $auction -> createdAt;
 
-            $database -> save($auction);
 
-            return $auctionData;
+            try {
+            $database -> save($auction);
+            } catch ( \Exception $e ) {
+                echo $e -> getMessage();
+                return json_encode($auction);
+            }
+
+            return "Auction erfolgreich angelegt!";
         }
 
         /**
@@ -91,7 +97,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : Auction_1_1
+        public function updateAuction($id, array $auctionData) : string
         {
             /**
              * @var DataBase $database
@@ -116,9 +122,15 @@
             $auction -> updatedAt = time();
 
 
-            $database -> save($auction);
+            try {
+                $database -> save($auction);
+            } catch ( \Exception $e ) {
+                echo $e -> getMessage();
 
-            return $auction;
+                return json_encode($auction);
+            }
+
+            return "Auction Nr.: $id erfolgreich geändert!";
         }
 
 
@@ -128,7 +140,7 @@
          * @param int $id
          * @return Auction
          */
-        public function deleteAuction($id) : Auction_1_1
+        public function deleteAuction($id) : string
         {
             /**
              * @var DataBase $database
@@ -140,8 +152,15 @@
                 -> get();
 
             $auction = $auctionList[0];
-            $database -> delete($auction);
 
-            return $auction;
+            try {
+                $database -> delete($auction);
+            } catch ( \Exception $e ) {
+                echo $e -> getMessage();
+
+                return json_encode($auction);
+            }
+
+            return "Auction Nr.: $id erfolgreich gelöscht!";
         }
     }

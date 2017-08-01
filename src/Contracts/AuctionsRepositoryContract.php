@@ -31,7 +31,7 @@
          * @return Auction
          */
 
-        public function createAuction(array $auctionData) : array;
+        public function createAuction(array $auctionData) : string ;
 
 
         /**
@@ -40,7 +40,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : Auction_1_1;
+        public function updateAuction($id, array $auctionData) : string ;
 
         /**
          * Delete a task from the Auction list
@@ -48,5 +48,5 @@
          * @param int $id
          * @return Auction
          */
-        public function deleteAuction($id) : Auction_1_1;
+        public function deleteAuction($id) : string ;
     }
