@@ -18,7 +18,7 @@
 //            $migrate -> createTable(Auction_1_1::class);
 
             try {
-                $migrate -> createTable(Auction_1_1::class);
+                $migrate -> deleteTable(Auction_1_1::class);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
             }
