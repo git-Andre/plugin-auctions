@@ -30,7 +30,7 @@
 //            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
 ////
 //                function ($api) {
-                    $api -> get('api/auctions', 'PluginAuctionsController@getAuctions');
+                    $api -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
 //                });
 //
             /** @var ApiRouter $routerApi */
