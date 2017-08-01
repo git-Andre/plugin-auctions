@@ -131,7 +131,7 @@
                 return json_encode($auction);
             }
 
-            return "json_encode($auction) + $auctionList[0]";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
+            return "json_encode($auctionList[0])";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
         }
 
 
