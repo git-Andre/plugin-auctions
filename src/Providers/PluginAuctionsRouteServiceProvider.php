@@ -27,11 +27,11 @@
 //            $router->put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction')->where('id', '\d+');
 //            $router->delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction')->where('id', '\d+');
 
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
-//
-                function ($api) {
+//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
+////
+//                function ($api) {
                     $api -> get('api/auctions', 'PluginAuctionsController@getAuctions');
-                });
+//                });
 //
             /** @var ApiRouter $routerApi */
 //                    $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
