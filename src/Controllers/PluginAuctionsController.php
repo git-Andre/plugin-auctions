@@ -49,7 +49,7 @@
         {
             $newAuction = $auctionRepo -> createAuction($request -> all());
 
-            return json_encode($newAuction);
+            return $newAuction;
         }
 
         /**
@@ -61,7 +61,7 @@
         {
             $updateAuction = $auctionRepo -> updateAuction($id, $request -> all());
 
-            return json_encode($updateAuction);
+            return $updateAuction;
         }
 
         /**
@@ -73,7 +73,7 @@
         {
             $deleteAuction = $auctionRepo -> deleteAuction($id);
 
-            return json_encode($deleteAuction);
+            return $deleteAuction;
         }
 
         /**
