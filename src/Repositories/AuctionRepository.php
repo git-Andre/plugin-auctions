@@ -112,7 +112,7 @@
 
             $auction = $auctionList[0];
 
-            return json_encode($auctionList[0]);
+            return json_encode($auction);
 //            $auction = $auctionList[0];
 
 //            $auction -> itemId = $auctionData ['itemId'];
