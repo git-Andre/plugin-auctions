@@ -6,9 +6,9 @@
     use PluginAuctions\Models\Auction_2;
 
     /**
-     * Class CreateAuctionTable
+     * Class CreateAuction2Table
      */
-    class CreateAuctionTable {
+    class CreateAuction2Table {
 
         /**
          * @param Migrate $migrate
