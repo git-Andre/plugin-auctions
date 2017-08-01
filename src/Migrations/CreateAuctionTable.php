@@ -18,6 +18,6 @@
         {
             $migrate -> createTable(Auction_1_1::class);
 
-            $migrate -> deleteTable(Auction::class);
+//            $migrate -> deleteTable(Auction::class);
         }
     }
