@@ -110,8 +110,6 @@
                 -> where('id', '=', $id)
                 -> get();
 
-            $auction = $auctionList[0];
-
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -123,16 +121,16 @@
 
             $auction -> updatedAt = time();
 
-            return json_encode($auctionData);
 
-//            try {
-//                $database -> save($auction);
-//            } catch ( \Exception $e ) {
-//                echo $e -> getMessage();
-//
-//                return json_encode($auction);
-//            }
-//
+            try {
+                $database -> save($auction);
+            } catch ( \Exception $e ) {
+                echo $e -> getMessage();
+
+                return json_encode($auction);
+            }
+
+            return json_encode($auctionData);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";
         }
 
