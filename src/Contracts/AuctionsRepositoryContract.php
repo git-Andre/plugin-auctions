@@ -1,52 +1,52 @@
 <?php
 
-namespace PluginAuctions\Contracts;
+    namespace PluginAuctions\Contracts;
 
-use PluginAuctions\Models\Auction;
-
-/**
- * Class AuctionsRepositoryContract
- * @package PluginAuctions\Contracts
- */
-interface AuctionsRepositoryContract
-{
+    use PluginAuctions\Models\Auction_1_1;
 
     /**
-     * List all tasks of the Auction list
-     *
-     * @return Auction[]
+     * Class AuctionsRepositoryContract
+     * @package PluginAuctions\Contracts
      */
-    public function getAuctions(): array;
+    interface AuctionsRepositoryContract {
 
-    /**
-     * List an item of the Auction list
-     *
-     * @return Auction
-     */
-    public function getAuction($id): Auction;
-    /**
-     * Add a new task to the Auction list
-     *
-     * @param array $data
-     * @return Auction
-     */
+        /**
+         * List all tasks of the Auction list
+         *
+         * @return Auction[]
+         */
+        public function getAuctions() : array;
 
-    public function createAuction(array $auctionData): array ;
+        /**
+         * List an item of the Auction list
+         *
+         * @return Auction
+         */
+        public function getAuction($id) : Auction_1_1;
+
+        /**
+         * Add a new task to the Auction list
+         *
+         * @param array $data
+         * @return Auction
+         */
+
+        public function createAuction(array $auctionData) : array;
 
 
-    /**
-     * Update the status of the Auction
-     *
-     * @param int $id
-     * @return Auction
-     */
-    public function updateAuction($id, array $auctionData): Auction;
+        /**
+         * Update the status of the Auction
+         *
+         * @param int $id
+         * @return Auction
+         */
+        public function updateAuction($id, array $auctionData) : Auction_1_1;
 
-    /**
-     * Delete a task from the Auction list
-     *
-     * @param int $id
-     * @return Auction
-     */
-    public function deleteAuction($id): Auction;
-}
+        /**
+         * Delete a task from the Auction list
+         *
+         * @param int $id
+         * @return Auction
+         */
+        public function deleteAuction($id) : Auction_1_1;
+    }

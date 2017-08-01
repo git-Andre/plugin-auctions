@@ -1,20 +1,17 @@
 <?php
 
-namespace PluginAuctions\Controllers;
+    namespace PluginAuctions\Controllers;
 
-use Plenty\Plugin\Controller;
-use Plenty\Plugin\Http\Request;
-use Plenty\Plugin\Templates\Twig;
-use PluginAuctions\Contracts\AuctionsRepositoryContract;
-use PluginAuctions\Models\Auction;
-use PluginAuctions\Services\AuctionsService;
+    use Plenty\Plugin\Controller;
+    use Plenty\Plugin\Http\Request;
+    use Plenty\Plugin\Templates\Twig;
+    use PluginAuctions\Contracts\AuctionsRepositoryContract;
 
-class PluginAuctionsController extends Controller
-{
+    class PluginAuctionsController extends Controller {
 
-    /**
-     * @var AuctionsService
-     */
+        /**
+         * @var AuctionsService
+         */
 //    private $auctionsService;
 //
 //    public function __construct(AuctionsService $auctionsService)
@@ -23,63 +20,69 @@ class PluginAuctionsController extends Controller
 //    }
 
 
-    /**
-     * @param Twig                   $twig
-     * @param AuctionsRepositoryContract $auctionRepo
-     * @return string
-     */
-    public function getAuctions(AuctionsRepositoryContract $auctionRepo): array {
-        $auctionList = $auctionRepo->getAuctions();
-        return $auctionList;
+        /**
+         * @param Twig $twig
+         * @param AuctionsRepositoryContract $auctionRepo
+         * @return string
+         */
+        public function getAuctions(AuctionsRepositoryContract $auctionRepo) : array
+        {
+            $auctionList = $auctionRepo -> getAuctions();
+
+            return $auctionList;
+
+        }
+
+        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : string
+        {
+            $getAuction = $auctionRepo -> getAuction($id);
+
+            return json_encode($getAuction);
+        }
+
+        /**
+         * @param  \Plenty\Plugin\Http\Request $request
+         * @param AuctionRepositoryContract $auctionRepo
+         * @return string
+         */
+        public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo) : string
+        {
+            $newAuction = $auctionRepo -> createAuction($request -> all());
+
+            return json_encode($newAuction);
+        }
+
+        /**
+         * @param int $id
+         * @param AuctionRepositoryContract $auctionRepo
+         * @return string
+         */
+        public function updateAuction(int $id, Request $request, AuctionsRepositoryContract $auctionRepo) : string
+        {
+            $updateAuction = $auctionRepo -> updateAuction($id, $request -> all());
+
+            return json_encode($updateAuction);
+        }
+
+        /**
+         * @param int $id
+         * @param AuctionRepositoryContract $auctionRepo
+         * @return string
+         */
+        public function deleteAuction(int $id, AuctionsRepositoryContract $auctionRepo) : string
+        {
+            $deleteAuction = $auctionRepo -> deleteAuction($id);
+
+            return json_encode($deleteAuction);
+        }
+
+        /**
+         * @param Twig $twig
+         * @return string
+         */
+        public function getHelloWorldPage(Twig $twig) : string
+        {
+            return $twig -> render('PluginAuctions::content/Auction');
+        }
 
     }
-
-    public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
-    {
-        $getAuction = $auctionRepo->getAuction($id);
-        return json_encode($getAuction);
-    }
-
-    /**
-     * @param  \Plenty\Plugin\Http\Request $request
-     * @param AuctionRepositoryContract       $auctionRepo
-     * @return string
-     */
-    public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo): string
-    {
-        $newAuction = $auctionRepo->createAuction($request->all());
-        return json_encode($newAuction);
-    }
-
-    /**
-     * @param int                    $id
-     * @param AuctionRepositoryContract $auctionRepo
-     * @return string
-     */
-    public function updateAuction(int $id, Request $request, AuctionsRepositoryContract $auctionRepo): string
-    {
-        $updateAuction = $auctionRepo->updateAuction($id, $request->all());
-        return json_encode($updateAuction);
-    }
-
-    /**
-     * @param int                    $id
-     * @param AuctionRepositoryContract $auctionRepo
-     * @return string
-     */
-    public function deleteAuction(int $id, AuctionsRepositoryContract $auctionRepo): string
-    {
-        $deleteAuction = $auctionRepo->deleteAuction($id);
-        return json_encode($deleteAuction);
-    }
-
-    /**
-     * @param Twig $twig
-     * @return string
-     */
-    public function getHelloWorldPage(Twig $twig):string
-    {
-        return $twig->render('PluginAuctions::content/Auction');
-    }
-
-}

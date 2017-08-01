@@ -6,7 +6,7 @@
 //    use Plenty\Modules\Frontend\Services\AccountService;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
-    use PluginAuctions\Models\Auction;
+    use PluginAuctions\Models\Auction_1_1;
 
     //    use PluginAuctions\Validators\AuctionValidator;
 
@@ -26,7 +26,7 @@
             /**
              * @var Auction[] $auctionList
              */
-            $auctionList = $database -> query(Auction::class) -> get();
+            $auctionList = $database -> query(Auction_1_1::class) -> get();
 
             return $auctionList;
         }
@@ -36,14 +36,14 @@
          *
          * @return Auction[]
          */
-        public function getAuction($id) : Auction
+        public function getAuction($id) : Auction_1_1
         {
             /**
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
 
-            $auctionList = $database -> query(Auction::class)
+            $auctionList = $database -> query(Auction_1_1::class)
                 -> where('id', '=', $id)
                 -> get();
 
@@ -67,7 +67,7 @@
              */
             $database = pluginApp(DataBase::class);
 
-            $auction = pluginApp(Auction::class);
+            $auction = pluginApp(Auction_1_1::class);
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -78,7 +78,7 @@
             $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
 
             $auction -> createdAt = time();
-//            $auction -> updatedAt = time();
+            $auction -> updatedAt = time();
 
             $database -> save($auction);
 
@@ -91,14 +91,14 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : Auction
+        public function updateAuction($id, array $auctionData) : Auction_1_1
         {
             /**
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
 
-            $auctionList = $database -> query(Auction::class)
+            $auctionList = $database -> query(Auction_1_1::class)
                 -> where('id', '=', $id)
                 -> get();
 
@@ -112,7 +112,7 @@
             $auction -> startPrice = $auctionData ['startPrice'];
             $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
 
-//            $auction -> updatedAt = time();
+            $auction -> updatedAt = time();
 
 
             $database -> save($auction);
@@ -127,14 +127,14 @@
          * @param int $id
          * @return Auction
          */
-        public function deleteAuction($id) : Auction
+        public function deleteAuction($id) : Auction_1_1
         {
             /**
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
 
-            $auctionList = $database -> query(Auction::class)
+            $auctionList = $database -> query(Auction_1_1::class)
                 -> where('id', '=', $id)
                 -> get();
 

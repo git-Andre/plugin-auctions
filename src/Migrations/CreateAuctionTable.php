@@ -16,5 +16,7 @@ class CreateAuctionTable
     public function run(Migrate $migrate)
     {
         $migrate->deleteTable(Auction::class);
+
+        $migrate->createTable(Auction_1_1::class);
     }
 }
