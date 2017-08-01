@@ -105,12 +105,12 @@
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $database -> find(Auction_1_1::class, $id) -> all();
+            $auction = $database -> find(Auction_1_1::class, $id);
 
-
+            return "$auction";
 //            $auction = $auctionList[0];
 
-            $auction -> itemId = $auctionData ['itemId'];
+/*            $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
             $auction -> startHour = $auctionData ['startHour'];
             $auction -> startMinute = $auctionData ['startMinute'];
@@ -130,6 +130,7 @@
             }
 
             return "$id";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
+            */
         }
 
 
