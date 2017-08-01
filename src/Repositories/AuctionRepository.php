@@ -123,15 +123,17 @@
 
             $auction -> updatedAt = time();
 
-            try {
-                $database -> save($auction);
-            } catch ( \Exception $e ) {
-                echo $e -> getMessage();
+            return json_encode($auction);
 
-                return json_encode($auction);
-            }
-
-            return  "Auction Nr.: $id erfolgreich geaendert!";
+//            try {
+//                $database -> save($auction);
+//            } catch ( \Exception $e ) {
+//                echo $e -> getMessage();
+//
+//                return json_encode($auction);
+//            }
+//
+//            return  "Auction Nr.: $id erfolgreich geaendert!";
         }
 
 
