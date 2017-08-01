@@ -132,7 +132,7 @@
                 return json_encode($auction);
             }
 $test = $database -> find(Auction_1_1::class, $id);
-            return json_encode($find);
+            return json_encode($test);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";
         }
 
