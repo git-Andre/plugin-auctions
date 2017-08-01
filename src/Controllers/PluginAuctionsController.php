@@ -79,7 +79,7 @@ class PluginAuctionsController extends Controller
      */
     public function getHelloWorldPage(Twig $twig):string
     {
-        return $twig->render('PluginAuctions::Index');
+        return $twig->render('PluginAuctions::content/Auction');
     }
 
 }
