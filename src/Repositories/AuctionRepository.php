@@ -102,6 +102,7 @@
                 -> where('id', '=', $id)
                 -> get();
 
+            $auction = pluginApp(Auction_1_1::class);
             $auction = $auctionList[0];
 
             $auction -> itemId = $auctionData ['itemId'];
