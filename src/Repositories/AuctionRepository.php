@@ -104,33 +104,33 @@
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
-            $auction = pluginApp(Auction_1_1::class);
-
-//            $auction = $database -> find(Auction_1_1::class, $id);
-            $auctionList = $database -> query(Auction_1_1::class)
-                -> where('id', '=', $id)
-                -> get();
-
-            $auction = $auctionList[0];
-
-            $auction -> itemId = $auctionData ['itemId'];
-            $auction -> startDate = $auctionData ['startDate'];
-            $auction -> startHour = $auctionData ['startHour'];
-            $auction -> startMinute = $auctionData ['startMinute'];
-            $auction -> auctionDuration = $auctionData ['auctionDuration'];
-            $auction -> startPrice = $auctionData ['startPrice'];
-            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
-
-            $auction -> updatedAt = time();
-
-
-            try {
-                $database -> save($auction);
-            } catch ( \Exception $e ) {
-                echo $e -> getMessage();
-
-                return json_encode($auction);
-            }
+//            $auction = pluginApp(Auction_1_1::class);
+//
+////            $auction = $database -> find(Auction_1_1::class, $id);
+//            $auctionList = $database -> query(Auction_1_1::class)
+//                -> where('id', '=', $id)
+//                -> get();
+//
+//            $auction = $auctionList[0];
+//
+//            $auction -> itemId = $auctionData ['itemId'];
+//            $auction -> startDate = $auctionData ['startDate'];
+//            $auction -> startHour = $auctionData ['startHour'];
+//            $auction -> startMinute = $auctionData ['startMinute'];
+//            $auction -> auctionDuration = $auctionData ['auctionDuration'];
+//            $auction -> startPrice = $auctionData ['startPrice'];
+//            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+//
+//            $auction -> updatedAt = time();
+//
+//
+//            try {
+//                $database -> save($auction);
+//            } catch ( \Exception $e ) {
+//                echo $e -> getMessage();
+//
+//                return json_encode($auction);
+//            }
 $test = $database -> find(Auction_1_1::class, $id);
             return json_encode($test);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";
