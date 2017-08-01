@@ -3,7 +3,7 @@
     namespace PluginAuctions\Migrations;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
-    use PluginAuctions\Models\Auction_1_1;
+    use PluginAuctions\Models\Auction__12;
 
     /**
      * Class CreateAuctionTable
@@ -15,13 +15,10 @@
          */
         public function run(Migrate $migrate)
         {
-//            $migrate -> createTable(Auction_1_1::class);
-
             try {
-                $migrate -> deleteTable(Auction_1_1::class);
+                $migrate -> createTable(Auction__12::class);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
             }
-//            $migrate -> deleteTable(Auction::class);
         }
     }

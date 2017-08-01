@@ -2,7 +2,7 @@
 
     namespace PluginAuctions\Contracts;
 
-    use PluginAuctions\Models\Auction_1_1;
+    use PluginAuctions\Models\Auction__12;
 
     /**
      * Class AuctionsRepositoryContract
@@ -22,7 +22,7 @@
          *
          * @return Auction
          */
-        public function getAuction($id) : Auction_1_1;
+        public function getAuction($id) : Auction__12;
 
         /**
          * Add a new task to the Auction list
