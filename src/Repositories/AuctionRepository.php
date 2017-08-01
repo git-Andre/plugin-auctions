@@ -123,7 +123,7 @@
 
             $auction -> updatedAt = time();
 
-            return json_encode($auction);
+            return json_encode($auctionData);
 
 //            try {
 //                $database -> save($auction);
