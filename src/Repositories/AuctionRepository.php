@@ -97,7 +97,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : string
+        public function updateAuction($id, array $auctionData) : Auction_1_1
         {
             /**
              * @var DataBase $database
@@ -131,7 +131,7 @@
                 return json_encode($auction);
             }
 
-            return json_encode($auctionList[0]);  /*"Auction Nr.: $id erfolgreich geaendert!";*/
+            return $auctionList[0];  /*"Auction Nr.: $id erfolgreich geaendert!";*/
         }
 
 
