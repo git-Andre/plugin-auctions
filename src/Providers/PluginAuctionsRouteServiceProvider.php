@@ -21,6 +21,7 @@
             $router->get('halt','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
             $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
+            $router->get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction')->where('id', '\d+');
             $router->post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
             $router->put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction')->where('id', '\d+');
             $router->delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction')->where('id', '\d+');
