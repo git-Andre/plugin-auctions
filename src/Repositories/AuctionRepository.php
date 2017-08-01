@@ -5,6 +5,7 @@
 //    use Plenty\Exceptions\ValidationException;
 //    use Plenty\Modules\Frontend\Services\AccountService;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+    use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
     use PluginAuctions\Models\Auction_1_1;
 
@@ -101,20 +102,18 @@
         public function updateAuction($id, array $auctionData) : string
         {
 
-            echo "$auctionData";
-
             /**
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $database -> find(Auction_1_1::class, $id);
 
-            //            $auctionList = $database -> query(Auction_1_1::class)
-//                -> where('id', '=', $id)
-//                -> get();
-//            $auction = $auctionList[0];
+            $auctionList = $database -> query(Auction_1_1::class)
+                -> where('id', '=', $id)
+                -> get();
+
+            $auction = $auctionList[0];
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -134,6 +133,7 @@
 
                 return json_encode($auction);
             }
+            $auction = $database -> find(Auction_1_1::class, $id);
 
             return json_encode($auction);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";

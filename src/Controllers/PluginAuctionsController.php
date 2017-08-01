@@ -47,7 +47,7 @@
          */
         public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo) : string
         {
-            $newAuction = $auctionRepo -> createAuction($request -> getContent());
+            $newAuction = $auctionRepo -> createAuction($request -> all());
 
             return $newAuction;
         }
@@ -59,7 +59,7 @@
          */
         public function updateAuction(int $id, Request $request, AuctionsRepositoryContract $auctionRepo) : string
         {
-            $updateAuction = $auctionRepo -> updateAuction($id, $request -> getContent());
+            $updateAuction = $auctionRepo -> updateAuction($id, $request -> all());
 
             return $updateAuction;
         }
