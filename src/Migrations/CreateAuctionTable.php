@@ -2,7 +2,7 @@
 
 namespace PluginAuctions\Migrations;
 
-use PluginAuctions\Models\Auction;
+use PluginAuctions\Models\Auction_1_1;
 use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
 
 /**
