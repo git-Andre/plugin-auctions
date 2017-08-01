@@ -124,7 +124,7 @@
 
 
             try {
-                $database -> save($auction);
+                $database -> update($auction);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
 
