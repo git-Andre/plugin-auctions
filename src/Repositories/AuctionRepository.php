@@ -105,7 +105,12 @@
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $database -> find(Auction_1_1::class, $id);
+//            $auction = $database -> find(Auction_1_1::class, $id);
+            $auctionList = $database -> query(Auction_1_1::class)
+                -> where('id', '=', $id)
+                -> get();
+
+            $auction = $auctionList[0];
 
             return "$auction";
 //            $auction = $auctionList[0];
