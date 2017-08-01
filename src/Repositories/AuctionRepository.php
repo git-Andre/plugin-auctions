@@ -132,7 +132,7 @@
                 return json_encode($auction);
             }
 
-            return json_encode($test);
+            return json_encode($auction);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";
         }
 
