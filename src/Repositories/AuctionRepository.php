@@ -110,27 +110,27 @@
             return "$auction";
 //            $auction = $auctionList[0];
 
-/*            $auction -> itemId = $auctionData ['itemId'];
-            $auction -> startDate = $auctionData ['startDate'];
-            $auction -> startHour = $auctionData ['startHour'];
-            $auction -> startMinute = $auctionData ['startMinute'];
-            $auction -> auctionDuration = $auctionData ['auctionDuration'];
-            $auction -> startPrice = $auctionData ['startPrice'];
-            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
-
-            $auction -> updatedAt = time();
-
-
-            try {
-                $database -> save($auction);
-            } catch ( \Exception $e ) {
-                echo $e -> getMessage();
-
-                return json_encode($auction);
-            }
-
-            return "$id";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
-            */
+//            $auction -> itemId = $auctionData ['itemId'];
+//            $auction -> startDate = $auctionData ['startDate'];
+//            $auction -> startHour = $auctionData ['startHour'];
+//            $auction -> startMinute = $auctionData ['startMinute'];
+//            $auction -> auctionDuration = $auctionData ['auctionDuration'];
+//            $auction -> startPrice = $auctionData ['startPrice'];
+//            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+//
+//            $auction -> updatedAt = time();
+//
+//
+//            try {
+//                $database -> save($auction);
+//            } catch ( \Exception $e ) {
+//                echo $e -> getMessage();
+//
+//                return json_encode($auction);
+//            }
+//
+//            return "$id";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
+//
         }
 
 
