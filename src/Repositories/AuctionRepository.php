@@ -109,6 +109,7 @@
                 -> get();
 
             $auction = pluginApp(Auction_1_1::class);
+
             $auction = $auctionList[0];
 
             $auction -> itemId = $auctionData ['itemId'];
@@ -130,7 +131,7 @@
                 return json_encode($auction);
             }
 
-            return "Auction Nr.: $id erfolgreich geändert!";
+            return "json_encode($auction) + $auctionList[0]";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
         }
 
 
