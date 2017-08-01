@@ -105,7 +105,7 @@
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $database -> find(Auction_1_1::class, $id);
+            $auction = $database -> find(Auction_1_1::class, $id) -> all();
 
 
 //            $auction = $auctionList[0];
