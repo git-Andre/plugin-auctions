@@ -40,7 +40,7 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : Auction_1_1 ;
+        public function updateAuction($id, array $auctionData) : string ;
 
         /**
          * Delete a task from the Auction list

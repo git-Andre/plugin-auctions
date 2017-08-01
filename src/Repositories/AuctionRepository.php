@@ -97,20 +97,20 @@
          * @param int $id
          * @return Auction
          */
-        public function updateAuction($id, array $auctionData) : Auction_1_1
+        public function updateAuction($id, array $auctionData) : string
         {
             /**
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
+            $auction = pluginApp(Auction_1_1::class);
 
-            $auctionList = $database -> query(Auction_1_1::class)
+            $auction = $database -> query(Auction_1_1::class)
                 -> where('id', '=', $id)
                 -> get();
 
-            $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $auctionList[0];
+//            $auction = $auctionList[0];
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -131,7 +131,7 @@
                 return json_encode($auction);
             }
 
-            return $auctionList[0];  /*"Auction Nr.: $id erfolgreich geaendert!";*/
+            return "$id";  /*"Auction Nr.: $id erfolgreich geaendert!";*/
         }
 
 
