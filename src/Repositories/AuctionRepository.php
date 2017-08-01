@@ -126,14 +126,14 @@
             $auction -> updatedAt = time();
 
 
-//            try {
-//                $database -> save($auction);
-//            } catch ( \Exception $e ) {
-//                echo $e -> getMessage();
-//
-//                return json_encode($auction);
-//            }
-            $auction = $database -> find(Auction_1_1::class, $id);
+            try {
+                $database -> save($auction);
+            } catch ( \Exception $e ) {
+                echo $e -> getMessage();
+
+                return json_encode($auction);
+            }
+//            $auction = $database -> find(Auction_1_1::class, $id);
 
             return json_encode($auction);
 //            return  "Auction Nr.: $id erfolgreich geaendert!";
