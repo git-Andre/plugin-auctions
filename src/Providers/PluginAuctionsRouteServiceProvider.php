@@ -19,7 +19,7 @@
 //        public function map(Router $router)
         public function map(Router $router, ApiRouter $api)
         {
-//            $router->get('halt','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+            $router->get('halt','PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
 //            $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
 //            $router->get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction')->where('id', '\d+');
