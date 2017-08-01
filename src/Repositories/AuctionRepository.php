@@ -105,8 +105,7 @@
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-            $auction = $database -> query(Auction_1_1::class)
-                -> where('id', '=', $id)
+            $auction = $database -> find(Auction_1_1::class, $id)
                 -> get();
 
 
@@ -124,7 +123,7 @@
 
 
             try {
-                $database -> update($auction);
+                $database -> save($auction);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
 
