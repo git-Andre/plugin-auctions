@@ -106,12 +106,12 @@
             $database = pluginApp(DataBase::class);
             $auction = pluginApp(Auction_1_1::class);
 
-//            $auction = $database -> find(Auction_1_1::class, $id);
-            $auctionList = $database -> query(Auction_1_1::class)
-                -> where('id', '=', $id)
-                -> get();
+            $auction = $database -> find(Auction_1_1::class, $id);
 
-            $auction = $auctionList[0];
+            //            $auctionList = $database -> query(Auction_1_1::class)
+//                -> where('id', '=', $id)
+//                -> get();
+//            $auction = $auctionList[0];
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -125,8 +125,7 @@
 
 
             try {
-//                $database -> save($auction);
-            $test = $database -> find($auction, $id);
+                $database -> save($auction);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
 
