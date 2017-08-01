@@ -112,7 +112,7 @@
             $auction -> startPrice = $auctionData ['startPrice'];
             $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
 
-//            $auction -> updatedAt = time();
+            $auction -> updatedAt = time();
 
 
             $database -> save($auction);
