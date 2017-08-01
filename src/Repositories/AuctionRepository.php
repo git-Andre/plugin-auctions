@@ -100,6 +100,9 @@
          */
         public function updateAuction($id, array $auctionData) : string
         {
+
+            echo "$auctionData";
+
             /**
              * @var DataBase $database
              */
@@ -157,13 +160,13 @@
             $auction = $auctionList[0];
 
             try {
-                $database -> delete($auction);
+                $del = $database -> delete($auction);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
 
                 return json_encode($auction);
             }
 
-            return "Auction Nr.: $id erfolgreich gelöscht!";
+            return "Auction Nr.: $id erfolgreich gelöscht! ($del)";
         }
     }
