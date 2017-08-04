@@ -35,11 +35,11 @@
 
         }
 
-        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : Auction_2
+        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
         {
-            $getAuction = $auctionRepo -> getAuction($id);
+            $getAuction[0] = $auctionRepo -> getAuction($id);
 
-            return $getAuction;
+            return $getAuction[0];
         }
 
         /**
