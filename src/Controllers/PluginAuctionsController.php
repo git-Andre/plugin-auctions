@@ -6,8 +6,6 @@
     use Plenty\Plugin\Http\Request;
     use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
-    use PluginAuctions\Models\Auction_2;
-
 
     class PluginAuctionsController extends Controller {
 
@@ -35,11 +33,11 @@
 
         }
 
-        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
+        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : java
         {
-            $getAuction[0] = $auctionRepo -> getAuction($id);
+            $getAuction = $auctionRepo -> getAuction($id);
 
-            return $getAuction[0];
+            return json_decode($getAuction);
         }
 
         /**
