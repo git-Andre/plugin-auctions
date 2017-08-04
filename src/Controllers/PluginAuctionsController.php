@@ -37,7 +37,7 @@
         {
             $getAuction = $auctionRepo -> getAuction($id);
 
-            return json_encode($getAuction);
+            return ($getAuction);
         }
 
         /**

@@ -27,7 +27,9 @@
             /**
              * @var Auction[] $auctionList
              */
-            $auctionList = $database -> query(Auction_2::class) -> get();
+            $auctionList = $database
+                -> query(Auction_2::class)
+                -> get();
 
             return $auctionList;
         }
@@ -136,7 +138,7 @@
 //            $auction = $database -> find(Auction_2::class, $id);
 
 //            return json_encode($auction);
-            return  "Auction Nr.: $id erfolgreich geändert!";
+            return "Auction Nr.: $id erfolgreich geändert!";
         }
 
 
