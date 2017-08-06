@@ -15,11 +15,11 @@
      * @property int $startHour
      * @property int $startMinute
      * @property int $auctionDuration
-     * @property double $startPrice
-     * @property double $buyNowPrice
+     * @property float $startPrice
+     * @property float $buyNowPrice
      */
 
-    class Auction_2 extends Model {
+    class Auction_3 extends Model {
 
         /**
          * @var int
@@ -40,6 +40,6 @@
      */
     public function getTableName() : string
     {
-        return 'PluginAuctions::Auction_2';
+        return 'PluginAuctions::Auction_3';
     }
 }
