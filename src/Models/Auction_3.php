@@ -31,9 +31,9 @@
         public $startDate = 0;
         public $startHour = 19;
         public $startMinute = 1;
-        public $auctionDuration = 10;
+        public $auctionDuration = 21;
         public $startPrice = 1.99;
-        public $buyNowPrice = 0;
+        public $buyNowPrice = 3.10;
 
     /**
      * @return string
