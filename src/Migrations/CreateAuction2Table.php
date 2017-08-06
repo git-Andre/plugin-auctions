@@ -15,7 +15,6 @@
          */
         public function run(Migrate $migrate)
         {
-            $migrate -> deleteTable(Auction_2::class);
             try {
                 $migrate -> createTable(Auction_3::class);
             } catch ( \Exception $e ) {
