@@ -28,6 +28,9 @@
              * @var Auction[] $auctionList
              */
             $auctionList = $database -> query(Auction_2::class) -> get();
+            for (auction in $auctionList) {
+
+        }
 
             return $auctionList;
         }
