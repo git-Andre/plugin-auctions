@@ -33,11 +33,11 @@
 
         }
 
-        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : string
+        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
         {
-            $getAuction = $auctionRepo -> getAuction($id);
+            $getAuction[0] = $auctionRepo -> getAuction($id);
 
-            return json_encode($getAuction);
+            return $getAuction[0];
         }
 
         /**
