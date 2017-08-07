@@ -22,7 +22,7 @@
          *
          * @return Auction
          */
-        public function getAuction($id) : Auction_3;
+        public function getAuction($id) : array ;
 
         /**
          * Add a new task to the Auction list

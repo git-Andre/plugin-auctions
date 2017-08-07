@@ -39,7 +39,7 @@
          *
          * @return Auction[]
          */
-        public function getAuction($id) : Auction_3
+        public function getAuction($id) : array
         {
             /**
              * @var DataBase $database
@@ -50,9 +50,9 @@
                 -> where('id', '=', $id)
                 -> get();
 
-            $auction = $auctionList[0];
+//            $auction = $auctionList[0];
 
-            return $auction;
+            return $auctionList;
         }
 
 

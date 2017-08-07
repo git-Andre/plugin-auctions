@@ -35,9 +35,9 @@
 
         public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
         {
-            $getAuction[0] = $auctionRepo -> getAuction($id);
+            $getAuction = $auctionRepo -> getAuction($id);
 
-            return $getAuction[0];
+            return $getAuction;
         }
 
         /**
