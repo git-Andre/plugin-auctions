@@ -2,7 +2,7 @@
 
     namespace PluginAuctions\Contracts;
 
-    use PluginAuctions\Models\Auction_3;
+    use PluginAuctions\Models\Auction_4;
 
     /**
      * Class AuctionsRepositoryContract

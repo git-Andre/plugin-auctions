@@ -7,7 +7,7 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
-    use PluginAuctions\Models\Auction_3;
+    use PluginAuctions\Models\Auction_4;
 
     //    use PluginAuctions\Validators\AuctionValidator;
 
@@ -28,7 +28,7 @@
              * @var Auction[] $auctionList
              */
             $auctionList = $database
-                -> query(Auction_3::class)
+                -> query(Auction_4::class)
                 -> get();
 
             return $auctionList;
@@ -46,7 +46,7 @@
              */
             $database = pluginApp(DataBase::class);
 
-            $auctionList = $database -> query(Auction_3::class)
+            $auctionList = $database -> query(Auction_4::class)
                 -> where('id', '=', $id)
                 -> get();
 
@@ -70,7 +70,7 @@
              */
             $database = pluginApp(DataBase::class);
 
-            $auction = pluginApp(Auction_3::class);
+            $auction = pluginApp(Auction_4::class);
 
             $auction -> itemId = $auctionData ['itemId'];
             $auction -> startDate = $auctionData ['startDate'];
@@ -108,10 +108,10 @@
              * @var DataBase $database
              */
             $database = pluginApp(DataBase::class);
-            $auction = pluginApp(Auction_3::class);
+            $auction = pluginApp(Auction_4::class);
 
 
-            $auctionList = $database -> query(Auction_3::class)
+            $auctionList = $database -> query(Auction_4::class)
                 -> where('id', '=', $id)
                 -> get();
 
@@ -135,7 +135,7 @@
 
                 return json_encode($auction);
             }
-//            $auction = $database -> find(Auction_3::class, $id);
+//            $auction = $database -> find(Auction_4::class, $id);
 
 //            return json_encode($auction);
             return  "Auction Nr.: $id erfolgreich geändert!";
@@ -155,7 +155,7 @@
              */
             $database = pluginApp(DataBase::class);
 
-            $auctionList = $database -> query(Auction_3::class)
+            $auctionList = $database -> query(Auction_4::class)
                 -> where('id', '=', $id)
                 -> get();
 

@@ -19,7 +19,7 @@
      * @property float $buyNowPrice
      */
 
-    class Auction_3 extends Model {
+    class Auction_4 extends Model {
 
         /**
          * @var int
@@ -40,6 +40,6 @@
      */
     public function getTableName() : string
     {
-        return 'PluginAuctions::Auction_3';
+        return 'PluginAuctions::Auction_4';
     }
 }
