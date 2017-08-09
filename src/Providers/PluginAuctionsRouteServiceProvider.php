@@ -21,17 +21,17 @@
         {
             $router -> get('halt', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
-            $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
+//            $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
             $router->get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction')->where('id', '\d+');
             $router->post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
             $router->put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction')->where('id', '\d+');
             $router->delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction')->where('id', '\d+');
 
-//            $api -> version(['v1'], ['middleware' => ['oauth']],
-//                function ($routeApi) {
-//                    $routeApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
-//                });
-//
+            $api -> version([], ['namespace' => 'PluginAuctions\Controller', 'middleware' => 'oauth'],
+                function ($routeApi) {
+                    $routeApi -> get('api/auctions', ['uses' => 'PluginAuctionsController@getAuctions']);
+                });
+
             /** @var ApiRouter $routerApi */
 //                    $routerApi -> get('api/auctions', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions']);
 //                    $routerApi -> post('api/auction', ['uses' => 'PluginAuctions\Controllers\PluginAuctionsController@createAuction']);
@@ -42,7 +42,7 @@
 //                });
 //            $router -> get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
 //
-//            $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+            $router -> get('hallo', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 //
         }
     }
