@@ -33,7 +33,7 @@
 //                });
 
             /** @var ApiRouter $routerApi TestEbaySdkRouteServiceProvider. */
-            $api -> version(['v1'], ['middleware' => ['oauth']], function ($router) {
+            $api -> version([''], ['middleware' => ['oauth']], function ($router) {
                 $router -> get('api/auctions/', [
                     'uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions'
                 ]);
