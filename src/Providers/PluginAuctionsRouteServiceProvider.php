@@ -28,8 +28,8 @@
             $router->delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction')->where('id', '\d+');
 
             $api -> version([], ['namespace' => 'PluginAuctions\Controller', 'middleware' => 'oauth'],
-                function ($routeApi) {
-                    $routeApi -> get('api/auctions', ['uses' => 'PluginAuctionsController@getAuctions']);
+                function ($api) {
+                    $api -> get('api/auctions/', 'PluginAuctionsController@getAuctions');
                 });
 
             /** @var ApiRouter $routerApi */
