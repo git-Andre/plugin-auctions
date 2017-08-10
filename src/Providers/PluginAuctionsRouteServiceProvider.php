@@ -19,7 +19,7 @@
 //        public function map(Router $router)
         public function map(Router $router, ApiRouter $api)
         {
-            $router -> get('ttt3', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
+            $router -> get('tttt', 'PluginAuctions\Controllers\PluginAuctionsController@getHelloWorldPage');
 
 //            $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction') -> where('id', '\d+');
@@ -34,9 +34,7 @@
 
             /** @var ApiRouter $routerApi TestEbaySdkRouteServiceProvider. */
             $api -> version(['v1'], ['middleware' => ['oauth']], function ($router) {
-                $router -> get('api/auctions/', [
-                    'uses' => 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions'
-                ]);
+                $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
             });
         }
 
