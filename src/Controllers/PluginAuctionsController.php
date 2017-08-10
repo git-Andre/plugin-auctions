@@ -3,27 +3,25 @@
     namespace PluginAuctions\Controllers;
 
     use Plenty\Plugin\Controller;
-    use Plenty\Plugin\Http\Request;
-    use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Contracts\AuctionsRepositoryContract;
+    use Plenty\Plugin\Http\Request;
 
     class PluginAuctionsController extends Controller {
 
         /**
          * @var AuctionsService
          */
-//    private $auctionsService;
-//
-//    public function __construct(AuctionsService $auctionsService)
-//    {
-//        $this->auctionsService = $auctionsService;
-//    }
+        private $auctionsService;
+
+        public function __construct(AuctionsService $auctionsService)
+        {
+            $this -> auctionsService = $auctionsService;
+        }
 
 
         /**
-         * @param Twig $twig
          * @param AuctionsRepositoryContract $auctionRepo
-         * @return string
+         * @return array
          */
         public function getAuctions(AuctionsRepositoryContract $auctionRepo) : array
         {
@@ -74,15 +72,6 @@
             $deleteAuction = $auctionRepo -> deleteAuction($id);
 
             return $deleteAuction;
-        }
-
-        /**
-         * @param Twig $twig
-         * @return string
-         */
-        public function getHelloWorldPage(Twig $twig) : string
-        {
-            return $twig -> render('PluginAuctions::content/Auction');
         }
 
     }
