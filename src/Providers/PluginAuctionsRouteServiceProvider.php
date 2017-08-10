@@ -25,7 +25,7 @@
             $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], // 'middleware' => ['oauth']
                 function ($api) {
                     $api -> delete('api/auction/{id}',
-                        ['uses' => 'PluginAuctionsController@deleteAuction']);
+                        ['uses' => 'AuctionsController@deleteAuction']);
                 });
 
 
