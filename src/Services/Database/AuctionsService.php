@@ -25,7 +25,9 @@
         }
 
 
-//        /**
+        /**
+         * @return array|bool
+         */
         public function getAuctions()
         {
 //            $auctions = array ();
@@ -33,12 +35,6 @@
 
             return $results;
         }
-
-        /**
-         * List an item of the Auction list
-         *
-         * @return Auction[]
-         */
 
         /**
          * @param $auctionId
@@ -71,13 +67,13 @@
                 $auction = pluginApp(Auction_4::class);
 
 
-                $auction -> itemId = $auctionData ['itemId'];
-                $auction -> startDate = $auctionData ['startDate'];
-                $auction -> startHour = $auctionData ['startHour'];
-                $auction -> startMinute = $auctionData ['startMinute'];
-                $auction -> auctionDuration = $auctionData ['auctionDuration'];
-                $auction -> startPrice = $auctionData ['startPrice'];
-                $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+                $auction -> itemId = $newAuction ['itemId'];
+                $auction -> startDate = $newAuction ['startDate'];
+                $auction -> startHour = $newAuction ['startHour'];
+                $auction -> startMinute = $newAuction ['startMinute'];
+                $auction -> auctionDuration = $newAuction ['auctionDuration'];
+                $auction -> startPrice = $newAuction ['startPrice'];
+                $auction -> buyNowPrice = $newAuction ['buyNowPrice'];
 
                 $auction -> createdAt = time();
                 $auction -> updatedAt = $auction -> createdAt;
