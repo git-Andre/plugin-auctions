@@ -24,24 +24,23 @@
 
 
         /**
-         * @return array
+         * @return array|bool
          */
         public function getAuctions()
         {
-            return json_encode($this -> auctionsService -> getAuctions());
+            return $this -> auctionsService -> getAuctions();
         }
 
         /**
          * @param int $auctionId
          * @return bool|mixed|string
          */
-        public function getAuction(int $auctionId)
+        public function getAuction($auctionId)
         {
-            if ($auctionId && $auctionId > 0) return 'keine ID (oder 0)';
+            if ($auctionId && $auctionId > 0)
             {
                 return $this -> auctionsService -> getAuction($auctionId);
             }
-
             return 'keine ID (oder 0)';
         }
 

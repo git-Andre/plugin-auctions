@@ -30,7 +30,6 @@
          */
         public function getAuctions()
         {
-//            $auctions = array ();
             $results = $this -> getValues(Auction_4::class);
 
             return $results;
@@ -109,9 +108,11 @@
                     $auction -> updatedAt = time();
 
                     $this -> setValue($auction);
+
+                    return "ok, Auction Nr.: $id erfolgreich geändert!";
                 }
 
-                return "ok, Auction Nr.: $id erfolgreich geändert!";
+                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
             return json_encode($auction);
