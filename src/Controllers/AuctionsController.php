@@ -80,7 +80,7 @@
                 {
                     return $this -> getAuctions();  // $this->deleteAuction();  // was soll wirklich zurück ???
                 }
-                return 'vom AuctionsService kam nichts';
+                return  $request; //'vom AuctionsService kam nichts';
             }
             return 'keine auctionId';
         }
