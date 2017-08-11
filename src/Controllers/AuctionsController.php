@@ -27,7 +27,7 @@
          * @param AuctionsRepositoryContract $auctionRepo
          * @return array
          */
-        public function getAuctions() : array
+        public function getAuctions() : string// array
         {
 
             $auctions = ['hier', 'kommen', 'die Auktionen hin'];
@@ -80,7 +80,9 @@
                 {
                     return $this -> getAuctions();  // $this->deleteAuction();  // was soll wirklich zurück ???
                 }
+                return 'vom AuctionsService kam nichts';
             }
+            return 'keine auctionId';
         }
 
     }

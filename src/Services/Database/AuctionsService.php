@@ -170,6 +170,6 @@
                 return $this->deleteValue($auctionModel);
             }
 
-            return null;
+            return 'Auctionsservice - Bedingung nicht erfüllt';
         }
     }
