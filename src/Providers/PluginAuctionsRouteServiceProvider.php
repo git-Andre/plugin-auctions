@@ -33,7 +33,7 @@
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@getAuction') -> where('id', '\d+');
             $router -> post('api/auction', 'PluginAuctions\Controllers\PluginAuctionsController@createAuction');
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@updateAuction') -> where('id', '\d+');
-            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\PluginAuctionsController@deleteAuction') -> where('id', '\d+');
+            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
 
             /** @var ApiRouter $routerApi TestEbaySdkRouteServiceProvider. */
