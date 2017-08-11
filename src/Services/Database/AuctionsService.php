@@ -39,11 +39,11 @@
          * @param $auctionId
          * @return bool|mixed|string
          */
-        public function getAuction($auctionId)
+        public function getAuction($id)
         {
-            if ($auctionId > 0)
+            if ($id > 0)
             {
-                $auction = $this -> getValue(Auction_4::class, $auctionId);
+                $auction = $this -> getValue(Auction_4::class, $id);
                 if ($auction instanceof Auction_4)
                 {
                     return $auction;

@@ -85,13 +85,13 @@
             {
                 if ($this -> auctionsService -> deleteAuction($id))
                 {
-                    return 'ok, hier könnte aber noch etwas zurück kommen...';  //$this -> getAuctions();  // was soll wirklich zurück ???
+                    return 'ok';  //$this -> getAuctions();  // was soll wirklich zurück ???
                 }
 
                 return 'vom AuctionsService kam nichts';
             }
 
-            return 'keine auctionId';
+            return 'keine Id';
         }
 
     }

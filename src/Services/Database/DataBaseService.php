@@ -26,11 +26,8 @@ class DataBaseService
     }
 
     /**
-     * Set the settings value
-     *
      * @param Model $model
-     *
-     * @return bool
+     * @return bool|Model
      */
     protected function setValue(Model $model)
     {
@@ -43,8 +40,7 @@ class DataBaseService
 
     /**
      * Delete the give model from the database
-     *
-     * @param Model $model
+     * @param $model
      * @return bool
      */
     public function deleteValue($model)

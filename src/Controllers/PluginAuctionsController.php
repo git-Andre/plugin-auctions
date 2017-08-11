@@ -8,16 +8,6 @@
 
     class PluginAuctionsController extends Controller {
 
-        /**
-         * @var AuctionsService
-         */
-//    private $auctionsService;
-//
-//    public function __construct(AuctionsService $auctionsService)
-//    {
-//        $this->auctionsService = $auctionsService;
-//    }
-
 
         /**
          * @param Twig $twig
