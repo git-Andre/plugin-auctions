@@ -72,7 +72,7 @@
         public function deleteAuction(Request $request)
         {
 
-            $auctionId = $request -> get(all());
+            $auctionId = $request -> all();
 
             if ($auctionId)
             {
