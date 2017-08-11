@@ -37,10 +37,9 @@
          */
         public function getAuction($id)
         {
-            return $id;
             if ($id && $id > 0)
             {
-                json_encode($this -> auctionsService -> getAuction($id));
+                return json_encode($this -> auctionsService -> getAuction($id));
             }
             return 'keine ID (oder 0)';
         }
