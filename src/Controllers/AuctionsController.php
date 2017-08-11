@@ -59,10 +59,10 @@
          * @param Request $request
          * @return \PluginAuctions\Services\Database\Auction[]
          */
-        public function updateAuction(Request $request)
+        public function updateAuction(int $id, Request $request)
         {
-            $updateAuction = $request -> all();
-               return $this -> auctionsService -> updateAuction($updateAuction);
+            $auctionData = $request -> all();
+               return $this -> auctionsService -> updateAuction($auctionData);
         }
 
         /**

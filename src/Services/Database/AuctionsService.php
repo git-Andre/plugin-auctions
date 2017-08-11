@@ -3,6 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+    use Plenty\Plugin\Http\Request;
     use PluginAuctions\Models\Auction_4;
 
     //    use Illuminate\Support\Facades\App;
@@ -112,12 +113,12 @@
 //         * @param int $id
 //         * @return Auction
 //         */
-        public function updateAuction(int $id, Request $request)
+        public function updateAuction($id, $auctionData)
         {//
 //            $auction = pluginApp(Auction_4::class);
 //            $auction = $updateAuction;
 
-            $auctionData = $request -> all();
+//            $auctionData = $$updateAuction;
 
             if ($auctionData)
             {
@@ -138,6 +139,7 @@
 
                     $this -> setValue($auction);
                 }
+
                 return json_encode($auction);
             }
 
