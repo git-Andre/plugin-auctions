@@ -72,7 +72,7 @@
         public function deleteAuction(Request $request)
         {
 
-            $auctionId = $request -> get('id');
+            $auctionId = $request -> get(all());
 
             if ($auctionId)
             {
@@ -80,9 +80,9 @@
                 {
                     return $this -> getAuctions();  // $this->deleteAuction();  // was soll wirklich zurück ???
                 }
-                return  $request; //'vom AuctionsService kam nichts';
+                return  'vom AuctionsService kam nichts';
             }
-            return 'keine auctionId';
+            return $request; //'keine auctionId';
         }
 
     }
