@@ -2,6 +2,7 @@
 
     namespace PluginAuctions\Controllers;
 
+    use PluginAuctions\Services\Database\AuctionsServices;
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
 

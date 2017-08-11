@@ -9,13 +9,13 @@
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
 
 
-    class AuctionService extends DataBaseService {
+    class AuctionsServices extends DataBaseService {
 
 
         protected $tableName = 'auctions';
 
         /**
-         * AuctionService constructor.
+         * AuctionsServices constructor.
          * @param DataBase $dataBase
          */
 
