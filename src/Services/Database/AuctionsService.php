@@ -3,6 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use PluginAuctions\Models\Auction_4;
+
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
 
 //    use Illuminate\Support\Facades\App;
@@ -159,12 +160,12 @@
          * @param int $id
          * @return bool | null
          */
-        public function deleteAuction($id)
+        public function deleteAuction($auctionId)
         {
-            if ($id && $id > 0) {
+            if ($auctionId && $auctionId > 0) {
                 /* @var Auction $auctionModel */
                 $auctionModel = pluginApp(Auction_4::class);
-                $auctionModel -> id = $id;
+                $auctionModel -> id = $auctionId;
 
                 return $this->deleteValue($auctionModel);
             }

@@ -7,7 +7,7 @@
      */
 
 
-namespace PluginAuctions\Services\AuctionsService;
+namespace PluginAuctions\Services\Database;
 
 use PluginAuctions\Models\Auction_4;
 use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
