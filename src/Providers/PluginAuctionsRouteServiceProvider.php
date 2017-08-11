@@ -13,13 +13,9 @@
     class PluginAuctionsRouteServiceProvider extends RouteServiceProvider {
 
         /**
+         * @param Router $router
          * @param ApiRouter $api
          */
-
-//    $api->version(['v1'], ['namespace' => 'IO\Api\Resources'], function ($api)
-//        $api->get('io/basket', 'BasketResource@index');
-
-//        public function map(Router $router)
         public function map(Router $router, ApiRouter $api)
         {
             $api -> version([''], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'outh'], // 'middleware' => ['oauth']
