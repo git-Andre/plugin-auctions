@@ -114,12 +114,7 @@
 //         * @return Auction
 //         */
         public function updateAuction($id, $auctionData)
-        {//
-//            $auction = pluginApp(Auction_4::class);
-//            $auction = $updateAuction;
-
-//            $auctionData = $$updateAuction;
-
+        {
             if ($auctionData)
             {
                 $auction = $this -> getValue(Auction_4::class, $id);

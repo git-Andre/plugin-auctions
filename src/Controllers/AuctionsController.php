@@ -62,7 +62,7 @@
         public function updateAuction(int $id, Request $request)
         {
             $auctionData = $request -> all();
-               return $this -> auctionsService -> updateAuction($auctionData);
+               return $this -> auctionsService -> updateAuction($id, $auctionData);
         }
 
         /**
