@@ -72,11 +72,11 @@
         public function deleteAuction(Request $request)
         {
 
-            $auctionId = $request -> all();
+            $auction = $request -> all();
 
-            if ($auctionId)
+            if ($auction->id)
             {
-                if ($this -> auctionsService -> deleteAuction($auctionId))
+                if ($this -> auctionsService -> deleteAuction($auction->id))
                 {
                     return $this -> getAuctions();  // $this->deleteAuction();  // was soll wirklich zurück ???
                 }
