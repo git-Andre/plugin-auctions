@@ -22,10 +22,10 @@
 //        public function map(Router $router)
         public function map(Router $router, ApiRouter $api)
         {
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], // 'middleware' => ['oauth']
+            $api -> version([''], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'outh'], // 'middleware' => ['oauth']
                 function ($api) {
                     $api -> delete('api/auction/{id}', ['uses' => 'AuctionsController@deleteAuction']);
-                    $api -> get('api/auctions', ['uses' => 'AuctionsController@getAuctions']);
+                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
                 });
 
 
