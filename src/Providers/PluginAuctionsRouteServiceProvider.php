@@ -22,18 +22,18 @@
 //        public function map(Router $router)
         public function map(Router $router, ApiRouter $api)
         {
-//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], // 'middleware' => ['oauth']
-//                function ($api) {
-//                    $api -> delete('api/auction/{id}',
-//                        ['uses' => 'AuctionsController@deleteAuction']);
-//                });
+            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], // 'middleware' => ['oauth']
+                function ($api) {
+                    $api -> delete('api/auction/{id}', ['uses' => 'AuctionsController@deleteAuction']);
+                    $api -> get('api/auctions', ['uses' => 'AuctionsController@getAuctions']);
+                });
 
 
-            $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
+//            $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction') -> where('id', '\d+');
             $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
-            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
+//            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
 
             /** @var ApiRouter $routerApi TestEbaySdkRouteServiceProvider. */
