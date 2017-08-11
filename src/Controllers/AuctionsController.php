@@ -55,19 +55,19 @@
 //            return $newAuction;
 //        }
 //
-//        /**
-//         * @param int $id
-//         * @param AuctionRepositoryContract $auctionRepo
-//         * @return string
-//         */
-//        public function updateAuction(int $id, Request $request, AuctionsRepositoryContract $auctionRepo) : string
-//        {
-//            $updateAuction = $auctionRepo -> updateAuction($id, $request -> all());
-//
-//            return $updateAuction;
-//        }
+        /**
+         * @param Request $request
+         * @return \PluginAuctions\Services\Database\Auction[]
+         */
+        public function updateAuction(Request $request)
+        {
+            $updateAuction = $request -> all();
+               return $this -> auctionsService -> updateAuction($updateAuction);
+        }
 
         /**
+         * @param $auctionId
+         * @return string
          */
         public function deleteAuction($auctionId)
         {
@@ -76,11 +76,11 @@
             {
                 if ($this -> auctionsService -> deleteAuction($auctionId))
                 {
-                    return $this -> getAuctions();  // $this->deleteAuction();  // was soll wirklich zurück ???
+                    return 'ok, hier könnte aber noch etwas zurück kommen...';  //$this -> getAuctions();  // was soll wirklich zurück ???
                 }
                 return  'vom AuctionsService kam nichts';
             }
-            return $request; //'keine auctionId';
+            return 'keine auctionId';
         }
 
     }
