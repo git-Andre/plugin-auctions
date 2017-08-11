@@ -39,7 +39,7 @@
         {
             if ($auctionId && $auctionId > 0)
             {
-                return $this -> auctionsService -> getAuction($auctionId);
+                json_encode($this -> auctionsService -> getAuction($auctionId));
             }
             return 'keine ID (oder 0)';
         }
