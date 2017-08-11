@@ -35,11 +35,12 @@
          * @param int $auctionId
          * @return bool|mixed|string
          */
-        public function getAuction($auctionId)
+        public function getAuction($id)
         {
-            if ($auctionId && $auctionId > 0)
+            return $id;
+            if ($id && $id > 0)
             {
-                json_encode($this -> auctionsService -> getAuction($auctionId));
+                json_encode($this -> auctionsService -> getAuction($id));
             }
             return 'keine ID (oder 0)';
         }
@@ -78,12 +79,12 @@
          * @param $auctionId
          * @return string
          */
-        public function deleteAuction($auctionId)
+        public function deleteAuction($id)
         {
 
-            if ($auctionId)
+            if ($id)
             {
-                if ($this -> auctionsService -> deleteAuction($auctionId))
+                if ($this -> auctionsService -> deleteAuction($id))
                 {
                     return 'ok, hier könnte aber noch etwas zurück kommen...';  //$this -> getAuctions();  // was soll wirklich zurück ???
                 }
