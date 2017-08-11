@@ -71,7 +71,9 @@
          */
         public function deleteAuction(Request $request)
         {
+
             $auctionId = $request -> get('id');
+
             if ($auctionId)
             {
                 if ($this -> auctionsService -> deleteAuction($auctionId))
