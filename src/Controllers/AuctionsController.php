@@ -27,7 +27,7 @@
          * @param AuctionsRepositoryContract $auctionRepo
          * @return array
          */
-        public function getAuctions() : string// array
+        public function getAuctions() :  array
         {
 
             $auctions = ['hier', 'kommen', 'die Auktionen hin'];
