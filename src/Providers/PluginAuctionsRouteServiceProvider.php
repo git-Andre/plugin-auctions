@@ -32,10 +32,6 @@
 //            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
 
-            /** @var ApiRouter $routerApi TestEbaySdkRouteServiceProvider. */
-//            $api -> version(['v1'], ['middleware' => ['oauth']], function ($router) {
-//                $router->get('api/auctions', 'PluginAuctions\Controllers\PluginAuctionsController@getAuctions');
-//            });
         }
 
     }
