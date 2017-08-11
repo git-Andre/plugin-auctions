@@ -3,7 +3,6 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use Plenty\Plugin\Http\Request;
     use PluginAuctions\Models\Auction_4;
 
     //    use Illuminate\Support\Facades\App;
@@ -26,93 +25,74 @@
         }
 
 
+//        /**
+        public function getAuctions()
+        {
+//            $auctions = array ();
+            $results = $this -> getValues(Auction_4::class);
+
+            return $results;
+        }
+
         /**
-         * List all items of the Auction list
+         * List an item of the Auction list
          *
          * @return Auction[]
          */
-//        public function getAuctions() : array
-//        {
-//
-//            $database = pluginApp(DataBase::class);
-//
-//            /**
-//             * @var Auction[] $auctionList
-//             */
-//            $auctionList = $database
-//                -> query(Auction_4::class)
-//                -> get();
-//
-//            return $auctionList;
-//        }
-//
-//        /**
-//         * List an item of the Auction list
-//         *
-//         * @return Auction[]
-//         */
-//        public function getAuction($id) : array
-//        {
-//            /**
-//             * @var DataBase $database
-//             */
-//            $database = pluginApp(DataBase::class);
-//
-//            $auctionList = $database -> query(Auction_4::class)
-//                -> where('id', '=', $id)
-//                -> get();
-//
-////            $auction = $auctionList[0];
-//
-//            return $auctionList;
-//        }
-//
-//
-//        /**
-//         * Add a new item to the Auction list
-//         *
-//         * @param array $data
-//         * @return Auction
-//         * @throws ValidationException ToDo:
-//         */
-//        public function createAuction(array $auctionData) : string
-//        {
-//            /**
-//             * @var DataBase $database
-//             */
-//            $database = pluginApp(DataBase::class);
-//
-//            $auction = pluginApp(Auction_4::class);
-//
-//            $auction -> itemId = $auctionData ['itemId'];
-//            $auction -> startDate = $auctionData ['startDate'];
-//            $auction -> startHour = $auctionData ['startHour'];
-//            $auction -> startMinute = $auctionData ['startMinute'];
-//            $auction -> auctionDuration = $auctionData ['auctionDuration'];
-//            $auction -> startPrice = $auctionData ['startPrice'];
-//            $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
-//
-//            $auction -> createdAt = time();
-//            $auction -> updatedAt = $auction -> createdAt;
-//
-//
-//            try {
-//                $database -> save($auction);
-//            } catch ( \Exception $e ) {
-//                echo $e -> getMessage();
-//
-//                return json_encode($auction);
-//            }
-//
-//            return "Auction erfolgreich angelegt!";
-//        }
-//
-//        /**
-//         * Update the status of the item
-//         *
-//         * @param int $id
-//         * @return Auction
-//         */
+
+        /**
+         * @param $auctionId
+         * @return bool|mixed|string
+         */
+        public function getAuction($auctionId)
+        {
+            if ($auctionId > 0)
+            {
+                $auction = $this -> getValue(Auction_4::class, $auctionId);
+                if ($auction instanceof Auction_4)
+                {
+                    return $auction;
+                }
+            }
+
+            return 'falsche ID';
+        }
+
+
+        /**
+         * @param $newAuction
+         * @return bool|string
+         */
+        public function createAuction($newAuction)
+        {
+            if ($newAuction)
+            {
+
+                $auction = pluginApp(Auction_4::class);
+
+
+                $auction -> itemId = $auctionData ['itemId'];
+                $auction -> startDate = $auctionData ['startDate'];
+                $auction -> startHour = $auctionData ['startHour'];
+                $auction -> startMinute = $auctionData ['startMinute'];
+                $auction -> auctionDuration = $auctionData ['auctionDuration'];
+                $auction -> startPrice = $auctionData ['startPrice'];
+                $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+
+                $auction -> createdAt = time();
+                $auction -> updatedAt = $auction -> createdAt;
+
+                return $this -> setValue($auction);
+            }
+
+            return 'Fehler bei der Neuanlage...';
+        }
+
+        /**
+         * @param $id
+         * @param $auctionData
+         * @return string
+         */
         public function updateAuction($id, $auctionData)
         {
             if ($auctionData)
@@ -135,18 +115,17 @@
                     $this -> setValue($auction);
                 }
 
-                return json_encode($auction);
+                return "ok, Auction Nr.: $id erfolgreich geändert!";
             }
 
-            return 'keine richtigen Daten'; // "Auction Nr.: $id erfolgreich geändert!";
+            return json_encode($auction);
+
         }
 
 
         /**
-         * Delete an item from the Auction list
-         *
-         * @param int $id
-         * @return bool | null
+         * @param $auctionId
+         * @return bool|string
          */
         public function deleteAuction($auctionId)
         {

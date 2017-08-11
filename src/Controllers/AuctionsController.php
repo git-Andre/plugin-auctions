@@ -2,9 +2,9 @@
 
     namespace PluginAuctions\Controllers;
 
-    use PluginAuctions\Services\Database\AuctionsService;
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
+    use PluginAuctions\Services\Database\AuctionsService;
 
     class AuctionsController extends Controller {
 
@@ -24,37 +24,46 @@
 
 
         /**
-         * @param AuctionsRepositoryContract $auctionRepo
          * @return array
          */
-        public function getAuctions() :  array
+        public function getAuctions()
         {
-
-            $auctions = ['hier', 'kommen', 'die Auktionen hin'];
-
-            return $auctions;
-
+            return json_encode($this -> auctionsService -> getAuctions());
         }
 
-//        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
-//        {
-//            $getAuction = $auctionRepo -> getAuction($id);
-//
-//            return $getAuction;
-//        }
-//
-//        /**
-//         * @param  \Plenty\Plugin\Http\Request $request
-//         * @param AuctionRepositoryContract $auctionRepo
-//         * @return string
-//         */
-//        public function createAuction(Request $request, AuctionsRepositoryContract $auctionRepo) : string
-//        {
-//            $newAuction = $auctionRepo -> createAuction($request -> all());
-//
-//            return $newAuction;
-//        }
-//
+        /**
+         * @param int $auctionId
+         * @return bool|mixed|string
+         */
+        public function getAuction(int $auctionId)
+        {
+            if ($auctionId && $auctionId > 0) return 'keine ID (oder 0)';
+            {
+                return $this -> auctionsService -> getAuction($auctionId);
+            }
+
+            return 'keine ID (oder 0)';
+        }
+
+        /**
+         * @param Request $request
+         * @return string
+         */
+        public function createAuction(Request $request)
+        {
+            $newAuction = $request -> all();
+
+            if ($newAuction)
+            {
+                if ($this -> auctionsService -> createAuction($newAuction))
+                {
+                    return 'ok';
+                }
+            }
+
+            return 'Fehler beim Request';
+        }
+
         /**
          * @param Request $request
          * @return \PluginAuctions\Services\Database\Auction[]
@@ -62,7 +71,8 @@
         public function updateAuction(int $id, Request $request)
         {
             $auctionData = $request -> all();
-               return $this -> auctionsService -> updateAuction($id, $auctionData);
+
+            return $this -> auctionsService -> updateAuction($id, $auctionData);
         }
 
         /**
@@ -78,8 +88,10 @@
                 {
                     return 'ok, hier könnte aber noch etwas zurück kommen...';  //$this -> getAuctions();  // was soll wirklich zurück ???
                 }
-                return  'vom AuctionsService kam nichts';
+
+                return 'vom AuctionsService kam nichts';
             }
+
             return 'keine auctionId';
         }
 
