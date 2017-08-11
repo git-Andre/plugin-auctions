@@ -22,19 +22,20 @@
             $this -> auctionsService = $auctionsService;
         }
 
-//
-//        /**
-//         * @param AuctionsRepositoryContract $auctionRepo
-//         * @return array
-//         */
-//        public function getAuctions(AuctionsRepositoryContract $auctionRepo) : array
-//        {
-//            $auctionList = $auctionRepo -> getAuctions();
-//
-//            return $auctionList;
-//
-//        }
-//
+
+        /**
+         * @param AuctionsRepositoryContract $auctionRepo
+         * @return array
+         */
+        public function getAuctions() : array
+        {
+
+            $auctions = ['hier', 'kommen', 'die Auktionen hin'];
+
+            return $auctions;
+
+        }
+
 //        public function getAuction(int $id, AuctionsRepositoryContract $auctionRepo) : array
 //        {
 //            $getAuction = $auctionRepo -> getAuction($id);
