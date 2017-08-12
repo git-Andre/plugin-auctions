@@ -20,16 +20,18 @@
         {
             $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'outh'], // 'middleware' => ['oauth']
                 function ($api) {
-                    $api -> delete('api/auction/{id}', ['uses' => 'AuctionsController@deleteAuction']);
 //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
+//                    $api -> get('api/auction/{id}', ['uses' => '\AuctionsController@getAuction']);
                     $api -> post('api/auction', ['uses' => '\AuctionsController@createAuction']);
+                    $api -> put('api/auction/{id}', ['uses' => '\AuctionsController@updateAuction']);
+                    $api -> delete('api/auction/{id}', ['uses' => 'AuctionsController@deleteAuction']);
                 });
 
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction') -> where('id', '\d+');
-            $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
-            $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
+//            $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
+//            $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
 //            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
 
