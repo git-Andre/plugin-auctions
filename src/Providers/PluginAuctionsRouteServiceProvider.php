@@ -24,7 +24,7 @@
 //                    $api -> get('api/auction/{id}', ['uses' => '\AuctionsController@getAuction']);
 //                    $api -> post('api/auction', ['uses' => '\AuctionsController@createAuction']);
 //                    $api -> put('api/auction/{id}', ['uses' => '\AuctionsController@updateAuction']);
-                    $api -> delete('api/auction/{id}', 'AuctionsController@deleteAuction');
+                    $api -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction');
                 });
 
 
