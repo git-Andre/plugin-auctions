@@ -65,7 +65,7 @@ class DataBaseService
 
         if($result)
         {
-            return $result;
+            return $result[0];
         }
         return false;
     }
