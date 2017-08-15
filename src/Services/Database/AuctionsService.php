@@ -35,6 +35,21 @@
             return $results;
         }
 
+        public function getAuctionForItemId($itemId)
+        {
+            if ($itemId > 0)
+            {
+                $auction = $this -> getValues(Auction_4::class, [$itemId], [$itemId]);
+                if ($auction instanceof Auction_4)
+                {
+                    return $auction;
+                }
+            }
+
+            return 'ist die itemId richtig?';
+        }
+
+
         /**
          * @param $auctionId
          * @return bool|mixed|string
@@ -52,21 +67,6 @@
 
             return 'falsche ID';
         }
-
-        public function getAuctionForItemId($itemId)
-        {
-            if ($itemId > 0)
-            {
-                $auction = $this -> getValue(Auction_4::class, $itemId);
-                if ($auction instanceof Auction_4)
-                {
-                    return $auction;
-                }
-            }
-
-            return 'ist die itemId richtig?';
-        }
-
 
         /**
          * @param $newAuction
