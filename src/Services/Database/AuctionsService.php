@@ -53,11 +53,11 @@
             return 'falsche ID';
         }
 
-        public function getAuctionForItemId($ItemId)
+        public function getAuctionForItemId($itemId)
         {
-            if ($ItemId > 0)
+            if ($itemId > 0)
             {
-                $auction = $this -> getValue(Auction_4::class, $ItemId);
+                $auction = $this -> getValue(Auction_4::class, $itemId);
                 if ($auction instanceof Auction_4)
                 {
                     return $auction;
