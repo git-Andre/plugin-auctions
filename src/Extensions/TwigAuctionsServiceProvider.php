@@ -2,6 +2,8 @@
 
 namespace PluginAuctions\Extensions;
 
+
+
 use Plenty\Plugin\Templates\Extensions\Twig_Extension;
 use PluginAuctions\Services\Database\AuctionsService;
 
