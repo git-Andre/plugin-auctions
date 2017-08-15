@@ -39,7 +39,7 @@
         {
             if ($itemId > 0)
             {
-                $auction = $this -> getValues(Auction_4::class, [$itemId], [$itemId]);
+                $auction = $this -> getValues(Auction_4::class, ['$itemId'], [$itemId]);
                 if ($auction instanceof Auction_4)
                 {
                     return $auction;
