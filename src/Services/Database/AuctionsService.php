@@ -39,10 +39,10 @@
         {
             if ($itemId > 0)
             {
-                $auction = $this -> getValues(Auction_4::class, ['itemId'], [$itemId]);
-                if ($auction)
+                $auction[] = $this -> getValues(Auction_4::class, ['itemId'], [$itemId]);
+                if ($auction[0])
                 {
-                    return $auction;
+                    return $auction[0];
                 }
             }
 
