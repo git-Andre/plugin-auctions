@@ -53,6 +53,20 @@
             return 'falsche ID';
         }
 
+        public function getAuctionForItemId($ItemId)
+        {
+            if ($ItemId > 0)
+            {
+                $auction = $this -> getValue(Auction_4::class, $ItemId);
+                if ($auction instanceof Auction_4)
+                {
+                    return $auction;
+                }
+            }
+
+            return 'ist die itemId richtig?';
+        }
+
 
         /**
          * @param $newAuction
