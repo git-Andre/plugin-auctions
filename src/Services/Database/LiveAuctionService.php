@@ -80,13 +80,13 @@
                 $liveAuction = pluginApp(LiveAuction_1::class);
 
 
-                $liveAuction -> itemId = $newAuction ['itemId'];
-                $liveAuction -> auctionId = $newAuction ['auctionId'];
+                $liveAuction -> itemId = $newLiveAuction ['itemId'];
+                $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
 
 
-                $liveAuction -> isEnded = $newAuction ['isEnded'];
-                $liveAuction -> isLive = $newAuction ['isLive'];
-                $liveAuction -> isEndedWithBuyNow = $newAuction ['isEndedWithBuyNow'];
+                $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
+                $liveAuction -> isLive = $newLiveAuction ['isLive'];
+                $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
 
 
 

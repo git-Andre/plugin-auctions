@@ -12,6 +12,7 @@
     use Plenty\Plugin\Templates\Twig;
 
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
+    use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
 
 
     /**
