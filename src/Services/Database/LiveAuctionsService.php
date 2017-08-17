@@ -3,8 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use PluginAuctions\Models\LiveAuction_2;
-    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
+    use PluginAuctions\Models\LiveAuction_3;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -31,9 +30,15 @@
          */
         public function getLiveAuctions()
         {
-            $results = $this -> getValues(LiveAuction_2::class);
+            $results = $this -> getValues(LiveAuction_3::class);
 
-            return $results;
+            if ($results)
+            {
+
+                return $results;
+            }
+
+            return 'results in getLiveAuctions = false';
         }
 
 //        public function getAuctionForItemId($itemId)
@@ -78,7 +83,7 @@
 //            if ($newLiveAuction)
 //            {
 //
-//                $liveAuction = pluginApp(LiveAuction_2::class);
+//                $liveAuction = pluginApp(LiveAuction_3::class);
 //
 //
 //                $liveAuction -> itemId = $newLiveAuction ['itemId'];

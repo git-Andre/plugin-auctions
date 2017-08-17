@@ -18,7 +18,6 @@
      * @property float $startPrice
      * @property float $buyNowPrice
      */
-
     class Auction_4 extends Model {
 
         /**
@@ -35,11 +34,11 @@
         public $startPrice = 1.99;
         public $buyNowPrice = 3.10;
 
-    /**
-     * @return string
-     */
-    public function getTableName() : string
-    {
-        return 'PluginAuctions::Auction_4';
+        /**
+         * @return string
+         */
+        public function getTableName() : string
+        {
+            return 'PluginAuctions::Auction_4';
+        }
     }
-}
