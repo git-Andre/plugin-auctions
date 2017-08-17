@@ -28,6 +28,7 @@
          */
         public function getLiveAuctions()
         {
+//            return 'Hallo André';
             return $this -> liveAuctionsService -> getLiveAuctions();
         }
 
