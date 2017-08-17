@@ -7,10 +7,10 @@
 //    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
 
     /**
-     * Class LiveAuction_5
+     * Class LiveAuction_51
      * @package PluginAuctions\Models
      */
-    class LiveAuction_5 extends Model {
+    class LiveAuction_51 extends Model {
 
         /**
          * @var int
@@ -33,6 +33,6 @@
          */
         public function getTableName() : string
         {
-            return 'PluginAuctions::LiveAuction_5';
+            return 'PluginAuctions::LiveAuction_51';
         }
     }
