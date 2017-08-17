@@ -56,7 +56,7 @@
 
             if ($newLiveAuction)
             {
-                if ($this -> liveAuctionsService -> createAuction($newLiveAuction))
+                if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
                 {
                     return 'ok';
                 }
