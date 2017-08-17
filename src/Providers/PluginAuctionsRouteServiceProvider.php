@@ -36,6 +36,7 @@
 
 
             $router -> get('api/liveauctions', 'PluginAuctions\Controllers\LiveAuctionsController@getLiveAuctions');
+
             $router -> post('api/liveauction', 'PluginAuctions\Controllers\LiveAuctionsController@createLiveAuction');
         }
 

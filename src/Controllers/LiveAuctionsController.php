@@ -9,13 +9,13 @@
     class LiveAuctionsController extends Controller {
 
         /**
-         * @var AuctionsService
+         * @var LiveAuctionsService
          */
         private $liveAuctionsService;
 
         /**
-         * AuctionsController constructor.
-         * @param AuctionsService $liveAuctionsService
+         * LiveAuctionsController constructor.
+         * @param LiveAuctionsService $liveAuctionsService
          */
         public function __construct(LiveAuctionsService $liveAuctionsService)
         {
