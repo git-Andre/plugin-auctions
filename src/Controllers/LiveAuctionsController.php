@@ -50,7 +50,7 @@
          * @param Request $request
          * @return string
          */
-        public function createAuction(Request $request)
+        public function createLiveAuction(Request $request)
         {
             $newLiveAuction = $request -> all();
 
