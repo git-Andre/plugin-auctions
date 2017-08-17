@@ -58,7 +58,8 @@
             {
                 if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
                 {
-                    return 'ok';
+//                    return 'ok';
+                    return $newLiveAuction;
                 }
             }
 
