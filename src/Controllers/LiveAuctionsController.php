@@ -28,8 +28,8 @@
          */
         public function getLiveAuctions()
         {
-//            return 'Hallo André';
-            return $this -> liveAuctionsService -> getLiveAuctions();
+            return 'Hallo André';
+//            return $this -> liveAuctionsService -> getLiveAuctions();
         }
 
 //        /**
