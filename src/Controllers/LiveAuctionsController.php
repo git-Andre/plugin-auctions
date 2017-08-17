@@ -29,8 +29,8 @@
         public function getLiveAuctions()
         {
 //            return 'Hallo André';
-            return json_encode('hallo meen Kleener...');
-//            return $this -> liveAuctionsService -> getLiveAuctions();
+//            return json_encode('hallo meen Kleener...');
+            return $this -> liveAuctionsService -> getLiveAuctions();
         }
 
 //        /**
