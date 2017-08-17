@@ -78,33 +78,33 @@
          * @param $newAuction
          * @return bool|string
          */
-//        public function createLiveAuction($newLiveAuction)
-//        {
-//            if ($newLiveAuction)
-//            {
-//
-//                $liveAuction = pluginApp(LiveAuction_5::class);
-//
-//
-//                $liveAuction -> itemId = $newLiveAuction ['itemId'];
-//                $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
-//
+        public function createLiveAuction($newLiveAuction)
+        {
+            if ($newLiveAuction)
+            {
+
+                $liveAuction = pluginApp(LiveAuction_5::class);
+
+
+                $liveAuction -> itemId = $newLiveAuction ['itemId'];
+                $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
+
 //                $liveAuction -> $bidderList = $newLiveAuction ['bidderList'];
-//
-//                $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
-//                $liveAuction -> isLive = $newLiveAuction ['isLive'];
-//                $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
-//
-//
-//
-//
-//                $liveAuction -> createdAt = time();
-//
-//                return $this -> setValue($liveAuction);
-//            }
-//
-//            return 'Fehler bei der Neuanlage der LiveAuction...';
-//        }
+
+                $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
+                $liveAuction -> isLive = $newLiveAuction ['isLive'];
+                $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
+
+
+
+
+                $liveAuction -> createdAt = time();
+
+                return $this -> setValue($liveAuction);
+            }
+
+            return 'Fehler bei der Neuanlage der LiveAuction...';
+        }
 
 //        /**
 //         * @param $id

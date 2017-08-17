@@ -46,25 +46,25 @@
 //            return 'keine ID (oder 0)';
 //        }
 //
-//        /**
-//         * @param Request $request
-//         * @return string
-//         */
-//        public function createAuction(Request $request)
-//        {
-//            $newLiveAuction = $request -> all();
-//
-//            if ($newLiveAuction)
-//            {
-//                if ($this -> liveAuctionsService -> createAuction($newLiveAuction))
-//                {
-//                    return 'ok';
-//                }
-//            }
-//
-//            return 'Fehler beim Request';
-//        }
-//
+        /**
+         * @param Request $request
+         * @return string
+         */
+        public function createAuction(Request $request)
+        {
+            $newLiveAuction = $request -> all();
+
+            if ($newLiveAuction)
+            {
+                if ($this -> liveAuctionsService -> createAuction($newLiveAuction))
+                {
+                    return 'ok';
+                }
+            }
+
+            return 'Fehler beim Request';
+        }
+
 //        /**
 //         * @param Request $request
 //         * @return \PluginAuctions\Services\Database\Auction[]
