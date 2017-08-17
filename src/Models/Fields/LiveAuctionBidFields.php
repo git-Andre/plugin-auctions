@@ -8,7 +8,7 @@
      */
     class LiveAuctionBidFields {
 
-        const CUSTOMER_ID = "customerId";
+        const CUSTOMER_EMAIL = "customerEmail";
         const BID_PRICE = "bidPrice";
         const BID_TIMESTAMP = "bidTimeStamp";
     }

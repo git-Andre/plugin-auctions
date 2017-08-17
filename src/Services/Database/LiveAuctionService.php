@@ -4,6 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\LiveAuction_1;
+    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -15,7 +16,7 @@
         protected $tableName = 'liveAuctions';
 
         /**
-         * AuctionsService constructor.
+         * LiveAuctionsService constructor.
          * @param DataBase $dataBase
          */
 
@@ -24,17 +25,17 @@
             parent ::__construct($dataBase);
         }
 
-//
-//        /**
-//         * @return array|bool
-//         */
-//        public function getAuctions()
-//        {
-//            $results = $this -> getValues(Auction_4::class);
-//
-//            return $results;
-//        }
-//
+
+        /**
+         * @return array|bool
+         */
+        public function getLiveAuctions()
+        {
+            $results = $this -> getValues(LiveAuction_1::class);
+
+            return $results;
+        }
+
 //        public function getAuctionForItemId($itemId)
 //        {
 //            if ($itemId > 0)
@@ -48,8 +49,8 @@
 //
 //            return 'ist die itemId richtig?';
 //        }
-//
-//
+
+
 //        /**
 //         * @param $auctionId
 //         * @return bool|mixed|string
@@ -83,6 +84,7 @@
                 $liveAuction -> itemId = $newLiveAuction ['itemId'];
                 $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
 
+                $liveAuction -> $bidderList = $newLiveAuction ['bidderList'];
 
                 $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
                 $liveAuction -> isLive = $newLiveAuction ['isLive'];

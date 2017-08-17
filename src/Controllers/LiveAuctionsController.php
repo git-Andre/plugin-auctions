@@ -7,30 +7,30 @@
     use PluginAuctions\Services\Database\LiveAuctionsService;
 
     class LiveAuctionsController extends Controller {
-//
-//        /**
-//         * @var AuctionsService
-//         */
-//        private $liveAuctionsService;
-//
-//        /**
-//         * AuctionsController constructor.
-//         * @param AuctionsService $liveAuctionsService
-//         */
-//        public function __construct(LiveAuctionsService $liveAuctionsService)
-//        {
-//            $this -> liveAuctionsService = $liveAuctionsService;
-//        }
-//
-//
-//        /**
-//         * @return array|bool
-//         */
-//        public function getAuctions()
-//        {
-//            return $this -> liveAuctionsService -> getAuctions();
-//        }
-//
+
+        /**
+         * @var AuctionsService
+         */
+        private $liveAuctionsService;
+
+        /**
+         * AuctionsController constructor.
+         * @param AuctionsService $liveAuctionsService
+         */
+        public function __construct(LiveAuctionsService $liveAuctionsService)
+        {
+            $this -> liveAuctionsService = $liveAuctionsService;
+        }
+
+
+        /**
+         * @return array|bool
+         */
+        public function getLiveAuctions()
+        {
+            return $this -> liveAuctionsService -> getLiveAuctions();
+        }
+
 //        /**
 //         * @param int $auctionId
 //         * @return bool|mixed|string

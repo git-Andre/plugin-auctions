@@ -17,11 +17,11 @@
          */
         public function run(Migrate $migrate)
         {
-            try {
-                $migrate -> deleteTable(Auction_4::class);
-            } catch ( \Exception $e ) {
-                echo $e -> getMessage();
-            }
+//            try {
+//                $migrate -> deleteTable(Auction_4::class);
+//            } catch ( \Exception $e ) {
+//                echo $e -> getMessage();
+//            }
             $migrate -> createTable(Auction_4::class);
 
 
