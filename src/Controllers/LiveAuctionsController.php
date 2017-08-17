@@ -29,7 +29,7 @@
         public function getLiveAuctions()
         {
 //            return 'Hallo André';
-            return json_encode($this -> $liveAuctionsService, 3);
+            return json_encode('hallo meen Kleener...');
 //            return $this -> liveAuctionsService -> getLiveAuctions();
         }
 
