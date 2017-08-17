@@ -32,9 +32,8 @@
         public function getLiveAuctions()
         {
             $results = $this -> getValues(LiveAuction_1::class);
-            return 'Hallo André';
 
-//            return $results;
+            return $results;
         }
 
 //        public function getAuctionForItemId($itemId)
