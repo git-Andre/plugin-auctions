@@ -9,7 +9,7 @@
     /**
      * Class CreateAuction4Table
      */
-    class CreateLiveAuctionTable51 {
+    class CreateLiveAuctionTable52 {
 
         /**
          * @param Migrate $migrate

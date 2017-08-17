@@ -10,5 +10,5 @@
     "type"              :   "general",
     "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
     "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateAuctionTable",
-                             "PluginAuctions\\Migrations\\CreateLiveAuctionTable_51"]
+                             "PluginAuctions\\Migrations\\CreateLiveAuctionTable52"]
 }
