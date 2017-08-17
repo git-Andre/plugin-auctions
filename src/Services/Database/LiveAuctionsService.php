@@ -89,7 +89,7 @@
                 $liveAuction -> itemId = $newLiveAuction ['itemId'];
                 $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
 
-//                $liveAuction -> $bidderList = $newLiveAuction ['bidderList'];
+                $liveAuction -> $bidderList = $newLiveAuction ['bidderList'];
 
                 $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
                 $liveAuction -> isLive = $newLiveAuction ['isLive'];
