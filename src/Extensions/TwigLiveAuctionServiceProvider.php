@@ -5,7 +5,7 @@ namespace PluginAuctions\Extensions;
 
 
 use Plenty\Plugin\Templates\Extensions\Twig_Extension;
-use PluginAuctions\Services\Database\LiveAuctionService;
+use PluginAuctions\Services\Database\LiveAuctionsService;
 
 /**
  * Provide services and helper functions to twig engine
