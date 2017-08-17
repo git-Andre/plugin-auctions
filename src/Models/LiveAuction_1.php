@@ -3,7 +3,7 @@
     namespace PluginAuctions\Models;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
-    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
+//    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
 
     /**
      * Class LiveAuction_1
@@ -16,9 +16,9 @@
         public $itemId = 0;
         public $auctionId = 0;
 
-        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
+/*        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
                               LiveAuctionBidFields::BID_PRICE => 0,
-                              LiveAuctionBidFields::BID_TIMESTAMP => 1502919564];
+                              LiveAuctionBidFields::BID_TIMESTAMP => 1502919564];*/
 
         public $isEnded = false;
         public $isLive = false;

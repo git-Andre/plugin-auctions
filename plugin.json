@@ -9,5 +9,5 @@
     "categories"        :   "[]",
     "type"              :   "general",
     "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
-    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateAuctionTables"]
+    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateAuctionTables", "PluginAuctions\\Migrations\\CreateLiveAuctionTable"]
 }
