@@ -4,8 +4,6 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
     use PluginAuctions\Models\Auction_4;
-    use PluginAuctions\Models\LiveAuction_4;
-
 
 
     /**
@@ -24,7 +22,6 @@
                 echo $e -> getMessage();
             }
             $migrate -> createTable(Auction_4::class);
-            $migrate -> createTable(LiveAuction_4::class);
 
         }
     }

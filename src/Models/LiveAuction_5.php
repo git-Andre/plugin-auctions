@@ -7,10 +7,10 @@
 //    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
 
     /**
-     * Class LiveAuction_4
+     * Class LiveAuction_5
      * @package PluginAuctions\Models
      */
-    class LiveAuction_4 extends Model {
+    class LiveAuction_5 extends Model {
 
         /**
          * @var int
@@ -20,19 +20,18 @@
         public $itemId = 0;
         public $auctionId = 0;
 
-        /*        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
-                                      LiveAuctionBidFields::BID_PRICE => 0,
-                                      LiveAuctionBidFields::BID_TIMESTAMP => 1502919564];*/
-
         public $isEnded = false;
         public $isLive = false;
         public $isEndedWithBuyNow = false;
 
+//        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
+//                                      LiveAuctionBidFields::BID_PRICE => 0,
+//                                      LiveAuctionBidFields::BID_TIMESTAMP => 1502919564];
         /**
          * @return string
          */
         public function getTableName() : string
         {
-            return 'PluginAuctions::LiveAuction_4';
+            return 'PluginAuctions::LiveAuction_5';
         }
     }
