@@ -100,7 +100,8 @@
 
                 $liveAuction -> createdAt = time();
 
-                return $this -> setValue($liveAuction);
+                return json_encode($liveAuction);
+//                return $this -> setValue($liveAuction);
             }
 
             return 'Fehler bei der Neuanlage der LiveAuction...';
