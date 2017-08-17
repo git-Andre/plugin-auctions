@@ -23,6 +23,7 @@
         public $isEnded = false;
         public $isLive = false;
         public $isEndedWithBuyNow = false;
+        public $bidderList = [];
 
 //        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
 //                                      LiveAuctionBidFields::BID_PRICE => 0,
