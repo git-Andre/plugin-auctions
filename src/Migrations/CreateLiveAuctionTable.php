@@ -3,7 +3,7 @@
     namespace PluginAuctions\Migrations;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
-    use PluginAuctions\Models\LiveAuction_1;
+    use PluginAuctions\Models\LiveAuction_2;
 
 
     /**
@@ -17,11 +17,11 @@
         public function run(Migrate $migrate)
         {
             try {
-                $migrate -> deleteTable(LiveAuction_1::class);
+                $migrate -> deleteTable(LiveAuction_2::class);
             } catch ( \Exception $e ) {
                 echo $e -> getMessage();
             }
-            $migrate -> createTable(LiveAuction_1::class);
+            $migrate -> createTable(LiveAuction_2::class);
 
         }
     }

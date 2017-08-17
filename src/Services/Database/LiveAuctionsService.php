@@ -3,7 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use PluginAuctions\Models\LiveAuction_1;
+    use PluginAuctions\Models\LiveAuction_2;
     use PluginAuctions\Models\Fields\LiveAuctionBidFields;
 
     //    use Illuminate\Support\Facades\App;
@@ -31,7 +31,7 @@
          */
         public function getLiveAuctions()
         {
-            $results = $this -> getValues(LiveAuction_1::class);
+            $results = $this -> getValues(LiveAuction_2::class);
 
             return $results;
         }
@@ -78,7 +78,7 @@
 //            if ($newLiveAuction)
 //            {
 //
-//                $liveAuction = pluginApp(LiveAuction_1::class);
+//                $liveAuction = pluginApp(LiveAuction_2::class);
 //
 //
 //                $liveAuction -> itemId = $newLiveAuction ['itemId'];
