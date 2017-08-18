@@ -89,11 +89,10 @@
             {
                 if ($this -> liveAuctionsService -> deleteLiveAuction($id))
                 {
-//                    return 'ok';
-                    $this -> getAuctions();  // was soll wirklich zurück ???
+                    return 'ok';
                 }
 
-                return 'vom LiveAuctionsService kam nichts';
+                return 'vom LiveAuctionsService Delete kam nichts';
             }
 
             return 'keine Id';

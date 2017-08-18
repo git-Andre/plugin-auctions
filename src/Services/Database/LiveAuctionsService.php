@@ -112,39 +112,33 @@
          * @param $auctionData
          * @return string
          */
-        public function updateLiveAuction($id, $liveAauctionData)
+        public function updateLiveAuction($id, $liveAuctionData)
         {
             if ($liveAuctionData)
             {
                 $liveAuction = $this -> getValue(LiveAuction_53::class, $id);
 
-                if ($auction instanceof Auction_4)
+                if ($liveAuction instanceof LiveAuction_53)
                 {
 
-                    $liveAuction = pluginApp(LiveAuction_53::class);
+                    $liveAuction -> itemId = $liveAuctionData ['itemId'];
+                    $liveAuction -> auctionId = $liveAuctionData ['auctionId'];
 
+                    $liveAuction -> bidderList = $liveAuctionData ['bidderList'];
 
-                    $liveAuction -> itemId = $newLiveAuction ['itemId'];
-                    $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
+                    $liveAuction -> isEnded = $liveAuctionData ['isEnded'];
+                    $liveAuction -> isLive = $liveAuctionData ['isLive'];
+                    $liveAuction -> isEndedWithBuyNow = $liveAuctionData ['isEndedWithBuyNow'];
 
-                    $liveAuction -> bidderList = $newLiveAuction ['bidderList'];
+                    $this -> setValue($liveAuction);
 
-                    $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
-                    $liveAuction -> isLive = $newLiveAuction ['isLive'];
-                    $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
-
-
-
-
-                    $liveAuction -> createdAt = time();
-
-                    return "ok, Auction Nr.: $id erfolgreich geändert!";
+                    return "ok, Live Auction Nr.: $id erfolgreich geändert!";
                 }
 
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
-            return json_encode($auction);
+            return json_encode($liveAuction);
 
         }
 
@@ -158,12 +152,12 @@
             if ($auctionId && $auctionId > 0)
             {
                 /* @var Auction $auctionModel */
-                $auctionModel = pluginApp(LiveAuction_53::class);
-                $auctionModel -> id = $auctionId;
+                $liveAuctionModel = pluginApp(LiveAuction_53::class);
+                $liveAuctionModel -> id = $auctionId;
 
-                return $this -> deleteValue($auctionModel);
+                return $this -> deleteValue($liveAuctionModel);
             }
 
-            return 'Auctionsservice - Bedingung nicht erfüllt';
+            return 'LiveAuctionsService - Bedingung nicht erfüllt';
         }
     }
