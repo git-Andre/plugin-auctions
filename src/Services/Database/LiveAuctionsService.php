@@ -150,7 +150,6 @@
         {
             if ($liveAuctionId && $liveAuctionId > 0)
             {
-                /* @var Auction $auctionModel */
                 $liveAuctionModel = pluginApp(LiveAuction_53::class);
                 $liveAuctionModel -> id = $liveAuctionId;
 
