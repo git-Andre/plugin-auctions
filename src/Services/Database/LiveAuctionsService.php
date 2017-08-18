@@ -153,9 +153,9 @@
                 $liveAuctionModel = pluginApp(LiveAuction_53::class);
                 $liveAuctionModel -> id = $id;
 
-//                return $this -> deleteValue($liveAuctionModel);
+                return $this -> deleteValue($liveAuctionModel);
 //                return $id;
-                return 'test ' + $id;
+//                return 'test ' + $id;
 //                return json_encode($liveAuctionModel);
             }
 
