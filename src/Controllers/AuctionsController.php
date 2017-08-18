@@ -188,7 +188,7 @@
             return 'keine Id';
         }
         public function test(){
-            return $this -> liveAuctionsService -> deleteLiveAuction(1);
+            return $this -> liveAuctionsService -> deleteLiveAuction(2);
 
         }
 

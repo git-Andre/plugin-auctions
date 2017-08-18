@@ -155,7 +155,7 @@
 
 //                return $this -> deleteValue($liveAuctionModel);
 //                return $id;
-                return 'json_encode($liveAuctionModel)' + $id;
+                return 'test ' + $id;
 //                return json_encode($liveAuctionModel);
             }
 
