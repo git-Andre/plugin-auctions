@@ -109,7 +109,7 @@
         /**
          * @param $id
          * @param $liveAuctionData
-         * @return string
+         * @return bool|string
          */
         public function updateLiveAuction($id, $liveAuctionData)
         {
@@ -119,10 +119,6 @@
 
                 if ($liveAuction instanceof LiveAuction_53)
                 {
-
-//                    $liveAuction -> itemId = $liveAuctionData ['itemId'];
-//                    $liveAuction -> auctionId = $liveAuctionData ['auctionId'];
-
                     $liveAuction -> bidderList = $liveAuctionData ['bidderList'];
 
                     $liveAuction -> isEnded = $liveAuctionData ['isEnded'];
@@ -143,8 +139,8 @@
 
 
         /**
-         * @param $liveAuctionId
-         * @return bool|string
+         * @param $id
+         * @return bool
          */
         public function deleteLiveAuction($id)
         {
