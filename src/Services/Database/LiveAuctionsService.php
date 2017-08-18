@@ -26,7 +26,7 @@
 
 
         /**
-         * @return array|bool
+         * @return array|bool|string
          */
         public function getLiveAuctions()
         {
@@ -41,42 +41,41 @@
             return 'results in getLiveAuctions = false';
         }
 
-//        public function getAuctionForItemId($itemId)
-//        {
-//            if ($itemId > 0)
-//            {
-//                $auction[] = $this -> getValues(Auction_4::class, ['itemId'], [$itemId]);
-//                if ($auction[0])
-//                {
-//                    return $auction[0];
-//                }
-//            }
-//
-//            return 'ist die itemId richtig?';
-//        }
+        public function getLiveAuctionForItemId($itemId)
+        {
+            if ($itemId > 0)
+            {
+                $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
+                if ($liveAuction[0])
+                {
+                    return $liveAuction[0];
+                }
+            }
+
+            return 'ist die LiveAuction -> itemId richtig?';
+        }
 
 
-//        /**
-//         * @param $auctionId
-//         * @return bool|mixed|string
-//         */
-//        public function getAuction($id)
-//        {
-//            if ($id > 0)
-//            {
-//                $auction = $this -> getValue(Auction_4::class, $id);
-//                if ($auction instanceof Auction_4)
-//                {
-//                    return $auction;
-//                }
-//            }
-//
-//            return 'falsche ID';
-//        }
-//
         /**
-         * @param $newAuction
-         * @return bool|string
+         * @param $id
+         * @return bool|mixed|string
+         */
+        public function getLiveAuction($id)
+        {
+            if ($id > 0)
+            {
+                $liveAuction = $this -> getValue(LiveAuction_53::class, $id);
+                if ($liveAuction instanceof LiveAuction_53)
+                {
+                    return $liveAuction;
+                }
+            }
+            return 'falsche ID Live';
+        }
+
+        /**
+         * @param $newLiveAuction
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
         public function createLiveAuction($newLiveAuction)
         {
@@ -109,7 +108,7 @@
 
         /**
          * @param $id
-         * @param $auctionData
+         * @param $liveAuctionData
          * @return string
          */
         public function updateLiveAuction($id, $liveAuctionData)
@@ -144,7 +143,7 @@
 
 
         /**
-         * @param $auctionId
+         * @param $liveAuctionId
          * @return bool|string
          */
         public function deleteLiveAuction($liveAuctionId)
