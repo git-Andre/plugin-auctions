@@ -58,7 +58,7 @@
             {
                 if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
                 {
-//                    return 'ok';
+//                    return 'ok createLiveAuction';
                     return $newLiveAuction;
                 }
             }
@@ -89,7 +89,7 @@
             {
                 if ($this -> liveAuctionsService -> deleteLiveAuction($id))
                 {
-                    return 'ok';
+                    return 'ok vom LiveAuctionsService Delete';
                 }
 
                 return 'vom LiveAuctionsService Delete kam nichts';

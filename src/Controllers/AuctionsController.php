@@ -64,11 +64,11 @@
             {
                 if ($this -> auctionsService -> createAuction($newAuction))
                 {
-                    return 'ok';
+                    return 'ok von createAuction';
                 }
             }
 
-            return 'Fehler beim Request';
+            return 'Fehler beim Request createAuction';
         }
 
         /**
@@ -93,7 +93,7 @@
             {
                 if ($this -> auctionsService -> deleteAuction($id))
                 {
-                    return 'ok';  //$this -> getAuctions();  // was soll wirklich zurück ???
+                    return 'ok vom auctionsService';  //$this -> getAuctions();  // was soll wirklich zurück ???
                 }
 
                 return 'vom AuctionsService kam nichts';
@@ -139,7 +139,7 @@
             {
                 if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
                 {
-//                    return 'ok';
+//                    return 'ok createLiveAuction';
                     return $newLiveAuction;
                 }
             }
@@ -170,7 +170,7 @@
             {
                 if ($this -> liveAuctionsService -> deleteLiveAuction($id))
                 {
-                    return 'ok';
+                    return 'ok vom LiveAuction Delete';
                 }
 
                 return 'vom LiveAuctionsService Delete kam nichts';
