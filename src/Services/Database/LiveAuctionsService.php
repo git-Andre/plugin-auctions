@@ -155,7 +155,8 @@
                 $liveAuctionModel = pluginApp(LiveAuction_53::class);
                 $liveAuctionModel -> id = $liveAuctionId;
 
-                return $this -> deleteValue($liveAuctionModel);
+//                return $this -> deleteValue($liveAuctionModel);
+                return json_encode($liveAuctionModel);
             }
 
             return 'LiveAuctionsService - Bedingung nicht erfüllt';

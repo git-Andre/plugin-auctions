@@ -9,7 +9,7 @@
 
 namespace PluginAuctions\Services\Database;
 
-use PluginAuctions\Models\Auction_4;
+//use PluginAuctions\Models\Auction_4;
 use PluginAuctions\Models\LiveAuction_53;
 use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
 use Plenty\Modules\Plugin\DataBase\Contracts\Model;
