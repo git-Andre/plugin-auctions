@@ -150,13 +150,12 @@
         {
             if ($id && $id > 0)
             {
-                $liveAuctionModel = pluginApp(LiveAuction_53::class);
-                $liveAuctionModel -> id = $id;
+//                $liveAuctionModel = pluginApp(LiveAuction_53::class);
+//                $liveAuctionModel -> id = $id;
 
-                return $this -> deleteValue($liveAuctionModel);
-//                return $id;
-//                return 'test ' + $id;
-//                return json_encode($liveAuctionModel);
+                $this -> deleteValue(pluginApp(LiveAuction_53::class) -> id = $id);
+//                $this -> deleteValue($liveAuctionModel);
+                return true;
             }
 
             return false;
