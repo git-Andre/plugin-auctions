@@ -66,35 +66,37 @@
             return 'Fehler beim Request';
         }
 
-//        /**
-//         * @param Request $request
-//         * @return \PluginAuctions\Services\Database\Auction[]
-//         */
-//        public function updateAuction(int $id, Request $request)
-//        {
-//            $auctionData = $request -> all();
-//
-//            return $this -> liveAuctionsService -> updateAuction($id, $auctionData);
-//        }
-//
-//        /**
-//         * @param $auctionId
-//         * @return string
-//         */
-//        public function deleteAuction($id)
-//        {
-//
-//            if ($id)
-//            {
-//                if ($this -> liveAuctionsService -> deleteAuction($id))
-//                {
-//                    return 'ok';  //$this -> getAuctions();  // was soll wirklich zurück ???
-//                }
-//
-//                return 'vom LiveAuctionsService kam nichts';
-//            }
-//
-//            return 'keine Id';
-//        }
-//
+        /**
+         * @param int $id
+         * @param Request $request
+         * @return mixed
+         */
+        public function updateLiveAuction(int $id, Request $request)
+        {
+            $auctionData = $request -> all();
+
+            return $this -> liveAuctionsService -> updateLiveAuction($id, $auctionData);
+        }
+
+        /**
+         * @param $auctionId
+         * @return string
+         */
+        public function deleteLiveAuction($id)
+        {
+
+            if ($id)
+            {
+                if ($this -> liveAuctionsService -> deleteLiveAuction($id))
+                {
+//                    return 'ok';
+                    $this -> getAuctions();  // was soll wirklich zurück ???
+                }
+
+                return 'vom LiveAuctionsService kam nichts';
+            }
+
+            return 'keine Id';
+        }
+
     }

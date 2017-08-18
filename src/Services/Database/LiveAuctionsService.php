@@ -107,58 +107,63 @@
             return 'Fehler bei der Neuanlage der LiveAuction...';
         }
 
-//        /**
-//         * @param $id
-//         * @param $auctionData
-//         * @return string
-//         */
-//        public function updateAuction($id, $auctionData)
-//        {
-//            if ($auctionData)
-//            {
-//                $auction = $this -> getValue(Auction_4::class, $id);
-//
-//                if ($auction instanceof Auction_4)
-//                {
-//
-//                    $auction -> itemId = $auctionData ['itemId'];
-//                    $auction -> startDate = $auctionData ['startDate'];
-//                    $auction -> startHour = $auctionData ['startHour'];
-//                    $auction -> startMinute = $auctionData ['startMinute'];
-//                    $auction -> auctionDuration = $auctionData ['auctionDuration'];
-//                    $auction -> startPrice = $auctionData ['startPrice'];
-//                    $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
-//
-//                    $auction -> updatedAt = time();
-//
-//                    $this -> setValue($auction);
-//
-//                    return "ok, Auction Nr.: $id erfolgreich geändert!";
-//                }
-//
-//                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
-//            }
-//
-//            return json_encode($auction);
-//
-//        }
-//
-//
-//        /**
-//         * @param $auctionId
-//         * @return bool|string
-//         */
-//        public function deleteAuction($auctionId)
-//        {
-//            if ($auctionId && $auctionId > 0)
-//            {
-//                /* @var Auction $auctionModel */
-//                $auctionModel = pluginApp(Auction_4::class);
-//                $auctionModel -> id = $auctionId;
-//
-//                return $this -> deleteValue($auctionModel);
-//            }
-//
-//            return 'Auctionsservice - Bedingung nicht erfüllt';
-//        }
+        /**
+         * @param $id
+         * @param $auctionData
+         * @return string
+         */
+        public function updateLiveAuction($id, $liveAauctionData)
+        {
+            if ($liveAuctionData)
+            {
+                $liveAuction = $this -> getValue(LiveAuction_53::class, $id);
+
+                if ($auction instanceof Auction_4)
+                {
+
+                    $liveAuction = pluginApp(LiveAuction_53::class);
+
+
+                    $liveAuction -> itemId = $newLiveAuction ['itemId'];
+                    $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
+
+                    $liveAuction -> bidderList = $newLiveAuction ['bidderList'];
+
+                    $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
+                    $liveAuction -> isLive = $newLiveAuction ['isLive'];
+                    $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
+
+
+
+
+                    $liveAuction -> createdAt = time();
+
+                    return "ok, Auction Nr.: $id erfolgreich geändert!";
+                }
+
+                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+            }
+
+            return json_encode($auction);
+
+        }
+
+
+        /**
+         * @param $auctionId
+         * @return bool|string
+         */
+        public function deleteLiveAuction($auctionId)
+        {
+            if ($auctionId && $auctionId > 0)
+            {
+                /* @var Auction $auctionModel */
+                $auctionModel = pluginApp(LiveAuction_53::class);
+                $auctionModel -> id = $auctionId;
+
+                return $this -> deleteValue($auctionModel);
+            }
+
+            return 'Auctionsservice - Bedingung nicht erfüllt';
+        }
     }
