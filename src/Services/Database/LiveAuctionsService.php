@@ -137,7 +137,7 @@
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
-            return json_encode($liveAuction);
+            return false;
 
         }
 

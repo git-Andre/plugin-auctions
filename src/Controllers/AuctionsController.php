@@ -123,7 +123,8 @@
         {
             if ($id && $id > 0)
             {
-                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
+                return $this -> liveAuctionsService -> getLiveAuction($id);
+//                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
             }
 
             return 'keine ID (oder 0)';
@@ -156,9 +157,14 @@
          */
         public function updateLiveAuction(int $id, Request $request)
         {
-            $auctionData = $request -> all();
+            $liveAuctionData = $request -> all();
+            $updateLiveAuction = $this -> liveAuctionsService -> updateLiveAuction($id, $liveAuctionData);
 
-            return $this -> liveAuctionsService -> updateLiveAuction($id, $auctionData);
+            if ($updateLiveAuction)
+            {
+                return $updateLiveAuction;
+            }
+            return 'liveAuction Fehler beim aktualisieren';
         }
 
         /**
