@@ -85,17 +85,17 @@
         public function deleteLiveAuction($id)
         {
 
-            if ($id)
-            {
-                if ($this -> liveAuctionsService -> deleteLiveAuction($id))
-                {
-                    return 'ok vom LiveAuctionsService Delete';
-                }
-
-                return 'vom LiveAuctionsService Delete kam nichts';
-            }
-
-            return 'keine Id';
+//            if ($id)
+//            {
+//                if ($this -> liveAuctionsService -> deleteLiveAuction($id))
+//                {
+//                    return 'ok vom LiveAuctionsService Delete';
+//                }
+//
+//                return 'vom LiveAuctionsService Delete kam nichts';
+//            }
+//
+            return 'falsch';
         }
 
     }
