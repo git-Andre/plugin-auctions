@@ -188,7 +188,8 @@
             return 'keine Id';
         }
         public function test(){
-            return 'TEST ';
+            return $this -> liveAuctionsService -> deleteLiveAuction(1);
+
         }
 
     }
