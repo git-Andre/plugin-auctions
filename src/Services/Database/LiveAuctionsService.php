@@ -146,12 +146,12 @@
          * @param $liveAuctionId
          * @return bool|string
          */
-        public function deleteLiveAuction($liveAuctionId)
+        public function deleteLiveAuction($id)
         {
-            if ($liveAuctionId && $liveAuctionId > 0)
+            if ($id && $id > 0)
             {
                 $liveAuctionModel = pluginApp(LiveAuction_53::class);
-                $liveAuctionModel -> id = $liveAuctionId;
+                $liveAuctionModel -> id = $id;
 
 //                return $this -> deleteValue($liveAuctionModel);
 //                return is_object($liveAuctionModel);
