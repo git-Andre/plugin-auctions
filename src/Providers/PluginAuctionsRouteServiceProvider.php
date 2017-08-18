@@ -38,7 +38,7 @@
             $router -> get('api/liveauctions', 'PluginAuctions\Controllers\LiveAuctionsController@getLiveAuctions');
             $router -> put('api/liveauction/{id}', 'PluginAuctions\Controllers\LiveAuctionsController@updateLiveAuctions') -> where('id', '\d+');
 
-            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\LiveAuctionsController@deleteLiveAuction') -> where('id', '\d+');
+            $router -> delete('api/liveauction/{id}', 'PluginAuctions\Controllers\LiveAuctionsController@deleteLiveAuction') -> where('id', '\d+');
             $router -> post('api/liveauction', 'PluginAuctions\Controllers\LiveAuctionsController@createLiveAuction');
         }
 
