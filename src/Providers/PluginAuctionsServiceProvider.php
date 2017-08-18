@@ -35,6 +35,5 @@
         public function boot(Twig $twig)
         {
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
-//            $twig -> addExtension(TwigLiveAuctionServiceProvider::class);
         }
     }
