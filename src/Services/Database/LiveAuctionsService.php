@@ -119,6 +119,9 @@
 
                 if ($liveAuction instanceof LiveAuction_53)
                 {
+                    $liveAuction -> itemId = $liveAuctionData ['itemId'];
+                    $liveAuction -> auctionId = $liveAuctionData ['auctionId'];
+
                     $liveAuction -> bidderList = $liveAuctionData ['bidderList'];
 
                     $liveAuction -> isEnded = $liveAuctionData ['isEnded'];
