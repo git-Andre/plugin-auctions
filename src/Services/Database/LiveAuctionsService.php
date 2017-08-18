@@ -152,7 +152,8 @@
                 $liveAuctionModel = pluginApp(LiveAuction_53::class);
                 $liveAuctionModel -> id = $id;
 
-                return $this -> deleteValue($liveAuctionModel);
+                return 'im Moment deaktiviert...';
+//                return $this -> deleteValue($liveAuctionModel);
             }
 
             return false;
