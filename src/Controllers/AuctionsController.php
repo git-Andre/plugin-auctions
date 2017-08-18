@@ -123,8 +123,8 @@
         {
             if ($id && $id > 0)
             {
-                return $this -> liveAuctionsService -> getLiveAuction($id);
-//                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
+//                return $this -> liveAuctionsService -> getLiveAuction($id);
+                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
             }
 
             return 'keine ID (oder 0)';

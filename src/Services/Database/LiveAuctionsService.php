@@ -154,8 +154,8 @@
                 $liveAuctionModel -> id = $id;
 
 //                return $this -> deleteValue($liveAuctionModel);
-                return is_object($liveAuctionModel);
-//                return json_encode($liveAuctionModel);
+//                return $id;
+                return json_encode($liveAuctionModel);
             }
 
             return false;
