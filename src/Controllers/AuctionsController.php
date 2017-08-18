@@ -49,6 +49,7 @@
             {
                 return json_encode($this -> auctionsService -> getAuction($id));
             }
+
             return 'keine ID (oder 0)';
         }
 
@@ -124,6 +125,7 @@
             {
                 return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
             }
+
             return 'keine ID (oder 0)';
         }
 
@@ -168,9 +170,10 @@
 
             if ($id)
             {
-                if ($this -> liveAuctionsService -> deleteLiveAuction($id))
+                $liveAuctionData = $this -> liveAuctionsService -> deleteLiveAuction($id);
+                if ($liveAuctionData)
                 {
-                    return 'ok vom LiveAuction Delete';
+                    return 'ok vom LiveAuction Delete' + $id + ' ... ' + $liveAuctionData;
                 }
 
                 return 'vom LiveAuctionsService Delete kam nichts';

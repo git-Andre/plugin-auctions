@@ -120,8 +120,8 @@
                 if ($liveAuction instanceof LiveAuction_53)
                 {
 
-                    $liveAuction -> itemId = $liveAuctionData ['itemId'];
-                    $liveAuction -> auctionId = $liveAuctionData ['auctionId'];
+//                    $liveAuction -> itemId = $liveAuctionData ['itemId'];
+//                    $liveAuction -> auctionId = $liveAuctionData ['auctionId'];
 
                     $liveAuction -> bidderList = $liveAuctionData ['bidderList'];
 
@@ -154,10 +154,10 @@
                 $liveAuctionModel -> id = $id;
 
 //                return $this -> deleteValue($liveAuctionModel);
-//                return is_object($liveAuctionModel);
-                return json_encode($liveAuctionModel);
+                return is_object($liveAuctionModel);
+//                return json_encode($liveAuctionModel);
             }
 
-            return 'LiveAuctionsService - Bedingung nicht erfüllt';
+            return false;
         }
     }
