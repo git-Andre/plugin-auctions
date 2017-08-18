@@ -187,5 +187,8 @@
 
             return 'keine Id';
         }
+        public function test(){
+            return 'TEST ';
+        }
 
     }
