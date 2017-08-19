@@ -61,14 +61,14 @@ use PluginAuctions\Services\Database\AuctionsService;
 
 
                     $startDate = $auction[0] -> startDate;
-                    if ($auction[0]){
-                        return $startDate;
-                    }
 
                     $startDate = $startDate + ($auction[0] -> startHour * 60 *60) + ($auction[0] -> startMinute *60);
                     $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
                     $now = time();
 
+                    if ($auction[0]){
+                        return $endDate;
+                    }
 
                     if ($now - $startDate < 0)
                     {
