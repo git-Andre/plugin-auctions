@@ -51,7 +51,7 @@
             {
                 $liveAuction = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
 
-                if ($liveAuction[0])
+                if ($liveAuction)
                 {
 
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
@@ -72,10 +72,10 @@
                         $isEnded = false;
                     }
 
-                    $liveAuction[0] -> isLive = $isLive;
-                    $liveAuction[0] -> isEnded = $isEnded;
+                    $liveAuction -> isLive = $isLive;
+                    $liveAuction -> isEnded = $isEnded;
 
-                    return $liveAuction[0];
+                    return $liveAuction;
                 }
 
                 return "keine liveAuction[0] + $itemId ";
