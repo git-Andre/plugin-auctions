@@ -4,7 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\LiveAuction_53;
-
+use PluginAuctions\Services\Database\AuctionsService;
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
 
@@ -14,14 +14,18 @@
 
         protected $tableName = 'liveAuctions';
 
+        private $auctionService;
+
+
         /**
          * LiveAuctionsService constructor.
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase)
+        public function __construct(DataBase $dataBase, AuctionsService $auctionsService)
         {
             parent ::__construct($dataBase);
+            $this -> auctionService = $auctionsService;
         }
 
 
@@ -52,28 +56,27 @@
                     $isEnded = false;
                     $isLive = true;
 
-                    $auctionService = AuctionsService::class;
-                    $auction[0] = $auctionService -> getAuctionForItemId($itemId);
+                    $auction[0] = $this -> auctionService -> getAuctionForItemId($itemId);
 
-//                    $startDate = $auction[0] -> startDate;
-//                    $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
-//                    $now = time();
-//
-//                    if ($now - $startDate < 0)
-//                    {
-//                        $isLive = true;
-//                    } else
-//                    {
-//                        $isLive = false;
-//                    }
-//
-//                    if ($now - $endDate > 0)
-//                    {
-//                        $isEnded = true;
-//                    } else
-//                    {
-//                        $isEnded = false;
-//                    }
+                    $startDate = $auction[0] -> startDate;
+                    $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
+                    $now = time();
+
+                    if ($now - $startDate < 0)
+                    {
+                        $isLive = true;
+                    } else
+                    {
+                        $isLive = false;
+                    }
+
+                    if ($now - $endDate > 0)
+                    {
+                        $isEnded = true;
+                    } else
+                    {
+                        $isEnded = false;
+                    }
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
