@@ -62,7 +62,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     $startDate = $auction[0] -> startDate;
                     if ($auction[0]){
-                        return $auction[0];
+                        return $startDate;
                     }
 
                     $startDate = $startDate + ($auction[0] -> startHour * 60 *60) + ($auction[0] -> startMinute *60);
