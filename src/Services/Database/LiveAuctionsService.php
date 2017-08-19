@@ -60,7 +60,7 @@ use PluginAuctions\Services\Database\AuctionsService;
                     $auction[0] = $this -> auctionService -> getAuctionForItemId($itemId);
 
 
-                    $startDate = $auction[0] -> startDate;
+                    $startDate = $auction[0] ['startDate'];
                     if ($auction[0]){
                         return $startDate;
                     }
