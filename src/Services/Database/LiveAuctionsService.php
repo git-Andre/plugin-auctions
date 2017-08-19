@@ -57,7 +57,7 @@ use PluginAuctions\Services\Database\AuctionsService;
                     $isEnded = false;
                     $isLive = true;
 
-                    $auction[] = json_encode($this -> auctionService -> getAuctionForItemId($itemId));
+                    $auction[] = $this -> auctionService -> getAuctionForItemId($itemId);
 
 
                     $startDate = $auction[0] -> startDate;
