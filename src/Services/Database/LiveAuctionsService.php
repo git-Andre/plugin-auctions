@@ -49,7 +49,6 @@
         {
             if ($itemId > 0)
             {
-                $liveAuction = array ();
                 $liveAuction = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
 
                 if ($liveAuction[0])
