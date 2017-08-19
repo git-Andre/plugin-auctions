@@ -49,41 +49,39 @@
         {
             if ($itemId > 0)
             {
+                $liveAuction = array ();
                 $liveAuction = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
 
                 if ($liveAuction[0])
                 {
 
-
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
-
 
                     $startDate = $auction[0] -> startDate;
                     $auctionDuration = $auction[0] -> auctionDuration;
                     $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
                     $now = time();
 
-//                    if ($auction[0])
-//                    {
-////                        return "start: $startDate - end:  $endDate  - now: $now - hour: $startHour - Minute: $startMinute - Dauer: $auctionDuration";
-////                        return $now - $startDate;
-//                    }
-
-//                    ($now - $startDate >= 0) ? $isLive = true : $isLive = false;
                     $isEnded = true;
                     $isLive = true;
-                    if ($now - $startDate < 0) { $isLive = false; }
-                    if ($now - $endDate < 0) { $isEnded = false; }
+                    if ($now - $startDate < 0)
+                    {
+                        $isLive = false;
+                    }
+                    if ($now - $endDate < 0)
+                    {
+                        $isEnded = false;
+                    }
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
-//                    return $liveAuction[0] -> isLive;
-//                    return "($now - $startDate) ($now - $endDate) + live: $isLive + end: $isEnded  live: $liveAuction[0]['isLive'] ";
                     return $liveAuction[0];
                 }
+
                 return "keine liveAuction[0] + $itemId ";
             }
+
             return 'ist die LiveAuction ->' + $itemId + 'richtig?';
         }
 
