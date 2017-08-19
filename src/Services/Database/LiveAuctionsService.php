@@ -71,7 +71,7 @@
 
                     if ($auction[0])
                     {
-                        return $itemId;
+                        return $auction[0] -> id;
                     }
 
                     if ($now - $startDate < 0)
