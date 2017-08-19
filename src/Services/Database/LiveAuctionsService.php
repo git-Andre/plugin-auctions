@@ -72,7 +72,8 @@
 //                    }
 
                     ($now - $startDate >= 0) ? $isLive = true : $isLive = false;
-                    ($now - $endDate >= 0) ? $isEnded = true : $isEnded = false;
+//                    ($now - $endDate >= 0) ? $isEnded = true : $isEnded = false;
+                    ($now - $endDate >= 0) ? "true-ao" : "false-ao";
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
