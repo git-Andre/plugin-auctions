@@ -4,7 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\LiveAuction_53;
-use PluginAuctions\Services\Database\AuctionsService;
+
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
 
@@ -61,13 +61,14 @@ use PluginAuctions\Services\Database\AuctionsService;
 
 
                     $startDate = $auction[0] -> startDate;
-
-                    $startDate = $startDate + ($auction[0] -> startHour * 60 *60) + ($auction[0] -> startMinute *60);
+                    $startHour = $auction[0] -> startHour * 60 * 60;
+                    $startDate = $startDate + () + ($auction[0] -> startMinute * 60);
                     $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
                     $now = time();
 
-                    if ($auction[0]){
-                        return $now;
+                    if ($auction[0])
+                    {
+                        return $startHour;
                     }
 
                     if ($now - $startDate < 0)
@@ -91,6 +92,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     return $liveAuction[0];
                 }
+
                 return "keine liveAuction[0] + $itemId ";
             }
 
