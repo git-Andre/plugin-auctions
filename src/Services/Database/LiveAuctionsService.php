@@ -60,35 +60,19 @@
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
 
-                    $startDate = $auction[0] -> startDate;
-                    $startHour = $auction[0] -> startHour;
-                    $startMinute = $auction[0] -> startMinute;
+                    $endDate > $auction[0] -> startDate;
                     $auctionDuration = $auction[0] -> auctionDuration;
-
-                    $now = time();
                     $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
+                    $now = time();
 
-                    if ($auction[0])
-                    {
-                        return "start: $startDate - end:  $endDate  - now: $now - hour: $startHour - Minute: $startMinute - Dauer: $auctionDuration";
-                    }
-                    $startDate = $startDate + $startHour * 60*60 + $startMinute *60;
+//                    if ($auction[0])
+//                    {
+////                        return "start: $startDate - end:  $endDate  - now: $now - hour: $startHour - Minute: $startMinute - Dauer: $auctionDuration";
+//                        return $now - $startDate;
+//                    }
 
-                    if ($now - $startDate < 0)
-                    {
-                        $isLive = true;
-                    } else
-                    {
-                        $isLive = false;
-                    }
-
-                    if ($now - $endDate > 0)
-                    {
-                        $isEnded = true;
-                    } else
-                    {
-                        $isEnded = false;
-                    }
+                    ($now - $startDate < 0) ? $isLive = true : $isLive = false;
+                    ($now - $endDate > 0) ? $isEnded = true : $isEnded = false;
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
