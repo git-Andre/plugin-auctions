@@ -46,13 +46,13 @@
             if ($itemId > 0)
             {
                 $auctionService = AuctionsService::class;
-                $auction = $auctionService -> getAuctionForItemId($itemId);
+                $auction[0] = $auctionService -> getAuctionForItemId($itemId);
 
                 $isEnded = false;
                 $isLive = false;
 
-                $startDate = $auction -> startDate;
-                $endDate = $startDate + ($auction -> auctionDuration * 24 * 60 * 60);
+                $startDate = $auction[0] -> startDate;
+                $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
                 $now = time();
 
                 if ($now - $startDate < 0)
