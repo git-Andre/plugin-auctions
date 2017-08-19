@@ -69,10 +69,10 @@
                     $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
                     $now = time();
 
-//                    if ($auction[0])
-//                    {
-//                        return " $startDate + ' - ' + $endDate + ' - ' + $now";
-//                    }
+                    if ($auction[0])
+                    {
+                        return " $startDate + ' - ' + $endDate + ' - ' + $now";
+                    }
 
                     if ($now - $startDate < 0)
                     {
