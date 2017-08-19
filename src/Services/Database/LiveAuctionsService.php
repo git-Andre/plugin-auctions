@@ -59,6 +59,11 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     $auction[0] = $this -> auctionService -> getAuctionForItemId($itemId);
 
+                    if ($auction[0]){
+                        return $auction[0];
+                    }
+
+
                     $startDate = $auction[0] -> startDate;
                     $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
                     $now = time();
@@ -84,7 +89,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     return $liveAuction[0];
                 }
-                return "keine $liveAuction[0] + $itemId ";
+                return "'keine $liveAuction[0]' + $itemId ";
             }
 
             return 'ist die LiveAuction -> itemId richtig?';
