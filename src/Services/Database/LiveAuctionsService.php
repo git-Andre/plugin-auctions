@@ -54,7 +54,7 @@
                 if ($liveAuction[0])
                 {
 
-                    $isEnded = false;
+                    $isEnded = true;
                     $isLive = true;
 
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
@@ -71,14 +71,15 @@
 ////                        return $now - $startDate;
 //                    }
 
-                    ($now - $startDate >= 0) ? $isLive = true : $isLive = false;
-//                    ($now - $endDate >= 0) ? $isEnded = true : $isEnded = false;
-                    ($now - $endDate >= 0) ? "true-ao" : "false-ao";
+//                    ($now - $startDate >= 0) ? $isLive = true : $isLive = false;
+                    if ($now - $startDate < 0) { $isLive = false; }
+                    ($now - $endDate >= 0) ? $isEnded = true : $isEnded = false;
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
-                    return "($now - $startDate) ($now - $endDate) + live: $isLive + end: $isEnded";
+                    return $liveAuction[0] -> isLive;
+//                    return "($now - $startDate) ($now - $endDate) + live: $isLive + end: $isEnded  live: $liveAuction[0]['isLive'] ";
 //                    return $liveAuction[0];
                 }
                 return "keine liveAuction[0] + $itemId ";
