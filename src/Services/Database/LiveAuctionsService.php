@@ -44,10 +44,41 @@
         public function getLiveAuctionForItemId($itemId)
         {
             if ($itemId > 0)
+
+
             {
+                $auctionService = AuctionsService::class;
+                $auction = $auctionService -> getAuctionForItemId($itemId);
+
+                $isEnded = false;
+                $isLive = false;
+
+                $startDate = $auction -> startDate;
+                $endDate = $startDate + ($auction -> auctionDuration * 24 * 60 * 60);
+                $now = time();
+
+                if ($now - $startDate < 0)
+                {
+                    $isLive = true;
+                } else
+                {
+                    $isLive = false;
+                }
+
+                if ($now - $endDate > 0)
+                {
+                    $isEnded = true;
+                } else
+                {
+                    $isEnded = false;
+                }
+
                 $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
                 if ($liveAuction[0])
                 {
+                    $liveAuction -> isLive = $isLive;
+                    $liveAuction -> isEnded = $isEnded;
+
                     return $liveAuction[0];
                 }
             }
@@ -70,6 +101,7 @@
                     return $liveAuction;
                 }
             }
+
             return 'falsche ID Live';
         }
 
@@ -93,8 +125,6 @@
                 $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
                 $liveAuction -> isLive = $newLiveAuction ['isLive'];
                 $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
-
-
 
 
                 $liveAuction -> createdAt = time();
