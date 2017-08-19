@@ -207,4 +207,7 @@
             return 'keine Id';
         }
 
+        public function test ($time) {
+            return $time = date('d.m.Y H:i:s');
+        }
     }
