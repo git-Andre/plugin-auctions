@@ -50,6 +50,7 @@ use PluginAuctions\Services\Database\AuctionsService;
             if ($itemId > 0)
             {
                 $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
+
                 if ($liveAuction[0])
                 {
 
@@ -83,7 +84,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     return $liveAuction[0];
                 }
-                return 'keine $liveAuction[0]';
+                return 'keine $liveAuction[0]' + $itemId;
             }
 
             return 'ist die LiveAuction -> itemId richtig?';
