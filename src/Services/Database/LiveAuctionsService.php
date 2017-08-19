@@ -45,35 +45,36 @@
         {
             if ($itemId > 0)
             {
-                $isEnded = false;
-                $isLive = true;
-
-//                $auctionService = AuctionsService::class;
-//                $auction[0] = $auctionService -> getAuctionForItemId($itemId);
-//
-//                $startDate = $auction[0] -> startDate;
-//                $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
-//                $now = time();
-//
-//                if ($now - $startDate < 0)
-//                {
-//                    $isLive = true;
-//                } else
-//                {
-//                    $isLive = false;
-//                }
-//
-//                if ($now - $endDate > 0)
-//                {
-//                    $isEnded = true;
-//                } else
-//                {
-//                    $isEnded = false;
-//                }
-
                 $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
                 if ($liveAuction[0])
                 {
+
+                    $isEnded = false;
+                    $isLive = true;
+
+                    $auctionService = AuctionsService::class;
+                    $auction[0] = $auctionService -> getAuctionForItemId($itemId);
+
+                    $startDate = $auction[0] -> startDate;
+                    $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
+                    $now = time();
+
+                    if ($now - $startDate < 0)
+                    {
+                        $isLive = true;
+                    } else
+                    {
+                        $isLive = false;
+                    }
+
+                    if ($now - $endDate > 0)
+                    {
+                        $isEnded = true;
+                    } else
+                    {
+                        $isEnded = false;
+                    }
+
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
