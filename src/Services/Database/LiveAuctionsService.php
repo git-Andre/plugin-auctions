@@ -60,9 +60,9 @@ use PluginAuctions\Services\Database\AuctionsService;
                     $auction = json_decode($this -> auctionService -> getAuctionForItemId($itemId));
 
 
-                    $startDate = $auction[0] -> startDate;
-                    if ($auction[0]){
-                        return $auction[0];
+                    $startDate = $auction -> startDate;
+                    if ($auction){
+                        return $auction;
                     }
 
                     $startDate = $startDate + ($auction[0] -> startHour * 60 *60) + ($auction[0] -> startMinute *60);
