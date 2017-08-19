@@ -65,11 +65,11 @@
                     $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
                     $now = time();
 
-                    if ($auction[0])
-                    {
-//                        return "start: $startDate - end:  $endDate  - now: $now - hour: $startHour - Minute: $startMinute - Dauer: $auctionDuration";
-//                        return $now - $startDate;
-                    }
+//                    if ($auction[0])
+//                    {
+////                        return "start: $startDate - end:  $endDate  - now: $now - hour: $startHour - Minute: $startMinute - Dauer: $auctionDuration";
+////                        return $now - $startDate;
+//                    }
 
                     ($now - $startDate >= 0) ? $isLive = true : $isLive = false;
                     ($now - $endDate >= 0) ? $isEnded = true : $isEnded = false;
@@ -77,12 +77,11 @@
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
-                    return $liveAuction[0];
+                    return "($now - $startDate) ($now - $endDate)";
+//                    return $liveAuction[0];
                 }
-
                 return "keine liveAuction[0] + $itemId ";
             }
-
             return 'ist die LiveAuction -> itemId richtig?';
         }
 
