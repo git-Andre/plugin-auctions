@@ -71,7 +71,7 @@
 
                     if ($auction[0])
                     {
-                        return $startHour;
+                        return $itemId;
                     }
 
                     if ($now - $startDate < 0)
