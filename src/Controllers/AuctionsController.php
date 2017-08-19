@@ -208,6 +208,7 @@
         }
 
         public function test ($time) {
-            return $time = date('d.m.Y H:i:s');
+
+            return date('d.m.Y H:i:s', $time);
         }
     }
