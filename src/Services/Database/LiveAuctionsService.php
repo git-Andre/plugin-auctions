@@ -67,7 +67,7 @@ use PluginAuctions\Services\Database\AuctionsService;
                     $now = time();
 
                     if ($auction[0]){
-                        return $endDate;
+                        return $now;
                     }
 
                     if ($now - $startDate < 0)
