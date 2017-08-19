@@ -53,6 +53,16 @@
             return 'keine ID (oder 0)';
         }
 
+        public function getAuctionForItemId($itemId)
+        {
+            if ($itemId && $itemId > 0)
+            {
+                return json_encode($this -> auctionsService -> getAuctionForItemId($itemId));
+            }
+
+            return 'keine ID (oder 0) - getLiveAuctionForItemId';
+        }
+
         /**
          * @param Request $request
          * @return string
@@ -129,7 +139,6 @@
 
             return 'keine ID (oder 0)';
         }
-
         public function getLiveAuctionForItemId($itemId)
         {
             if ($itemId && $itemId > 0)
