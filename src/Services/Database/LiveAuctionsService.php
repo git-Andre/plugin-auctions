@@ -77,12 +77,12 @@
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
-                    return "($now - $startDate) ($now - $endDate)";
+                    return "($now - $startDate) ($now - $endDate) + live: $isLive + end: $isEnded";
 //                    return $liveAuction[0];
                 }
                 return "keine liveAuction[0] + $itemId ";
             }
-            return 'ist die LiveAuction -> itemId richtig?';
+            return 'ist die LiveAuction ->' + $itemId + 'richtig?';
         }
 
 
