@@ -84,7 +84,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
                     return $liveAuction[0];
                 }
-                return 'keine $liveAuction[0]' + $itemId;
+                return "keine $liveAuction[0] + $itemId ";
             }
 
             return 'ist die LiveAuction -> itemId richtig?';
