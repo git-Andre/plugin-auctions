@@ -44,8 +44,6 @@
         public function getLiveAuctionForItemId($itemId)
         {
             if ($itemId > 0)
-
-
             {
                 $auctionService = AuctionsService::class;
                 $auction = $auctionService -> getAuctionForItemId($itemId);
@@ -76,8 +74,8 @@
                 $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
                 if ($liveAuction[0])
                 {
-                    $liveAuction -> isLive = $isLive;
-                    $liveAuction -> isEnded = $isEnded;
+                    $liveAuction[0] -> isLive = $isLive;
+                    $liveAuction[0] -> isEnded = $isEnded;
 
                     return $liveAuction[0];
                 }
