@@ -14,7 +14,7 @@ use PluginAuctions\Services\Database\AuctionsService;
 
         protected $tableName = 'liveAuctions';
 
-        private $auctionService;
+        private $auctionsService;
 
 
         /**
@@ -25,7 +25,7 @@ use PluginAuctions\Services\Database\AuctionsService;
         public function __construct(DataBase $dataBase, AuctionsService $auctionsService)
         {
             parent ::__construct($dataBase);
-            $this -> auctionService = $auctionsService;
+            $this -> auctionsService = $auctionsService;
         }
 
 
@@ -57,12 +57,12 @@ use PluginAuctions\Services\Database\AuctionsService;
                     $isEnded = false;
                     $isLive = true;
 
-                    $auction[] = $this -> auctionService -> getAuctionForItemId($itemId);
+                    $auction[] = $this -> auctionsService -> getAuctionForItemId($itemId);
 
 
                     $startDate = $auction[0] -> startDate;
                     if ($auction[0]){
-                        return $auction[0];
+                        return $auction[0] -> id;
                     }
 
                     $startDate = $startDate + ($auction[0] -> startHour * 60 *60) + ($auction[0] -> startMinute *60);
