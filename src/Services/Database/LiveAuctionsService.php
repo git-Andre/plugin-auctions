@@ -60,7 +60,7 @@
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
 
-                    $endDate > $auction[0] -> startDate;
+                    $startDate = $auction[0] -> startDate;
                     $auctionDuration = $auction[0] -> auctionDuration;
                     $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
                     $now = time();
