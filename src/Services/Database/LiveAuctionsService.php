@@ -61,9 +61,12 @@
 
 
                     $startDate = $auction[0] -> startDate;
-                    $startHour = $auction[0] -> startHour * 60 * 60;
-                    $startDate = $startDate + () + ($auction[0] -> startMinute * 60);
-                    $endDate = $startDate + ($auction[0] -> auctionDuration * 24 * 60 * 60);
+                    $startHour = $auction[0] -> startHour;
+                    $startMinute = $auction[0] -> startMinute;
+                    $auctionDuration = $auction[0] -> auctionDuration;
+
+                    $startDate = $startDate + $startHour * 60*60 + $startMinute *60;
+                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
                     $now = time();
 
                     if ($auction[0])
