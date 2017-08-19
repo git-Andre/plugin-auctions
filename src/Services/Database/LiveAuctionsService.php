@@ -49,7 +49,7 @@
         {
             if ($itemId > 0)
             {
-                $liveAuction[] = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
+                $liveAuction = $this -> getValues(LiveAuction_53::class, ['itemId'], [$itemId]);
 
                 if ($liveAuction[0])
                 {
