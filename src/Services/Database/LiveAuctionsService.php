@@ -60,13 +60,20 @@
 
                     $startDate = date_create("@$auction->startDate");
 
-                    $endDate = $startDate -> modify("+$auctionDuration days");
+                    $endDate = clone $startDate;
+                    $endDate = date_modify($endDate, "+$auctionDuration day");
 
                     $now = date_create("now");
 
 
-                    $isEnded = false;
+                    $isEnded = true;
                     $isLive = true;
+
+                    ($startDate < $now) ? $isLive = true : $isLive = false;
+                    ($endDate < $now) ? $isEnded = true : $isEnded = false;
+
+
+
 //                    if ($now - $startDate < 0)
 //                    {
 //                        $isLive = false;
