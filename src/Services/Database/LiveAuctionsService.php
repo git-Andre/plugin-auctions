@@ -78,10 +78,10 @@
                     return $liveAuction[0];
                 }
 
-                return "keine liveAuction[0] + $itemId ";
+                return false;
             }
 
-            return 'ist die LiveAuction ->' + $itemId + 'richtig?';
+            return false;
         }
 
 

@@ -46,7 +46,7 @@
                 }
             }
 
-            return 'ist die itemId richtig?';
+            return false;
         }
 
 
