@@ -172,7 +172,7 @@
          * @param Request $request
          * @return array|string
          */
-        public function createLiveAuction($newLiveAuction)
+        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
         {
 //            $newLiveAuction = $request -> all();
 
