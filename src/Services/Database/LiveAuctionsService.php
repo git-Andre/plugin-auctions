@@ -54,8 +54,8 @@
                 if ($liveAuction)
                 {
 
-//                    $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
-//
+                    $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
+
 //                    $startDate = $auction[0] -> startDate;
 //                    $auctionDuration = $auction[0] -> auctionDuration;
 //                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
