@@ -75,7 +75,7 @@
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
 
-                    return $liveAuction[0] ->id;
+                    return $auction[0] ->id;
                 }
 
                 return "keine liveAuction[0] + $itemId ";
