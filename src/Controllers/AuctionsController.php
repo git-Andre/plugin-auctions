@@ -74,16 +74,17 @@
 
             if ($newAuction)
             {
-                if ($this -> auctionsService -> createAuction($newAuction))
+                $newCreatedAuction = $this -> auctionsService -> createAuction($newAuction);
+                if ($newCreatedAuction)
                 {
                     $newLiveAuction = pluginApp(LiveAuction_53::class);
 
-                    $newLiveAuction -> itemId = $newAuction ['itemId'];
-                    $newLiveAuction -> auctionId = $newAuction ['id'];
+                    $newLiveAuction -> itemId = $newCreatedAuction ['itemId'];
+                    $newLiveAuction -> auctionId = $newCreatedAuction ['id'];
                     $newLiveAuction -> isLive = true;
                     $newLiveAuction -> isEnded = true;
                     $newLiveAuction -> isEndedWithBuyNow = false;
-                    $newLiveAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newAuction -> startPrice, 'bidTimeStamp' => $newAuction -> startDate, 'maxBid' => 0];
+                    $newLiveAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newCreatedAuction -> startPrice, 'bidTimeStamp' => $newCreatedAuction -> startDate, 'maxBid' => 0];
 
 
                     return $this -> liveAuctionsService -> createLiveAuction($newLiveAuction);
