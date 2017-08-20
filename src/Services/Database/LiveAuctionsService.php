@@ -57,10 +57,10 @@
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
                     $auctionDuration = $auction -> auctionDuration;
+                    $start = $auction -> startDate;
+                    $startDate = date_create("@$start");
+                    $endDate = date_create("@$start");
 
-                    $startDate = date_create("@$auction->startDate");
-
-                    $endDate = clone $startDate;
                     $endDate = date_modify($endDate, "+$auctionDuration day");
 
                     $now = date_create("now");
@@ -71,7 +71,6 @@
 
                     ($startDate < $now) ? $isLive = true : $isLive = false;
                     ($endDate < $now) ? $isEnded = true : $isEnded = false;
-
 
 
 //                    if ($now - $startDate < 0)
