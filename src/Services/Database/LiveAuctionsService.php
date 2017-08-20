@@ -57,9 +57,9 @@
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
                     $auctionDuration = $auction -> auctionDuration;
-                    $startDate = new DateTime();
-                    $endDate = new DateTime();
-                    $now = new DateTime();
+                    $startDate = date_create();
+                    $endDate = date_create();
+                    $now = date_create();
 
                     $startDate -> setTimestamp($auction -> startDate);
 
