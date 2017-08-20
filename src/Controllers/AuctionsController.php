@@ -77,17 +77,22 @@
                 $newCreatedAuction = $this -> auctionsService -> createAuction($newAuction);
                 if ($newCreatedAuction)
                 {
-                    $newLiveAuction;
+                    $newLiveAuction = pluginApp(LiveAuction_53::class);
 
-                    $newLiveAuction ['itemId'] = $newCreatedAuction -> itemId;
-                    $newLiveAuction ['auctionId'] = $newCreatedAuction -> id;
-                    $newLiveAuction ['isLive'] = true;
-                    $newLiveAuction ['isEnded'] = true;
-                    $newLiveAuction ['isEndedWithBuyNow'] = false;
-                    $newLiveAuction ['bidderList'] = ['customer'=> 'Startpreis', 'bidPrice' => $newCreatedAuction -> startPrice, 'bidTimeStamp' => $newCreatedAuction -> startDate, 'maxBid' => 0];
+                    $newLiveAuction -> itemId = $newCreatedAuction -> itemId;
+                    $newLiveAuction -> auctionId = $newCreatedAuction -> id;
+                    $newLiveAuction -> isLive = true;
+                    $newLiveAuction -> isEnded = true;
+                    $newLiveAuction -> isEndedWithBuyNow = false;
+                    $newLiveAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newCreatedAuction -> startPrice, 'bidTimeStamp' => $newCreatedAuction -> startDate, 'maxBid' => 0];
 
+//                    $newLiveAuction ['itemId'] = $newCreatedAuction -> itemId;
+//                    $newLiveAuction ['auctionId'] = $newCreatedAuction -> id;
+//                    $newLiveAuction ['isLive'] = true;
+//                    $newLiveAuction ['isEnded'] = true;
+//                    $newLiveAuction ['isEndedWithBuyNow'] = false;
 
-                    return $this -> liveAuctionsService -> createLiveAuction($newLiveAuction);
+                    return $this -> createLiveAuction($newLiveAuction);
                 }
                 return false;
             }
@@ -167,7 +172,7 @@
          * @param Request $request
          * @return array|string
          */
-        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
+        public function createLiveAuction($newLiveAuction)
         {
 //            $newLiveAuction = $request -> all();
 
