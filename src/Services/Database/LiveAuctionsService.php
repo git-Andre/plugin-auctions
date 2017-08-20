@@ -56,7 +56,7 @@
 
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
-                    $startDate = $auction -> startDate;
+                    $startDate = new \DateTime($auction -> startDate);
                     $auctionDuration = $auction -> auctionDuration;
                     $endDate = $startDate -> add(new \DateInterval('P' + $auctionDuration + 'D'));
 //                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
