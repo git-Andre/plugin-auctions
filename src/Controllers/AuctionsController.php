@@ -76,7 +76,8 @@
             {
                 if ($this -> auctionsService -> createAuction($newAuction))
                 {
-                    $newLiveAuction = LiveAuction_53::class;
+                    $newLiveAuction = pluginApp(LiveAuction_53::class);
+
                     $newLiveAuction -> itemId = $newAuction ['itemId'];
                     $newLiveAuction -> auctionId = $newAuction ['id'];
                     $newLiveAuction -> isLive = true;
