@@ -56,22 +56,27 @@
 
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
-                    $startDate = new \DateTime($auction -> startDate);
                     $auctionDuration = $auction -> auctionDuration;
-                    $endDate = $startDate -> add(new \DateInterval('P' + $auctionDuration + 'D'));
-//                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
-                    $now = time();
+                    $startDate = new DateTime();
+                    $endDate = new DateTime();
+                    $now = new DateTime();
 
-                    $isEnded = true;
+                    $startDate -> setTimestamp($auction -> startDate);
+
+                    $endDate = $startDate -> modify("+$auctionDuration days");
+//                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
+                    $now = setTimestamp(time());
+
+                    $isEnded = false;
                     $isLive = true;
-                    if ($now - $startDate < 0)
-                    {
-                        $isLive = false;
-                    }
-                    if ($now - $endDate < 0)
-                    {
-                        $isEnded = false;
-                    }
+//                    if ($now - $startDate < 0)
+//                    {
+//                        $isLive = false;
+//                    }
+//                    if ($now - $endDate < 0)
+//                    {
+//                        $isEnded = false;
+//                    }
 
                     $liveAuction[0] -> isLive = $isLive;
                     $liveAuction[0] -> isEnded = $isEnded;
