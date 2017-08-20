@@ -94,7 +94,7 @@
                 return $this -> setValue($auction);
             }
 
-            return 'Fehler bei der Neuanlage...';
+            return false;
         }
 
         /**

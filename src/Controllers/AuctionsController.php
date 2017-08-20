@@ -4,6 +4,7 @@
 
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
+    use PluginAuctions\Models\LiveAuction_53;
     use PluginAuctions\Services\Database\AuctionsService;
     use PluginAuctions\Services\Database\LiveAuctionsService;
 
@@ -75,7 +76,12 @@
             {
                 if ($this -> auctionsService -> createAuction($newAuction))
                 {
-                    return 'ok von createAuction';
+                    $newLiveAuction = new LiveAuction_53();
+                    $newLiveAuction -> itemId = $newAuction ['itemId'];
+
+
+
+                    return $newLiveAuction;
                 }
             }
 
@@ -139,6 +145,7 @@
 
             return 'keine ID (oder 0)';
         }
+
         public function getLiveAuctionForItemId($itemId)
         {
             if ($itemId && $itemId > 0)
@@ -161,7 +168,6 @@
             {
                 if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
                 {
-//                    return 'ok createLiveAuction';
                     return $newLiveAuction;
                 }
             }
@@ -183,6 +189,7 @@
             {
                 return $updateLiveAuction;
             }
+
             return 'liveAuction Fehler beim aktualisieren';
         }
 
@@ -207,7 +214,8 @@
             return 'keine Id';
         }
 
-        public function test ($time) {
+        public function test($time)
+        {
 
             return date('d.m.Y H:i:s', $time);
         }
