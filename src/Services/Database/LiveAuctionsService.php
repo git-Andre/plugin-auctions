@@ -57,15 +57,13 @@
                     $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
                     $auctionDuration = $auction -> auctionDuration;
-                    $startDate = date_create();
-                    $endDate = date_create();
-                    $now = date_create();
 
-                    $startDate -> setTimestamp($auction -> startDate);
+                    $startDate = date_create("@$auction->startDate");
 
                     $endDate = $startDate -> modify("+$auctionDuration days");
-//                    $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
-                    $now = setTimestamp(time());
+
+                    $now = date_create("now");
+
 
                     $isEnded = false;
                     $isLive = true;
