@@ -76,13 +76,18 @@
             {
                 if ($this -> auctionsService -> createAuction($newAuction))
                 {
-                    $newLiveAuction = new LiveAuction_53();
+                    $newLiveAuction = LiveAuction_53::class;
                     $newLiveAuction -> itemId = $newAuction ['itemId'];
+                    $newLiveAuction -> auctionId = $newAuction ['id'];
+                    $newLiveAuction -> isLive = true;
+                    $newLiveAuction -> isEnded = true;
+                    $newLiveAuction -> isEndedWithBuyNow = false;
+                    $newLiveAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newAuction -> startPrice, 'bidTimeStamp' => $newAuction -> startDate, 'maxBid' => 0];
 
 
-
-                    return $newLiveAuction;
+                    return $this -> liveAuctionsService -> createLiveAuction($newLiveAuction);
                 }
+                return false;
             }
 
             return 'Fehler beim Request createAuction';
@@ -160,9 +165,9 @@
          * @param Request $request
          * @return array|string
          */
-        public function createLiveAuction(Request $request)
+        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
         {
-            $newLiveAuction = $request -> all();
+//            $newLiveAuction = $request -> all();
 
             if ($newLiveAuction)
             {
