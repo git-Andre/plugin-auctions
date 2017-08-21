@@ -64,32 +64,31 @@
                     return $auction;
                 }
             }
-
             return 'falsche ID';
         }
 
         /**
-         * @param $newAuction
-         * @return bool|string
+         * @param $newBackendAuction
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model
          */
-        public function createAuction($newAuction)
+        public function createAuction($newBackendAuction)
         {
-            if ($newAuction)
+            if ($newBackendAuction)
             {
 
                 $auction = pluginApp(Auction_5::class);
 
 
-                $auction -> variationId = $newAuction ['variationId'];
-                $auction -> startDate = $newAuction ['startDate'];
-                $auction -> startHour = $newAuction ['startHour'];
-                $auction -> startMinute = $newAuction ['startMinute'];
-                $auction -> auctionDuration = $newAuction ['auctionDuration'];
-                $auction -> currentPrice = $newAuction ['currentPrice'];
+                $auction -> variationId = $newBackendAuction ['variationId'];
+                $auction -> startDate = $newBackendAuction ['startDate'];
+                $auction -> startHour = $newBackendAuction ['startHour'];
+                $auction -> startMinute = $newBackendAuction ['startMinute'];
+                $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
+                $auction -> currentPrice = $newBackendAuction ['currentPrice'];
 
-                $auctionDuration = $newAuction ['auctionDuration'];
+                $auctionDuration = $newBackendAuction ['auctionDuration'];
 
-                $start = $newAuction ['startDate'];
+                $start = $newBackendAuction ['startDate'];
 
                 $startDate = date_create("@$start");
                 $endDate = date_create("@$start");
@@ -108,7 +107,7 @@
                 $auction -> bidderList = ['bidderName'     => 'Startpreis',
                                           'customerId'     => null,
                                           'customerMaxBid' => 0,
-                                          'bidPrice'       => $newAuction -> currentPrice,
+                                          'bidPrice'       => $auction -> currentPrice,
                                           'bidTimeStamp'   => $auction -> createdAt,
                 ];
                 $auction -> updatedAt = $auction -> createdAt;
@@ -125,7 +124,7 @@
          * @param $auctionData
          * @return string
          */
-        public function updateAuction($id, $auctionData)
+        public function updateAuction($id, $updatedBackendAuction)
         {
             if ($auctionData)
             {
@@ -133,14 +132,14 @@
 
                 if ($auction instanceof Auction_5)
                 {
-                    $auction -> startDate = $auctionData ['startDate'];
-                    $auction -> startHour = $auctionData ['startHour'];
-                    $auction -> startMinute = $auctionData ['startMinute'];
-                    $auction -> auctionDuration = $auctionData ['auctionDuration'];
-                    $auction -> currentPrice = $auctionData ['currentPrice'];
+                    $auction -> startDate = $updatedBackendAuction ['startDate'];
+                    $auction -> startHour = $updatedBackendAuction ['startHour'];
+                    $auction -> startMinute = $updatedBackendAuction ['startMinute'];
+                    $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
+                    $auction -> currentPrice = $updatedBackendAuction ['currentPrice'];
 
-                    $auctionDuration = $auctionData ['auctionDuration'];
-                    $start = $auctionData ['startDate'];
+                    $auctionDuration = $updatedBackendAuction ['auctionDuration'];
+                    $start = $updatedBackendAuction ['startDate'];
 
                     $auction -> expiryDate = $this -> calculatedExpiryDate($start, $auctionDuration);
 

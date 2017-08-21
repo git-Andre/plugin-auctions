@@ -38,8 +38,8 @@
 
         public $expiryDate      = 0;
 
-        public $isEnded    = false;
-        public $isLive     = false;
+        public $isEnded    = true;
+        public $isLive     = true;
         public $bidderList = array ();
 
 

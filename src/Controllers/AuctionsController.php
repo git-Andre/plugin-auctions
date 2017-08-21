@@ -4,9 +4,7 @@
 
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
-    use PluginAuctions\Models\LiveAuction_53;
     use PluginAuctions\Services\Database\AuctionsService;
-    use PluginAuctions\Services\Database\LiveAuctionsService;
 
     class AuctionsController extends Controller {
 
@@ -14,12 +12,6 @@
          * @var AuctionsService
          */
         private $auctionsService;
-
-        /**
-         * @var LiveAuctionsService
-         */
-        private $liveAuctionsService;
-
 
         /**
          * AuctionsController constructor.
@@ -40,8 +32,8 @@
         }
 
         /**
-         * @param int $auctionId
-         * @return bool|mixed|string
+         * @param $id
+         * @return string
          */
         public function getAuction($id)
         {
@@ -74,32 +66,20 @@
             if ($newBackendAuction)
             {
                 $result = $this -> auctionsService -> createAuction($newBackendAuction);
-//                {
-//                    $newAuction = pluginApp(Auction_5::class);
-//
-//                    $newAuction -> variationId = $newCreatedAuction -> variationId;
-//                    $newAuction -> auctionId = $newCreatedAuction -> id;
-//                    $newAuction -> isLive = true;
-//                    $newAuction -> isEnded = true;
-//                    $newAuction -> isEndedWithBuyNow = false;
-//                    $newAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newCreatedAuction -> startPrice, 'bidTimeStamp' => $newCreatedAuction -> startDate, 'maxBid' => 0];
-//
-//                    $result = $this -> createLiveAuction($newAuction);
 
                 if ($result)
                 {
                     return json_encode($result);
                 }
-
                 return false;
             }
-
             return 'Fehler beim Request createAuction';
         }
 
         /**
+         * @param int $id
          * @param Request $request
-         * @return \PluginAuctions\Services\Database\Auction[]
+         * @return string
          */
         public function updateAuction(int $id, Request $request)
         {
@@ -109,8 +89,8 @@
         }
 
         /**
-         * @param $auctionId
-         * @return string
+         * @param $id
+         * @return bool|string
          */
         public function deleteAuction($id)
         {
@@ -122,105 +102,12 @@
             return $id;
         }
 
+        /**
+         * @param $time
+         * @return false|string
+         */
         public function formatDate($time)
         {
-
             return date('d.m.Y H:i:s', $time);
         }
-
-
-//        ###################
-
-//        public function getLiveAuctionForItemId($itemId)
-//        {
-//            if ($itemId && $itemId > 0)
-//            {
-//                return json_encode($this -> liveAuctionsService -> getLiveAuctionForItemId($itemId));
-//            }
-//
-//            return 'keine ID (oder 0) - getLiveAuctionForItemId';
-//        }
-//
-//        /**
-//         * @param $id
-//         * @return string
-//         */
-//        public function deleteLiveAuction($id)
-//        {
-//
-//            if ($id)
-//            {
-//                $liveAuctionData = $this -> liveAuctionsService -> deleteLiveAuction($id);
-//                if ($liveAuctionData)
-//                {
-//                    return 'ok vom LiveAuction Delete' + $id + ' ... ' + $liveAuctionData;
-//                }
-//
-//                return 'vom LiveAuctionsService Delete kam nichts';
-//            }
-//
-//            return 'keine Id';
-//        }
-//
-//        /**
-//         * @return array|bool
-//         */
-//        public function getLiveAuctions()
-//        {
-////            return 'Hallo André';
-////            return json_encode('hallo meen Kleener...');
-//            return $this -> liveAuctionsService -> getLiveAuctions();
-//        }
-//
-//        /**
-//         * @param int $auctionId
-//         * @return bool|mixed|string
-//         */
-//        public function getLiveAuction($id)
-//        {
-//            if ($id && $id > 0)
-//            {
-////                return $this -> liveAuctionsService -> getLiveAuction($id);
-//                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
-//            }
-//
-//            return 'keine ID (oder 0)';
-//        }
-//
-//        /**
-//         * @param Request $request
-//         * @return array|string
-//         */
-//        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
-//        {
-//
-//            if ($newLiveAuction)
-//            {
-//                if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
-//                {
-//                    return $newLiveAuction;
-//                }
-//            }
-//
-//            return 'Fehler beim Request';
-//        }
-//
-//        /**
-//         * @param int $id
-//         * @param Request $request
-//         * @return string
-//         */
-//        public function updateLiveAuction(int $id, Request $request)
-//        {
-//            $liveAuctionData = $request -> all();
-//            $updateLiveAuction = $this -> liveAuctionsService -> updateLiveAuction($id, $liveAuctionData);
-//
-//            if ($updateLiveAuction)
-//            {
-//                return $updateLiveAuction;
-//            }
-//
-//            return 'liveAuction Fehler beim aktualisieren';
-//        }
-//
     }
