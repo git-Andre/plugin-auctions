@@ -127,7 +127,7 @@
                 return 'vom AuctionsService kam nichts';
             }
 
-            return 'keine Id';
+            return $id;
         }
 
 //        ###################
