@@ -6,7 +6,7 @@
     use IO\Middlewares\Middleware;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use PluginAuctions\Models\Auction_5;
+    use PluginAuctions\Models\Auction_6;
     use IO\Extensions\TwigIOExtension;
     use IO\Extensions\TwigServiceProvider;
     use Plenty\Plugin\Templates\Twig;

@@ -3,7 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use PluginAuctions\Models\Auction_5;
+    use PluginAuctions\Models\Auction_6;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -29,7 +29,7 @@
          */
         public function getAuctions()
         {
-            $results = $this -> getValues(Auction_5::class);
+            $results = $this -> getValues(Auction_6::class);
 
             return json_encode($results);
         }
@@ -38,7 +38,7 @@
         {
             if ($variationId > 0)
             {
-                $auction = $this -> getValues(Auction_5::class, ['variationId'], [$variationId]);
+                $auction = $this -> getValues(Auction_6::class, ['variationId'], [$variationId]);
                 if ($auction[0])
                 {
                     return $auction[0];
@@ -57,8 +57,8 @@
         {
             if ($id > 0)
             {
-                $auction = $this -> getValue(Auction_5::class, $id);
-                if ($auction instanceof Auction_5)
+                $auction = $this -> getValue(Auction_6::class, $id);
+                if ($auction instanceof Auction_6)
                 {
                     return $auction;
                 }
@@ -76,7 +76,7 @@
             if ($newBackendAuction)
             {
 
-                $auction = pluginApp(Auction_5::class);
+                $auction = pluginApp(Auction_6::class);
 
 
                 $auction -> variationId = $newBackendAuction ['variationId'];
@@ -127,9 +127,9 @@
         {
             if ($updatedBackendAuction)
             {
-                $auction = $this -> getValue(Auction_5::class, $id);
+                $auction = $this -> getValue(Auction_6::class, $id);
 
-                if ($auction instanceof Auction_5)
+                if ($auction instanceof Auction_6)
                 {
                     $auction -> startDate = $updatedBackendAuction ['startDate'];
                     $auction -> startHour = $updatedBackendAuction ['startHour'];
@@ -182,7 +182,7 @@
         {
             if ($id && $id > 0)
             {
-                $auctionModel = pluginApp(Auction_5::class);
+                $auctionModel = pluginApp(Auction_6::class);
                 $auctionModel -> id = $id;
 
                 return json_encode($this -> deleteValue($auctionModel));

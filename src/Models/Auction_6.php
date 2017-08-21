@@ -6,7 +6,7 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
     /**
-     * Class Auction_5
+     * Class Auction_6
      *
      * @property int $id
      * @property int $createdAt
@@ -22,9 +22,9 @@
      * @property boolean $isLive
      * @property array $bidderList
      */
-    class Auction_5 extends Model implements \JsonSerializable {
+    class Auction_6 extends Model implements \JsonSerializable {
 
-        const NAMESPACE = 'PluginAuctions\Models\Auction_5';
+        const NAMESPACE = 'PluginAuctions\Models\Auction_6';
 
         public $id              = 0;
         public $createdAt       = 0;
@@ -48,7 +48,7 @@
          */
         public function getTableName() : string
         {
-            return 'PluginAuctions::Auction_5';
+            return 'PluginAuctions::Auction_6';
         }
 
         public function fillByAttributes($attributes)
