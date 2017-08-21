@@ -122,6 +122,13 @@
             return $id;
         }
 
+        public function formatDate($time)
+        {
+
+            return date('d.m.Y H:i:s', $time);
+        }
+
+
 //        ###################
 
 //        public function getLiveAuctionForItemId($itemId)
@@ -216,9 +223,4 @@
 //            return 'liveAuction Fehler beim aktualisieren';
 //        }
 //
-//        public function test($time)
-//        {
-//
-//            return date('d.m.Y H:i:s', $time);
-//        }
     }
