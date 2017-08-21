@@ -1,5 +1,5 @@
 {
-    "version"           :   "0.4.0",
+    "version"           :   "0.5.0",
     "license"           :   "MIT",
     "name"              :   "PluginAuctions",
     "shortDescription"  :   "Auktionen für Plentymarkets Ceres Webshops",
@@ -9,6 +9,5 @@
     "categories"        :   "[]",
     "type"              :   "general",
     "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
-    "runOnBuild"        :   ["PluginAuctions\\Migrations\\CreateAuctionTable",
-                             "PluginAuctions\\Migrations\\CreateLiveAuctionTable53"]
+    "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_1"]
 }

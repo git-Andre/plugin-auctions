@@ -25,10 +25,9 @@
          * AuctionsController constructor.
          * @param AuctionsService $auctionsService
          */
-        public function __construct(AuctionsService $auctionsService, LiveAuctionsService $liveAuctionsService)
+        public function __construct(AuctionsService $auctionsService)
         {
             $this -> auctionsService = $auctionsService;
-            $this -> liveAuctionsService = $liveAuctionsService;
         }
 
 

@@ -3,7 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-    use PluginAuctions\Models\Auction_4;
+    use PluginAuctions\Models\Auction_5;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -30,7 +30,7 @@
          */
         public function getAuctions()
         {
-            $results = $this -> getValues(Auction_4::class);
+            $results = $this -> getValues(Auction_5::class);
 
             return $results;
         }
@@ -39,7 +39,7 @@
         {
             if ($itemId > 0)
             {
-                $auction = $this -> getValues(Auction_4::class, ['itemId'], [$itemId]);
+                $auction = $this -> getValues(Auction_5::class, ['itemId'], [$itemId]);
                 if ($auction[0])
                 {
                     return $auction[0];
@@ -58,8 +58,8 @@
         {
             if ($id > 0)
             {
-                $auction = $this -> getValue(Auction_4::class, $id);
-                if ($auction instanceof Auction_4)
+                $auction = $this -> getValue(Auction_5::class, $id);
+                if ($auction instanceof Auction_5)
                 {
                     return $auction;
                 }
@@ -77,7 +77,7 @@
             if ($newAuction)
             {
 
-                $auction = pluginApp(Auction_4::class);
+                $auction = pluginApp(Auction_5::class);
 
 
                 $auction -> itemId = $newAuction ['itemId'];
@@ -106,9 +106,9 @@
         {
             if ($auctionData)
             {
-                $auction = $this -> getValue(Auction_4::class, $id);
+                $auction = $this -> getValue(Auction_5::class, $id);
 
-                if ($auction instanceof Auction_4)
+                if ($auction instanceof Auction_5)
                 {
 
                     $auction -> itemId = $auctionData ['itemId'];
@@ -143,7 +143,7 @@
             if ($auctionId && $auctionId > 0)
             {
                 /* @var Auction $auctionModel */
-                $auctionModel = pluginApp(Auction_4::class);
+                $auctionModel = pluginApp(Auction_5::class);
                 $auctionModel -> id = $auctionId;
 
                 return $this -> deleteValue($auctionModel);
