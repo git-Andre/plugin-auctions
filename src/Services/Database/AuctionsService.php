@@ -24,7 +24,6 @@
             parent ::__construct($dataBase);
         }
 
-
         /**
          * @return array|bool
          */
@@ -32,7 +31,7 @@
         {
             $results = $this -> getValues(Auction_5::class);
 
-            return  json_encode($results);
+            return json_encode($results);
         }
 
         public function getAuctionForItemId($variationId)
@@ -64,6 +63,7 @@
                     return $auction;
                 }
             }
+
             return 'falsche ID';
         }
 
@@ -84,7 +84,7 @@
                 $auction -> startHour = $newBackendAuction ['startHour'];
                 $auction -> startMinute = $newBackendAuction ['startMinute'];
                 $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
-                $auction -> currentPrice = (float)($newBackendAuction ['currentPrice']);
+                $auction -> currentPrice = (float) ($newBackendAuction ['currentPrice']);
 
                 $auctionDuration = $newBackendAuction ['auctionDuration'];
 
@@ -105,7 +105,7 @@
                 $auction -> createdAt = time();
 
                 $auction -> bidderList = ['bidderName'     => 'Startpreis',
-                                          'customerId'     => null,
+                                          'customerId'     => 0,
                                           'customerMaxBid' => 0,
                                           'bidPrice'       => $auction -> currentPrice,
                                           'bidTimeStamp'   => $auction -> createdAt,
@@ -113,7 +113,6 @@
                 $auction -> updatedAt = $auction -> createdAt;
 
                 return $this -> setValue($auction);
-//                return $this -> setValue($auction);
             }
 
             return false;
@@ -136,7 +135,7 @@
                     $auction -> startHour = $updatedBackendAuction ['startHour'];
                     $auction -> startMinute = $updatedBackendAuction ['startMinute'];
                     $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
-                    $auction -> currentPrice = (float)($updatedBackendAuction ['currentPrice']);
+                    $auction -> currentPrice = (float) ($updatedBackendAuction ['currentPrice']);
 
                     $auctionDuration = $updatedBackendAuction ['auctionDuration'];
                     $start = $updatedBackendAuction ['startDate'];
@@ -145,6 +144,13 @@
 
                     $auction -> updatedAt = time();
 
+                    $auction -> bidderList = ['bidderName'     => 'Startpreis',
+                                              'customerId'     => 0,
+                                              'customerMaxBid' => 0,
+                                              'bidPrice'       => $auction -> currentPrice,
+                                              'bidTimeStamp'   => $auction -> updatedAt,
+                    ];
+
                     return $this -> setValue($auction);
                 }
 
@@ -152,7 +158,6 @@
             }
 
             return json_encode($auction);
-
         }
 
         /**
@@ -166,7 +171,7 @@
             $start = date_create("@$startDate");
             $end = date_create("@$startDate");
 
-            return strtotime(date_modify($end, "+$durationInDays day")-> format('T Y-M-d H:i:s'));
+            return strtotime(date_modify($end, "+$durationInDays day") -> format('T Y-M-d H:i:s'));
         }
 
         /**
@@ -182,6 +187,7 @@
 
                 return json_encode($this -> deleteValue($auctionModel));
             }
+
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
         }
 
