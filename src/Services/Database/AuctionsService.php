@@ -126,7 +126,7 @@
          */
         public function updateAuction($id, $updatedBackendAuction)
         {
-            if ($auctionData)
+            if ($updatedBackendAuction)
             {
                 $auction = $this -> getValue(Auction_5::class, $id);
 
