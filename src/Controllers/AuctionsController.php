@@ -90,8 +90,10 @@
                 {
                     return json_encode($result);
                 }
+
                 return false;
             }
+
             return 'Fehler beim Request createAuction';
         }
 
@@ -112,19 +114,9 @@
          */
         public function deleteAuction($id)
         {
-
             if ($id)
             {
-                $deletedAuction = $this -> auctionsService -> deleteAuction($id);
-                if ($deletedAuction)
-                {
-                    $liveAuction = $this -> getLiveAuctionForItemId($deletedAuction -> itemId);
-                    $result = $this -> deleteLiveAuction($liveAuction -> id);
-
-                    return json_encode($result);
-                }
-
-                return 'vom AuctionsService kam nichts';
+                return $this -> auctionsService -> deleteAuction($id);
             }
 
             return $id;
@@ -132,101 +124,101 @@
 
 //        ###################
 
-        public function getLiveAuctionForItemId($itemId)
-        {
-            if ($itemId && $itemId > 0)
-            {
-                return json_encode($this -> liveAuctionsService -> getLiveAuctionForItemId($itemId));
-            }
-
-            return 'keine ID (oder 0) - getLiveAuctionForItemId';
-        }
-
-        /**
-         * @param $id
-         * @return string
-         */
-        public function deleteLiveAuction($id)
-        {
-
-            if ($id)
-            {
-                $liveAuctionData = $this -> liveAuctionsService -> deleteLiveAuction($id);
-                if ($liveAuctionData)
-                {
-                    return 'ok vom LiveAuction Delete' + $id + ' ... ' + $liveAuctionData;
-                }
-
-                return 'vom LiveAuctionsService Delete kam nichts';
-            }
-
-            return 'keine Id';
-        }
-
-        /**
-         * @return array|bool
-         */
-        public function getLiveAuctions()
-        {
-//            return 'Hallo André';
-//            return json_encode('hallo meen Kleener...');
-            return $this -> liveAuctionsService -> getLiveAuctions();
-        }
-
-        /**
-         * @param int $auctionId
-         * @return bool|mixed|string
-         */
-        public function getLiveAuction($id)
-        {
-            if ($id && $id > 0)
-            {
-//                return $this -> liveAuctionsService -> getLiveAuction($id);
-                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
-            }
-
-            return 'keine ID (oder 0)';
-        }
-
-        /**
-         * @param Request $request
-         * @return array|string
-         */
-        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
-        {
-
-            if ($newLiveAuction)
-            {
-                if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
-                {
-                    return $newLiveAuction;
-                }
-            }
-
-            return 'Fehler beim Request';
-        }
-
-        /**
-         * @param int $id
-         * @param Request $request
-         * @return string
-         */
-        public function updateLiveAuction(int $id, Request $request)
-        {
-            $liveAuctionData = $request -> all();
-            $updateLiveAuction = $this -> liveAuctionsService -> updateLiveAuction($id, $liveAuctionData);
-
-            if ($updateLiveAuction)
-            {
-                return $updateLiveAuction;
-            }
-
-            return 'liveAuction Fehler beim aktualisieren';
-        }
-
-        public function test($time)
-        {
-
-            return date('d.m.Y H:i:s', $time);
-        }
+//        public function getLiveAuctionForItemId($itemId)
+//        {
+//            if ($itemId && $itemId > 0)
+//            {
+//                return json_encode($this -> liveAuctionsService -> getLiveAuctionForItemId($itemId));
+//            }
+//
+//            return 'keine ID (oder 0) - getLiveAuctionForItemId';
+//        }
+//
+//        /**
+//         * @param $id
+//         * @return string
+//         */
+//        public function deleteLiveAuction($id)
+//        {
+//
+//            if ($id)
+//            {
+//                $liveAuctionData = $this -> liveAuctionsService -> deleteLiveAuction($id);
+//                if ($liveAuctionData)
+//                {
+//                    return 'ok vom LiveAuction Delete' + $id + ' ... ' + $liveAuctionData;
+//                }
+//
+//                return 'vom LiveAuctionsService Delete kam nichts';
+//            }
+//
+//            return 'keine Id';
+//        }
+//
+//        /**
+//         * @return array|bool
+//         */
+//        public function getLiveAuctions()
+//        {
+////            return 'Hallo André';
+////            return json_encode('hallo meen Kleener...');
+//            return $this -> liveAuctionsService -> getLiveAuctions();
+//        }
+//
+//        /**
+//         * @param int $auctionId
+//         * @return bool|mixed|string
+//         */
+//        public function getLiveAuction($id)
+//        {
+//            if ($id && $id > 0)
+//            {
+////                return $this -> liveAuctionsService -> getLiveAuction($id);
+//                return json_encode($this -> liveAuctionsService -> getLiveAuction($id));
+//            }
+//
+//            return 'keine ID (oder 0)';
+//        }
+//
+//        /**
+//         * @param Request $request
+//         * @return array|string
+//         */
+//        public function createLiveAuction(LiveAuction_53 $newLiveAuction)
+//        {
+//
+//            if ($newLiveAuction)
+//            {
+//                if ($this -> liveAuctionsService -> createLiveAuction($newLiveAuction))
+//                {
+//                    return $newLiveAuction;
+//                }
+//            }
+//
+//            return 'Fehler beim Request';
+//        }
+//
+//        /**
+//         * @param int $id
+//         * @param Request $request
+//         * @return string
+//         */
+//        public function updateLiveAuction(int $id, Request $request)
+//        {
+//            $liveAuctionData = $request -> all();
+//            $updateLiveAuction = $this -> liveAuctionsService -> updateLiveAuction($id, $liveAuctionData);
+//
+//            if ($updateLiveAuction)
+//            {
+//                return $updateLiveAuction;
+//            }
+//
+//            return 'liveAuction Fehler beim aktualisieren';
+//        }
+//
+//        public function test($time)
+//        {
+//
+//            return date('d.m.Y H:i:s', $time);
+//        }
     }
