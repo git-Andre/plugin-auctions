@@ -36,7 +36,7 @@
         public $auctionDuration = 10;
         public $currentPrice    = 1.99;
 
-        public $expiryDate      = 0;
+        public $expiryDate;
 
         public $isEnded    = false;
         public $isLive     = false;
@@ -49,6 +49,18 @@
         public function getTableName() : string
         {
             return 'PluginAuctions::Auction_5';
+        }
+
+        public function fillByAttributes($attributes)
+        {
+            foreach ($attributes as $attr => $val)
+            {
+                if (array_key_exists($attr, $this -> jsonSerialize()))
+                {
+                    $ref = &$this -> getVarRef($attr);
+                    $ref = $val;
+                }
+            }
         }
 
         /**
@@ -76,19 +88,6 @@
                 'bidderList'      => $this -> bidderList,
             ];
         }
-
-        public function fillByAttributes($attributes)
-        {
-            foreach ($attributes as $attr => $val)
-            {
-                if (array_key_exists($attr, $this -> jsonSerialize()))
-                {
-                    $ref = &$this -> getVarRef($attr);
-                    $ref = $val;
-                }
-            }
-        }
-
 
         private function &getVarRef($varName)
         {
