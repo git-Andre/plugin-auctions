@@ -104,7 +104,7 @@
         }
 
         /**
-         * @param $newLiveAuction
+         * @param LiveAuction_53 $newLiveAuction
          * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
         public function createLiveAuction(LiveAuction_53 $newLiveAuction)
@@ -112,22 +112,8 @@
             if ($newLiveAuction)
             {
 
-//                $liveAuction = pluginApp(LiveAuction_53::class);
-//
-//
-//                $liveAuction -> itemId = $newLiveAuction ['itemId'];
-//                $liveAuction -> auctionId = $newLiveAuction ['auctionId'];
-//
-//                $liveAuction -> bidderList = $newLiveAuction ['bidderList'];
-//
-//                $liveAuction -> isEnded = $newLiveAuction ['isEnded'];
-//                $liveAuction -> isLive = $newLiveAuction ['isLive'];
-//                $liveAuction -> isEndedWithBuyNow = $newLiveAuction ['isEndedWithBuyNow'];
-
-
                 $newLiveAuction -> createdAt = time();
 
-//                return json_encode($liveAuction);
                 return $this -> setValue($newLiveAuction);
             }
 

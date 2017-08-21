@@ -66,7 +66,7 @@
 
         /**
          * @param Request $request
-         * @return string
+         * @return bool|string
          */
         public function createAuction(Request $request)
         {
@@ -85,12 +85,6 @@
                     $newLiveAuction -> isEnded = true;
                     $newLiveAuction -> isEndedWithBuyNow = false;
                     $newLiveAuction -> bidderList = ['customer'=> 'Startpreis', 'bidPrice' => $newCreatedAuction -> startPrice, 'bidTimeStamp' => $newCreatedAuction -> startDate, 'maxBid' => 0];
-
-//                    $newLiveAuction ['itemId'] = $newCreatedAuction -> itemId;
-//                    $newLiveAuction ['auctionId'] = $newCreatedAuction -> id;
-//                    $newLiveAuction ['isLive'] = true;
-//                    $newLiveAuction ['isEnded'] = true;
-//                    $newLiveAuction ['isEndedWithBuyNow'] = false;
 
                     $result = $this -> createLiveAuction($newLiveAuction);
                     return json_encode($result);
@@ -121,9 +115,13 @@
 
             if ($id)
             {
-                if ($this -> auctionsService -> deleteAuction($id))
+                $deletedAuction = $this -> auctionsService -> deleteAuction($id);
+                if ($deletedAuction)
                 {
-                    return 'ok vom auctionsService';  //$this -> getAuctions();  // was soll wirklich zurück ???
+                    $liveAuction = $this -> getLiveAuctionForItemId ($deletedAuction -> itemId );
+                    $result = $this -> deleteLiveAuction( $liveAuction -> id );
+
+                    return json_encode($result);
                 }
 
                 return 'vom AuctionsService kam nichts';
@@ -175,7 +173,6 @@
          */
         public function createLiveAuction(LiveAuction_53 $newLiveAuction)
         {
-//            $newLiveAuction = $request -> all();
 
             if ($newLiveAuction)
             {
