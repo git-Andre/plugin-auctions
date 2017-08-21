@@ -92,7 +92,8 @@
 //                    $newLiveAuction ['isEnded'] = true;
 //                    $newLiveAuction ['isEndedWithBuyNow'] = false;
 
-                    return $this -> createLiveAuction($newLiveAuction);
+                    $result = $this -> createLiveAuction($newLiveAuction);
+                    return json_encode($result);
                 }
                 return false;
             }
