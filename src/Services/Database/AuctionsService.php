@@ -93,9 +93,10 @@
 
                 $startDate = date_create("@$start");
                 $endDate = date_create("@$start");
+
                 $endDate = date_modify($endDate, "+$auctionDuration day");
 
-                $auction -> expiryDate = strtotime($endDate);
+                $auction -> expiryDate = strtotime($endDate -> format('T Y-M-d H:i:s'));
 
                 $now = date_create("now");
 
@@ -113,6 +114,7 @@
                 $auction -> updatedAt = $auction -> createdAt;
 
                 return $this -> setValue($auction);
+//                return $this -> setValue($auction);
             }
 
             return false;
@@ -165,7 +167,7 @@
             $start = date_create("@$startDate");
             $end = date_create("@$startDate");
 
-            return strtotime(date_modify($end, "+$durationInDays day"));
+            return strtotime(date_modify($end, "+$durationInDays day")-> format('T Y-M-d H:i:s'));
         }
 
         /**
@@ -176,14 +178,12 @@
         {
             if ($id && $id > 0)
             {
-                /* @var Auction $auctionModel */
                 $auctionModel = pluginApp(Auction_5::class);
                 $auctionModel -> id = $id;
 
-                return $this -> deleteValue($auctionModel);
+                return json_encode($this -> deleteValue($auctionModel));
             }
-
-            return 'Auctionsservice - Bedingung nicht erfüllt';
+            return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
         }
 
     }
