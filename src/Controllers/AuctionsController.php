@@ -22,7 +22,6 @@
             $this -> auctionsService = $auctionsService;
         }
 
-
         /**
          * @return array|bool
          */
@@ -71,8 +70,10 @@
                 {
                     return json_encode($result);
                 }
+
                 return false;
             }
+
             return 'Fehler beim Request createAuction';
         }
 
@@ -103,6 +104,7 @@
         }
 
         /**
+         * helper
          * @param $time
          * @return false|string
          */

@@ -84,7 +84,7 @@
                 $auction -> startHour = $newBackendAuction ['startHour'];
                 $auction -> startMinute = $newBackendAuction ['startMinute'];
                 $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
-                $auction -> currentPrice = $newBackendAuction ['currentPrice'];
+                $auction -> currentPrice = floatval($newBackendAuction ['currentPrice']);
 
                 $auctionDuration = $newBackendAuction ['auctionDuration'];
 
@@ -136,7 +136,7 @@
                     $auction -> startHour = $updatedBackendAuction ['startHour'];
                     $auction -> startMinute = $updatedBackendAuction ['startMinute'];
                     $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
-                    $auction -> currentPrice = $updatedBackendAuction ['currentPrice'];
+                    $auction -> currentPrice = floatval($updatedBackendAuction ['currentPrice']);
 
                     $auctionDuration = $updatedBackendAuction ['auctionDuration'];
                     $start = $updatedBackendAuction ['startDate'];
