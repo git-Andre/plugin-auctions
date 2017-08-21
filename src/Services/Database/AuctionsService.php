@@ -32,7 +32,7 @@
         {
             $results = $this -> getValues(Auction_5::class);
 
-            return json_decode(json_encode($results));
+            return  json_encode($results);
         }
 
         public function getAuctionForItemId($variationId)
