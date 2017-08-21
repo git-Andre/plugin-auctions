@@ -159,7 +159,7 @@
          * @param number $durationInDays
          * @return number
          */
-        private function calculatedExpiryDate($startDate, $durationInDays) : number
+        private function calculatedExpiryDate($startDate, $durationInDays) : int
         {
 
             $start = date_create("@$startDate");

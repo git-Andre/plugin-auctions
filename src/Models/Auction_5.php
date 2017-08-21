@@ -36,7 +36,7 @@
         public $auctionDuration = 10;
         public $currentPrice    = 1.99;
 
-        public $expiryDate;
+        public $expiryDate      = 0;
 
         public $isEnded    = false;
         public $isLive     = false;
