@@ -95,7 +95,7 @@
                 $endDate = date_create("@$start");
                 $endDate = date_modify($endDate, "+$auctionDuration day");
 
-                $auction -> expiryDate = time($endDate);
+                $auction -> expiryDate = $endDate;
 
                 $now = date_create("now");
 
@@ -159,13 +159,13 @@
          * @param number $durationInDays
          * @return number
          */
-        private function calculatedExpiryDate(number $startDate, number $durationInDays) : number
+        private function calculatedExpiryDate($startDate, $durationInDays) : number
         {
 
             $start = date_create("@$startDate");
             $end = date_create("@$startDate");
 
-            return time(date_modify($end, "+$durationInDays day"));
+            return date_modify($end, "+$durationInDays day");
         }
 
         /**
