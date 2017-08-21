@@ -35,11 +35,11 @@
             return $results;
         }
 
-        public function getAuctionForItemId($itemId)
+        public function getAuctionForItemId($variationId)
         {
-            if ($itemId > 0)
+            if ($variationId > 0)
             {
-                $auction = $this -> getValues(Auction_5::class, ['itemId'], [$itemId]);
+                $auction = $this -> getValues(Auction_5::class, ['variationId'], [$variationId]);
                 if ($auction[0])
                 {
                     return $auction[0];
@@ -80,20 +80,38 @@
                 $auction = pluginApp(Auction_5::class);
 
 
-                $auction -> itemId = $newAuction ['itemId'];
+                $auction -> variationId = $newAuction ['variationId'];
                 $auction -> startDate = $newAuction ['startDate'];
                 $auction -> startHour = $newAuction ['startHour'];
                 $auction -> startMinute = $newAuction ['startMinute'];
                 $auction -> auctionDuration = $newAuction ['auctionDuration'];
-                $auction -> startPrice = $newAuction ['startPrice'];
-                $auction -> buyNowPrice = $newAuction ['buyNowPrice'];
+                $auction -> currentPrice = $newAuction ['currentPrice'];
 
+                $auctionDuration = $newAuction ['auctionDuration'];
+
+                $start = $newAuction ['startDate'];
+
+                $startDate = date_create("@$start");
+                $endDate = date_create("@$start");
+
+                $auction -> expiryDate = time(date_modify($endDate, "+$auctionDuration day"));
+
+                $now = date_create("now");
+
+                ($startDate < $now) ? $auction -> isLive = true : $auction -> isLive = false;
+                ($endDate < $now) ? $auction -> isEnded = true : $auction -> isEnded = false;
+
+                $auction -> bidderList = ['bidderName'       => 'Startpreis',
+                                          'customerId'     => null,
+                                          'customerMaxBid' => 0,
+                                          'bidPrice'       => $newCreatedAuction -> startPrice,
+                                          'bidTimeStamp'   => $newCreatedAuction -> startDate,
+                ];
                 $auction -> createdAt = time();
                 $auction -> updatedAt = $auction -> createdAt;
 
                 return $this -> setValue($auction);
             }
-
             return false;
         }
 
@@ -110,20 +128,20 @@
 
                 if ($auction instanceof Auction_5)
                 {
-
-                    $auction -> itemId = $auctionData ['itemId'];
                     $auction -> startDate = $auctionData ['startDate'];
                     $auction -> startHour = $auctionData ['startHour'];
                     $auction -> startMinute = $auctionData ['startMinute'];
                     $auction -> auctionDuration = $auctionData ['auctionDuration'];
-                    $auction -> startPrice = $auctionData ['startPrice'];
-                    $auction -> buyNowPrice = $auctionData ['buyNowPrice'];
+                    $auction -> currentPrice = $auctionData ['currentPrice'];
+
+                    $auctionDuration = $auctionData ['auctionDuration'];
+                    $start = $auctionData ['startDate'];
+
+                    $auction -> expiryDate = $this -> calculatedExpiryDate($start, $auctionDuration);
 
                     $auction -> updatedAt = time();
 
-                    $this -> setValue($auction);
-
-                    return "ok, Auction Nr.: $id erfolgreich geändert!";
+                    return $this -> setValue($auction);
                 }
 
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
@@ -138,17 +156,31 @@
          * @param $auctionId
          * @return bool|string
          */
-        public function deleteAuction($auctionId)
+        public function deleteAuction($id)
         {
-            if ($auctionId && $auctionId > 0)
+            if ($id && $id > 0)
             {
                 /* @var Auction $auctionModel */
                 $auctionModel = pluginApp(Auction_5::class);
-                $auctionModel -> id = $auctionId;
+                $auctionModel -> id = $id;
 
                 return $this -> deleteValue($auctionModel);
             }
 
             return 'Auctionsservice - Bedingung nicht erfüllt';
         }
+
+        /**
+         * @param number $startDate
+         * @param number $durationInDays
+         * @return number
+         */
+        private function calculatedExpiryDate(number $startDate, number $durationInDays) : number {
+
+            $start = date_create("@$startDate");
+            $end = date_create("@$startDate");
+
+            return time(date_modify($end, "+$durationInDays day"));
+        }
+
     }

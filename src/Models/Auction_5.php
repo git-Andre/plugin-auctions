@@ -34,8 +34,9 @@
         public $startHour       = 19;
         public $startMinute     = 1;
         public $auctionDuration = 10;
-        public $expiryDate      = 0;
         public $currentPrice    = 1.99;
+
+        public $expiryDate      = 0;
 
         public $isEnded    = false;
         public $isLive     = false;
