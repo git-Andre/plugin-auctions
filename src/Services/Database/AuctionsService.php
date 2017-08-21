@@ -93,25 +93,28 @@
 
                 $startDate = date_create("@$start");
                 $endDate = date_create("@$start");
+                $endDate = date_modify($endDate, "+$auctionDuration day");
 
-                $auction -> expiryDate = time(date_modify($endDate, "+$auctionDuration day"));
+                $auction -> expiryDate = time($endDate);
 
                 $now = date_create("now");
 
                 ($startDate < $now) ? $auction -> isLive = true : $auction -> isLive = false;
                 ($endDate < $now) ? $auction -> isEnded = true : $auction -> isEnded = false;
 
-                $auction -> bidderList = ['bidderName'       => 'Startpreis',
+                $auction -> createdAt = time();
+
+                $auction -> bidderList = ['bidderName'     => 'Startpreis',
                                           'customerId'     => null,
                                           'customerMaxBid' => 0,
-                                          'bidPrice'       => $newCreatedAuction -> startPrice,
-                                          'bidTimeStamp'   => $newCreatedAuction -> startDate,
+                                          'bidPrice'       => $newAuction -> currentPrice,
+                                          'bidTimeStamp'   => $auction -> createdAt,
                 ];
-                $auction -> createdAt = time();
                 $auction -> updatedAt = $auction -> createdAt;
 
                 return $this -> setValue($auction);
             }
+
             return false;
         }
 
@@ -151,6 +154,19 @@
 
         }
 
+        /**
+         * @param number $startDate
+         * @param number $durationInDays
+         * @return number
+         */
+        private function calculatedExpiryDate(number $startDate, number $durationInDays) : number
+        {
+
+            $start = date_create("@$startDate");
+            $end = date_create("@$startDate");
+
+            return time(date_modify($end, "+$durationInDays day"));
+        }
 
         /**
          * @param $auctionId
@@ -168,19 +184,6 @@
             }
 
             return 'Auctionsservice - Bedingung nicht erfüllt';
-        }
-
-        /**
-         * @param number $startDate
-         * @param number $durationInDays
-         * @return number
-         */
-        private function calculatedExpiryDate(number $startDate, number $durationInDays) : number {
-
-            $start = date_create("@$startDate");
-            $end = date_create("@$startDate");
-
-            return time(date_modify($end, "+$durationInDays day"));
         }
 
     }

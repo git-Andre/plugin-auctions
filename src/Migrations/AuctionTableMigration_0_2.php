@@ -3,8 +3,8 @@
     namespace PluginAuctions\Migrations;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
+    use PluginAuctions\Delete\LiveAuction_53;
     use PluginAuctions\Models\Auction_5;
-
 
     /**
      * Class CreateAuction_5
@@ -16,15 +16,21 @@
          */
         public function run(Migrate $migrate)
         {
-            try {
+            try
+            {
                 $migrate -> deleteTable(LiveAuction_53::class);
-            } catch ( \Exception $e ) {
+            }
+            catch ( \Exception $e )
+            {
                 echo $e -> getMessage();
             }
 
-            try {
+            try
+            {
                 $migrate -> deleteTable(Auction_5::class);
-            } catch ( \Exception $e ) {
+            }
+            catch ( \Exception $e )
+            {
                 echo $e -> getMessage();
             }
             $migrate -> createTable(Auction_5::class);
