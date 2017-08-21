@@ -108,7 +108,7 @@
                                           'customerId'     => 0,
                                           'customerMaxBid' => 0,
                                           'bidPrice'       => $auction -> currentPrice,
-                                          'bidTimeStamp'   => $auction -> createdAt,
+                                          'bidTimeStamp'   => $auction -> startDate,
                 ];
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -148,7 +148,7 @@
                                               'customerId'     => 0,
                                               'customerMaxBid' => 0,
                                               'bidPrice'       => $auction -> currentPrice,
-                                              'bidTimeStamp'   => $auction -> updatedAt,
+                                              'bidTimeStamp'   => $auction -> startDate
                     ];
 
                     return $this -> setValue($auction);
