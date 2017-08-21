@@ -95,7 +95,7 @@
                 $endDate = date_create("@$start");
                 $endDate = date_modify($endDate, "+$auctionDuration day");
 
-                $auction -> expiryDate = $endDate;
+                $auction -> expiryDate = strtotime($endDate);
 
                 $now = date_create("now");
 
@@ -165,7 +165,7 @@
             $start = date_create("@$startDate");
             $end = date_create("@$startDate");
 
-            return date_modify($end, "+$durationInDays day");
+            return strtotime(date_modify($end, "+$durationInDays day"));
         }
 
         /**
