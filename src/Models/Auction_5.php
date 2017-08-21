@@ -22,7 +22,7 @@
      * @property boolean $isLive
      * @property array $bidderList
      */
-    class Auction_5 extends Model {
+    class Auction_5 extends Model implements \JsonSerializable {
 
         const NAMESPACE = 'PluginAuctions\Models\Auction_5';
 
