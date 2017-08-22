@@ -103,7 +103,6 @@
                 $bidderEntry = pluginApp(AuctionBidderListEntry::class);
 
                 $auction -> bidderList[0] = $bidderEntry ;
-                $auction -> bidderList[0] -> $bidPrice = $auction -> currentPrice;
 
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -144,9 +143,6 @@
                     if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
 
                     $auction -> updatedAt = time();
-
-//                    $bidderList[0] -> $bidPrice = $auction -> currentPrice;
-//                    $bidderList[0] -> $bidTimeStamp = $auction -> startDate;
 
                     return $this -> setValue($auction);
                 }
