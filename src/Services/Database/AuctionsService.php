@@ -100,7 +100,11 @@
 
                 $auction -> createdAt = time();
 
-                $auction -> bidderList[0] = AuctionBiddderListFields::class;
+                $auction -> bidderList[0] = pluginApp(AuctionBiddderListFields::class);
+                $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
+
+                $auction -> bidderList[1] = pluginApp(AuctionBiddderListFields::class);
+                $auction -> $bidderList[1] -> $bidderName = $auction -> 'HAAAAllo';
 
                 $auction -> updatedAt = $auction -> createdAt;
 
