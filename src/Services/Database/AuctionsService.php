@@ -107,7 +107,7 @@
                 ];
                 $auction -> updatedAt = $auction -> createdAt;
 
-                return json_encode($this -> setValue($auction));
+                return $this -> setValue($auction);
             }
 
             return false;
