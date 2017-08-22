@@ -157,8 +157,6 @@
                     $bidderList[0] -> $bidPrice = $auction -> currentPrice;
                     $bidderList[0] -> $bidTimeStamp = $auction -> startDate;
 
-                    ];
-
                     return $this -> setValue($auction);
                 }
 
