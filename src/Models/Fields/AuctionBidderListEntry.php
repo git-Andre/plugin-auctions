@@ -6,7 +6,7 @@
      * Class ItemBaseFields
      * @package IO\Builder\Item\Fields
      */
-    class AuctionBiddderListFields {
+    class AuctionBidderListEntry {
 
 
         public $bidderName     = 'Startpreis';

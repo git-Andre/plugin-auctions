@@ -4,7 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\Auction_7;
-    use PluginAuctions\Models\Fields\AuctionBiddderListFields;
+    use PluginAuctions\Models\Fields\AuctionBidderListEntry;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -95,16 +95,27 @@
                 $auction -> isEnded = true;
                 $auction -> isLive = true;
 
-                if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
-                if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
+                if ($auction -> startDate < $now)
+                {
+                    $auction -> isLive = true;
+                } else
+                {
+                    $auction -> isLive = false;
+                }
+                if ($endDate < $now)
+                {
+                    $auction -> isEnded = true;
+                } else
+                {
+                    $auction -> isEnded = false;
+                }
 
                 $auction -> createdAt = time();
 
-                $auction -> bidderList[0] = pluginApp(AuctionBiddderListFields::class);
-                $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
+                $bidderEntry = new AuctionBidderListEntry;
 
-                $auction -> bidderList[1] = pluginApp(AuctionBiddderListFields::class);
-                $auction -> $bidderList[1] -> $bidderName = 'HAAAAllo';
+                $auction -> bidderList = $bidderEntry ;
+//                $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
 
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -141,8 +152,20 @@
                     $auction -> isEnded = true;
                     $auction -> isLive = true;
 
-                    if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
-                    if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
+                    if ($auction -> startDate < $now)
+                    {
+                        $auction -> isLive = true;
+                    } else
+                    {
+                        $auction -> isLive = false;
+                    }
+                    if ($endDate < $now)
+                    {
+                        $auction -> isEnded = true;
+                    } else
+                    {
+                        $auction -> isEnded = false;
+                    }
 
                     $auction -> updatedAt = time();
 

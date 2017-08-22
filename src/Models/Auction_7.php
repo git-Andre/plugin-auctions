@@ -4,6 +4,8 @@
     namespace PluginAuctions\Models;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
+    use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+
 
     /**
      * Class Auction_7
@@ -40,7 +42,10 @@
 
         public $isEnded    = true;
         public $isLive     = true;
-        public $bidderList = array ();
+        public $bidderList = [];
+
+//    private auctions: Auction[] = [];
+
 
 
         /**
