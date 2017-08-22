@@ -107,7 +107,7 @@
                 ];
                 $auction -> updatedAt = $auction -> createdAt;
 
-                return $this -> setValue($auction);
+                return json_encode($this -> setValue($auction));
             }
 
             return false;
@@ -154,11 +154,9 @@
 
                     return $this -> setValue($auction);
                 }
-
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
-
-            return json_encode($auction);
+            return false;
         }
 
         /**
