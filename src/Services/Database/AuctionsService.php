@@ -91,6 +91,9 @@
 
                 $now = time();
 
+                $auction -> isEnded =true;
+                $auction -> isLive =true;
+
                  if($auction -> startDate < $now) { $auction -> isLive = true; } else {$auction -> isLive = false; }
                  if($endDate < $now) { $auction -> isEnded = true; } else {$auction -> isEnded = false; }
 
@@ -129,10 +132,16 @@
                     $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
                     $auction -> currentPrice = (float) ($updatedBackendAuction ['currentPrice']);
 
-                    $auctionDuration = $updatedBackendAuction ['auctionDuration'];
-                    $start = $updatedBackendAuction ['startDate'];
+                    $endDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
+                    $auction -> expiryDate = $endDate;
 
-                    $auction -> expiryDate = $this -> calculatedExpiryDate($start, $auctionDuration);
+                    $now = time();
+
+                    $auction -> isEnded =true;
+                    $auction -> isLive =true;
+
+                    if($auction -> startDate < $now) { $auction -> isLive = true; } else {$auction -> isLive = false; }
+                    if($endDate < $now) { $auction -> isEnded = true; } else {$auction -> isEnded = false; }
 
                     $auction -> updatedAt = time();
 
