@@ -6,12 +6,12 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
     /**
-     * Class Auction_6
+     * Class Auction_7
      *
      * @property int $id
      * @property int $createdAt
      * @property int $updatedAt
-     * @property int $variationId
+     * @property int $itemId
      * @property int $startDate
      * @property int $startHour
      * @property int $startMinute
@@ -22,14 +22,14 @@
      * @property boolean $isLive
      * @property array $bidderList
      */
-    class Auction_6 extends Model implements \JsonSerializable {
+    class Auction_7 extends Model implements \JsonSerializable {
 
-        const NAMESPACE = 'PluginAuctions\Models\Auction_6';
+        const NAMESPACE = 'PluginAuctions\Models\Auction_7';
 
         public $id              = 0;
         public $createdAt       = 0;
         public $updatedAt       = 0;
-        public $variationId     = 0;
+        public $itemId     = 0;
         public $startDate       = 0;
         public $startHour       = 19;
         public $startMinute     = 1;
@@ -48,7 +48,7 @@
          */
         public function getTableName() : string
         {
-            return 'PluginAuctions::Auction_6';
+            return 'PluginAuctions::Auction_7';
         }
 
         public function fillByAttributes($attributes)
@@ -76,7 +76,7 @@
                 'id'              => $this -> id,
                 'createdAt'       => $this -> createdAt,
                 'updatedAt'       => $this -> updatedAt,
-                'variationId'     => $this -> variationId,
+                'itemId'     => $this -> itemId,
                 'startDate'       => $this -> startDate,
                 'startHour'       => $this -> startHour,
                 'startMinute'     => $this -> startMinute,
@@ -99,8 +99,8 @@
                     return $this -> createdAt;
                 case 'updatedAt'        :
                     return $this -> updatedAt;
-                case 'variationId'        :
-                    return $this -> variationId;
+                case 'itemId'        :
+                    return $this -> itemId;
                 case 'startDate'        :
                     return $this -> startDate;
                 case 'startHour'        :

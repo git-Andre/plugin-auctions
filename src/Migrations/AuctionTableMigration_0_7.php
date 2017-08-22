@@ -4,12 +4,12 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
     use PluginAuctions\Models\LiveAuction_53;
-    use PluginAuctions\Models\Auction_6;
+    use PluginAuctions\Models\Auction_7;
 
     /**
      * Class CreateAuction_5
      */
-    class AuctionTableMigration_0_6 {
+    class AuctionTableMigration_0_7 {
 
         /**
          * @param Migrate $migrate
@@ -27,13 +27,13 @@
 
             try
             {
-                $migrate -> deleteTable(Auction_6::class);
+                $migrate -> deleteTable(Auction_7::class);
             }
             catch ( \Exception $e )
             {
                 echo $e -> getMessage();
             }
-            $migrate -> createTable(Auction_6::class);
+            $migrate -> createTable(Auction_7::class);
 
         }
     }

@@ -5,7 +5,6 @@
 
     use Plenty\Plugin\Templates\Extensions\Twig_Extension;
     use PluginAuctions\Services\Database\AuctionsService;
-    use PluginAuctions\Services\Database\LiveAuctionsService;
 
     /**
      * Provide services and helper functions to twig engine
