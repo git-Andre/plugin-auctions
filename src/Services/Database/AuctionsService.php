@@ -112,7 +112,8 @@
                 ];
                 $auction -> updatedAt = $auction -> createdAt;
 
-                return $this -> setValue($auction);
+                return "start: $startDate - end: $endDate - now: $now";
+//                return $this -> setValue($auction);
             }
 
             return false;
