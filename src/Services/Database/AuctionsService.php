@@ -86,18 +86,15 @@
                 $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
                 $auction -> currentPrice = (float) ($newBackendAuction ['currentPrice']);
 
-                $auctionDuration = $newBackendAuction ['auctionDuration'];
+                $auctionDuration = $auction -> auctionDuration;
 
-                $start = $newBackendAuction ['startDate'];
+                $startDate = $auction -> startDate;
 
-                $startDate = date_create("@$start");
-                $endDate = date_create("@$start");
+                $endDate = $startDate + $auctionDuration * 24 * 60 * 60;
 
-                $endDate = date_modify($endDate, "+$auctionDuration day");
+                $auction -> expiryDate = $endDate;
 
-                $auction -> expiryDate = strtotime($endDate -> format('T Y-M-d H:i:s'));
-
-                $now = date_create("now");
+                $now = time();
 
                 ($startDate < $now) ? $auction -> isLive = true : $auction -> isLive = false;
                 ($endDate < $now) ? $auction -> isEnded = true : $auction -> isEnded = false;
@@ -168,7 +165,6 @@
          */
         private function calculatedExpiryDate($startDate, $durationInDays) : int
         {
-
             $start = date_create("@$startDate");
             $end = date_create("@$startDate");
 
