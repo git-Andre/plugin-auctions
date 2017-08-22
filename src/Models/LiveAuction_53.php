@@ -4,7 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
-//    use PluginAuctions\Models\Fields\LiveAuctionBidFields;
+//    use PluginAuctions\Models\Fields\AuctionBiddderListFields;
 
     /**
      * Class LiveAuction_53
@@ -25,9 +25,9 @@
         public $isEndedWithBuyNow = false;
         public $bidderList = array ();
 
-//        public $bidderList = [LiveAuctionBidFields::CUSTOMER_EMAIL => 'eme_***_end',
-//                                      LiveAuctionBidFields::BID_PRICE => 0,
-//                                      LiveAuctionBidFields::BID_TIMESTAMP => 1502919564];
+//        public $bidderList = [AuctionBiddderListFields::CUSTOMER_EMAIL => 'eme_***_end',
+//                                      AuctionBiddderListFields::BID_PRICE => 0,
+//                                      AuctionBiddderListFields::BID_TIMESTAMP => 1502919564];
         /**
          * @return string
          */

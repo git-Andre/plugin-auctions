@@ -4,6 +4,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\Auction_7;
+    use PluginAuctions\Models\Fields\AuctionBiddderListFields;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -99,12 +100,12 @@
 
                 $auction -> createdAt = time();
 
-                $auction -> bidderList = ['bidderName'     => 'Startpreis',
-                                          'customerId'     => 0,
-                                          'customerMaxBid' => 0,
-                                          'bidPrice'       => $auction -> currentPrice,
-                                          'bidTimeStamp'   => $auction -> startDate,
-                ];
+                $bidderList = array (AuctionBiddderListFields::class);
+                /** @var TYPE_NAME $bidderList */
+                $bidderList -> $bidPrice = $auction -> currentPrice;
+
+                $auction -> bidderList = [$bidderList];
+
                 $auction -> updatedAt = $auction -> createdAt;
 
                 return $this -> setValue($auction);
