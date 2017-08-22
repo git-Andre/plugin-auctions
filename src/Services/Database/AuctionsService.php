@@ -95,20 +95,8 @@
                 $auction -> isEnded = true;
                 $auction -> isLive = true;
 
-                if ($auction -> startDate < $now)
-                {
-                    $auction -> isLive = true;
-                } else
-                {
-                    $auction -> isLive = false;
-                }
-                if ($endDate < $now)
-                {
-                    $auction -> isEnded = true;
-                } else
-                {
-                    $auction -> isEnded = false;
-                }
+                if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
+                if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
 
                 $auction -> createdAt = time();
 
@@ -183,17 +171,17 @@
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
         }
 
-        /**
-         * @param number $startDate
-         * @param number $durationInDays
-         * @return number
-         */
-        private function calculatedExpiryDate($startDate, $durationInDays) : int
-        {
-            $start = date_create("@$startDate");
-            $end = date_create("@$startDate");
-
-            return strtotime(date_modify($end, "+$durationInDays day") -> format('T Y-M-d H:i:s'));
-        }
+//        /**
+//         * @param number $startDate
+//         * @param number $durationInDays
+//         * @return number
+//         */
+//        private function calculatedExpiryDate($startDate, $durationInDays) : int
+//        {
+//            $start = date_create("@$startDate");
+//            $end = date_create("@$startDate");
+//
+//            return strtotime(date_modify($end, "+$durationInDays day") -> format('T Y-M-d H:i:s'));
+//        }
 
     }
