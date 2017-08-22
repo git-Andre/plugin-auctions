@@ -3,7 +3,7 @@
   "namespace": "PluginAuctions",
   "menuEntries": [
     {
-      "label": "Auktion 1.0.75",
+      "label": "Auktion 1.0.76",
       "menu": "item",
       "urlKey": "auctions",
       "entryPoint": "index.html"
