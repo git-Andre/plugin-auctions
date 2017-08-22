@@ -104,7 +104,7 @@
                 $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
 
                 $auction -> bidderList[1] = pluginApp(AuctionBiddderListFields::class);
-                $auction -> $bidderList[1] -> $bidderName = $auction -> 'HAAAAllo';
+                $auction -> $bidderList[1] -> $bidderName = 'HAAAAllo';
 
                 $auction -> updatedAt = $auction -> createdAt;
 
