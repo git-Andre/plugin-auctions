@@ -102,7 +102,7 @@
 
                 $bidderEntry = pluginApp(AuctionBidderListEntry::class);
 
-                $auction -> bidderList = $bidderEntry ;
+                $auction -> bidderList[0] = $bidderEntry ;
 //                $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
 
                 $auction -> updatedAt = $auction -> createdAt;
