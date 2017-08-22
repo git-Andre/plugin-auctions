@@ -59,7 +59,6 @@
             return [
                 "auctions" => [
                     "auction"     => pluginApp(AuctionsService::class),
-                    "liveAuction" => pluginApp(LiveAuctionsService::class),
                 ]
             ];
         }
