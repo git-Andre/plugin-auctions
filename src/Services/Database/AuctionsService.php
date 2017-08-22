@@ -92,19 +92,27 @@
 
                 $now = time();
 
-                $auction -> isEnded =true;
-                $auction -> isLive =true;
+                $auction -> isEnded = true;
+                $auction -> isLive = true;
 
-                 if($auction -> startDate < $now) { $auction -> isLive = true; } else {$auction -> isLive = false; }
-                 if($endDate < $now) { $auction -> isEnded = true; } else {$auction -> isEnded = false; }
+                if ($auction -> startDate < $now)
+                {
+                    $auction -> isLive = true;
+                } else
+                {
+                    $auction -> isLive = false;
+                }
+                if ($endDate < $now)
+                {
+                    $auction -> isEnded = true;
+                } else
+                {
+                    $auction -> isEnded = false;
+                }
 
                 $auction -> createdAt = time();
 
-                $bidderList = array (AuctionBiddderListFields::class);
-                /** @var TYPE_NAME $bidderList */
-                $bidderList -> $bidPrice = $auction -> currentPrice;
-
-                $auction -> bidderList = [$bidderList];
+                $auction -> bidderList[0] = AuctionBiddderListFields::class;
 
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -138,39 +146,26 @@
 
                     $now = time();
 
-                    $auction -> isEnded =true;
-                    $auction -> isLive =true;
+                    $auction -> isEnded = true;
+                    $auction -> isLive = true;
 
-                    if($auction -> startDate < $now) { $auction -> isLive = true; } else {$auction -> isLive = false; }
-                    if($endDate < $now) { $auction -> isEnded = true; } else {$auction -> isEnded = false; }
+                    if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
+                    if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
 
                     $auction -> updatedAt = time();
 
-                    $auction -> bidderList = ['bidderName'     => 'Startpreis',
-                                              'customerId'     => 0,
-                                              'customerMaxBid' => 0,
-                                              'bidPrice'       => $auction -> currentPrice,
-                                              'bidTimeStamp'   => $auction -> startDate
+                    $bidderList[0] -> $bidPrice = $auction -> currentPrice;
+                    $bidderList[0] -> $bidTimeStamp = $auction -> startDate;
+
                     ];
 
                     return $this -> setValue($auction);
                 }
+
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
+
             return false;
-        }
-
-        /**
-         * @param number $startDate
-         * @param number $durationInDays
-         * @return number
-         */
-        private function calculatedExpiryDate($startDate, $durationInDays) : int
-        {
-            $start = date_create("@$startDate");
-            $end = date_create("@$startDate");
-
-            return strtotime(date_modify($end, "+$durationInDays day") -> format('T Y-M-d H:i:s'));
         }
 
         /**
@@ -188,6 +183,19 @@
             }
 
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
+        }
+
+        /**
+         * @param number $startDate
+         * @param number $durationInDays
+         * @return number
+         */
+        private function calculatedExpiryDate($startDate, $durationInDays) : int
+        {
+            $start = date_create("@$startDate");
+            $end = date_create("@$startDate");
+
+            return strtotime(date_modify($end, "+$durationInDays day") -> format('T Y-M-d H:i:s'));
         }
 
     }
