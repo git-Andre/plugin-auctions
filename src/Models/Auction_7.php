@@ -42,7 +42,7 @@
 
         public $isEnded    = true;
         public $isLive     = true;
-        public $bidderList = [];
+        public $bidderList = array ();
 
 //    private auctions: Auction[] = [];
 

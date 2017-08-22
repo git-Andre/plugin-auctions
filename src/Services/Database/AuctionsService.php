@@ -95,24 +95,12 @@
                 $auction -> isEnded = true;
                 $auction -> isLive = true;
 
-                if ($auction -> startDate < $now)
-                {
-                    $auction -> isLive = true;
-                } else
-                {
-                    $auction -> isLive = false;
-                }
-                if ($endDate < $now)
-                {
-                    $auction -> isEnded = true;
-                } else
-                {
-                    $auction -> isEnded = false;
-                }
+                if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
+                if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
 
                 $auction -> createdAt = time();
 
-                $bidderEntry = new AuctionBidderListEntry;
+                $bidderEntry = pluginApp(AuctionBidderListEntry::class);
 
                 $auction -> bidderList = $bidderEntry ;
 //                $auction -> $bidderList[0] -> $bidPrice = $auction -> currentPrice;
@@ -152,20 +140,8 @@
                     $auction -> isEnded = true;
                     $auction -> isLive = true;
 
-                    if ($auction -> startDate < $now)
-                    {
-                        $auction -> isLive = true;
-                    } else
-                    {
-                        $auction -> isLive = false;
-                    }
-                    if ($endDate < $now)
-                    {
-                        $auction -> isEnded = true;
-                    } else
-                    {
-                        $auction -> isEnded = false;
-                    }
+                    if ($auction -> startDate < $now){$auction -> isLive = true;} else{$auction -> isLive = false;}
+                    if ($endDate < $now){$auction -> isEnded = true;} else{$auction -> isEnded = false;}
 
                     $auction -> updatedAt = time();
 
