@@ -18,24 +18,6 @@
         {
             try
             {
-                $migrate -> deleteTable(Auction_5::class);
-            }
-            catch ( \Exception $e )
-            {
-                echo $e -> getMessage();
-            }
-
-            try
-            {
-                $migrate -> deleteTable(Auction_6::class);
-            }
-            catch ( \Exception $e )
-            {
-                echo $e -> getMessage();
-            }
-
-            try
-            {
                 $migrate -> deleteTable(Auction_7::class);
             }
             catch ( \Exception $e )
