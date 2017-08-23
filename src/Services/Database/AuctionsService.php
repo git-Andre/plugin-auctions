@@ -115,7 +115,7 @@
             {
                 return 'past';
             }
-            elseif ($startDate > $now && $endDate < $now)
+            elseif ($startDate < $now && $endDate > $now)
             {
                 return 'present';
             }
