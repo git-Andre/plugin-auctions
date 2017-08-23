@@ -169,15 +169,15 @@
 
             if ($startDate < $now && $endDate < $now)
             {
-                return $auction -> tense = 'past';
+                return 'past';
             }
             elseif ($startDate > $now && $endDate < $now)
             {
-                return $auction -> tense = 'present';
+                return 'present';
             }
             elseif ($startDate > $now && $endDate > $now)
             {
-                return $auction -> tense = 'future';
+                return 'future';
             }
             return false;
         }
