@@ -159,9 +159,9 @@
         }
 
         /**
-         * @param number $startDate
-         * @param number $durationInDays
-         * @return number
+         * @param $startDate
+         * @param $endDate
+         * @return string
          */
         public function calculateTense($startDate, $endDate) : string
         {
@@ -179,7 +179,7 @@
             {
                 return 'future';
             }
-            return 'Fehler - keine Bedingung erfüllt';
+            return 'Fehler - startDate: '.$startDate.' - endDate: '.$endDate.' - now: ';
         }
 
     }
