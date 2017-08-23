@@ -98,7 +98,35 @@
 
                 return $this -> setValue($auction);
             }
+
             return false;
+        }
+
+        /**
+         * @param $startDate
+         * @param $endDate
+         * @return string
+         */
+        public function calculateTense($startDate, $endDate) : string
+        {
+            $now = time();
+
+            if ($startDate < $now && $endDate < $now)
+            {
+                return 'past';
+            }
+            elseif ($startDate > $now && $endDate < $now)
+            {
+                return 'present';
+            }
+            elseif ($startDate > $now && $endDate > $now)
+            {
+                return 'future';
+            }
+            else
+            {
+                return 'Fehler - startDate: ' . $startDate . ' - endDate: ' . $endDate . ' - now: ' . $now;
+            }
         }
 
         /**
@@ -129,8 +157,10 @@
 
                     return $this -> setValue($auction);
                 }
+
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
+
             return false;
         }
 
@@ -149,30 +179,6 @@
             }
 
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
-        }
-
-        /**
-         * @param $startDate
-         * @param $endDate
-         * @return string
-         */
-        public function calculateTense($startDate, $endDate) : string
-        {
-            $now = time();
-
-            if ($startDate < $now && $endDate < $now)
-            {
-                return 'past';
-            }
-            elseif ($startDate > $now && $endDate < $now)
-            {
-                return 'present';
-            }
-            elseif ($startDate > $now && $endDate > $now)
-            {
-                return 'future';
-            }
-            return 'Fehler - startDate: '.$startDate.' - endDate: '.$endDate.' - now: '.$now;
         }
 
     }

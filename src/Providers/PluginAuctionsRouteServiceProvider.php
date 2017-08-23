@@ -35,16 +35,6 @@
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
             $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
-
-//            $router -> get('api/liveauctions', 'PluginAuctions\Controllers\AuctionsController@getLiveAuctions');
-//
-//            $router -> get('api/liveauctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getLiveAuctionForItemId') -> where('itemId', '\d+');
-//
-//            $router -> get('api/liveauction/{id}', 'PluginAuctions\Controllers\AuctionsController@getLiveAuction') -> where('id', '\d+');
-//            $router -> post('api/liveauction', 'PluginAuctions\Controllers\AuctionsController@createLiveAuction');
-//            $router -> put('api/liveauction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateLiveAuction') -> where('id', '\d+');
-//            $router -> delete('api/liveauction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteLiveAuction') -> where('id', '\d+');
-
             $router -> get('api/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate') -> where('time', '\d+');
             $router -> get('api/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
 
