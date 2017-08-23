@@ -179,7 +179,7 @@
             {
                 return 'future';
             }
-            return false;
+            return 'Fehler - keine Bedingung erfüllt';
         }
 
     }
