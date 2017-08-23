@@ -90,8 +90,6 @@
                 $endDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
                 $auction -> expiryDate = $endDate;
 
-                $now = time();
-
                 $auction -> tense = $this -> calculateTense($auction -> startDate, $endDate);
 
                 $auction -> createdAt = time();
@@ -179,7 +177,7 @@
             {
                 return 'future';
             }
-            return 'Fehler - startDate: '.$startDate.' - endDate: '.$endDate.' - now: ';
+            return 'Fehler - startDate: '.$startDate.' - endDate: '.$endDate.' - now: '.$now;
         }
 
     }
