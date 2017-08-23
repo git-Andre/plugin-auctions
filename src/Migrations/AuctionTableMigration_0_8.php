@@ -9,22 +9,13 @@
     /**
      * Class CreateAuction_5
      */
-    class AuctionTableMigration_0_7 {
+    class AuctionTableMigration_0_8 {
 
         /**
          * @param Migrate $migrate
          */
         public function run(Migrate $migrate)
         {
-            try
-            {
-                $migrate -> deleteTable(LiveAuction_53::class);
-            }
-            catch ( \Exception $e )
-            {
-                echo $e -> getMessage();
-            }
-
             try
             {
                 $migrate -> deleteTable(Auction_7::class);

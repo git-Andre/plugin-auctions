@@ -4,7 +4,6 @@
     namespace PluginAuctions\Models;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Model;
-    use PluginAuctions\Models\Fields\AuctionBidderListEntry;
 
 
     /**
@@ -20,33 +19,28 @@
      * @property int $auctionDuration
      * @property int $expiryDate
      * @property float $currentPrice
-     * @property boolean $isEnded
-     * @property boolean $isLive
+     * @property string $tense
      * @property array $bidderList
      */
     class Auction_7 extends Model implements \JsonSerializable {
 
         const NAMESPACE = 'PluginAuctions\Models\Auction_7';
-
-        public $id              = 0;
-        public $createdAt       = 0;
-        public $updatedAt       = 0;
-        public $itemId     = 0;
+//auto
+        public $id        = 0;
+        public $createdAt = 0;
+        public $updatedAt = 0;
+//input per form
+        public $itemId          = 0;
         public $startDate       = 0;
         public $startHour       = 19;
         public $startMinute     = 1;
         public $auctionDuration = 10;
         public $currentPrice    = 1.99;
+//calculated
+        public $expiryDate = 0;
 
-        public $expiryDate      = 0;
-
-        public $isEnded    = true;
-        public $isLive     = true;
+        public $tense      = "past";
         public $bidderList = array ();
-
-//    private auctions: Auction[] = [];
-
-
 
         /**
          * @return string
@@ -81,7 +75,7 @@
                 'id'              => $this -> id,
                 'createdAt'       => $this -> createdAt,
                 'updatedAt'       => $this -> updatedAt,
-                'itemId'     => $this -> itemId,
+                'itemId'          => $this -> itemId,
                 'startDate'       => $this -> startDate,
                 'startHour'       => $this -> startHour,
                 'startMinute'     => $this -> startMinute,
