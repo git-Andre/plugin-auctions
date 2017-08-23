@@ -96,9 +96,7 @@
 
                 $auction -> createdAt = time();
 
-                $bidderEntry = pluginApp(AuctionBidderListEntry::class);
-
-                $auction -> bidderList[0] = $bidderEntry;
+                $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
 
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -129,9 +127,6 @@
 
                     $endDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
                     $auction -> expiryDate = $endDate;
-
-                    $auction -> isEnded = true;
-                    $auction -> isLive = true;
 
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $endDate);
 
@@ -172,15 +167,15 @@
         {
             $now = time();
 
-            if ($auction -> startDate < $now && $endDate < $now)
+            if ($startDate < $now && $endDate < $now)
             {
                 return $auction -> tense = 'past';
             }
-            elseif ($auction -> startDate > $now && $endDate < $now)
+            elseif ($startDate > $now && $endDate < $now)
             {
                 return $auction -> tense = 'present';
             }
-            elseif ($auction -> startDate > $now && $endDate > $now)
+            elseif ($startDate > $now && $endDate > $now)
             {
                 return $auction -> tense = 'future';
             }
