@@ -76,9 +76,7 @@
         {
             if ($newBackendAuction)
             {
-
                 $auction = pluginApp(Auction_7::class);
-
 
                 $auction -> itemId = $newBackendAuction ['itemId'];
                 $auction -> startDate = $newBackendAuction ['startDate'];
@@ -100,14 +98,13 @@
 
                 return $this -> setValue($auction);
             }
-
             return false;
         }
 
         /**
          * @param $id
-         * @param $auctionData
-         * @return string
+         * @param $updatedBackendAuction
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
         public function updateAuction($id, $updatedBackendAuction)
         {
@@ -132,10 +129,8 @@
 
                     return $this -> setValue($auction);
                 }
-
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
-
             return false;
         }
 

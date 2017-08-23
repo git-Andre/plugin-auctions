@@ -112,4 +112,12 @@
         {
             return json_encode(date('d.m.Y H:i:s e', $time));
         }
+
+        /**
+         * @return AuctionsService
+         */
+        public function calculateTense($start, $end) : string
+        {
+            return $this -> auctionsService ->calculateTense($start, $end);
+        }
     }
