@@ -82,7 +82,7 @@
                 'auctionDuration' => $this -> auctionDuration,
                 'expiryDate'      => $this -> expiryDate,
                 'currentPrice'    => $this -> currentPrice,
-                'tense'          => $this -> tense,
+                'tense'           => $this -> tense,
                 'bidderList'      => $this -> bidderList,
             ];
         }
@@ -111,8 +111,6 @@
                     return $this -> expiryDate;
                 case 'currentPrice'        :
                     return $this -> currentPrice;
-                case 'isEnded'        :
-                    return $this -> isEnded;
                 case 'tense'        :
                     return $this -> tense;
                 case 'bidderList'        :
