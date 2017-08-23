@@ -110,6 +110,6 @@
          */
         public function formatDate($time)
         {
-            return date('d.m.Y H:i:s', $time);
+            return json_encode(date('d.m.Y H:i:s e', $time));
         }
     }
