@@ -1,26 +1,27 @@
 {
-    "version"           :   "0.8.2",
-    "license"           :   "MIT",
-    "name"              :   "PluginAuctions",
-    "shortDescription"  :   "Auktionen für Plentymarkets Ceres Webshops",
-    "namespace"         :   "PluginAuctions",
-    "author"            :   "Andre Oelschlaegel",
-    "price"             :   "0",
-    "categories"        :   "[]",
-    "type"              :   "general",
-    "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
-    "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_8"],
-    "dataProviders": [
+    "version"          : "0.8.3",
+    "license"          : "MIT",
+    "name"             : "PluginAuctions",
+    "shortDescription" : "Auktionen für Plentymarkets Ceres Webshops",
+    "namespace"        : "PluginAuctions",
+    "author"           : "Andre Oelschlaegel",
+    "price"            : "0",
+    "categories"       : "[]",
+    "type"             : "general",
+    "serviceProvider"  : "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
+    "runOnBuild"       : [
+        "PluginAuctions\\Migrations\\AuctionTableMigration_0_8"
+    ],
+    "dataProviders"    : [
         {
-            "key": "PluginAuctions\\Containers\\SingleItemAuctionContainer",
-            "name": "SingleItemAuction",
-            "description": "Schaffrath SingleItemPlug für Auktionen"
+            "key"         : "PluginAuctions\\Containers\\SingleItemAuctionContainer",
+            "name"        : "SingleItemAuction",
+            "description" : "Schaffrath SingleItemPlug für Auktionen"
         },
         {
-            "key": "PluginAuctions\\Containers\\VueComponentAuctionContainer",
-            "name": "VueComponentAuction",
-            "description": "Auction Vue Component JS-Script"
+            "key"         : "PluginAuctions\\Containers\\VueComponentAuctionContainer",
+            "name"        : "VueComponentAuction",
+            "description" : "Auction Vue Component JS-Script"
         }
-    ],
-
+    ]
 }

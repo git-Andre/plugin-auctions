@@ -1,8 +1,7 @@
-{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
+{#{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}#}
 
 
-{% set test = LayoutContainer.SingleItem.BeforePrice %}
-<p>{{ test }}</p>
+<p>{{ item | json_encode }}</p>
 
 
 <h1>
