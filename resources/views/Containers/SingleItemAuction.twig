@@ -8,7 +8,7 @@
 {% set basePriceList = getBasePriceList( services.item.getVariationList( item.documents[0].data.item.id  ) ) %}
 {#ao Variables #}
 {% set itemMain = item.documents[0].data %}
-{% set itemGetVariation = services.item.getVariation(item.documents[0].data.variation.id) %}
+{% set itemGetVariation = services.item.getVariation(7911) %}
 {% set itemVariationData = itemGetVariation.documents[0].data %}
 
 <p>{{ itemData }}</p>
@@ -30,7 +30,7 @@
     {% include "PluginAuctions::VarDump" with { 'dumpData': auction | json_encode() } %}
     {% include "PluginAuctions::VarDump" with { 'itemId': itemId } %}
 
-<div id="auction">
+<div id="auction" variation-id="{{ item.documents[0].data.variation.id }}">
 
 
 </div>
