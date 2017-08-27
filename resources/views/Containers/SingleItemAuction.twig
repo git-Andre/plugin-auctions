@@ -11,12 +11,12 @@
 {% set itemGetVariation = services.item.getVariation(7911) %}
 {% set itemVariationData = itemGetVariation.documents[0].data %}
 
-<p>{{ itemData }}</p>
-<p>{{ configItemName }}</p>
-<p>{{ variations }}</p>
-<p>{{ basePriceList }}</p>
-<p>{{ itemMain }}</p>
-<p>{{ itemVariationData }}</p>
+<p>{{ itemData | json_encode() }}</p>
+<p>{{ configItemName | json_encode() }}</p>
+<p>{{ variations | json_encode() }}</p>
+<p>{{ basePriceList | json_encode() }}</p>
+<h3>{{ itemMain | json_encode() }}</h3>
+<p>{{ itemVariationData | json_encode() }}</p>
 
 <h1>
     {# ao Var-Dump #}
