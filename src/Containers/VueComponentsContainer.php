@@ -8,6 +8,6 @@
 
         public function call(Twig $twig) : string
         {
-            return $twig -> render('CeresSchaffrath::Containers.VueComponentAuction');
+            return $twig -> render('PluginAuctions::Containers.VueComponentAuction');
         }
     }
