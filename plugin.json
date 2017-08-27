@@ -12,8 +12,8 @@
     "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_8"],
     "dataProviders": [
         {
-            "key": "PluginAuctions\\Containers\\SingleItemAuctionsContainer",
-            "name": "SingleItemAuctions",
+            "key": "PluginAuctions\\Containers\\SingleItemAuctionContainer",
+            "name": "SingleItemAuction",
             "description": "Schaffrath SingleItemPlug für Auktionen"
         },
         {
