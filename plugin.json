@@ -17,7 +17,7 @@
             "description": "Schaffrath SingleItemPlug für Auktionen"
         },
         {
-            "key": "PluginAuctions\\Containers\\VueComponentsContainer",
+            "key": "PluginAuctions\\Containers\\VueComponentAuctionContainer",
             "name": "VueComponentAuction",
             "description": "Auction Vue Component JS-Script"
         }

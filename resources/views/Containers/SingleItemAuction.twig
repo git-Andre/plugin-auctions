@@ -6,7 +6,7 @@
     Anfang
 </h1>
 {% set auction = auctions.auction.getAuctionForItemId(item.documents[0].data.item.id) %}
-{% set itemId = item.documents[0].data.item.id) %}
+{% set itemId = item.documents[0].data.item.id %}
 <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
 

@@ -4,7 +4,7 @@
 
     use Plenty\Plugin\Templates\Twig;
 
-    class VueComponentsContainer {
+    class VueComponentAuctionContainer {
 
         public function call(Twig $twig) : string
         {
