@@ -5,7 +5,13 @@
     {# ao Var-Dump #}
     Anfang
 </h1>
-    {% include "PluginAuctions::VarDump" with { 'dumpData': item.documents[0].data } %}
+{% set auction = auctions.auction.getAuctionForItemId(item.documents[0].data.item.id) %}
+{% set itemId = item.documents[0].data.item.id) %}
+<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+
+
+    {% include "PluginAuctions::VarDump" with { 'dumpData': auction } %}
+    {% include "PluginAuctions::VarDump" with { 'itemId': itemId } %}
 
 <div id="auction">
 
