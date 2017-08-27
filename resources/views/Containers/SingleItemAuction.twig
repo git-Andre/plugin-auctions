@@ -1,5 +1,22 @@
 
+{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
 
+{% set itemData = config("Ceres.item.data") | split(', ') %}
+{% set configItemName = config("Ceres.item.name") %}
+{% set enabledRoutes = config("IO.routing.enabled_routes") | split(', ') %}
+{% set variations = services.item.getVariationAttributeMap( item.documents[0].data.item.id  ) %}
+{% set basePriceList = getBasePriceList( services.item.getVariationList( item.documents[0].data.item.id  ) ) %}
+{#ao Variables #}
+{% set itemMain = item.documents[0].data %}
+{% set itemGetVariation = services.item.getVariation(item.documents[0].data.variation.id) %}
+{% set itemVariationData = itemGetVariation.documents[0].data %}
+
+<p>{{ itemData }}</p>
+<p>{{ configItemName }}</p>
+<p>{{ variations }}</p>
+<p>{{ basePriceList }}</p>
+<p>{{ itemMain }}</p>
+<p>{{ itemVariationData }}</p>
 
 <h1>
     {# ao Var-Dump #}
@@ -10,7 +27,7 @@
 <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
 
-    {% include "PluginAuctions::VarDump" with { 'dumpData': auction } %}
+    {% include "PluginAuctions::VarDump" with { 'dumpData': auction | json_encode() } %}
     {% include "PluginAuctions::VarDump" with { 'itemId': itemId } %}
 
 <div id="auction">
