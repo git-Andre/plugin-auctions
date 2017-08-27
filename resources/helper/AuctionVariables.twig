@@ -1,0 +1,49 @@
+{% if( auction ) %}
+
+    <p>{{ auction }}</p>
+    <h1>Auktion:</h1>
+
+    <dl class="itemDefList">
+        <dt>Id:</dt>
+        <dd>{{ auction.id }} </dd>
+
+        <dt>itemId:</dt>
+        <dd>{{ auction.itemId }} </dd>
+
+        <dt>Start Datum:</dt>
+        <dd>{{ auction.startDate | date('d.M.Y H:i:s') }} Uhr</dd>
+        <dt>End Datum:</dt>
+        <dd>{{ auction.expiryDate }}</dd>
+
+        <dt>Laufzeit:</dt>
+        <dd>{{ auction.auctionDuration }} Tage</dd>
+
+        <dt>Start Preis:</dt>
+        <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+
+        {% set bidderListLast = auction.bidderList | last %}
+        {% set bidderListLength = auction.bidderList | length %}
+
+        <dt>bidderListLength:</dt>
+        <dd>{{ bidderListLength }}</dd>
+
+        <dt>bidderList:</dt>
+        <dd>{{ bidderListLast | json_encode }}</dd>
+
+        <dt>last bidderName:</dt>
+        <dd>{{ bidderListLast.bidderName }}</dd>
+
+        <dt>last customerId:</dt>
+        <dd>{{ bidderListLast.customerId }}</dd>
+
+        <dt>last customerMaxBid:</dt>
+        <dd>{{ bidderListLast.customerMaxBid | formatMonetary('EUR') }}</dd>
+
+        <dt>last bidPrice:</dt>
+        <dd>{{ bidderListLast.bidPrice | formatMonetary('EUR')  }}</dd>
+
+        <dt>last bidTimeStamp:</dt>
+        <dd>{{ bidderListLast.bidTimeStamp | date('d.m.Y H:i:s') }}</dd>
+
+    </dl>
+{% endif %}
