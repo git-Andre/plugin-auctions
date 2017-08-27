@@ -11,24 +11,23 @@
 {% set itemGetVariation = services.item.getVariation(7911) %}
 {% set itemVariationData = itemGetVariation.documents[0].data %}
 
-<p>{{ itemData | json_encode() }}</p>
-<p>{{ configItemName | json_encode() }}</p>
-<p>{{ variations | json_encode() }}</p>
-<p>{{ basePriceList | json_encode() }}</p>
-<h3>{{ itemMain | json_encode() }}</h3>
-<p>{{ itemVariationData | json_encode() }}</p>
+<p>{{ itemId | json_encode() }}</p>
+<p>{{ itemId }}</p>
+
+{{ LayoutContainer.show(itemId) }}
 
 <h1>
     {# ao Var-Dump #}
     Anfang
 </h1>
-{% set auction = auctions.auction.getAuctionForItemId(item.documents[0].data.item.id) %}
-{% set itemId = item.documents[0].data.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{% set itemIds = item.documents[0].data.item.id %}
 <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
 
     {% include "PluginAuctions::VarDump" with { 'dumpData': auction | json_encode() } %}
     {% include "PluginAuctions::VarDump" with { 'itemId': itemId } %}
+    {% include "PluginAuctions::VarDump" with { 'itemIds': itemIds } %}
 
 <div id="auction" variation-id="{{ item.documents[0].data.variation.id }}">
 
