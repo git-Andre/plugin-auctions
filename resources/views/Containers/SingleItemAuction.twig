@@ -1,7 +1,13 @@
 {#{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}#}
 
 
-<p>{{ item | json_encode }}</p>
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'item', 'dumpData': item } %}
+{% set auction = auctions.auction.getAuctionForItemId(item.id) %}
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
 
 
 <h1>
