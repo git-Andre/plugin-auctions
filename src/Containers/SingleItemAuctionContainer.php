@@ -9,7 +9,7 @@
 
         public function call(Twig $twig, $arg):string
         {
-            return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["itemData" => $arg[0]]);
+            return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["item" => $arg[0]]);
         }
 
     }

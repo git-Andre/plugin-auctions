@@ -2,8 +2,8 @@
 
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData', 'dumpData': itemData } %}
-{% set auction = auctions.auction.getAuctionForItemId(itemData.item.id) %}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'item', 'dumpData': item } %}
+{% set auction = auctions.auction.getAuctionForItemId(item.item.id) %}
 
 
 {# ao Var-Dump #}
