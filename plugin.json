@@ -1,5 +1,5 @@
 {
-    "version"           :   "0.7.0",
+    "version"           :   "0.8.1",
     "license"           :   "MIT",
     "name"              :   "PluginAuctions",
     "shortDescription"  :   "Auktionen für Plentymarkets Ceres Webshops",
@@ -9,5 +9,17 @@
     "categories"        :   "[]",
     "type"              :   "general",
     "serviceProvider"   :   "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
-    "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_8"]
+    "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_8"],
+    "dataProviders": [
+        {
+            "key": "CeresSchaffrath\\Containers\\SingleItemAuctionsContainer",
+            "name": "SingleItemAuctions",
+            "description": "Schaffrath SingleItemPlug für Auktionen"
+        },
+        {
+            "key": "CeresSchaffrath\\Containers\\VueComponentsContainer",
+            "name": "VueComponentAuction",
+            "description": "Auction Vue Component JS-Script"
+        }
+    ]
 }
