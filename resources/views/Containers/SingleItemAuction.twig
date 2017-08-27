@@ -2,12 +2,12 @@
 
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}
+{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}
 {% set auction = auctions.auction.getAuctionForItemId(itemData.item.id) %}
 
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction | json_encode } %}
+{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
 
 
 <h1>
@@ -17,7 +17,7 @@
 
 <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
-<div id="auction" >
+<div id="auction" variationId="itemData.item.id" >
 
 
 </div>
