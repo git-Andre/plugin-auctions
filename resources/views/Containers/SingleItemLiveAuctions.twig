@@ -7,29 +7,42 @@
     {% include "PluginAuctions::VarDump" with { 'dumpData': item.documents[0] } %}
 </h1>
 
-
-<span class="price h1">
-                <span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.default.price"
-                        :filters="['currency']"
-                        content="{{ item.documents[0].data.calculatedPrices.default.price }}">
-                        {{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}
-                    </span>
-                    <sup>*</sup>
-                    <span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>
-                </span>
-
-<span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"
-        v-availability-class:currentVariation>
-                    <span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">
-                        {{ item.documents[0].data.variation.availability.names.name }}
-                    </span>
-                </span>
-
-<div class="row m-y-1">
+<auction></auction>
 
 
 
-    {#<add-to-basket template="#vue-add-to-basket" v-resource-push:item data-accessor="true"#}
-            {#resource="currentVariation" :show-quantity="true"></add-to-basket>#}
 
-</div>
+{#Preise#}
+{#<span class="price h1">#}
+                    {#<span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.formatted.defaultPrice"#}
+                            {#content="{{ item.documents[0].data.calculatedPrices.default.price }}">#}
+                        {#{{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}#}
+                    {#</span>#}
+                    {#<sup>*</sup>#}
+                    {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
+                    {#</span>#}
+
+{#{{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}#}
+
+{#<span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"#}
+        {#v-availability-class:currentVariation>#}
+                    {#<span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">#}
+                        {#{{ item.documents[0].data.variation.availability.names.name }}#}
+                    {#</span>#}
+                    {#</span>#}
+
+{#<div class="row m-y-1">#}
+
+    {#{{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}#}
+
+    {#<add-to-basket template="#vue-add-to-basket"#}
+            {#v-resource-if:currentVariation="documents[0].data.filter.isSalable"#}
+            {#v-resource-push:item#}
+            {#data-accessor="true"#}
+            {#resource="currentVariation"#}
+            {#:show-quantity="true"#}
+            {#:show-order-properties="true"></add-to-basket>#}
+
+
+    {#{{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data) }}#}
+{#</div>#}

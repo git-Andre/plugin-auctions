@@ -12,12 +12,12 @@
     "runOnBuild"        :   ["PluginAuctions\\Migrations\\AuctionTableMigration_0_8"],
     "dataProviders": [
         {
-            "key": "CeresSchaffrath\\Containers\\SingleItemAuctionsContainer",
+            "key": "PluginAuctions\\Containers\\SingleItemAuctionsContainer",
             "name": "SingleItemAuctions",
             "description": "Schaffrath SingleItemPlug für Auktionen"
         },
         {
-            "key": "CeresSchaffrath\\Containers\\VueComponentsContainer",
+            "key": "PluginAuctions\\Containers\\VueComponentsContainer",
             "name": "VueComponentAuction",
             "description": "Auction Vue Component JS-Script"
         }
