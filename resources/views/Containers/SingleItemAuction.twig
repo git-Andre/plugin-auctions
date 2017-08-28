@@ -44,6 +44,8 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
             {% endif %}
+            <dt>Dauer:</dt>
+            <dd>{{ auction.auctionDuration }} Tage</dd>
             <dt>Ablaufdatum:</dt>
             <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
             <dt>Artikel ID:</dt>
