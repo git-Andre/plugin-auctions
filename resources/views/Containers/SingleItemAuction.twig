@@ -1,59 +1,133 @@
 {#{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}#}
 
+{% set itemId = itemData.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {# ao Var-Dump #}
 {% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}
-{% set auction = auctions.auction.getAuctionForItemId(itemData.item.id) %}
-
-
-{# ao Var-Dump #}
 {% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
 
+{% if ( auction is not null ) %}
 
-<h1>
-    {# ao Var-Dump #}
-    Anfang
-</h1>
+    {% set bidderListLast = auction.bidderList | last %}
+    {% set bidderListLength = auction.bidderList | length %}
 
-<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+    {% if (auction.tense == 'future') %}
 
-<div id="auction" variationId="itemData.item.id" >
+        <h1>Anfang Vue</h1>
 
+        <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
-</div>
-
-
-{#Preise#}
-{#<span class="price h1">#}
-                    {#<span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.formatted.defaultPrice"#}
-                            {#content="{{ item.documents[0].data.calculatedPrices.default.price }}">#}
-                        {#{{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}#}
-                    {#</span>#}
-                    {#<sup>*</sup>#}
-                    {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
-                    {#</span>#}
-
-{#{{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}#}
-
-{#<span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"#}
-        {#v-availability-class:currentVariation>#}
-                    {#<span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">#}
-                        {#{{ item.documents[0].data.variation.availability.names.name }}#}
-                    {#</span>#}
-                    {#</span>#}
-
-{#<div class="row m-y-1">#}
-
-    {#{{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}#}
-
-    {#<add-to-basket template="#vue-add-to-basket"#}
-            {#v-resource-if:currentVariation="documents[0].data.filter.isSalable"#}
-            {#v-resource-push:item#}
-            {#data-accessor="true"#}
-            {#resource="currentVariation"#}
-            {#:show-quantity="true"#}
-            {#:show-order-properties="true"></add-to-basket>#}
+        <div id="auction" variationId="itemData.item.id">
 
 
-    {#{{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data) }}#}
-{#</div>#}
+        </div>
+
+        {#<auction></auction>  #}{#  template="#vue-auction"  isActive="true" #}
+
+    {% elseif (auction.tense == 'present') %}
+        {#<span class="price h1">#}
+        {#<span v-resource-bind:currentAuction="auction.currentPrice"#}
+        {#content="{{ auction.currentPrice }}">#}
+        {#{{ auction.currentPrice | formatMonetary('EUR') }}#}
+        {#</span>#}
+        {#<sup>*</sup>#}
+        {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
+        {#</span>#}
+
+
+        <h2 class="m-b-2">Laufende Auktion:</h2>
+
+        {#| date("d \\T\\a\\g\\e H:i:s")#}
+        <dl class="auctionList">
+            {% if (bidderListLast.currentPrice != 0) %}
+                <dt>Aktuelles Gebot:</dt>
+                <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
+                <dt>Start Preis:</dt>
+                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+            {% else %}
+                <dt>Start Preis:</dt>
+                <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+            {% endif %}
+            <dt>Ablaufdatum:</dt>
+            <dd>{{ auction.expiryDate | date('D d.M.Y H:i:s e') }}</dd>
+            <dt>Artikel ID:</dt>
+            <dd>{{ auction.itemId }}</dd>
+            <dt>Versandpreis:</dt>
+            <dd>muß noch gefunden werden...</dd>
+            {% if bidderListLength != 1 %}
+                <dt>Anzahl Gebote:</dt>
+                <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+            {% endif %}
+            <div class="m-t-3">
+                <dt>Restzeit:</dt>
+                <dd class="countDown">{{ "5d, 5h:33min" }}</dd>
+            </div>
+        </dl>
+
+        <div class="row m-b-3">
+            <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
+
+                <input class="form-control form-control-lg text-muted"
+                        type="number"
+                        id="maximumBid"
+                        placeholder="Ihr Maximalgebot"
+                        aria-describedby="maxBidHelpBlock">
+                <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
+                                                                                  mindestens {{ bidderListLast.bidPrice + 1 }}
+                                                                                  EUR ein!</p>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
+
+            </div>
+
+        </div>
+
+    {% elseif (auction.tense == 'past') %}
+        <h2>NACH der Auktion</h2>
+
+
+    {% endif %}
+
+{% else %}
+
+    {#Preis#}
+    <span class="price h1">
+    <span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.formatted.defaultPrice"
+            content="{{ item.documents[0].data.calculatedPrices.default.price }}">
+    {{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}
+    </span>
+    <sup>*</sup>
+    <span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>
+    </span>
+
+
+    {{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}
+
+    <span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"
+            v-availability-class:currentVariation>
+    <span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">
+    {{ item.documents[0].data.variation.availability.names.name }}
+    </span>
+    </span>
+
+    <div class="row m-y-1">
+
+        {{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}
+
+        <add-to-basket template="#vue-add-to-basket"
+                v-resource-if:currentVariation="documents[0].data.filter.isSalable"
+                v-resource-push:item
+                data-accessor="true"
+                resource="currentVariation"
+                :show-quantity="false"
+                :show-order-properties="true"></add-to-basket>
+
+
+        {{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data) }}
+    </div>
+
+{% endif %}
+
+
+
+
