@@ -1,3 +1,28 @@
+//{
+//  "presets": ["es2015"]
+//}
+//{
+//  "plugins": ["transform-es2015-modules-commonjs"]
+//}
+
+//{
+//  "env": {
+//    "test": {
+//      "presets": ["es2015-node4"]
+//    }
+//  },
+//  "presets": [
+//    [
+//      "env",
+//      {
+//        "targets": {
+//          "browsers": ["> 10%"]
+//        },
+//        "modules": false
+//      }
+//    ]
+//  ]
+//}
 {
-  "presets": ["es2015"]
+  "presets": ["env"]
 }
