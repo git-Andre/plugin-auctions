@@ -57,9 +57,39 @@
             {% endif %}
         </dl>
         {#Vue Start#}
-        <div id="auction" resource="currentAuction">
+        <div id="auction">
+            <dl class="auctionList">
 
+                <div class="m-t-3">
+                    <dt>Restzeit:</dt>
+                    <dd class="countDown">{{ "5d, 5h:33min" }}</dd>
+                </div>
+            </dl>
+            <div class="row m-b-3">
+                <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
 
+                    <input class="form-control form-control-lg text-muted"
+                            type="number"
+                            id="maximumBid"
+                            placeholder="Ihr Maximalgebot"
+                            aria-describedby="maxBidHelpBlock">
+                    <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
+                                                                                      mindestens {{ bidderListLast.bidPrice +
+                        1 }}
+                                                                                      EUR ein!</p>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
+
+                </div>
+
+            </div>
+            <h3>{{ bidderList | jsonencode }}</h3>
+            <p>{{ data | jsonencode }}</p>
+            <p>{{ itemId }}</p>
+        </div>
+
+        <div id="auction"
+                v-resource-push: auction data-accessor="true">
+                resource="currentAuction"
         </div>
 
 
