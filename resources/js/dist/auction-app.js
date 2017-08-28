@@ -10454,12 +10454,6 @@ Vue.component("auction-bids", {
         // console.log( "data: " + this.bidderList );
     }
 });
-new Vue({
-    el: '#addAuctionVue',
-    components: {
-        // AuctionBids
-    }
-});
 
 // const AuctionBids = require("./components/auction/AuctionBids");
 
@@ -10470,7 +10464,6 @@ new Vue({
 // }
 
 },{"vue":2}]},{},[3])
-
 
 
 
