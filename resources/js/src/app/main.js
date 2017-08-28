@@ -5,8 +5,12 @@
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
+import Vue from 'vue'
+import App from './App.vue'
+
+
 new Vue({
-            el: '#root',
+            el: '#body',
             render: h => h(App)
         })
 // var init = (function($, window, document)
