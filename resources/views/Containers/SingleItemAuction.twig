@@ -1,4 +1,3 @@
-{#{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}#}
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
@@ -29,7 +28,7 @@
             <dt>Versandpreis:</dt>
             <dd>muß noch gefunden werden...</dd>
         </dl>
-
+{#Gegenwart#}
     {% elseif (auction.tense == 'present') %}
 
         <h2 class="m-b-2">Laufende Auktion:</h2>
@@ -55,13 +54,10 @@
                 <dt>Anzahl Gebote:</dt>
                 <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
             {% endif %}
-        </dl>
 
-        <dl class="auctionList">
-
-            <div class="m-t-3">
+            <div class="m-t-1">
                 <dt>Restzeit:</dt>
-                <dd class="countDown">{{ "5d, 5h:33min" }}</dd>
+                <dd class="countDown">{{ auction.expiryDate - auction.startDate | date('d H:i:s') }}</dd>
             </div>
         </dl>
         <div class="row m-b-3">
@@ -73,8 +69,7 @@
                         placeholder="Ihr Maximalgebot"
                         aria-describedby="maxBidHelpBlock">
                 <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
-                                                                                  mindestens {{ bidderListLast.bidPrice +
-                    1 }}
+                                                                                  mindestens {{ bidderListLast.bidPrice + 1 }}
                                                                                   EUR ein!</p>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
 
@@ -87,7 +82,7 @@
             resource="currentAuction"
         </div>
 
-
+{#Vergangenheit #}
     {% elseif (auction.tense == 'past') %}
         <h2 class="m-b-2">Beendete Auktion:</h2>
 
@@ -115,7 +110,7 @@
 
 
     {% endif %}
-
+{#Ende Auction#}
 {% else %}
 
     {#Preis#}
