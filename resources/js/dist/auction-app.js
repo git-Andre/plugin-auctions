@@ -579,6 +579,107 @@ module.exports =
 var ApiService = require("services/ApiService");
 var ResourceService = require("services/ResourceService");
 
+Vue.component("auction", {
+
+    props: ["bidderList", "itemId", "item"],
+    data: function data() {
+        return {
+            // itemId: this.itemId,
+            // bidderList: this.bidderList,
+        };
+    },
+    created: function created() {},
+    ready: function ready() {
+        this.itemId = item.itemId;
+        this.bidderList = item.bidderList;
+        alert(this.itemId);
+        console.log('this.itemId: ' + this.itemId);
+        console.log('data: ' + this.bidderList);
+    }
+
+    // props: [
+    //     "template",
+    //     "wishListIds"
+    // ],
+    //
+    // data()
+    // {
+    //     return {
+    //         wishListItems: [],
+    //         isLoading: false,
+    //         wishListCount: {}
+    //     };
+    // },
+    //
+    // created()
+    // {
+    //     this.$options.template = this.template;
+    // },
+    //
+    // ready()
+    // {
+    //     ResourceService.bind("wishListCount", this);
+    //
+    //     this.getWishListItems();
+    // },
+    //
+    // methods:
+    // {
+    //     removeWishListItem(wishListItem, index)
+    //     {
+    //         ApiService.delete("/rest/io/itemWishList/" + wishListItem.data.variation.id)
+    //             .done(data =>
+    //             {
+    //                 // remove this in done to prevent no items in this list label to be shown
+    //                 this.wishListIds.splice(this.wishListIds.indexOf(wishListItem.data.variation.id), 1);
+    //                 this.updateWatchListCount(parseInt(this.wishListCount.count) - 1);
+    //
+    //             })
+    //             .fail(error =>
+    //             {
+    //                 this.wishListItems.splice(index, 0, wishListItem);
+    //             });
+    //
+    //         this.wishListItems.splice(index, 1);
+    //     },
+    //
+    //     getWishListItems()
+    //     {
+    //         if (this.wishListIds[0])
+    //         {
+    //             this.isLoading = true;
+    //
+    //             ApiService.get("/rest/io/variations/", {variationIds: this.wishListIds, template: "Ceres::WishList.WishList"})
+    //                 .done(data =>
+    //                 {
+    //                     this.wishListItems = data.documents;
+    //
+    //                     this.isLoading = false;
+    //                 })
+    //                 .fail(() =>
+    //                 {
+    //                     this.isLoading = false;
+    //                 });
+    //         }
+    //     },
+    //
+    //     updateWatchListCount(count)
+    //     {
+    //         if (count >= 0)
+    //         {
+    //             ResourceService.getResource("wishListCount").set({count: count});
+    //         }
+    //     }
+    // }
+
+});
+
+},{"services/ApiService":17,"services/ResourceService":19}],5:[function(require,module,exports){
+"use strict";
+
+var ApiService = require("services/ApiService");
+var ResourceService = require("services/ResourceService");
+
 Vue.component("wish-list", {
 
     props: ["template", "wishListIds"],
@@ -637,7 +738,7 @@ Vue.component("wish-list", {
     }
 });
 
-},{"services/ApiService":16,"services/ResourceService":18}],5:[function(require,module,exports){
+},{"services/ApiService":17,"services/ResourceService":19}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -647,21 +748,21 @@ var exceptionMap = exports.exceptionMap = new Map([["1", "basketItemNotAdded"], 
 
 exports.default = exceptionMap;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Vue.filter("arrayFirst", function (array) {
     return array[0];
 });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Vue.filter("attachText", function (item, text) {
     return text + item;
 });
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 var ResourceService = require("services/ResourceService");
@@ -693,7 +794,7 @@ Vue.filter("currency", function (price, customCurrency) {
     return accounting.formatMoney(price, options);
 });
 
-},{"accounting":1,"currency-symbol-map":2,"services/ResourceService":18}],9:[function(require,module,exports){
+},{"accounting":1,"currency-symbol-map":2,"services/ResourceService":19}],10:[function(require,module,exports){
 "use strict";
 
 // for docs see https://github.com/brockpetrie/vue-moment
@@ -825,7 +926,7 @@ var dateFilter = function dateFilter() {
 Vue.filter("moment", dateFilter);
 Vue.filter("date", dateFilter);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Vue.filter("itemImage", function (itemImages, highestPosition) {
@@ -848,7 +949,7 @@ Vue.filter("itemImage", function (itemImages, highestPosition) {
     }).url;
 });
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Vue.filter("itemImages", function (images, accessor) {
@@ -868,7 +969,7 @@ Vue.filter("itemImages", function (images, accessor) {
     return imageUrls;
 });
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 Vue.filter("itemName", function (item, selectedName) {
@@ -883,7 +984,7 @@ Vue.filter("itemName", function (item, selectedName) {
     return item.name1;
 });
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 Vue.filter("itemURL", function (item) {
@@ -905,7 +1006,7 @@ Vue.filter("itemURL", function (item) {
     return link + item.item.id + "_" + item.variation.id;
 });
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Vue.filter("propertySurcharge", function (properties, propertyId) {
@@ -924,7 +1025,7 @@ Vue.filter("propertySurcharge", function (properties, propertyId) {
     return 0;
 });
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 Vue.filter("truncate", function (string, value) {
@@ -934,7 +1035,7 @@ Vue.filter("truncate", function (string, value) {
     return string;
 });
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -1070,7 +1171,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":17,"services/WaitScreenService":19}],17:[function(require,module,exports){
+},{"services/NotificationService":18,"services/WaitScreenService":20}],18:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1237,7 +1338,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1702,7 +1803,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":16}],19:[function(require,module,exports){
+},{"services/ApiService":17}],20:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -1745,12 +1846,20 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[4,5,6,7,8,9,10,11,12,13,14,15])
+},{}]},{},[4,5,6,7,8,9,10,11,12,13,14,15,16])
 
 
 // Frontend end scripts
 // eslint-disable-next-line
+// import Vue from 'vue'
+// import App from './App.vue'
+// const ApiService      = require("services/ApiService");
+// const ResourceService = require("services/ResourceService");
 
+new Vue({
+            el: '#root',
+            render: h => h(App)
+        })
 // var init = (function($, window, document)
 // {
 //

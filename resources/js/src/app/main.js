@@ -1,6 +1,14 @@
 // Frontend end scripts
 // eslint-disable-next-line
+// import Vue from 'vue'
+// import App from './App.vue'
+// const ApiService      = require("services/ApiService");
+// const ResourceService = require("services/ResourceService");
 
+new Vue({
+            el: '#root',
+            render: h => h(App)
+        })
 // var init = (function($, window, document)
 // {
 //

@@ -1,7 +1,7 @@
 const ApiService      = require("services/ApiService");
 const ResourceService = require("services/ResourceService");
 
-Vue.component("auction", {
+Vue.component("auction-bids", {
 
     props: [
         "bidderList",
