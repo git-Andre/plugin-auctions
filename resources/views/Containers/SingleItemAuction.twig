@@ -6,7 +6,8 @@
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
 
-{% if ( auction is not null ) %}
+{% if ( auction ) %}
+    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -26,15 +27,6 @@
         </dl>
 
     {% elseif (auction.tense == 'present') %}
-        {#<span class="price h1">#}
-        {#<span v-resource-bind:currentAuction="auction.currentPrice"#}
-        {#content="{{ auction.currentPrice }}">#}
-        {#{{ auction.currentPrice | formatMonetary('EUR') }}#}
-        {#</span>#}
-        {#<sup>*</sup>#}
-        {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
-        {#</span>#}
-
 
         <h2 class="m-b-2">Laufende Auktion:</h2>
 
@@ -81,6 +73,13 @@
             </div>
 
         </div>
+
+
+        <div id="auction" variationId="itemData.item.id">
+
+
+        </div>
+
 
     {% elseif (auction.tense == 'past') %}
         <h2 class="m-b-2">Beendete Auktion:</h2>
@@ -146,15 +145,6 @@
     </div>
 
 {% endif %}
-
-<h1>Anfang Vue</h1>
-
-<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
-
-<div id="auction" variationId="itemData.item.id">
-
-
-</div>
 
 
 
