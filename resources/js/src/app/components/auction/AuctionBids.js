@@ -1,3 +1,6 @@
+
+var Vue = require("vue");
+// Vue.use(require('vue-chunk'));
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
@@ -27,6 +30,13 @@ Vue.component("auction-bids", {
         console.log("data: " + this.bidderList);
     }
 });
+
+new Vue({
+    el: 'body',
+    components: {
+        // nothing...
+    }
+        })
 
 // const AuctionBids = require("./components/auction/AuctionBids");
 

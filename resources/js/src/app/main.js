@@ -4,7 +4,8 @@
 // import App from './App.vue'
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
-
+// var Vue = require("vue");
+//
 // import Vue from 'vue'
 // import App from './App.vue'
 
@@ -15,7 +16,10 @@
 
 // type="module"
 
-// import AuctionBids from './components/auction/AuctionBids'
+// Vue.use (require("components/auction/AuctionBids"));
+// var AuctionBids = require("components/auction/AuctionBids");
+
+// Vue.extend({components: {AuctionBids}});
 
 // var init = (function($, window, document)
 // {

@@ -17,97 +17,95 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
     <div id="addAuctionVue">
-    {% if (auction.tense == 'future') %}
-        <h2 class="m-b-2">Bald beginnende Auktion:</h2>
+        {% if (auction.tense == 'future') %}
+            <h2 class="m-b-2">Bald beginnende Auktion:</h2>
 
-        <dl class="auctionList">
-            <dt>Start Preis:</dt>
-            <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
-            <dt>Start Datum:</dt>
-            <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-            <dt>Dauer:</dt>
-            <dd>{{ auction.auctionDuration }} Tage</dd>
-            <dt>Ablauf Datum:</dt>
-            <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-            <dt>Artikel ID:</dt>
-            <dd>{{ auction.itemId }}</dd>
-            <dt>Versandpreis:</dt>
-            <dd>muß noch gefunden werden...</dd>
-        </dl>
-        {#Gegenwart#}
-    {% elseif (auction.tense == 'present') %}
-
-        <h2 class="m-b-2">Laufende Auktion:</h2>
-
-        {#| date("d \\T\\a\\g\\e H:i:s")#}
-        <dl class="auctionList">
-            {% if (bidderListLast.currentPrice != 0) %}
-                <dt>Aktuelles Gebot:</dt>
-                <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
-                <dt>Start Preis:</dt>
-                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
-            {% else %}
+            <dl class="auctionList">
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
-            {% endif %}
-            <dt>Dauer:</dt>
-            <dd>{{ auction.auctionDuration }} Tage</dd>
-            <dt>Ablaufdatum:</dt>
-            <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
-            <dt>Artikel ID:</dt>
-            <dd>{{ auction.itemId }}</dd>
-            <dt>Versandpreis:</dt>
-            <dd>muß noch gefunden werden...</dd>
-            {% if bidderListLength != 1 %}
-                <dt>Anzahl Gebote:</dt>
-                <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
-            {% endif %}
+                <dt>Start Datum:</dt>
+                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+                <dt>Dauer:</dt>
+                <dd>{{ auction.auctionDuration }} Tage</dd>
+                <dt>Ablauf Datum:</dt>
+                <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
+                <dt>Artikel ID:</dt>
+                <dd>{{ auction.itemId }}</dd>
+                <dt>Versandpreis:</dt>
+                <dd>muß noch gefunden werden...</dd>
+            </dl>
+            {#Gegenwart#}
+        {% elseif (auction.tense == 'present') %}
 
-            <div class="m-t-2">
-                <dt>Restzeit:</dt>
-                <dd class="countDown">{{ (auction.expiryDate - auction.startDate) | date('d \\T\\a\\g\\e H:i:s') }}</dd>
+            <h2 class="m-b-2">Laufende Auktion:</h2>
+
+            {#| date("d \\T\\a\\g\\e H:i:s")#}
+            <dl class="auctionList">
+                {% if (bidderListLast.currentPrice != 0) %}
+                    <dt>Aktuelles Gebot:</dt>
+                    <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
+                    <dt>Start Preis:</dt>
+                    <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                {% else %}
+                    <dt>Start Preis:</dt>
+                    <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                {% endif %}
+                <dt>Dauer:</dt>
+                <dd>{{ auction.auctionDuration }} Tage</dd>
+                <dt>Ablaufdatum:</dt>
+                <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                <dt>Artikel ID:</dt>
+                <dd>{{ auction.itemId }}</dd>
+                <dt>Versandpreis:</dt>
+                <dd>muß noch gefunden werden...</dd>
+                {% if bidderListLength != 1 %}
+                    <dt>Anzahl Gebote:</dt>
+                    <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+                {% endif %}
+
+                <div class="m-t-2">
+                    <dt>Restzeit:</dt>
+                    <dd class="countDown">{{ (auction.expiryDate - auction.startDate) | date('d \\T\\a\\g\\e H:i:s') }}</dd>
+                </div>
+            </dl>
+            <div class="row m-b-3">
+
+                <auction-bids template="#vue-auction-bids"
+                        v-resource-push: auction data-accessor="true"
+                        resource="currentAuction">
+                </auction-bids>
+
             </div>
-        </dl>
-        <div class="row m-b-3">
-
-            <auction-bids template="#vue-auction-bids"
-                    v-resource-push: auction data-accessor="true"
-                    resource="currentAuction">
-            </auction-bids>
-
-        </div>
-
-        </div>
 
 
-        {#Vergangenheit #}
-    {% elseif (auction.tense == 'past') %}
-        <h2 class="m-b-2">Beendete Auktion:</h2>
+            {#Vergangenheit #}
+        {% elseif (auction.tense == 'past') %}
+            <h2 class="m-b-2">Beendete Auktion:</h2>
 
-        <dl class="auctionList">
-            <dt>Start Datum:</dt>
-            <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+            <dl class="auctionList">
+                <dt>Start Datum:</dt>
+                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
 
-            <dt>Ablauf Datum:</dt>
-            <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                <dt>Ablauf Datum:</dt>
+                <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
 
-            <dt>Start Preis:</dt>
-            <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                <dt>Start Preis:</dt>
+                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
 
-            {% if bidderListLength != 1 %}
-                <dt>End Preis:</dt>
-                <dd> {{ bidderListLast.bidPrice | formatMonetary('EUR') }} </dd>
+                {% if bidderListLength != 1 %}
+                    <dt>End Preis:</dt>
+                    <dd> {{ bidderListLast.bidPrice | formatMonetary('EUR') }} </dd>
 
-                <dt>Anzahl Gebote:</dt>
-                <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
-            {% endif %}
+                    <dt>Anzahl Gebote:</dt>
+                    <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+                {% endif %}
 
-            <dt>Artikel ID:</dt>
-            <dd>{{ auction.itemId }}</dd>
-        </dl>
+                <dt>Artikel ID:</dt>
+                <dd>{{ auction.itemId }}</dd>
+            </dl>
 
 
-    {% endif %}
+        {% endif %}
     </div>
 
     {#Ende Auction#}
