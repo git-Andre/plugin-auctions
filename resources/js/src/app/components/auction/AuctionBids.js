@@ -2,7 +2,7 @@ const ApiService      = require("services/ApiService");
 const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-
+    name: "AuctionBids",
     props: [
         "bidderList",
         "itemId",

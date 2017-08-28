@@ -580,7 +580,7 @@ var ApiService = require("services/ApiService");
 var ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-
+    name: "auctionBids",
     props: ["bidderList", "itemId", "item"],
     data: function data() {
         return {
