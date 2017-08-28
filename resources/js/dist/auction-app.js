@@ -580,7 +580,7 @@ var ApiService = require("services/ApiService");
 var ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-    name: "auctionBids",
+    name: "AuctionBids",
     props: ["bidderList", "itemId", "item"],
     data: function data() {
         return {
@@ -1856,14 +1856,14 @@ module.exports = function ($) {
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
-import Vue from 'vue'
-import App from './App.vue'
-
-
-new Vue({
-            el: '#body',
-            render: h => h(App)
-        })
+// import Vue from 'vue'
+// import App from './App.vue'
+//
+//
+// new Vue({
+//             el: '#body',
+//             render: h => h(App)
+//         })
 // var init = (function($, window, document)
 // {
 //
