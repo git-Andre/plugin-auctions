@@ -55,32 +55,32 @@
                 <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
             {% endif %}
 
-            <div class="m-t-1">
+            <div class="m-t-2">
                 <dt>Restzeit:</dt>
-                <dd class="countDown">{{ auction.expiryDate - auction.startDate | date('d H:i:s') }}</dd>
+                <dd class="countDown">{{ (auction.expiryDate - auction.startDate) | date('d \\T\\a\\g\\e H:i:s') }}</dd>
             </div>
         </dl>
         <div class="row m-b-3">
             <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
 
-                <input class="form-control form-control-lg text-muted"
-                        type="number"
-                        id="maximumBid"
-                        placeholder="Ihr Maximalgebot"
-                        aria-describedby="maxBidHelpBlock">
-                <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
-                                                                                  mindestens {{ bidderListLast.bidPrice + 1 }}
-                                                                                  EUR ein!</p>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
+                <div id="auction"
+                        v-resource-push: auction data-accessor="true">
+                    resource="currentAuction"
+                </div>
+                {#<input class="form-control form-control-lg text-muted"#}
+                        {#type="number"#}
+                        {#id="maximumBid"#}
+                        {#placeholder="Ihr Maximalgebot"#}
+                        {#aria-describedby="maxBidHelpBlock">#}
+                {#<p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie#}
+                                                                                  {#mindestens {{ bidderListLast.bidPrice + 1 }}#}
+                                                                                  {#EUR ein!</p>#}
+                {#<button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>#}
 
             </div>
 
         </div>
 
-        <div id="auction"
-                v-resource-push: auction data-accessor="true">
-            resource="currentAuction"
-        </div>
 
 {#Vergangenheit #}
     {% elseif (auction.tense == 'past') %}
