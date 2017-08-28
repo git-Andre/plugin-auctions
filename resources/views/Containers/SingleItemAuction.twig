@@ -18,8 +18,12 @@
         <dl class="auctionList">
             <dt>Start Preis:</dt>
             <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
-            <dt>Ablaufdatum:</dt>
-            <dd>{{ auction.expiryDate | date('D d.M.Y H:i:s e') }}</dd>
+            <dt>Start Datum:</dt>
+            <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+            <dt>Dauer:</dt>
+            <dd>{{ auction.auctionDuration }} Tage</dd>
+            <dt>Ablauf Datum:</dt>
+            <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
             <dt>Artikel ID:</dt>
             <dd>{{ auction.itemId }}</dd>
             <dt>Versandpreis:</dt>
@@ -42,7 +46,7 @@
                 <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
             {% endif %}
             <dt>Ablaufdatum:</dt>
-            <dd>{{ auction.expiryDate | date('D d.M.Y H:i:s e') }}</dd>
+            <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
             <dt>Artikel ID:</dt>
             <dd>{{ auction.itemId }}</dd>
             <dt>Versandpreis:</dt>
@@ -51,31 +55,9 @@
                 <dt>Anzahl Gebote:</dt>
                 <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
             {% endif %}
-            <div class="m-t-3">
-                <dt>Restzeit:</dt>
-                <dd class="countDown">{{ "5d, 5h:33min" }}</dd>
-            </div>
         </dl>
-
-        <div class="row m-b-3">
-            <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
-
-                <input class="form-control form-control-lg text-muted"
-                        type="number"
-                        id="maximumBid"
-                        placeholder="Ihr Maximalgebot"
-                        aria-describedby="maxBidHelpBlock">
-                <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
-                                                                                  mindestens {{ bidderListLast.bidPrice + 1 }}
-                                                                                  EUR ein!</p>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
-
-            </div>
-
-        </div>
-
-
-        <div id="auction" variationId="itemData.item.id">
+        {#Vue Start#}
+        <div id="auction" resource="currentAuction">
 
 
         </div>
@@ -85,8 +67,11 @@
         <h2 class="m-b-2">Beendete Auktion:</h2>
 
         <dl class="auctionList">
-            <dt>Ablaufdatum:</dt>
-            <dd>{{ auction.expiryDate | date('D d.M.Y H:i:s e') }}</dd>
+            <dt>Start Datum:</dt>
+            <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+
+            <dt>Ablauf Datum:</dt>
+            <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
 
             <dt>Start Preis:</dt>
             <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
@@ -128,7 +113,7 @@
     </span>
     </span>
 
-    <div class="row m-y-1">
+    <div class="row m-y-3 col-md-6 col-lg-5 offset-lg-3">
 
         {{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}
 
