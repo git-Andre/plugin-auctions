@@ -5,16 +5,17 @@
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
-import Vue from 'vue'
-import App from './App.vue'
+// import Vue from 'vue'
+// import App from './App.vue'
 
+// new Vue({
+//             el: '#addAuctionVue',
+//             render: h => h(App)
+//         })
 
-new Vue({
-            el: '#addAuctionVue',
-            render: h => h(App)
-        })
+// type="module"
 
-
+// import AuctionBids from './components/auction/AuctionBids'
 
 // var init = (function($, window, document)
 // {
