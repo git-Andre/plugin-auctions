@@ -16,7 +16,7 @@
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-    <div id="addAuctionVue">
+    <div id="addAuctionVue" class="container">
         {% if (auction.tense == 'future') %}
             <h2 class="m-b-2">Bald beginnende Auktion:</h2>
 

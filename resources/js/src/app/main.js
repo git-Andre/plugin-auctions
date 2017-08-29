@@ -1,26 +1,19 @@
-
-// import AuctionBids from './components/auction/AuctionBids.vue';
-// Vue.component('auctionbids', AuctionBids)
-// var Vue = require("vue");
-
-import Vue from "vue";
-
-const AuctionBids = require("./components/auction/AuctionBids.js");
-//
-
-vueApp = new Vue({
-    el: "#addAuctionVue",
-    components: {
-        AuctionBids
+Vue.component('auction-bids', {
+    template: `<div>My name is {{name}} and I'm {{age}} years old.<input v-model="name"><input v-model="age"></div>`,
+    data() {
+        return {
+            name: "Bob",
+            age: 22
+        };
     },
-    data: {
-
+    methods: {
     }
+})
 
-});
-// module.export = {
-//     components: {
-//         "auction-bids": AuctionBids
-//     }
-// };
+new Vue({
+            el: '#addAuctionVue',
+            data: {
 
+            },
+
+        })
