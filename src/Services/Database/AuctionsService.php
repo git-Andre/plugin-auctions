@@ -97,7 +97,7 @@
                 $auction = $this -> getValue(Auction_7::class, $id);
                 if ($auction instanceof Auction_7)
                 {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $auction -> tense = "hallo Tense;  
                     return $auction;
                 }
             }
