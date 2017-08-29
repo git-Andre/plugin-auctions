@@ -39,7 +39,7 @@
 //calculated
         public $expiryDate = 0;
 
-        public $tense      = "past";
+        public $tense      = "init";
         public $bidderList = array ();
 
         /**
