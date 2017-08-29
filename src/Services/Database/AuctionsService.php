@@ -79,6 +79,7 @@
                 if ($auction[0])
                 {
                     $auction[0] -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $this -> setValue($auction);
 
                     return $auction[0];
                 }
@@ -97,11 +98,12 @@
                 $auction = $this -> getValue(Auction_7::class, $id);
                 if ($auction instanceof Auction_7)
                 {
-                    $auction -> tense = "hallo Tense";
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $this -> setValue($auction);
+
                     return $auction;
                 }
             }
-
             return 'falsche ID';
         }
 
