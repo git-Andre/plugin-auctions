@@ -31,7 +31,7 @@
                 <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
                 <dt>Dauer:</dt>
                 <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>Ablauf Datum:</dt>
+                <dt>End Datum:</dt>
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
@@ -56,7 +56,7 @@
                 {% endif %}
                 <dt>Dauer:</dt>
                 <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>Ablaufdatum:</dt>
+                <dt>End Datum:</dt>
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>

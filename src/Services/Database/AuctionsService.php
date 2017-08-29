@@ -78,8 +78,7 @@
                 $auction = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
                 if ($auction[0] instanceof Auction_7)
                 {
-                    $auction[0] -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-//                    $this -> setValue($auction[0]);
+                    $auction[0]['tense'] = $this -> calculateTense ($auction ['startDate'], $auction ['expiryDate']);
 
                     return $auction[0];
                 }
