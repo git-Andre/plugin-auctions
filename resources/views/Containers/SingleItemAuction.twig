@@ -13,6 +13,7 @@
 
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+    {{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
