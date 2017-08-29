@@ -14,7 +14,7 @@
 
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
-    {{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}
+    {#{{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}#}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -54,6 +54,10 @@
                     <dt>Start Preis:</dt>
                     <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
                 {% endif %}
+
+                <dt>Start Preis:</dt>
+                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+
                 <dt>Dauer:</dt>
                 <dd>{{ auction.auctionDuration }} Tage</dd>
                 <dt>End Datum:</dt>
@@ -67,10 +71,6 @@
                     <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
                 {% endif %}
 
-                <div class="m-t-2">
-                    <dt>Restzeit:</dt>
-                    <dd class="countDown">{{ (auction.expiryDate - auction.startDate) | date('d \\T\\a\\g\\e H:i:s') }}</dd>
-                </div>
             </dl>
             <div class="row m-b-3">
 

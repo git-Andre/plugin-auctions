@@ -1,16 +1,22 @@
-
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
-Vue.component("auction-bids", {
+Vue.component( "auction-bids", {
     name: 'auctionbids',
     template: `
+    <dl class="auctionList">
+        <div class="m-t-0">
+            <dt>Restzeit:</dt>
+            <dd class="countDown">{{ remainingTime }}</dd>
+        </div>
+    </dl>
     <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
          <input class="form-control form-control-lg text-muted"
                 type="number"
                 id="maximumBid"
                 placeholder="Ihr Maximalgebot"
-                aria-describedby="maxBidHelpBlock">
+                aria-describedby="maxBidHelpBlock"
+                >
         <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie
                                                                           mindestens 
                                                                           EUR ein!</p>
@@ -18,16 +24,13 @@ Vue.component("auction-bids", {
     </div>
     `
     ,
-    data()
-    {
+    data() {
         return {
-            // name: "Bob",
-            // age: 22
+            remainingTime: 23
         };
     },
-    methods: {
-    }
-});
+    methods: {}
+} );
 // Vue.component("auction-bids", {
 //     name: 'auctionbids',
 //     template: "<div>My name is {{name}} and I'm {{age}} years old.<input v-model=\"name\"><input v-model=\"age\"></div>",
