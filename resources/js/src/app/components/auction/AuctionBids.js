@@ -1,41 +1,19 @@
-// Vue.use(require('vue-chunk'));
-// const ApiService      = require("services/ApiService");
-// const ResourceService = require("services/ResourceService");
-var Vue = require("vue");
-
-Vue.component("auction-bids", {
-    name: "AuctionBids",
-    props: [
-        "template",
-        "bidderList",
-        "itemId",
-        "item"
-    ],
-    data()
-{
+Vue.component('auction-bids', {
+    template: `<div>My name is {{name}} and I'm {{age}} years old.<input v-model="name"><input v-model="age">`,
+    data() {
         return {
-            // itemId: this.itemId,
-            // bidderList: this.bidderList,
+            name: "Bob",
+            age: 22
         };
     },
-    created()
-{
-        this.$options.template = this.template;
-    },
-    ready()
-{
-        this.itemId = item.itemId;
-        this.bidderList = item.bidderList;
-        // alert(this.itemId);
-        // console.log( "this.itemId: " + this.itemId );
-        // console.log( "data: " + this.bidderList );
+    methods: {
     }
-});
+})
 
-// const AuctionBids = require("./components/auction/AuctionBids");
+new Vue({
+            el: '#addAuctionVue',
+            data: {
 
-// export default {
-//     components: {
-//         'auctionBids': AuctionBids
-//     }
-// }
+            },
+
+        })
