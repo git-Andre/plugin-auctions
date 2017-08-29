@@ -6,8 +6,7 @@ Vue.component("auction-bids", {
     name: 'auctionbids',
     template: `
     <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
-        <p>{{name}} and I'm {{age}} years old</p>
-        <input class="form-control form-control-lg text-muted"
+         <input class="form-control form-control-lg text-muted"
                 type="number"
                 id="maximumBid"
                 placeholder="Ihr Maximalgebot"
@@ -22,8 +21,8 @@ Vue.component("auction-bids", {
     data()
     {
         return {
-            name: "Bob",
-            age: 22
+            // name: "Bob",
+            // age: 22
         };
     },
     methods: {
