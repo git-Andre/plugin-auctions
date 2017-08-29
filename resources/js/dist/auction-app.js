@@ -5,6 +5,7 @@
 // const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
+    name: 'auctionbids',
     template: "<div>My name is {{name}} and I'm {{age}} years old.<input v-model=\"name\"><input v-model=\"age\"></div>",
     data: function data() {
         return {
@@ -23,15 +24,14 @@ var ApiService = require("services/ApiService");
 var ResourceService = require("services/ResourceService");
 
 Vue.component("auction-test", {
-    template: "\n        <div class=\"col-xs-6\">\n        <a class=\"text-muted small add-to-wish-list\"\n                :class=\"{active: isActive}\"\n                href=\"javascript:void(0)\"\n                @click=\"switchState()\"\n                data-toggle=\"tooltip\"\n                data-placement=\"top\"\n                title=\"\">\n            <i class=\"fa fa-heart\"></i>\n            {{ \"test text als Wunschlist getarnt...\" }}\n        </a>\n    </div>\n",
+    template: "\n    <div class=\"col-xs-6\">\n        <a class=\"text-muted small add-to-wish-list\"\n                :class=\"{active: isActive}\"\n                href=\"javascript:void(0)\"\n                @click=\"switchState()\"\n                data-toggle=\"tooltip\"\n                data-placement=\"top\"\n                title=\"\">\n            <i class=\"fa fa-heart\"></i>\n            {{ \"test text als Wunschlist getarnt...\" }}\n        </a>\n    </div>\n",
 
-    props: ["template", "wishListIds"],
+    props: ["isActive", "variationId"],
 
     data: function data() {
         return {
-            wishListItems: [],
-            isLoading: false,
-            wishListCount: {}
+            wishListCount: 0,
+            isLoading: false
         };
     },
     created: function created() {
@@ -40,38 +40,52 @@ Vue.component("auction-test", {
     ready: function ready() {
         ResourceService.bind("wishListCount", this);
 
-        this.getWishListItems();
+        this.changeTooltipText();
     },
 
 
     methods: {
-        removeWishListItem: function removeWishListItem(wishListItem, index) {
+        switchState: function switchState() {
+            if (this.isActive) {
+                this.removeFromWishList();
+            } else {
+                this.addToWishList();
+            }
+        },
+        addToWishList: function addToWishList() {
             var _this = this;
 
-            ApiService.delete("/rest/io/itemWishList/" + wishListItem.data.variation.id).done(function (data) {
-                // remove this in done to prevent no items in this list label to be shown
-                _this.wishListIds.splice(_this.wishListIds.indexOf(wishListItem.data.variation.id), 1);
-                _this.updateWatchListCount(parseInt(_this.wishListCount.count) - 1);
-            }).fail(function (error) {
-                _this.wishListItems.splice(index, 0, wishListItem);
-            });
-
-            this.wishListItems.splice(index, 1);
+            if (!this.isLoading) {
+                this.isLoading = true;
+                ApiService.post("/rest/io/itemWishList", { variationId: this.variationId }).done(function () {
+                    _this.isActive = true;
+                    _this.isLoading = false;
+                    _this.changeTooltipText();
+                    _this.updateWatchListCount(parseInt(_this.wishListCount.count) + 1);
+                }).fail(function () {
+                    _this.isLoading = false;
+                });
+            }
         },
-        getWishListItems: function getWishListItems() {
+        removeFromWishList: function removeFromWishList() {
             var _this2 = this;
 
-            if (this.wishListIds[0]) {
+            if (!this.isLoading) {
                 this.isLoading = true;
-
-                ApiService.get("/rest/io/variations/", { variationIds: this.wishListIds, template: "Ceres::WishList.WishList" }).done(function (data) {
-                    _this2.wishListItems = data.documents;
-
+                ApiService.delete("/rest/io/itemWishList/" + this.variationId).done(function () {
+                    _this2.isActive = false;
                     _this2.isLoading = false;
+                    _this2.changeTooltipText();
+                    _this2.updateWatchListCount(parseInt(_this2.wishListCount.count) - 1);
                 }).fail(function () {
                     _this2.isLoading = false;
                 });
             }
+        },
+        changeTooltipText: function changeTooltipText() {
+            var tooltipText = this.isActive ? "itemRemoveFromWishList" : "itemAddToWishList";
+
+            $(".add-to-wish-list").attr("data-original-title", Translations.Template[tooltipText]).tooltip("hide").tooltip("setContent");
         },
         updateWatchListCount: function updateWatchListCount(count) {
             if (count >= 0) {
@@ -895,7 +909,6 @@ module.exports = function ($) {
 },{}]},{},[1,2])
 
 
-
 vueApp = new Vue({
     el: "#addAuctionVue",
     components: {
@@ -906,4 +919,20 @@ vueApp = new Vue({
 
 });
 
+// var Profile;
+// Profile = Vue.extend( {
+//     components: {
+//         auctionbids
+//     },
+//                           template: `
+//     <p>test: {{ testData }} </p>
+// `,
+//                           data: function () {
+//                               return {
+//                                   testData: 'YEEES Sir'
+//                               }
+//                           }
+//                       } );
+//
+// new Profile().$mount( '#addAuctionVue' )
 //# sourceMappingURL=auction-app.js.map

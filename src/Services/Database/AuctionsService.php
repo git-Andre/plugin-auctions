@@ -26,79 +26,21 @@
         }
 
         /**
-         * @return array|bool
+         * @return bool|string
          */
         public function getAuctions()
         {
-            $results = $this -> getValues(Auction_7::class);
-
-            return json_encode($results);
-        }
-
-        public function getAuctionForItemId($itemId)
-        {
-            if ($itemId > 0)
+            $auctions = $this -> getValues(Auction_7::class);
+            if ($auctions)
             {
-                $auction = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
-                if ($auction[0])
+                foreach (auctions as $auction)
                 {
-                    return $auction[0];
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
                 }
+                unset($auction);
+
+                return json_encode($auctions);
             }
-
-            return false;
-        }
-
-
-        /**
-         * @param $auctionId
-         * @return bool|mixed|string
-         */
-        public function getAuction($id)
-        {
-            if ($id > 0)
-            {
-                $auction = $this -> getValue(Auction_7::class, $id);
-                if ($auction instanceof Auction_7)
-                {
-                    return $auction;
-                }
-            }
-
-            return 'falsche ID';
-        }
-
-        /**
-         * @param $newBackendAuction
-         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model
-         */
-        public function createAuction($newBackendAuction)
-        {
-            if ($newBackendAuction)
-            {
-                $auction = pluginApp(Auction_7::class);
-
-                $auction -> itemId = $newBackendAuction ['itemId'];
-                $auction -> startDate = $newBackendAuction ['startDate'];
-                $auction -> startHour = $newBackendAuction ['startHour'];
-                $auction -> startMinute = $newBackendAuction ['startMinute'];
-                $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
-                $auction -> currentPrice = (float) ($newBackendAuction ['currentPrice']);
-
-                $endDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
-                $auction -> expiryDate = $endDate;
-
-                $auction -> tense = $this -> calculateTense($auction -> startDate, $endDate);
-
-                $auction -> createdAt = time();
-
-                $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
-
-                $auction -> updatedAt = $auction -> createdAt;
-
-                return $this -> setValue($auction);
-            }
-
             return false;
         }
 
@@ -129,6 +71,73 @@
             }
         }
 
+        public function getAuctionForItemId($itemId)
+        {
+            if ($itemId > 0)
+            {
+                $auction = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
+                if ($auction[0])
+                {
+                    $auction[0] -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                    return $auction[0];
+                }
+            }
+            return false;
+        }
+
+        /**
+         * @param $auctionId
+         * @return bool|mixed|string
+         */
+        public function getAuction($id)
+        {
+            if ($id > 0)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+                if ($auction instanceof Auction_7)
+                {
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    return $auction;
+                }
+            }
+
+            return 'falsche ID';
+        }
+
+        /**
+         * @param $newBackendAuction
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model
+         */
+        public function createAuction($newBackendAuction)
+        {
+            if ($newBackendAuction)
+            {
+                $auction = pluginApp(Auction_7::class);
+
+                $auction -> itemId = $newBackendAuction ['itemId'];
+                $auction -> startDate = $newBackendAuction ['startDate'];
+                $auction -> startHour = $newBackendAuction ['startHour'];
+                $auction -> startMinute = $newBackendAuction ['startMinute'];
+                $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
+                $auction -> currentPrice = (float) ($newBackendAuction ['currentPrice']);
+
+                $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
+
+                $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                $auction -> createdAt = time();
+
+                $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
+
+                $auction -> updatedAt = $auction -> createdAt;
+
+                return $this -> setValue($auction);
+            }
+
+            return false;
+        }
+
         /**
          * @param $id
          * @param $updatedBackendAuction
@@ -148,10 +157,9 @@
                     $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
                     $auction -> currentPrice = (float) ($updatedBackendAuction ['currentPrice']);
 
-                    $endDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
-                    $auction -> expiryDate = $endDate;
+                    $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $endDate);
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
                     $auction -> updatedAt = time();
 

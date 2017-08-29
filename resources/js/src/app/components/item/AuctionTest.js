@@ -2,11 +2,25 @@ const ApiService      = require("services/ApiService");
 const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-test", {
+template: `
+    <div class="col-xs-6">
+        <a class="text-muted small add-to-wish-list"
+                :class="{active: isActive}"
+                href="javascript:void(0)"
+                @click="switchState()"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="">
+            <i class="fa fa-heart"></i>
+            {{ "test text als Wunschlist getarnt..." }}
+        </a>
+    </div>
+`,
 
     props: [
         "isActive",
         "variationId",
-        "template"
+        // "template"
     ],
 
     data()
@@ -19,7 +33,7 @@ Vue.component("auction-test", {
 
     created()
     {
-        this.$options.template = this.template;
+        // this.$options.template = this.template;
     },
 
     ready()
