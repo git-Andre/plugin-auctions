@@ -79,7 +79,7 @@
                 if ($auction[0])
                 {
                     $auction[0] -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-                    $this -> setValue($auction);
+                    $this -> setValue($auction[0]);
 
                     return $auction[0];
                 }

@@ -4,12 +4,13 @@
             {#:is-active="{{ item.isInWishListVariation | json_encode() }}"></add-to-wish-list>#}
 {#</div>#}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
-{#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
+{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
 
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
@@ -18,6 +19,8 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
     <div id="addAuctionVue" class="container">
+
+        {#Zukunft#}
         {% if (auction.tense == 'future') %}
             <h2 class="m-b-2">Bald beginnende Auktion:</h2>
 
@@ -35,7 +38,7 @@
                 <dt>Versandpreis:</dt>
                 <dd>muß noch gefunden werden...</dd>
             </dl>
-            {#Gegenwart#}
+        {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-2">Laufende Auktion:</h2>
@@ -85,7 +88,7 @@
             </div>
 
 
-            {#Vergangenheit #}
+        {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
