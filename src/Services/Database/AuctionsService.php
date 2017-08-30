@@ -77,7 +77,7 @@
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
                 $auction = (object) $auctionArray[0];
-                if ($auction)
+                if ($auction -> id)
                 {
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 

@@ -13,13 +13,13 @@
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
 
 {% if ( auction ) %}
-    {#<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>#}
+    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
     {#{{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}#}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-    <div id="addAuctionVue">
+    <div id="addAuctionVue" :data="auction">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
@@ -48,9 +48,16 @@
             <dl class="auctionList">
                 {% if (bidderListLast.currentPrice != 0) %}
                     <dt>Aktuelles Gebot:</dt>
-                    <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
+                    <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                        <span v-resource-bind:currentAuction="bidPrice"
+                                content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
+                        {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                    </span>
+
+                    </dd>
                     <dt>Start Preis:</dt>
-                    <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                    <dd>{{ auction.currentPrice | formatMonetary('EUR') }}
+                    </dd>
                 {% else %}
                     <dt>Start Preis:</dt>
                     <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
