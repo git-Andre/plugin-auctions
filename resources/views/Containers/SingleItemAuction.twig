@@ -19,7 +19,7 @@
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-    <div id="addAuctionVue" :data="auction">
+    <div id="addAuctionVue" :auctionData="{{ auction | json_encode() }}">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
@@ -122,7 +122,7 @@
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
 
-    <p>Die Standardkategorie ist auf 'Auktionen gesetzt, aber es ist keine Auktion im Backend definiert!!'</p>
+    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktionen' gesetzt, aber es ist keine Auktion im Backend definiert!!'</p>
 
 {% endif %}
 

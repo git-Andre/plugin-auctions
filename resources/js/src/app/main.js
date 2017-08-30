@@ -1,9 +1,26 @@
-vueApp = new Vue({
-    el: "#addAuctionVue",
-    components: {
-        // "auction-test": AuctionTest
-    }
-});
+Vue.config.devtools = true
+
+vueApp = new Vue( {
+                      el: "#addAuctionVue",
+    template: `
+        <p>
+{{ auctionData }}
+</p>
+    `,
+
+                      components: {
+                          // "auction-test": AuctionTest
+                      },
+                      props: [
+                          "auctionData"
+                      ],
+                      data: function () {
+                          return {
+                              auctionData
+                          }
+                      }
+
+                  } );
 
 // var Profile;
 // Profile = Vue.extend( {
@@ -13,11 +30,6 @@ vueApp = new Vue({
 //                           template: `
 //     <p>test: {{ testData }} </p>
 // `,
-//                           data: function () {
-//                               return {
-//                                   testData: 'YEEES Sir'
-//                               }
-//                           }
 //                       } );
 //
 // new Profile().$mount( '#addAuctionVue' )

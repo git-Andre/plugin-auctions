@@ -1,10 +1,14 @@
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
+// Vue.config.devtools = true
+
+
+
 
 Vue.component("auction-bids", {
     // name: "auctionbids",
     template: `
-<div class="m-t-0 m-b-2">
+<div class="row container m-t-0 m-b-3">
     <div class="m-b-1">
         <h4>Restzeit: <span class="countDown">{{ remainingTime }}</span></h4>
     </div>
@@ -16,12 +20,14 @@ Vue.component("auction-bids", {
                 aria-describedby="maxBidHelpBlock"
         >
         <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie mindestens {{ minBid }} ein!</p>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Gebot abgeben</button>
+        <button class="btn btn-primary btn-lg btn-block" 
+                type="submit">Gebot abgeben</button>
     </div>
 </div>
     `,
     props: [
-        "item"
+        "item",
+        "isActive"
     ],
     data: function()
 {
