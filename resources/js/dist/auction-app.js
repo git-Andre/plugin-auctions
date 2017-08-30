@@ -6,12 +6,11 @@
 
 Vue.component("auction-bids", {
     name: 'auctionbids',
-    template: "\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <p>{{name}} and I'm {{age}} years old</p>\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\">\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie\n                                                                          mindestens \n                                                                          EUR ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\">Gebot abgeben</button>\n    </div>\n    \n    ",
+    template: "\n    <dl class=\"auctionList\">\n        <div class=\"m-t-0\">\n            <dt>Restzeit:</dt>\n            <dd class=\"countDown\">{{ remainingTime }}</dd>\n        </div>\n    </dl>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n         <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n                >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie\n                                                                          mindestens \n                                                                          EUR ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\">Gebot abgeben</button>\n    </div>\n    ",
 
     data: function data() {
         return {
-            name: "Bob",
-            age: 22
+            remainingTime: 23
         };
     },
 

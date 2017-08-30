@@ -26,7 +26,7 @@ Vue.component( "auction-bids", {
     ,
     data() {
         return {
-            remainingTime: 23
+            remainingTime: 'Zeit wird berechnet... (in Kürze... :) )'
         };
     },
     methods: {}

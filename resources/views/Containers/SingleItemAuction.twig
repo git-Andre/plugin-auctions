@@ -18,7 +18,7 @@
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-    <div id="addAuctionVue" class="container">
+    <div id="addAuctionVue">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
@@ -38,7 +38,7 @@
                 <dt>Versandpreis:</dt>
                 <dd>muß noch gefunden werden...</dd>
             </dl>
-        {#Gegenwart#}
+            {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-2">Laufende Auktion:</h2>
@@ -72,23 +72,11 @@
                 {% endif %}
 
             </dl>
-            <div class="row m-b-3">
-
-                <auction-bids>
-                </auction-bids>
-
-                {#<auction-test>hi oeli#}
-                {#</auction-test>#}
-
-                {#<auction-bids template="#vue-auction-bids"#}
-                {#v-resource-push: auction data-accessor="true"#}
-                {#resource="currentAuction">#}
-                {#</auction-bids>#}
-
-            </div>
+            <auction-bids>
+            </auction-bids>
 
 
-        {#Vergangenheit #}
+            {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
