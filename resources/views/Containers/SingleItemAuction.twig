@@ -4,7 +4,7 @@
             {#:is-active="{{ item.isInWishListVariation | json_encode() }}"></add-to-wish-list>#}
 {#</div>#}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
@@ -120,43 +120,43 @@
     </div>
 
     {#Ende Auction#}
-{% else %}
+{#{% else %}#}
 
     {#Preise#}
-    <span class="price h1">
-                    <span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.formatted.defaultPrice"
-                            content="{{ item.documents[0].data.calculatedPrices.default.price }}">
-                        {{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}
-                    </span>
-                    <sup>*</sup>
-                    <span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>
-                    </span>
+    {#<span class="price h1">#}
+                    {#<span v-resource-bind:currentVariation="documents.0.data.calculatedPrices.formatted.defaultPrice"#}
+                            {#content="{{ item.documents[0].data.calculatedPrices.default.price }}">#}
+                        {#{{ item.documents[0].data.calculatedPrices.formatted.defaultPrice }}#}
+                    {#</span>#}
+                    {#<sup>*</sup>#}
+                    {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
+                    {#</span>#}
 
 
     {#{{ LayoutContainer.show("Ceres::SingleItem.AfterPrice", item.documents[0].data) }}#}
 
-    <span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"
-            v-availability-class:currentVariation>
-                    <span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">
-                        {{ item.documents[0].data.variation.availability.names.name }}
-                    </span>
-                    </span>
+    {#<span class="availability tag availability_{{ item.documents[0].data.variation.availability.id }}"#}
+            {#v-availability-class:currentVariation>#}
+                    {#<span v-resource-bind:currentVariation="documents.0.data.variation.availability.names.name">#}
+                        {#{{ item.documents[0].data.variation.availability.names.name }}#}
+                    {#</span>#}
+                    {#</span>#}
 
-    <div class="row m-y-1">
+    {#<div class="row m-y-1">#}
 
-        {{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}
+        {#{{ LayoutContainer.show("Ceres::SingleItem.BeforeAddToBasket", item.documents[0].data) }}#}
 
-        <add-to-basket template="#vue-add-to-basket"
-                v-resource-if:currentVariation="documents[0].data.filter.isSalable"
-                v-resource-push:item
-                data-accessor="true"
-                resource="currentVariation"
-                :show-quantity="true"
-                :show-order-properties="true"></add-to-basket>
+        {#<add-to-basket template="#vue-add-to-basket"#}
+                {#v-resource-if:currentVariation="documents[0].data.filter.isSalable"#}
+                {#v-resource-push:item#}
+                {#data-accessor="true"#}
+                {#resource="currentVariation"#}
+                {#:show-quantity="true"#}
+                {#:show-order-properties="true"></add-to-basket>#}
 
 
-        {{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data ) }}
-    </div>
+        {#{{ LayoutContainer.show("Ceres::SingleItem.AfterAddToBasket", item.documents[0].data ) }}#}
+    {#</div>#}
 
 {% endif %}
 
