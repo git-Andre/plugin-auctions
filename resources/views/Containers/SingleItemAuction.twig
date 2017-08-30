@@ -13,7 +13,8 @@
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
 
 {% if ( auction ) %}
-    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+    {#<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>#}
+
     {#{{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}#}
 
     {% set bidderListLast = auction.bidderList | last %}

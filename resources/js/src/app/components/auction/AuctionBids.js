@@ -2,7 +2,7 @@
 // const ResourceService = require("services/ResourceService");
 
 Vue.component( "auction-bids", {
-    // name: "auctionbids",
+    name: "auctionbids",
     template: `
 <div class="root-component-auction m-t-0 m-b-2">
     <div class="m-b-1">≈
