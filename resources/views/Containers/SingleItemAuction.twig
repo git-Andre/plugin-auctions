@@ -72,7 +72,9 @@
                 {% endif %}
 
             </dl>
-            <auction-bids>
+
+            <auction-bids resource="currentAuction"
+                v-resource-push: auction data-accessor="true">
             </auction-bids>
 
 
