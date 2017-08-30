@@ -26,6 +26,7 @@ Vue.component("auction-bids", {
 </div>
     `,
     props: [
+        "auctionId",
         "item",
         "isActive"
     ],
@@ -33,7 +34,7 @@ Vue.component("auction-bids", {
 {
         return {
             remainingTime: "this.now",
-            minBid: "this.item"
+            minBid: this.auctionId
         };
     },
     methods: {},
