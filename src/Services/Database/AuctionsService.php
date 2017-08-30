@@ -33,7 +33,7 @@
             $auctions = $this -> getValues(Auction_7::class);
             if ($auctions)
             {
-                foreach (auctions as $auction)
+                foreach ($auctions as $auction)
                 {
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
                 }
