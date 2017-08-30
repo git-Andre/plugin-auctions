@@ -1,13 +1,12 @@
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
 
-Vue.component("auction-bids", {
-    name: "auctionbids",
+Vue.component( "auction-bids", {
+    // name: "auctionbids",
     template: `
 <div class="root-component-auction m-t-0 m-b-2">
-    <div class="m-b-1">
+    <div class="m-b-1">≈
         <h4>Restzeit: <span class="countDown">{{ remainingTime }}</span></h4>
-        <p>{{auction}}</p>
     </div>
     <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
         <input class="form-control form-control-lg text-muted"
@@ -22,20 +21,17 @@ Vue.component("auction-bids", {
 </div>
     `,
     props: [
-        "auction"
+        "item"
     ],
-    data: function()
-{
+    data: function () {
         return {
-            remainingTime: this.now,
-            minBid: auction.id
+            remainingTime: "this.now",
+            minBid: "this.item"
         };
     },
     methods: {},
     computed: {
-        now: function()
-{
-            return Date.now();
+        // now: function () {
+        //     return Date.now()
         }
-    }
-});
+} );

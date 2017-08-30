@@ -73,9 +73,12 @@
 
             </dl>
 
-            <auction-bids resource="currentAuction"
-                v-resource-push:item data-accessor="true">
+            <auction-bids>
             </auction-bids>
+
+            {#<auction-bids resource="currentAuction"#}
+                {#v-resource-push:item data-accessor="true">#}
+            {#</auction-bids>#}
 
 
             {#Vergangenheit #}

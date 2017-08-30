@@ -10396,20 +10396,19 @@ return jQuery;
 // const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-    name: "auctionbids",
-    template: "\n<div class=\"root-component-auction m-t-0 m-b-2\">\n    <div class=\"m-b-1\">\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n        <p>{{auction}}</p>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} EUR ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
-    props: ["auction"],
+    // name: "auctionbids",
+    template: "\n<div class=\"root-component-auction m-t-0 m-b-2\">\n    <div class=\"m-b-1\">\u2248\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} EUR ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
+    props: ["item"],
     data: function data() {
         return {
-            remainingTime: this.now,
-            minBid: auction.id
+            remainingTime: "this.now",
+            minBid: "this.item"
         };
     },
     methods: {},
     computed: {
-        now: function now() {
-            return Date.now();
-        }
+        // now: function () {
+        //     return Date.now()
     }
 });
 
