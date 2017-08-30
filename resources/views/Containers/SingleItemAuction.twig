@@ -81,7 +81,7 @@
 
             </dl>
 
-            <auction-bids auction-id="{{ auction.id }}">
+            <auction-bids auction="{{ auction | json_encode }}">
             </auction-bids>
 
             {#<auction-bids resource="currentAuction"#}
