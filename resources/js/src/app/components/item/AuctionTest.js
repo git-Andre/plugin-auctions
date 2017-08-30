@@ -2,7 +2,7 @@ const ApiService      = require("services/ApiService");
 const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-test", {
-template: `
+    template: `
     <div class="col-xs-6">
         <a class="text-muted small add-to-wish-list"
                 :class="{active: isActive}"
@@ -19,7 +19,7 @@ template: `
 
     props: [
         "isActive",
-        "variationId",
+        "variationId"
         // "template"
     ],
 
@@ -44,72 +44,72 @@ template: `
     },
 
     methods:
-        {
-            switchState()
+    {
+        switchState()
             {
-                if (this.isActive)
+            if (this.isActive)
                 {
-                    this.removeFromWishList();
-                }
-                else
+                this.removeFromWishList();
+            }
+            else
                 {
-                    this.addToWishList();
-                }
-            },
+                this.addToWishList();
+            }
+        },
 
-            addToWishList()
+        addToWishList()
             {
-                if (!this.isLoading)
+            if (!this.isLoading)
                 {
-                    this.isLoading = true;
-                    ApiService.post("/rest/io/itemWishList", {variationId: this.variationId})
+                this.isLoading = true;
+                ApiService.post("/rest/io/itemWishList", {variationId: this.variationId})
                         .done(() =>
                               {
-                                  this.isActive = true;
-                                  this.isLoading = false;
-                                  this.changeTooltipText();
-                                  this.updateWatchListCount(parseInt(this.wishListCount.count) + 1);
-                              })
+                            this.isActive = true;
+                            this.isLoading = false;
+                            this.changeTooltipText();
+                            this.updateWatchListCount(parseInt(this.wishListCount.count) + 1);
+                        })
                         .fail(() =>
                               {
-                                  this.isLoading = false;
-                              });
-                }
-            },
+                            this.isLoading = false;
+                        });
+            }
+        },
 
-            removeFromWishList()
+        removeFromWishList()
             {
-                if (!this.isLoading)
+            if (!this.isLoading)
                 {
-                    this.isLoading = true;
-                    ApiService.delete("/rest/io/itemWishList/" + this.variationId)
+                this.isLoading = true;
+                ApiService.delete("/rest/io/itemWishList/" + this.variationId)
                         .done(() =>
                               {
-                                  this.isActive = false;
-                                  this.isLoading = false;
-                                  this.changeTooltipText();
-                                  this.updateWatchListCount(parseInt(this.wishListCount.count) - 1);
-                              })
+                            this.isActive = false;
+                            this.isLoading = false;
+                            this.changeTooltipText();
+                            this.updateWatchListCount(parseInt(this.wishListCount.count) - 1);
+                        })
                         .fail(() =>
                               {
-                                  this.isLoading = false;
-                              });
-                }
-            },
+                            this.isLoading = false;
+                        });
+            }
+        },
 
-            changeTooltipText()
+        changeTooltipText()
             {
-                const tooltipText = this.isActive ? "itemRemoveFromWishList" : "itemAddToWishList";
+            const tooltipText = this.isActive ? "itemRemoveFromWishList" : "itemAddToWishList";
 
-                $(".add-to-wish-list").attr("data-original-title", Translations.Template[tooltipText]).tooltip("hide").tooltip("setContent");
-            },
+            $(".add-to-wish-list").attr("data-original-title", Translations.Template[tooltipText]).tooltip("hide").tooltip("setContent");
+        },
 
-            updateWatchListCount(count)
+        updateWatchListCount(count)
             {
-                if (count >= 0)
+            if (count >= 0)
                 {
-                    ResourceService.getResource("wishListCount").set({count: count});
-                }
+                ResourceService.getResource("wishListCount").set({count: count});
             }
         }
+    }
 });
