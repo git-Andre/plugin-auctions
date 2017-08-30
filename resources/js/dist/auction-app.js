@@ -10394,11 +10394,13 @@ return jQuery;
 
 // const ApiService      = require("services/ApiService");
 // const ResourceService = require("services/ResourceService");
-Vue.config.devtools = true;
+// Vue.config.devtools = true
+
+
 Vue.component("auction-bids", {
     // name: "auctionbids",
     template: "\n<div class=\"row container m-t-0 m-b-3\">\n    <div class=\"m-b-1\">\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" \n                type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
-    props: ["item"],
+    props: ["item", "isActive"],
     data: function data() {
         return {
             remainingTime: "this.now",
@@ -12236,12 +12238,27 @@ module.exports = function ($) {
 
 Vue.config.devtools = true
 
-vueApp = new Vue({
-    el: "#addAuctionVue",
-    components: {
-        // "auction-test": AuctionTest
-    }
-});
+vueApp = new Vue( {
+                      el: "#addAuctionVue",
+    template: `
+        <p>
+{{ auctionDataTest }}
+</p>
+    `,
+
+                      components: {
+                          // "auction-test": AuctionTest
+                      },
+                      props: [
+                          "auctionData"
+                      ],
+                      data: function () {
+                          return {
+                              auctionDataTest: this.auctionData
+                          }
+                      }
+
+                  } );
 
 // var Profile;
 // Profile = Vue.extend( {
@@ -12251,11 +12268,6 @@ vueApp = new Vue({
 //                           template: `
 //     <p>test: {{ testData }} </p>
 // `,
-//                           data: function () {
-//                               return {
-//                                   testData: 'YEEES Sir'
-//                               }
-//                           }
 //                       } );
 //
 // new Profile().$mount( '#addAuctionVue' )

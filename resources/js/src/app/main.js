@@ -4,7 +4,7 @@ vueApp = new Vue( {
                       el: "#addAuctionVue",
     template: `
         <p>
-{{ auctionData }}
+{{ auctionDataTest }}
 </p>
     `,
 
@@ -16,7 +16,7 @@ vueApp = new Vue( {
                       ],
                       data: function () {
                           return {
-                              auctionData
+                              auctionDataTest: this.auctionData
                           }
                       }
 

@@ -19,7 +19,7 @@
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-    <div id="addAuctionVue" :auctionData="{{ auction | json_encode() }}">
+    <div id="addAuctionVue" auctionData="{{ auction | json_encode() }}">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
