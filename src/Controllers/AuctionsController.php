@@ -94,12 +94,12 @@
          * @param Request $request
          * @return mixed
          */
-        public function updateAuctionBidderList(int $id, Request $request)
+        public function updateBidderlist(int $id, Request $request)
         {
-//            $bidderList = $request -> all();
+            $bidderList = $request -> all();
 //
 //            return $this -> auctionsService -> updateBidderList($id, $bidderList);
-            return $id;
+            return $bidderList;
         }
 
         /**
