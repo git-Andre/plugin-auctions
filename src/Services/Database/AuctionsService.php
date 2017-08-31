@@ -195,7 +195,7 @@
                     $list = $auction -> bidderList;
 
 
-                    $bidderList -> bidTimeStamp = time();
+//                    $bidderList -> bidTimeStamp = time();
 //
                     return json_encode($bidderList);
 //                    array_push($list, $bidderList);
