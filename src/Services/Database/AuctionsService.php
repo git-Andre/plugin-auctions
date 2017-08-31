@@ -187,7 +187,7 @@
         {
             if ($sendedBid)
             {
-                $bidderList = json_decode($sendedBid);
+                $bidderList = (object)$sendedBid;
 
                 $auction = $this -> getValue(Auction_7::class, $id);
 
