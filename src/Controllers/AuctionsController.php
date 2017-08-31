@@ -97,8 +97,8 @@
         public function updateBidderlist(int $id, Request $request)
         {
             $bidderList = $request -> all();
-
-            return $this -> auctionsService -> updateBidderList($id, $bidderList);
+return $bidderList;
+//            return $this -> auctionsService -> updateBidderList($id, $bidderList);
         }
 
         /**
