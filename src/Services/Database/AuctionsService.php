@@ -175,6 +175,35 @@
         }
 
         /**
+         * @param $id
+         * @param $updatedBackendAuction
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
+         */
+        public function updateAuctionBidderList($id, $bidderList)
+        {
+            if ($bidderList)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+
+                    $auction -> bidderList.array_push($bidderList);
+
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                    $auction -> updatedAt = time();
+
+                    return $this -> setValue($auction);
+                }
+
+                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+            }
+
+            return false;
+        }
+
+        /**
          * @param $auctionId
          * @return bool|string
          */

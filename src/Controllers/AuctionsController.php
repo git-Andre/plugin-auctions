@@ -90,6 +90,18 @@
         }
 
         /**
+         * @param int $id
+         * @param Request $request
+         * @return mixed
+         */
+        public function updateAuctionBidderList(int $id, Request $request)
+        {
+            $bidderList = $request -> all();
+
+            return $this -> auctionsService -> updateAuctionBidderList($id, $bidderList);
+        }
+
+        /**
          * @param $id
          * @return bool|string
          */
