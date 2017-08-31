@@ -10396,22 +10396,23 @@ return jQuery;
 // const ResourceService = require("services/ResourceService");
 // Vue.config.devtools = true
 
-
 Vue.component("auction-bids", {
     // name: "auctionbids",
-    template: "\n<div class=\"row container m-t-0 m-b-3\">\n    <div class=\"m-b-1\">\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" \n                type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
-    props: ["auctionId", "item", "isActive"],
+    template: "\n<div class=\"row container m-t-0 m-b-3\">\n    <p>{{ test  }}</p>\n    <div class=\"m-b-1\">\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" \n                type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
+    props: ["auction", "isActive"],
     data: function data() {
         return {
             remainingTime: "this.now",
-            minBid: this.auctionId
+            minBid: "this.auction",
+            test: parseJSON(this.auction)
         };
     },
     methods: {},
     computed: {
-        // now: function () {
-        //     return Date.now()
+        // type: function () {
+        //     return this.auction['id'];
     }
+
 });
 
 },{}],6:[function(require,module,exports){

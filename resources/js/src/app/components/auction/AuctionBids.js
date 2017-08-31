@@ -2,13 +2,11 @@
 // const ResourceService = require("services/ResourceService");
 // Vue.config.devtools = true
 
-
-
-
-Vue.component("auction-bids", {
+Vue.component( "auction-bids", {
     // name: "auctionbids",
     template: `
 <div class="row container m-t-0 m-b-3">
+    <p>{{ test  }}</p>
     <div class="m-b-1">
         <h4>Restzeit: <span class="countDown">{{ remainingTime }}</span></h4>
     </div>
@@ -26,20 +24,22 @@ Vue.component("auction-bids", {
 </div>
     `,
     props: [
-        "auctionId",
-        "item",
+        "auction",
         "isActive"
     ],
-    data: function()
-{
+    data: function () {
         return {
             remainingTime: "this.now",
-            minBid: this.auctionId
+            minBid: "this.auction",
+            test: "parseJSON(this.auction)"
         };
     },
-    methods: {},
+    methods: {
+
+    },
     computed: {
-        // now: function () {
-        //     return Date.now()
-    }
-});
+        // type: function () {
+        //     return this.auction['id'];
+        }
+
+} );
