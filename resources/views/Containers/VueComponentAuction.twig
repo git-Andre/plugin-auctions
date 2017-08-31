@@ -2,5 +2,16 @@
 
 
 {#<script src="https://www.schaffrathnumis.de/layout/theme/js/auction-vendor.js"></script>#}
-{#<script src="https://www.schaffrathnumis.de/layout/theme/js/auction-app.js"></script>#}
+<script src="https://www.schaffrathnumis.de/layout/theme/js/auction-app.js"></script>
 
+
+<script>
+    var Profile;
+    Profile = Vue.extend( {
+                              components: {
+                                  auctionbids
+                              },
+                          } );
+
+    new Profile().$mount( '#addAuctionVue' )
+</script>

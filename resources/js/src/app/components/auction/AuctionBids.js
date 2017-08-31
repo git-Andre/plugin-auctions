@@ -3,7 +3,7 @@
 // Vue.config.devtools = true
 
 Vue.component( "auction-bids", {
-    // name: "auctionbids",
+    name: "auctionbids",
     template: `
 <div class="row container m-t-0 m-b-3">
     <p>{{ test  }}</p>
@@ -31,7 +31,7 @@ Vue.component( "auction-bids", {
         return {
             remainingTime: "this.now",
             minBid: "this.auction",
-            test: "parseJSON(this.auction)"
+            test: this.auction
         };
     },
     methods: {

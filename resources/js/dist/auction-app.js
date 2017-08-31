@@ -10404,7 +10404,7 @@ Vue.component("auction-bids", {
         return {
             remainingTime: "this.now",
             minBid: "this.auction",
-            test: parseJSON(this.auction)
+            test: this.auction
         };
     },
     methods: {},
@@ -12237,23 +12237,23 @@ module.exports = function ($) {
 },{}]},{},[5,6,7,8,9,10,15,16,11,12,13,14,17,18,19,20,21,22,23,24,25,26,27,28,29])
 
 
-Vue.config.devtools = true
-
-vueApp = new Vue( {
-                      el: "#addAuctionVue",
-
-                      components: {
-                          // "auction-test": AuctionTest
-                      },
-                      props: [
-                      ],
-                      data: function () {
-                          return {
-                          }
-                      },
-                      computed() {
-                      }
-                  } );
+// Vue.config.devtools = true
+//
+// vueApp = new Vue( {
+//                       el: "#addAuctionVue",
+//
+//                       components: {
+//                           // "auction-test": AuctionTest
+//                       },
+//                       props: [
+//                       ],
+//                       data: function () {
+//                           return {
+//                           }
+//                       },
+//                       computed() {
+//                       }
+//                   } );
 
 // var Profile;
 // Profile = Vue.extend( {
