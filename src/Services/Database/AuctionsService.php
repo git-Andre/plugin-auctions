@@ -183,10 +183,12 @@
          * @param $bidderList
          * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
-        public function updateBidderList($id, $bidderList)
+        public function updateBidderList($id, $sendedBid)
         {
-            if ($bidderList)
+            if ($sendedBid)
             {
+                $bidderList = json_decode($sendedBid);
+
                 $auction = $this -> getValue(Auction_7::class, $id);
 
                 if ($auction instanceof Auction_7)
@@ -210,10 +212,8 @@
 
                     return $this -> setValue($auction);
                 }
-
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
-
             return false;
         }
 
