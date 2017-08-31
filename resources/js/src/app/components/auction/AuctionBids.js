@@ -6,7 +6,7 @@ Vue.component( "auction-bids", {
     name: "auctionbids",
     template: `
 <div class="row container m-t-0 m-b-3">
-    <p>{{ test  }}</p>
+    <p>${ test  }</p>
     <div class="m-b-1">
         <h4>Restzeit: <span class="countDown">{{ remainingTime }}</span></h4>
     </div>
