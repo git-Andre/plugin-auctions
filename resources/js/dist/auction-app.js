@@ -25,6 +25,9 @@
             function (require, module, exports) {
                 "use strict";
 
+// const ApiService      = require("services/ApiService");
+// const ResourceService = require("services/ResourceService");
+// Vue.config.devtools = true
 
                 Vue.component( "auction-bids", {
                     // name: "auctionbids",
@@ -36,15 +39,39 @@
                             test: this.auction
                         };
                     },
-                    created() {
+                    created: function created() {
                         this.$options.template = this.template;
-                    },
-
+                    }
                 } );
 
             }, {}
         ]
     }, {}, [1] )
 
+// Vue.config.devtools = true
+//
+// vueApp = new Vue( {
+//                       el: "#addAuctionVue",
+//
+//                       components: {
+//                           // "auction-test": AuctionTest
+//                       },
+//                       props: [
+//                       ],
+//                       data: function () {
+//                           return {
+//                           }
+//                       },
+//                       computed() {
+//                       }
+//                   } );
 
-
+// import {AuctionBids} from './components/auction/AuctionBids';
+//
+// export default {
+//     name: 'auction-bids',
+//     components: {
+//         auctionBids: AuctionBids
+//     }
+// }
+//# sourceMappingURL=auction-app.js.map
