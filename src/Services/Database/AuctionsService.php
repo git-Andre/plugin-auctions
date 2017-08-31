@@ -41,6 +41,7 @@
 
                 return json_encode($auctions);
             }
+
             return false;
         }
 
@@ -84,6 +85,7 @@
                     return $auction;
                 }
             }
+
             return false;
         }
 
@@ -99,11 +101,13 @@
                 if ($auction instanceof Auction_7)
                 {
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
 //                    $this -> setValue($auction);
 
                     return $auction;
                 }
             }
+
             return 'falsche ID';
         }
 
@@ -187,9 +191,14 @@
 
                 if ($auction instanceof Auction_7)
                 {
+                    $list = array (pluginApp(AuctionBidderListEntry::class));
+                    $list = $auction -> bidderList;
+
                     $bidderList -> bidTimeStamp = time();
 
-                    $auction -> bidderList -> push ($bidderList);
+                    array_push($list, $bidderList);
+
+                    $auction -> bidderList = $list;
 
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
