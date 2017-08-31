@@ -37,7 +37,7 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <h2 class="m-b-2">Laufende Auktion:</h2>
+            <h2 class="m-b-2" style="color: #a10000;">Laufende Auktion:</h2>
 
             {#| date("d \\T\\a\\g\\e H:i:s")#}
             <dl class="auctionList">
@@ -78,7 +78,7 @@
 
             <auction-bids
                     template="#vue-auction-bids"
-                    auction="{{ auction | json_encode }}">
+                    auction="{{ auction }}">
             </auction-bids>
 
             {#<auction-bids resource="currentAuction"#}
