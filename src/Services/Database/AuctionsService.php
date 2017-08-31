@@ -181,7 +181,7 @@
         /**
          * @param $id
          * @param $bidderList
-         * @return string
+         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
         public function updateBidderList($id, $bidderList)
         {
@@ -191,26 +191,30 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $list = array (pluginApp(AuctionBidderListEntry::class));
-                    $list = $auction -> bidderList;
+                    $newList = array (pluginApp(AuctionBidderListEntry::class));
+                    $newList = $auction -> bidderList;
 
+                    $newEntry = pluginApp(AuctionBidderListEntry::class);
 
-//                    $bidderList -> bidTimeStamp = time();
-//
-                    return json_encode($bidderList);
-//                    array_push($list, $bidderList);
+                    $newEntry -> bidderName = $bidderList ['bidderName'];
+                    $newEntry -> customerId = $bidderList ['customerId'];
+                    $newEntry -> customerMaxBid = $bidderList ['customerMaxBid'];
+                    $newEntry -> bidPrice = $bidderList ['bidPrice'];
+                    $newEntry -> bidTimeStamp = time();
 
-//                    $auction -> bidderList = $list;
+                    array_push($newList, $newEntry);
 
-//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $auction -> bidderList = $newList;
 
-//                    return $this -> setValue($auction);
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                    return $this -> setValue($auction);
                 }
 
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
-            return 'test';
+            return false;
         }
 
         /**

@@ -85,8 +85,8 @@
         public function updateAuction(int $id, Request $request)
         {
             $auctionData = $request -> all();
-return $auctionData;
-//            return $this -> auctionsService -> updateAuction($id, $auctionData);
+
+            return $this -> auctionsService -> updateAuction($id, $auctionData);
         }
 
         /**
@@ -96,8 +96,8 @@ return $auctionData;
          */
         public function updateBidderlist(int $id, Request $request)
         {
-return $request -> all();
-//            return $this -> auctionsService -> updateBidderList($id, $bidderList);
+            $bidderList = $request -> all();
+            return $this -> auctionsService -> updateBidderList($id, $bidderList);
         }
 
         /**
