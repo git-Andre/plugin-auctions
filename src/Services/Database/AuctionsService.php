@@ -194,7 +194,7 @@
                     $list = array (pluginApp(AuctionBidderListEntry::class));
                     $list = $auction -> bidderList;
 
-                    return 'list ' + $list + '$bidderlist ' + $bidderList + '$auction -> bidderlist ' + $auction -> bidderList;
+                    return 'list ' + $list + '$bidderlist ' + $bidderList;
 
 //                    $bidderList -> bidTimeStamp = time();
 //
