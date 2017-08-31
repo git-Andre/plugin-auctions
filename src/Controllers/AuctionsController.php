@@ -92,14 +92,14 @@
         /**
          * @param int $id
          * @param Request $request
-         * @return mixed
+         * @return string
          */
         public function updateBidderlist(int $id, Request $request)
         {
 //            $bidderList = $request -> all();
 //
 //            return $this -> auctionsService -> updateBidderList($id, $bidderList);
-            return "test";
+            return $request;
         }
 
         /**

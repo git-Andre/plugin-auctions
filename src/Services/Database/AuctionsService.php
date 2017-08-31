@@ -185,31 +185,30 @@
          */
         public function updateBidderList($id, $bidderList)
         {
-//            if ($bidderList)
-//            {
-//                $auction = $this -> getValue(Auction_7::class, $id);
+            if ($bidderList)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $list = array (pluginApp(AuctionBidderListEntry::class));
+                    $list = $auction -> bidderList;
+
+                    return json_encode($list);
+
+//                    $bidderList -> bidTimeStamp = time();
 //
-//                if ($auction instanceof Auction_7)
-//                {
-////                    $list = array (pluginApp(AuctionBidderListEntry::class));
-////                    $list = $auction -> bidderList;
+//                    array_push($list, $bidderList);
 //
-////                    return json_encode($list);
+//                    $auction -> bidderList = $list;
 //
-////                    $bidderList -> bidTimeStamp = time();
-////
-////                    array_push($list, $bidderList);
-////
-////                    $auction -> bidderList = $list;
-////
-////                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-////
-////                    return $this -> setValue($auction);
-//                return 'Diese ID: ' + $id + ' ist uns bekannt';
-//                }
+//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 //
-//                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
-//            }
+//                    return $this -> setValue($auction);
+                }
+
+                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+            }
 
             return 'test';
         }
