@@ -98,7 +98,7 @@
         {
             $bidderList = $request -> all();
 
-            return $this -> auctionsService -> updateAuctionBidderList($id, $bidderList);
+            return $this -> auctionsService -> updateBidderList($id, $bidderList);
         }
 
         /**

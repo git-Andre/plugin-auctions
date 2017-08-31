@@ -180,10 +180,10 @@
 
         /**
          * @param $id
-         * @param $updatedBackendAuction
-         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
+         * @param $bidderList
+         * @return string
          */
-        public function updateAuctionBidderList($id, $bidderList)
+        public function updateBidderList($id, $bidderList)
         {
 //            if ($bidderList)
 //            {
