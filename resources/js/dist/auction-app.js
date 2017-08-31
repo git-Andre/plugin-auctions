@@ -24,7 +24,7 @@ Vue.component("auction-bids", {
         },
         auctionParse: function auctionParse() {
             var auction = JSON.parse(this.auction);
-            return auction.bidderList;
+            return auction.bidderList[0].bidderName;
         }
     }
 });
