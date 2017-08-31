@@ -1,45 +1,50 @@
-// const ApiService      = require("services/ApiService");
-// const ResourceService = require("services/ResourceService");
-// Vue.config.devtools = true
-
-Vue.component( "auction-bids", {
-    name: "auctionbids",
-    template: `
-<div class="row container m-t-0 m-b-3">
-    <p>${ test  }</p>
-    <div class="m-b-1">
-        <h4>Restzeit: <span class="countDown">{{ remainingTime }}</span></h4>
-    </div>
-    <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
-        <input class="form-control form-control-lg text-muted"
-                type="number"
-                id="maximumBid"
-                placeholder="Ihr Maximalgebot"
-                aria-describedby="maxBidHelpBlock"
-        >
-        <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie mindestens {{ minBid }} ein!</p>
-        <button class="btn btn-primary btn-lg btn-block" 
-                type="submit">Gebot abgeben</button>
-    </div>
-</div>
-    `,
-    props: [
-        "auction",
-        "isActive"
-    ],
-    data: function () {
-        return {
-            remainingTime: "this.now",
-            minBid: "this.auction",
-            test: this.auction
-        };
-    },
-    methods: {
-
-    },
-    computed: {
-        // type: function () {
-        //     return this.auction['id'];
+(function e(t, n, r) {
+    function s(o, u) {
+        if ( !n[o] ) {
+            if ( !t[o] ) {
+                var a = typeof require == "function" && require;
+                if ( !u && a ) return a( o, !0 );
+                if ( i ) return i( o, !0 );
+                var f = new Error( "Cannot find module '" + o + "'" );
+                throw f.code = "MODULE_NOT_FOUND", f
+            }
+            var l = n[o] = { exports: {} };
+            t[o][0].call( l.exports, function (e) {
+                var n = t[o][1][e];
+                return s( n ? n : e )
+            }, l, l.exports, e, t, n, r )
+        }
+        return n[o].exports
     }
 
-} );
+    var i = typeof require == "function" && require;
+    for (var o = 0; o < r.length; o++) s( r[o] );
+    return s
+})( {
+        1: [
+            function (require, module, exports) {
+                "use strict";
+
+
+                Vue.component( "auction-bids", {
+                    // name: "auctionbids",
+                    props: ["template", "auction", "isActive"],
+                    data: function data() {
+                        return {
+                            remainingTime: "this.now",
+                            minBid: "this.auction",
+                            test: this.auction
+                        };
+                    },
+                    created() {
+                        this.$options.template = this.template;
+                    },
+
+                } );
+
+            }, {}
+        ]
+    }, {}, [1] )
+
+
+

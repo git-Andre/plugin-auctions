@@ -16,3 +16,12 @@
 //                       }
 //                   } );
 
+
+// import {AuctionBids} from './components/auction/AuctionBids';
+//
+// export default {
+//     name: 'auction-bids',
+//     components: {
+//         auctionBids: AuctionBids
+//     }
+// }
