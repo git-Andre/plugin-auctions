@@ -192,7 +192,7 @@
                 if ($auction instanceof Auction_7)
                 {
                     $list = array (pluginApp(AuctionBidderListEntry::class));
-                    $list = $auction -> bidderList;
+//                    $list = $auction -> bidderList;
 
                     return json_encode($list);
 
