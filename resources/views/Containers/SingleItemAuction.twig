@@ -76,14 +76,15 @@
 
             </dl>
 
-            <auction-bids
-                    template="#vue-auction-bids"
-                    auction="{{ auction }}">
-            </auction-bids>
-
-            {#<auction-bids resource="currentAuction"#}
-                {#v-resource-push:item data-accessor="true">#}
+            {#<auction-bids#}
+                    {#template="#vue-auction-bids"#}
+                    {#auction="{{ auction | json_encode }}">#}
             {#</auction-bids>#}
+
+            <auction-bids template="#vue-auction-bids"
+                    v-resource-push:auction data-accessor="true"
+                    resource="currentAuction">
+            </auction-bids>
 
 
             {#Vergangenheit #}
