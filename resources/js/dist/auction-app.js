@@ -10397,7 +10397,7 @@ return jQuery;
 // Vue.config.devtools = true
 
 Vue.component("auction-bids", {
-    // name: "auctionbids",
+    name: "auctionbids",
     template: "\n<div class=\"row container m-t-0 m-b-3\">\n    <p>{{ test  }}</p>\n    <div class=\"m-b-1\">\n        <h4>Restzeit: <span class=\"countDown\">{{ remainingTime }}</span></h4>\n    </div>\n    <div class=\"col-lg-8 offset-lg-2\" formGroup=\"maxBid\">\n        <input class=\"form-control form-control-lg text-muted\"\n                type=\"number\"\n                id=\"maximumBid\"\n                placeholder=\"Ihr Maximalgebot\"\n                aria-describedby=\"maxBidHelpBlock\"\n        >\n        <p id=\"maxBidHelpBlock\" class=\"form-text text-muted text-center\"> Bitte geben Sie mindestens {{ minBid }} ein!</p>\n        <button class=\"btn btn-primary btn-lg btn-block\" \n                type=\"submit\">Gebot abgeben</button>\n    </div>\n</div>\n    ",
     props: ["auction", "isActive"],
     data: function data() {
@@ -12255,16 +12255,5 @@ module.exports = function ($) {
 //                       }
 //                   } );
 
-// var Profile;
-// Profile = Vue.extend( {
-//     components: {
-//         auctionbids
-//     },
-//                           template: `
-//     <p>test: {{ testData }} </p>
-// `,
-//                       } );
-//
-// new Profile().$mount( '#addAuctionVue' )
 
 //# sourceMappingURL=auction-app.js.map

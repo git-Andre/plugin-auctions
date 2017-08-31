@@ -4,7 +4,8 @@
             {#:is-active="{{ item.isInWishListVariation | json_encode() }}"></add-to-wish-list>#}
 {#</div>#}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
+{{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
@@ -15,7 +16,6 @@
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
-    {#{{ component( "PluginAuctions::Item.Components.AuctionTest" ) }}#}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -126,7 +126,7 @@
 
 {% endif %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>#}
 
-<script src="https://www.schaffrathnumis.de/layout/theme/js/auction-app.js"></script>
+{#<script src="https://www.schaffrathnumis.de/layout/theme/js/auction-app.js"></script>#}
 
