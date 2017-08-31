@@ -191,10 +191,10 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $list = array (pluginApp(AuctionBidderListEntry::class));
+//                    $list = array (pluginApp(AuctionBidderListEntry::class));
 //                    $list = $auction -> bidderList;
 
-                    return json_encode($list);
+//                    return json_encode($list);
 
 //                    $bidderList -> bidTimeStamp = time();
 //
@@ -205,6 +205,7 @@
 //                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 //
 //                    return $this -> setValue($auction);
+                return 'Diese ID: ' + $id + ' ist uns bekannt';
                 }
 
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
