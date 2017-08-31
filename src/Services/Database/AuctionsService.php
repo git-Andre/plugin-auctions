@@ -187,12 +187,11 @@
 
                 if ($auction instanceof Auction_7)
                 {
+                    $bidderList -> bidTimeStamp = time();
 
-                    $auction -> bidderList.array_push($bidderList);
+                    $auction -> bidderList -> push ($bidderList);
 
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-
-                    $auction -> updatedAt = time();
 
                     return $this -> setValue($auction);
                 }
