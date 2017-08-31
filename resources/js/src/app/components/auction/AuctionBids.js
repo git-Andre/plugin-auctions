@@ -3,16 +3,32 @@
 
 Vue.component( "auction-bids", {
     // name: "auctionbids",
-    props: ["template", "auction", "isActive"],
+    props: [
+        "template",
+        "auction",
+        "maxCustomerBid",
+        "isActive"
+    ],
     data: function data() {
         return {
             remainingTime: "this.now",
-            minBid: "this.auction",
-            test: this.auction
+            minBid: 66.22,
+            test: this.auctionParse()
         };
     },
     created() {
         this.$options.template = this.template;
-    },
 
+
+    },
+    methods: {
+        addBid() {
+            alert('addBid');
+        },
+        auctionParse() {
+            var auction = JSON.parse(this.auction);
+            return auction;
+        }
+
+    }
 } );
