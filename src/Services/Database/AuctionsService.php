@@ -185,33 +185,33 @@
          */
         public function updateAuctionBidderList($id, $bidderList)
         {
-            if ($bidderList)
-            {
-                $auction = $this -> getValue(Auction_7::class, $id);
-
-                if ($auction instanceof Auction_7)
-                {
-//                    $list = array (pluginApp(AuctionBidderListEntry::class));
-//                    $list = $auction -> bidderList;
-
-//                    return json_encode($list);
-
-//                    $bidderList -> bidTimeStamp = time();
+//            if ($bidderList)
+//            {
+//                $auction = $this -> getValue(Auction_7::class, $id);
 //
-//                    array_push($list, $bidderList);
+//                if ($auction instanceof Auction_7)
+//                {
+////                    $list = array (pluginApp(AuctionBidderListEntry::class));
+////                    $list = $auction -> bidderList;
 //
-//                    $auction -> bidderList = $list;
+////                    return json_encode($list);
 //
-//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+////                    $bidderList -> bidTimeStamp = time();
+////
+////                    array_push($list, $bidderList);
+////
+////                    $auction -> bidderList = $list;
+////
+////                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+////
+////                    return $this -> setValue($auction);
+//                return 'Diese ID: ' + $id + ' ist uns bekannt';
+//                }
 //
-//                    return $this -> setValue($auction);
-                return 'Diese ID: ' + $id + ' ist uns bekannt';
-                }
+//                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+//            }
 
-                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
-            }
-
-            return false;
+            return 'test';
         }
 
         /**
