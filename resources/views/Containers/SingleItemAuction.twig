@@ -76,7 +76,9 @@
 
             </dl>
 
-            <auction-bids auction="{{ auction | json_encode }}">
+            <auction-bids
+                    template="#vue-auction-bids"
+                    auction="{{ auction | json_encode }}">
             </auction-bids>
 
             {#<auction-bids resource="currentAuction"#}
