@@ -180,14 +180,14 @@
 
         /**
          * @param $id
-         * @param $bidderList
+         * @param $bid
          * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
          */
         public function updateBidderList($id, $sendedBid)
         {
             if ($sendedBid)
             {
-                $bidderList = (object)$sendedBid;
+                $bid = (object)$sendedBid;
 
                 $auction = $this -> getValue(Auction_7::class, $id);
 
@@ -198,10 +198,10 @@
 
                     $newEntry = pluginApp(AuctionBidderListEntry::class);
 
-                    $newEntry -> bidderName = $bidderList ['bidderName'];
-                    $newEntry -> customerId = $bidderList ['customerId'];
-                    $newEntry -> customerMaxBid = $bidderList ['customerMaxBid'];
-                    $newEntry -> bidPrice = $bidderList ['bidPrice'];
+                    $newEntry -> bidderName = $bid -> bidderName;
+                    $newEntry -> customerId = $bid -> customerId;
+                    $newEntry -> customerMaxBid = $bid -> customerMaxBid;
+                    $newEntry -> bidPrice = $bid -> bidPrice;
                     $newEntry -> bidTimeStamp = time();
 
                     array_push($newList, $newEntry);
