@@ -194,17 +194,17 @@
                     $list = array (pluginApp(AuctionBidderListEntry::class));
                     $list = $auction -> bidderList;
 
-                    return json_encode($list);
 
-//                    $bidderList -> bidTimeStamp = time();
+                    $bidderList -> bidTimeStamp = time();
 //
-//                    array_push($list, $bidderList);
+                    array_push($list, $bidderList);
 //
-//                    $auction -> bidderList = $list;
+                    $auction -> bidderList = $list;
 //
-//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 //
-//                    return $this -> setValue($auction);
+//                    return json_encode($list);
+                    return $this -> setValue($auction);
                 }
 
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
