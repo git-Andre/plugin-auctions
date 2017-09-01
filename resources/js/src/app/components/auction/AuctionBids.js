@@ -7,19 +7,21 @@ Vue.component( "auction-bids", {
         "template",
         "auctionData",
         "auction",
-        "maxCustomerBid",
-        "isInputValid"
+        "bidderList",
     ],
     data: function data() {
         return {
-            minBid: 66.22,
-            test: this.auction.id,
+            minBid: this.bidderList.bidPrice,
+            testId: this.auction.id,
+            testBidder: this.bidderList,
             isInputValid: false
         };
     },
     created() {
         this.$options.template = this.template;
         this.auction = JSON.parse(this.auctionData);
+        this.bidderList = auction.bidderList;
+
     },
     methods: {
         addBid() {

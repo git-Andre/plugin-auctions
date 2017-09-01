@@ -1,5 +1,6 @@
 <script type="x/template" id="vue-auction-bids">
-        {#<p>${ test }</p>#}
+        <p>Id: ${ testId }</p>
+        <p>testBidder: ${ testBidder }</p>
         <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
@@ -12,7 +13,7 @@
                     class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="isInputValid">${ minBid + 1 | currency }</span> ein!</p>
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
-                    :disabled="!isInputValid"
+                    :disabled="isInputValid"
                     @click="addBid"
                     >Gebot abgeben
             </button>
