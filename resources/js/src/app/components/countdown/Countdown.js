@@ -6,17 +6,20 @@ Vue.component( "auction-countdown", {
             this.now = Math.trunc((new Date()).getTime() / 1000);
         },1000);
     },
-    props : {
-        deadline : {
-            type: Number,
-            coerce: str => Math.trunc(str)
-        }
-    },
+    props : [
+        "template",
+        "deadline"
+    ],
     data() {
         return {
-            now: Math.trunc((new Date()).getTime() / 1000)
+            now: Math.trunc((new Date()).getTime() / 1000),
+            test: this.deadline,
         }
     },
+    created() {
+        this.$options.template = this.template;
+    },
+
     computed: {
         seconds() {
             return (this.date - this.now) % 60;
