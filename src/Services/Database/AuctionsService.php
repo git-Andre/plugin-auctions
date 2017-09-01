@@ -194,9 +194,9 @@
                 if ($auction instanceof Auction_7)
                 {
                     $newList = array (pluginApp(AuctionBidderListEntry::class));
-                    $newList = $auction -> bidderList;
-
                     $newEntry = pluginApp(AuctionBidderListEntry::class);
+
+                    $newList = $auction -> bidderList;
 
                     $newEntry -> bidderName = $bid -> bidderName;
                     $newEntry -> customerId = $bid -> customerId;
