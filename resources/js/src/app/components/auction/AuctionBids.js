@@ -11,7 +11,6 @@ Vue.component( "auction-bids", {
     ],
     data: function data() {
         return {
-            remainingTime: "this.now",
             minBid: 66.22,
             test: this.auctionParse(),
             isInputValid: false

@@ -9,7 +9,6 @@ Vue.component("auction-bids", {
     props: ["template", "auction", "maxCustomerBid", "isInputValid"],
     data: function data() {
         return {
-            remainingTime: "this.now",
             minBid: 66.22,
             test: this.auctionParse(),
             isInputValid: false
@@ -101,7 +100,17 @@ Vue.component("auction-countdown", {
 //     return value.toString()
 // } )
 
-},{}]},{},[1,2])
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Vue.filter('twoDigits', function (value) {
+    if (value.toString().length <= 1) {
+        return '0' + value.toString();
+    }
+    return value.toString();
+});
+
+},{}]},{},[1,2,3])
 
 
 // Vue.filter('twoDigits', (value) => {
