@@ -33,9 +33,7 @@ Vue.component("auction-bids", {
 'use strict';
 
 var interval = null;
-
 Vue.component("auction-countdown", {
-    // name: "auctionbids",
     props: ['template', 'deadline', 'stop'],
     data: function data() {
         return {
@@ -43,16 +41,21 @@ Vue.component("auction-countdown", {
             date: null,
             diff: 0
         };
-    }, created: function created() {
+    },
+    created: function created() {
         this.$options.template = this.template;
     },
     mounted: function mounted() {
         var _this = this;
 
-        this.date = Math.trunc(Date.parse(this.deadline.replace(/-/g, "/")) / 1000);
+        this.date = Math.trunc(this.deadline);
+        console.log('this.date: ' + this.date);
+
+        // this.date = Math.trunc( Date.parse( this.deadline.replace( /-/g, "/" ) ) / 1000 )
         interval = setInterval(function () {
             _this.now = Math.trunc(new Date().getTime() / 1000);
         }, 1000);
+
         console.log(interval);
     },
 
@@ -84,12 +87,12 @@ Vue.component("auction-countdown", {
 
 // ##########
 
-Vue.filter('twoDigits', function (value) {
-    if (value.toString().length <= 1) {
-        return '0' + value.toString();
-    }
-    return value.toString();
-});
+// Vue.filter( 'twoDigits', (value) => {
+//     if ( value.toString().length <= 1 ) {
+//         return '0' + value.toString()
+//     }
+//     return value.toString()
+// } )
 
 },{}]},{},[1,2])
 

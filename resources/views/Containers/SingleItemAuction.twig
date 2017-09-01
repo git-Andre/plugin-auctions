@@ -7,7 +7,7 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
-{#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
+{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
 
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>

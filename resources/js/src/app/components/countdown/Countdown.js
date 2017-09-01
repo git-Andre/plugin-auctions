@@ -1,10 +1,11 @@
 
-let interval = null;
+// let interval = null;
 Vue.component( "auction-countdown", {
     props: [
-        'template',
-        'deadline',
-        'stop'
+        "template",
+        "deadline",
+        "stop",
+        "interval" = null
     ],
     data: function data() {
         return {
@@ -15,18 +16,18 @@ Vue.component( "auction-countdown", {
     },
     created() {
         this.$options.template = this.template;
-
+        let interval = null;
     },
     mounted() {
         this.date = Math.trunc( this.deadline)
         console.log( 'this.date: ' + this.date );
 
         // this.date = Math.trunc( Date.parse( this.deadline.replace( /-/g, "/" ) ) / 1000 )
-        interval  = setInterval( () => {
+        this.interval  = setInterval( () => {
             this.now = Math.trunc( (new Date()).getTime() / 1000 )
         }, 1000 )
 
-        console.log( interval )
+        console.log( this.interval )
     },
     computed: {
         seconds() {

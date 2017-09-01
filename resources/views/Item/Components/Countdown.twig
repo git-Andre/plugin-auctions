@@ -1,7 +1,9 @@
 <script type="x/template" id="vue-auction-countdown">
-    <div class="row container m-t-0 m-b-1">
-        <div class="m-b-1">
-            <h4>Restzeit: <span>
+    <div class="row container m-t-1 m-b-2">
+        <dl class="auctionList">
+            <dt>Restzeit:</dt>
+            <dd>
+                <span>
                 <ul class="vue-countdown">
                     <li>
                         <p class="digit">{{ days }}</p>
@@ -20,58 +22,64 @@
                         <p class="text">sec</p>
                     </li>
                 </ul>
-            </span></h4>
-        </div>
+                </span>
+            </dd>
+        </dl>
     </div>
 </script>
 
-<style>
-    .vue-countdown {
-        padding: 0;
-        margin: 0;
-    }
+<dl class="auctionList">
+    <dt>Start Datum:</dt>
+    <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
 
-    .vue-countdown li {
-        display: inline-block;
-        margin: 0 8px;
-        text-align: center;
-        position: relative;
-    }
 
-    .vue-countdown li p {
-        margin: 0;
-    }
+    <style>
+        .vue-countdown {
+            padding: 0;
+            margin: 0;
+        }
 
-    .vue-countdown li:after {
-        content: ":";
-        position: absolute;
-        top: 0;
-        right: -13px;
-        font-size: 32px;
-    }
+        .vue-countdown li {
+            display: inline-block;
+            margin: 0 8px;
+            text-align: center;
+            position: relative;
+        }
 
-    .vue-countdown li:first-of-type {
-        margin-left: 0;
-    }
+        .vue-countdown li p {
+            margin: 0;
+        }
 
-    .vue-countdown li:last-of-type {
-        margin-right: 0;
-    }
+        .vue-countdown li:after {
+            content: ":";
+            position: absolute;
+            top: 0;
+            right: -13px;
+            font-size: 32px;
+        }
 
-    .vue-countdown li:last-of-type:after {
-        content: "";
-    }
+        .vue-countdown li:first-of-type {
+            margin-left: 0;
+        }
 
-    .vue-countdown .digit {
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 1.4;
-        margin-bottom: 0;
-    }
+        .vue-countdown li:last-of-type {
+            margin-right: 0;
+        }
 
-    .vue-countdown .text {
-        text-transform: uppercase;
-        margin-bottom: 0;
-        font-size: 10px;
-    }
-</style>
+        .vue-countdown li:last-of-type:after {
+            content: "";
+        }
+
+        .vue-countdown .digit {
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .vue-countdown .text {
+            text-transform: uppercase;
+            margin-bottom: 0;
+            font-size: 10px;
+        }
+    </style>
