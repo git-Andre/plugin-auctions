@@ -4,19 +4,25 @@
         <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
-                    :disabled="!isInputValid"
                     type="number"
                     id="maximumBid"
                     placeholder="Ihr Maximalgebot"
                     aria-describedby="maxBidHelpBlock"
             >
-            <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie mindestens ${ minBid + 1 | currency }
-                                                                              ein!</p>
+            <p id="maxBidHelpBlock"
+                    class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="!isInputValid">${ minBid + 1 | currency }</span> ein!</p>
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
+                    :disabled="!isInputValid"
                     @click="addBid"
                     >Gebot abgeben
             </button>
         </div>
     </div>
 </script>
+<style>
+    .alarm {
+        color: #c50000;
+    }
+
+</style>
