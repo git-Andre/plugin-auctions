@@ -30,60 +30,46 @@ Vue.component("auction-bids", {
 });
 
 },{}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 
-var interval = null;
+// let interval = null;
 Vue.component("auction-countdown", {
-    props: ['template', 'deadline', 'stop'],
-    data: function data() {
-        return {
-            now: Math.trunc(new Date().getTime() / 1000),
-            date: null,
-            diff: 0
-        };
-    },
-    created: function created() {
-        this.$options.template = this.template;
-    },
-    mounted: function mounted() {
+    ready: function ready() {
         var _this = this;
 
-        this.date = Math.trunc(this.deadline);
-        console.log('this.date: ' + this.date);
-
-        // this.date = Math.trunc( Date.parse( this.deadline.replace( /-/g, "/" ) ) / 1000 )
-        interval = setInterval(function () {
+        window.setInterval(function () {
             _this.now = Math.trunc(new Date().getTime() / 1000);
         }, 1000);
+    },
 
-        console.log(interval);
+    props: {
+        deadline: {
+            type: Number,
+            coerce: function coerce(str) {
+                return Math.trunc(str);
+            }
+        }
+    },
+    data: function data() {
+        return {
+            now: Math.trunc(new Date().getTime() / 1000)
+        };
     },
 
     computed: {
         seconds: function seconds() {
-            return Math.trunc(this.diff) % 60;
+            return (this.date - this.now) % 60;
         },
         minutes: function minutes() {
-            return Math.trunc(this.diff / 60) % 60;
+            return Math.trunc((this.date - this.now) / 60) % 60;
         },
         hours: function hours() {
-            return Math.trunc(this.diff / 60 / 60) % 24;
+            return Math.trunc((this.date - this.now) / 60 / 60) % 24;
         },
         days: function days() {
-            return Math.trunc(this.diff / 60 / 60 / 24);
+            return Math.trunc((this.date - this.now) / 60 / 60 / 24);
         }
-    },
-    watch: {
-        now: function now(value) {
-            this.diff = this.date - this.now;
-            if (this.diff <= 0 || this.stop) {
-                this.diff = 0;
-                // Remove interval
-                clearInterval(interval);
-            }
-        }
-    }
-});
+    } });
 
 // ##########
 
