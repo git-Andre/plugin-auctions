@@ -40,58 +40,58 @@
 
             <h2 class="m-b-3" style="color: #c50000;">Laufende Auktion:</h2>
 
-            {#| date("d \\T\\a\\g\\e H:i:s")#}
-            <dl class="auctionList">
-                {% if (bidderListLast.currentPrice != 0) %}
-                    <dt>Aktuelles Gebot:</dt>
-                    <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}
-                        <span v-resource-bind:currentAuction="bidPrice"
-                                content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
+            <div class="row container m-y-2">
+                <dl class="auctionList">
+                    {% if (bidderListLast.currentPrice != 0) %}
+                        <dt>Aktuelles Gebot:</dt>
+                        <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                            <span v-resource-bind:currentAuction="bidPrice"
+                                    content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
                         {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
                     </span>
 
-                    </dd>
-                    <dt>Start Preis:</dt>
-                    <dd>{{ auction.currentPrice | formatMonetary('EUR') }}
-                    </dd>
-                {% else %}
-                    <dt>Start Preis:</dt>
-                    <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
-                {% endif %}
+                        </dd>
+                        <dt>Start Preis:</dt>
+                        <dd>{{ auction.currentPrice | formatMonetary('EUR') }}
+                        </dd>
+                    {% else %}
+                        <dt>Start Preis:</dt>
+                        <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                    {% endif %}
 
-                <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+                    <dt>Start Datum:</dt>
+                    <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
 
-                <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
-                <dt>Artikel ID:</dt>
-                <dd>{{ auction.itemId }}</dd>
-                <dt>Versandpreis:</dt>
-                <dd>muß noch gefunden werden...</dd>
-                {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
-                {% endif %}
+                    <dt>Dauer:</dt>
+                    <dd>{{ auction.auctionDuration }} Tage</dd>
+                    <dt>End Datum:</dt>
+                    <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                    <dt>Artikel ID:</dt>
+                    <dd>{{ auction.itemId }}</dd>
+                    <dt>Versandpreis:</dt>
+                    <dd>muß noch gefunden werden...</dd>
+                    {% if bidderListLength != 1 %}
+                        <dt>Anzahl Gebote:</dt>
+                        <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+                    {% endif %}
 
-            </dl>
-
-        <div class="row container m-y-2">
-            <auction-countdown
-                    template="#vue-auction-countdown"
-                    deadline="{{ auction.expiryDate }}" number>
-            </auction-countdown>
-        </div>
-        <div class="row container m-t-0 m-b-3">
-            <auction-bids
-                    template="#vue-auction-bids"
-                    auctionData="{{ auction | json_encode }}">
-            </auction-bids>
-        </div>
+                </dl>
+            </div>
+            <div class="row container m-y-2">
+                <auction-countdown
+                        template="#vue-auction-countdown"
+                        deadline="{{ auction.expiryDate }}" number>
+                </auction-countdown>
+            </div>
+            <div class="row container m-t-0 m-b-3">
+                <auction-bids
+                        template="#vue-auction-bids"
+                        data="{{ auction | json_encode }}">
+                </auction-bids>
+            </div>
             {#<auction-bids template="#vue-auction-bids"#}
-                    {#v-resource-push:auction data-accessor="true"#}
-                    {#resource="currentAuction">#}
+            {#v-resource-push:auction data-accessor="true"#}
+            {#resource="currentAuction">#}
             {#</auction-bids>#}
 
 
@@ -128,7 +128,8 @@
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
 
-    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktionen' gesetzt, aber es ist keine Auktion im Backend definiert!!'</p>
+    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktionen' gesetzt, aber es ist keine Auktion im Backend
+       definiert!!'</p>
 
 {% endif %}
 
@@ -139,11 +140,13 @@
         padding: 0rem 1.5rem 0rem 1.5rem;
         margin-bottom: 0;
     }
+
     .auctionList dt {
         width: 25%;
         float: left;
         font-weight: bold;
     }
+
     .auctionList dd {
         width: 95%;
     }
