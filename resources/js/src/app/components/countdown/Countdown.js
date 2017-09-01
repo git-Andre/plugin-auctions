@@ -8,7 +8,7 @@ Vue.component( "auction-countdown", {
     props: [
         "template",
         "deadline",
-        "date" = 0,
+        "date",
         "stop"
     ],
     data() {

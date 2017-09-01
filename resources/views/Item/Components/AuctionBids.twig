@@ -4,7 +4,7 @@
         <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
-                    :disabled="isInputValid"
+                    :disabled="!isInputValid"
                     type="number"
                     id="maximumBid"
                     placeholder="Ihr Maximalgebot"
