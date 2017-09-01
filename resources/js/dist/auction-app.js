@@ -42,17 +42,11 @@ Vue.component("auction-countdown", {
         }, 1000);
     },
 
-    props: ["template", {
-        deadline: {
-            type: Number,
-            coerce: function coerce(str) {
-                return Math.trunc(str);
-            }
-        }
-    }],
+    props: ["template", "deadline"],
     data: function data() {
         return {
-            now: Math.trunc(new Date().getTime() / 1000)
+            now: Math.trunc(new Date().getTime() / 1000),
+            test: this.deadline
         };
     },
     created: function created() {
