@@ -7,13 +7,14 @@ Vue.component( "auction-bids", {
         "template",
         "auction",
         "maxCustomerBid",
-        "isActive"
+        "isInputValid"
     ],
     data: function data() {
         return {
             remainingTime: "this.now",
             minBid: 66.22,
-            test: this.auctionParse()
+            test: this.auctionParse(),
+            isInputValid: false
         };
     },
     created() {
