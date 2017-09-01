@@ -12,7 +12,7 @@ Vue.component( "auction-bids", {
     data: function data() {
         return {
             // minBid: this.bidderList[0].bidPrice,
-            // testId: this.auction.id,
+            testId: this.auction,
             // testBidder: this.bidderList,
             isInputValid: false
         };
@@ -20,7 +20,7 @@ Vue.component( "auction-bids", {
     created() {
         this.$options.template = this.template;
         this.auction = JSON.parse(this.biddata);
-        this.bidderList = auction.bidderList;
+        // this.bidderList = auction.bidderList;
 
     },
     methods: {
