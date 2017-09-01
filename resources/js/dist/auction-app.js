@@ -6,25 +6,22 @@
 
 Vue.component("auction-bids", {
     // name: "auctionbids",
-    props: ["template", "auction", "maxCustomerBid", "isInputValid"],
+    props: ["template", "auctionData", "auction", "maxCustomerBid", "isInputValid"],
     data: function data() {
         return {
             minBid: 66.22,
-            test: this.auctionParse(),
+            test: this.auction.id,
             isInputValid: false
         };
     },
     created: function created() {
         this.$options.template = this.template;
+        this.auction = JSON.parse(this.auctionData);
     },
 
     methods: {
         addBid: function addBid() {
-            alert('addBid');
-        },
-        auctionParse: function auctionParse() {
-            var auction = JSON.parse(this.auction);
-            return auction.bidderList[0].bidderName;
+            alert(this.auction.bidderlist[1]);
         }
     }
 });

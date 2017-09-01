@@ -5,6 +5,7 @@ Vue.component( "auction-bids", {
     // name: "auctionbids",
     props: [
         "template",
+        "auctionData",
         "auction",
         "maxCustomerBid",
         "isInputValid"
@@ -12,22 +13,17 @@ Vue.component( "auction-bids", {
     data: function data() {
         return {
             minBid: 66.22,
-            test: this.auctionParse(),
+            test: this.auction.id,
             isInputValid: false
         };
     },
     created() {
         this.$options.template = this.template;
-
+        this.auction = JSON.parse(this.auctionData);
     },
     methods: {
         addBid() {
-            alert('addBid');
+            alert(this.auction.bidderlist[1]);
         },
-        auctionParse() {
-            var auction = JSON.parse(this.auction);
-            return auction.bidderList[0].bidderName;
-        }
-
     }
 } );

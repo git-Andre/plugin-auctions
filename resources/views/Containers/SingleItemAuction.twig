@@ -77,16 +77,18 @@
 
             </dl>
 
+        <div class="row container m-y-2">
             <auction-countdown
                     template="#vue-auction-countdown"
                     deadline="{{ auction.expiryDate }}" number>
             </auction-countdown>
-
+        </div>
+        <div class="row container m-t-0 m-b-3">
             <auction-bids
                     template="#vue-auction-bids"
-                    auction="{{ auction | json_encode }}">
+                    auctionData="{{ auction | json_encode }}">
             </auction-bids>
-
+        </div>
             {#<auction-bids template="#vue-auction-bids"#}
                     {#v-resource-push:auction data-accessor="true"#}
                     {#resource="currentAuction">#}
