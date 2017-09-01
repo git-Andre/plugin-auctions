@@ -19,7 +19,6 @@ Vue.component( "auction-bids", {
     created() {
         this.$options.template = this.template;
 
-
     },
     methods: {
         addBid() {

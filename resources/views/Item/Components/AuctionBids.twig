@@ -1,9 +1,6 @@
 <script type="x/template" id="vue-auction-bids">
     <div class="row container m-t-0 m-b-3">
-        <p>${ test }</p>
-        <div class="m-b-1">
-            <h4>Restzeit: <span class="countDown">${ maxCustomerBid }</span></h4>
-        </div>
+        {#<p>${ test }</p>#}
         <div class="col-lg-8 offset-lg-2" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
@@ -12,7 +9,7 @@
                     placeholder="Ihr Maximalgebot"
                     aria-describedby="maxBidHelpBlock"
             >
-            <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie mindestens ${ minBid + 1 }
+            <p id="maxBidHelpBlock" class="form-text text-muted text-center"> Bitte geben Sie mindestens ${ minBid + 1 | currency }
                                                                               ein!</p>
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"

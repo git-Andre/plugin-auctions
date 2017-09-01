@@ -94,10 +94,10 @@ Vue.filter('twoDigits', function (value) {
 },{}]},{},[1,2])
 
 
-Vue.filter('twoDigits', (value) => {
-    if ( value.toString().length <= 1 ) {
-        return '0'+value.toString()
-    }
-    return value.toString()
-})
+// Vue.filter('twoDigits', (value) => {
+//     if ( value.toString().length <= 1 ) {
+//         return '0'+value.toString()
+//     }
+//     return value.toString()
+// })
 //# sourceMappingURL=auction-app.js.map

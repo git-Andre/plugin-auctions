@@ -1,8 +1,6 @@
 
 let interval = null;
-
 Vue.component( "auction-countdown", {
-    // name: "auctionbids",
     props: [
         'template',
         'deadline',
@@ -14,15 +12,20 @@ Vue.component( "auction-countdown", {
             date: null,
             diff: 0
         }
-    },    created() {
+    },
+    created() {
         this.$options.template = this.template;
 
     },
     mounted() {
-        this.date = Math.trunc( Date.parse( this.deadline.replace( /-/g, "/" ) ) / 1000 )
+        this.date = Math.trunc( this.deadline)
+        console.log( 'this.date: ' + this.date );
+
+        // this.date = Math.trunc( Date.parse( this.deadline.replace( /-/g, "/" ) ) / 1000 )
         interval  = setInterval( () => {
             this.now = Math.trunc( (new Date()).getTime() / 1000 )
         }, 1000 )
+
         console.log( interval )
     },
     computed: {
@@ -53,9 +56,9 @@ Vue.component( "auction-countdown", {
 
 // ##########
 
-Vue.filter( 'twoDigits', (value) => {
-    if ( value.toString().length <= 1 ) {
-        return '0' + value.toString()
-    }
-    return value.toString()
-} )
+// Vue.filter( 'twoDigits', (value) => {
+//     if ( value.toString().length <= 1 ) {
+//         return '0' + value.toString()
+//     }
+//     return value.toString()
+// } )
