@@ -43,6 +43,8 @@ Vue.component("auction-countdown", {
             date: null,
             diff: 0
         };
+    }, created: function created() {
+        this.$options.template = this.template;
     },
     mounted: function mounted() {
         var _this = this;
@@ -92,5 +94,10 @@ Vue.filter('twoDigits', function (value) {
 },{}]},{},[1,2])
 
 
-
+Vue.filter('twoDigits', (value) => {
+    if ( value.toString().length <= 1 ) {
+        return '0'+value.toString()
+    }
+    return value.toString()
+})
 //# sourceMappingURL=auction-app.js.map
