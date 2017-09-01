@@ -9,9 +9,9 @@ Vue.component("auction-bids", {
     props: ["template", "data", "auction", "bidderList"],
     data: function data() {
         return {
-            minBid: this.bidderList[0].bidPrice,
-            testId: this.auction.id,
-            testBidder: this.bidderList,
+            // minBid: this.bidderList[0].bidPrice,
+            // testId: this.auction.id,
+            // testBidder: this.bidderList,
             isInputValid: false
         };
     },

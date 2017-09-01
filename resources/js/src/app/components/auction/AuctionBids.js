@@ -5,21 +5,21 @@ Vue.component( "auction-bids", {
     // name: "auctionbids",
     props: [
         "template",
-        "data",
+        "biddata",
         "auction",
         "bidderList",
     ],
     data: function data() {
         return {
-            minBid: this.bidderList[0].bidPrice,
-            testId: this.auction.id,
-            testBidder: this.bidderList,
+            // minBid: this.bidderList[0].bidPrice,
+            // testId: this.auction.id,
+            // testBidder: this.bidderList,
             isInputValid: false
         };
     },
     created() {
         this.$options.template = this.template;
-        this.auction = JSON.parse(this.data);
+        this.auction = JSON.parse(this.biddata);
         this.bidderList = auction.bidderList;
 
     },
