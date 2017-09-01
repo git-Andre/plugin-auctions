@@ -29,7 +29,67 @@ Vue.component("auction-bids", {
     }
 });
 
-},{}]},{},[1])
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var interval = null;
+
+Vue.component("auction-countdown", {
+    // name: "auctionbids",
+    props: ['template', 'deadline', 'stop'],
+    data: function data() {
+        return {
+            now: Math.trunc(new Date().getTime() / 1000),
+            date: null,
+            diff: 0
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.date = Math.trunc(Date.parse(this.deadline.replace(/-/g, "/")) / 1000);
+        interval = setInterval(function () {
+            _this.now = Math.trunc(new Date().getTime() / 1000);
+        }, 1000);
+        console.log(interval);
+    },
+
+    computed: {
+        seconds: function seconds() {
+            return Math.trunc(this.diff) % 60;
+        },
+        minutes: function minutes() {
+            return Math.trunc(this.diff / 60) % 60;
+        },
+        hours: function hours() {
+            return Math.trunc(this.diff / 60 / 60) % 24;
+        },
+        days: function days() {
+            return Math.trunc(this.diff / 60 / 60 / 24);
+        }
+    },
+    watch: {
+        now: function now(value) {
+            this.diff = this.date - this.now;
+            if (this.diff <= 0 || this.stop) {
+                this.diff = 0;
+                // Remove interval
+                clearInterval(interval);
+            }
+        }
+    }
+});
+
+// ##########
+
+Vue.filter('twoDigits', function (value) {
+    if (value.toString().length <= 1) {
+        return '0' + value.toString();
+    }
+    return value.toString();
+});
+
+},{}]},{},[1,2])
 
 
 
