@@ -9,12 +9,8 @@ Vue.component("auction-bids", {
     props: ["template", "biddata", "auction", "auctionId", "maxCustomerBid"],
     data: function data() {
         return {
-            // minBid: this.bidderList[0].bidPrice,
-            // testId: this.auction,
             currentBidderList: [],
-            // auction: {},
-            isInputValid: this.isValid()
-            // maxCustomerBid
+            isInputValid: false
         };
     },
     created: function created() {
@@ -27,11 +23,13 @@ Vue.component("auction-bids", {
 
     methods: {
         isValid: function isValid() {
+
             if (this.maxCustomerBid < this.bidderListLastBidPrice + 1) {
-                return false;
+                this.isInputValid = false;
             } else {
-                return true;
+                this.isInputValid = true;
             }
+            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid);
         },
         addBid: function addBid() {
             // var test=  this.auction['id']

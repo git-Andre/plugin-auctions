@@ -27,11 +27,14 @@ Vue.component( "auction-bids", {
     methods: {
 
         isValid() {
-           if (this.maxCustomerBid < this.bidderListLastBidPrice + 1) {
-               return false;
+
+           if (this.maxCustomerBid < (this.bidderListLastBidPrice + 1)) {
+               this.isInputValid = false;
            } else {
-               return true;
+               this.isInputValid = true;
            }
+            alert( 'this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid );
+
         },
         addBid() {
             // var test=  this.auction['id']
@@ -42,8 +45,7 @@ Vue.component( "auction-bids", {
             // alert('this.bidderListLastCustomerMaxBid: ' + this.bidderListLastCustomerMaxBid + '<br/>');
             // alert('this.bidderListLastBidderName: ' + this.bidderListLastBidderName + '<br/>');
             // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
-            alert( 'this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' +
-                this.isInputValid );
+            alert( 'this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid );
         },
     },
     computed: {
