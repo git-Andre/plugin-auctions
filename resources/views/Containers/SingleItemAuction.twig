@@ -47,6 +47,7 @@
                         <dd class="price h1 m-b-2">
                             <span v-resource-bind:currentAuction="bidderListLast.bidPrice"
                                     content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
+                                {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
                             </span>
 
                         </dd>
@@ -86,7 +87,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode }}"
-                        :user-data="{{ services.customer.getContact() | json_encode() }}">
+                        userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
             </div>
             {#<auction-bids template="#vue-auction-bids"#}

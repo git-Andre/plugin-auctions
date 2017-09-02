@@ -6,6 +6,7 @@ Vue.component( "auction-bids", {
         "template",
         "auction",
         "auctionId",
+        "userdata"
     ],
     data: function data() {
         return {
@@ -18,6 +19,7 @@ Vue.component( "auction-bids", {
     created() {
         this.$options.template = this.template;
         this.auction           = JSON.parse( this.auction );
+        this.userdata          = JSON.parse( this.userdata );
         this.auctionId         = this.auction['id'];
         this.minBid            = this.bidderListLastBidPrice + 1;
     },
@@ -32,7 +34,7 @@ Vue.component( "auction-bids", {
         },
         addBid() {
 
-            alert( 'currentBidderList): ' + this.currentBidderList.bidPrice + '\n' + '' );
+            alert( 'this.userdata): ' + this.userdata + '\n' + '' );
         }
         ,
     },
