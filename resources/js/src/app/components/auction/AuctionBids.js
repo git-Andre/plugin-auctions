@@ -14,7 +14,6 @@ Vue.component( "auction-bids", {
             isUserLoggedIn: false,
             maxCustomerBid: null,
             minBid: 1.99,
-            isUserLoggedInAlert: false
         }
     },
     created() {
@@ -26,16 +25,15 @@ Vue.component( "auction-bids", {
     methods: {
         isValid() {
             if ( this.maxCustomerBid > this.minBid ) {
-                this.isInputValid = true;
+                this.isInputValid        = true;
             }
             else {
-                    this.isUserLoggedInAlert = true;
-                    this.isInputValid = false;
+                this.isInputValid        = false;
             }
         },
         addBid() {
 
-            alert( 'currentBidderList): ' + JSON.parse(this.currentBidderList) + '\n' + '' );
+            alert( 'currentBidderList): ' + this.currentBidderList.bidPrice + '\n' + '' );
         }
         ,
     },
