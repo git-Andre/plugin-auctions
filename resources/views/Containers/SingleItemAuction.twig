@@ -44,11 +44,10 @@
                 <dl class="auctionList">
                     {% if (bidderListLast.bidPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>
-                        <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                        <dd class="price h1 m-b-2">
                             <span v-resource-bind:currentAuction="bidPrice"
                                     content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
-                        {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
-                    </span>
+                            </span>
 
                         </dd>
                         <dt>Start Preis:</dt>
