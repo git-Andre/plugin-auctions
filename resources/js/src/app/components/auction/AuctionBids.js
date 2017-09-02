@@ -10,25 +10,27 @@ Vue.component( "auction-bids", {
     ],
     data: function data() {
         return {
-            currentBidderList: [],
-            isInputValid: false
+            currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
+            isInputValid: false,
+            minBid: this.bidderListLastBidPrice + 1
         }
     },
     created() {
         this.$options.template = this.template;
         this.biddata           = JSON.parse( this.biddata );
-        this.auctionId = this.biddata['id'];
+        this.auctionId         = this.biddata['id'];
     },
     methods: {
 
         isValid() {
-
-           if (this.maxCustomerBid < (this.bidderListLastBidPrice + 1)) {
-               this.isInputValid = false;
-           } else {
-               this.isInputValid = true;
-           }
             alert( 'this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid );
+
+            if ( this.maxCustomerBid < (this.bidderListLastBidPrice + 1) ) {
+                this.isInputValid = false;
+            }
+            else {
+                this.isInputValid = true;
+            }
 
         },
         addBid() {
@@ -36,7 +38,7 @@ Vue.component( "auction-bids", {
             // var test =  this.biddata.bidderList[1].bidderName;
             // var test = this.bidderListLastPrice
 
-            // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
+            // alert('this.bidderListLastCustomerId: ' + this.bidderListLastCustomerId + '<br/>');
             alert( '(this.bidderListLastBidPrice + 1): ' + (this.bidderListLastBidPrice + 1) + '\n' + '' );
         },
     },
@@ -50,7 +52,7 @@ Vue.component( "auction-bids", {
         bidderListLastBidderName() {
             return this.biddata.bidderList[this.biddata.bidderList.length - 1].bidderName
         },
-        bidderListCustomerId() {
+        bidderListLastCustomerId() {
             return this.biddata.bidderList[this.biddata.bidderList.length - 1].customerId
         }
     }

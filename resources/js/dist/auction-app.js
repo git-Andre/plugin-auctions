@@ -8,8 +8,9 @@ Vue.component("auction-bids", {
     props: ["template", "biddata", "auctionId", "maxCustomerBid"],
     data: function data() {
         return {
-            currentBidderList: [],
+            currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
             isInputValid: false
+            // minBid: this.bidderListLastBidPrice
         };
     },
     created: function created() {
@@ -33,7 +34,7 @@ Vue.component("auction-bids", {
             // var test =  this.biddata.bidderList[1].bidderName;
             // var test = this.bidderListLastPrice
 
-            // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
+            // alert('this.bidderListLastCustomerId: ' + this.bidderListLastCustomerId + '<br/>');
             alert('(this.bidderListLastBidPrice + 1): ' + (this.bidderListLastBidPrice + 1) + '\n' + '');
         }
     },
@@ -47,7 +48,7 @@ Vue.component("auction-bids", {
         bidderListLastBidderName: function bidderListLastBidderName() {
             return this.biddata.bidderList[this.biddata.bidderList.length - 1].bidderName;
         },
-        bidderListCustomerId: function bidderListCustomerId() {
+        bidderListLastCustomerId: function bidderListLastCustomerId() {
             return this.biddata.bidderList[this.biddata.bidderList.length - 1].customerId;
         }
     }
