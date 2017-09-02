@@ -7,7 +7,7 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
-{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
+{#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
 
 {% if ( auction ) %}
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
@@ -40,7 +40,7 @@
 
             <h2 class="m-b-3" style="color: #c50000;">Laufende Auktion:</h2>
 
-            <div class="row container m-y-2">
+            <div class="row container m-t-1 m-b-2">
                 <dl class="auctionList">
                     {% if (bidderListLast.currentPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>

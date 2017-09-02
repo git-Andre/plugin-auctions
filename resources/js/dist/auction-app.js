@@ -6,7 +6,7 @@
 
 Vue.component("auction-bids", {
     // name: "auctionbids",
-    props: ["template", "biddata", "auction", "bidderList"],
+    props: ["template", "biddata", "auction", "bidderList", "auctionId"],
     data: function data() {
         return {
             // minBid: this.bidderList[0].bidPrice,
@@ -18,12 +18,26 @@ Vue.component("auction-bids", {
     created: function created() {
         this.$options.template = this.template;
         this.auction = JSON.parse(this.biddata);
-        // this.bidderList = auction.bidderList;
+        this.biddata = null; /* all dataInput-handling is stupid, but I'm a js-amateur..*/
+        this.auctionId = this.auction['id'];
     },
 
     methods: {
         addBid: function addBid() {
-            alert(this.auction.bidderlist[1]);
+            // var test=  this.auction['id']
+            // var test =  this.auction.bidderList[1].bidderName;
+            // var test = this.bidderListLastPrice
+
+            var test = this.auction.bidderList[this.auction.bidderList.length - 1].customerId;
+            // auction.bidderList.last
+            // auction.bidderList.length
+
+            alert(this.auctionId + ' --- test: ' + test);
+        }
+    },
+    computed: {
+        bidderList: function bidderList() {
+            return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice;
         }
     }
 });
