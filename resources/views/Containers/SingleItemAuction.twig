@@ -45,7 +45,7 @@
                     {% if (bidderListLast.bidPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">
-                            <span v-resource-bind:currentAuction="bidPrice"
+                            <span v-resource-bind:currentAuction="bidderListLast.bidPrice"
                                     content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
                             </span>
 
