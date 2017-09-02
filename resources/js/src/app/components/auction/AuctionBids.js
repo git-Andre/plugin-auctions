@@ -11,9 +11,10 @@ Vue.component( "auction-bids", {
         return {
             currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
             isInputValid: false,
-            isUserLoggedIn: true,
+            isUserLoggedIn: false,
             maxCustomerBid: 0,
-            minBid: 1.99
+            minBid: 1.99,
+            isUserLoggedInAlert: false
         }
     },
     created() {
@@ -23,20 +24,20 @@ Vue.component( "auction-bids", {
         this.minBid            = this.bidderListLastBidPrice + 1;
     },
     methods: {
-
         isValid() {
             if ( this.maxCustomerBid < (this.bidderListLastBidPrice + 1) ) {
 
                 if ( !this.isUserLoggedIn ) {
                     this.isInputValid = false;
+                    this.isUserLoggedInAlert = true;
                 }
                 else {
-                    this.isUserLoggedIn = false;
+                    this.isUserLoggedInAlert = false;
                     this.isInputValid = true;
                 }
             }
             else {
-                    this.isUserLoggedIn = false;
+                    this.isUserLoggedInAlert = false;
                     this.isInputValid = false;
             }
         },

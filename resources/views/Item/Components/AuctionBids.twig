@@ -5,7 +5,7 @@
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
                     @keyup="isValid | debounce 500"
-                    type="number"
+                    type="float"
                     id="maximumBid"
                     placeholder="Ihr Maximalgebot"
                     aria-describedby="maxBidHelpBlock"
@@ -19,7 +19,7 @@
                     >Gebot abgeben
             </button>
         </div>
-        <div v-if="!isUserLoggedInAlert"
+        <div v-if="isUserLoggedInAlert"
                 class="col-lg-8 offset-lg-3 alert alert-danger m-t-1 text-center">
             Bitte einloggen bzw. registrieren!
         </div>
