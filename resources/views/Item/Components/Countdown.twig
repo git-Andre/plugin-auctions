@@ -17,7 +17,7 @@
                     <p class="text">min</p>
                 </li>
                 <li v-if="(days < 1)">
-                    <p class="digit" :class="{alarm: (days < 1) }">${ seconds }</p>
+                    <p class="digit" :class="alarm: (days < 1)">${ seconds }</p>
                     <p class="text">sec</p>
                 </li>
             </ul>

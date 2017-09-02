@@ -12,13 +12,15 @@ Vue.component("auction-bids", {
             // minBid: this.bidderList[0].bidPrice,
             testId: this.auction,
             // testBidder: this.bidderList,
-            isInputValid: false
+            isInputValid: false,
+            maxCustomerBid: maxCustomerBid
         };
     },
     created: function created() {
         this.$options.template = this.template;
         this.auction = JSON.parse(this.biddata);
-        this.biddata = null; /* all dataInput-handling is stupid, but I'm a js-amateur..*/
+        this.biddata = null;
+        /* all dataInput-handling is stupid, but I'm a js-amateur..*/
         this.auctionId = this.auction['id'];
     },
 
@@ -28,16 +30,32 @@ Vue.component("auction-bids", {
             // var test =  this.auction.bidderList[1].bidderName;
             // var test = this.bidderListLastPrice
 
-            var test = this.auction.bidderList[this.auction.bidderList.length - 1].customerId;
-            // auction.bidderList.last
-            // auction.bidderList.length
-
-            alert(this.auctionId + ' --- test: ' + test);
+            // alert('this.bidderListLastBidPrice: ' + this.bidderListLastBidPrice + '<br/>');
+            // alert('this.bidderListLastCustomerMaxBid: ' + this.bidderListLastCustomerMaxBid + '<br/>');
+            // alert('this.bidderListLastBidderName: ' + this.bidderListLastBidderName + '<br/>');
+            // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
+            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '<br/>' + 'this.isInputValid: ' + this.isInputValid);
         }
     },
     computed: {
-        bidderList: function bidderList() {
+        bidderListLastBidPrice: function bidderListLastBidPrice() {
             return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice;
+        },
+        bidderListLastCustomerMaxBid: function bidderListLastCustomerMaxBid() {
+            return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid;
+        },
+        bidderListLastBidderName: function bidderListLastBidderName() {
+            return this.auction.bidderList[this.auction.bidderList.length - 1].bidderName;
+        },
+        bidderListCustomerId: function bidderListCustomerId() {
+            return this.auction.bidderList[this.auction.bidderList.length - 1].customerId;
+        },
+        isInputValid: function isInputValid() {
+            if (this.maxCustomerBid < bidderListLastBidPrice + 1) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 });
