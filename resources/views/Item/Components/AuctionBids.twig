@@ -10,10 +10,10 @@
                     aria-describedby="maxBidHelpBlock"
             >
             <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="isInputValid">${ minBid + 1 | currency }</span> ein!</p>
+                    class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="'alarm' : isInputValid">${ minBid + 1 | currency }</span> ein!</p>
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
-                    :disabled="maxCustomerBid < bidderListLastBidPrice + 1"
+                    :disabled="isInputValid"
                     @click="addBid"
                     >Gebot abgeben
             </button>

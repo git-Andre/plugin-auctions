@@ -13,9 +13,9 @@ Vue.component( "auction-bids", {
     data: function data() {
         return {
             // minBid: this.bidderList[0].bidPrice,
-            testId: this.auction,
+            // testId: this.auction,
             // testBidder: this.bidderList,
-            // isInputValid: false,
+            isInputValid: maxCustomerBid < this.bidderListLastBidPrice + 1,
             // maxCustomerBid
         };
     },
