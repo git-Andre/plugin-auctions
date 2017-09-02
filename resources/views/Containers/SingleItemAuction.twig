@@ -40,9 +40,9 @@
 
             <h2 class="m-b-3" style="color: #c50000;">Laufende Auktion:</h2>
 
-            <div class="row container m-t-1 m-b-2">
+            <div class="row container m-t-1 m-b-0">
                 <dl class="auctionList">
-                    {% if (bidderListLast.currentPrice != 0) %}
+                    {% if (bidderListLast.bidPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}
                             <span v-resource-bind:currentAuction="bidPrice"
@@ -86,7 +86,7 @@
             <div class="row container m-t-0 m-b-3">
                 <auction-bids
                         template="#vue-auction-bids"
-                        biddata="{{ auction | json_encode }}">
+                        auction="{{ auction | json_encode }}">
                 </auction-bids>
             </div>
             {#<auction-bids template="#vue-auction-bids"#}

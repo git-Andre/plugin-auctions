@@ -10,10 +10,9 @@ Vue.component( "auction-bids", {
     data: function data() {
         return {
             currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
-            // minBid: 1.99,
             isInputValid: false,
-            isUserLoggedIn: true,
-            maxCustomerBid:,
+            isUserLoggedIn: false,
+            maxCustomerBid: 0,
             minBid: 1.99
         }
     },
@@ -34,12 +33,8 @@ Vue.component( "auction-bids", {
             }
         },
         addBid() {
-            // var test=  this.biddata['id']
-            // var test =  this.biddata.bidderList[1].bidderName;
-            // var test = this.bidderListLastPrice
 
-            // alert('this.bidderListLastCustomerId: ' + this.bidderListLastCustomerId + '<br/>');
-            alert( '(this.bidderListLastBidPrice + 1): ' + (this.bidderListLastBidPrice + 1) + '\n' + '' );
+            alert( 'currentBidderList): ' + this.currentBidderList + '\n' + '' );
         },
     },
     computed: {
