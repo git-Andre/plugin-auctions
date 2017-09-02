@@ -5,20 +5,20 @@
 // const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-    props: ["template", "biddata", "auctionId"],
+    props: ["template", "auction", "auctionId"],
     data: function data() {
         return {
             currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
             isInputValid: false,
-            isUserLoggedIn: true,
+            isUserLoggedIn: false,
             maxCustomerBid: 0,
             minBid: 1.99
         };
     },
     created: function created() {
         this.$options.template = this.template;
-        this.biddata = JSON.parse(this.biddata);
-        this.auctionId = this.biddata['id'];
+        this.auction = JSON.parse(this.auction);
+        this.auctionId = this.auction['id'];
         this.minBid = this.bidderListLastBidPrice + 1;
     },
 
@@ -37,16 +37,16 @@ Vue.component("auction-bids", {
     },
     computed: {
         bidderListLastBidPrice: function bidderListLastBidPrice() {
-            return this.biddata.bidderList[this.biddata.bidderList.length - 1].bidPrice;
+            return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice;
         },
         bidderListLastCustomerMaxBid: function bidderListLastCustomerMaxBid() {
-            return this.biddata.bidderList[this.biddata.bidderList.length - 1].customerMaxBid;
+            return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid;
         },
         bidderListLastBidderName: function bidderListLastBidderName() {
-            return this.biddata.bidderList[this.biddata.bidderList.length - 1].bidderName;
+            return this.auction.bidderList[this.auction.bidderList.length - 1].bidderName;
         },
         bidderListLastCustomerId: function bidderListLastCustomerId() {
-            return this.biddata.bidderList[this.biddata.bidderList.length - 1].customerId;
+            return this.auction.bidderList[this.auction.bidderList.length - 1].customerId;
         }
     }
 });
