@@ -26,18 +26,10 @@ Vue.component( "auction-bids", {
     methods: {
         isValid() {
             if ( this.maxCustomerBid > this.minBid ) {
-
-                if (!this.isUserLoggedIn ) {
-                    this.isInputValid = false;
-                    this.isUserLoggedInAlert = true;
-                }
-                else {
-                    this.isUserLoggedInAlert = false;
-                    this.isInputValid = true;
-                }
+                this.isInputValid = true;
             }
             else {
-                    this.isUserLoggedInAlert = false;
+                    this.isUserLoggedInAlert = true;
                     this.isInputValid = false;
             }
         },

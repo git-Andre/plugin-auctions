@@ -20,31 +20,13 @@
                     :disabled="!isInputValid"
                     @click="addBid"
             >Gebot abgeben
-        </button>
+            </button>
+        {% else %}
+            <div v-if="isUserLoggedInAlert"
+                    class="alert alert-danger m-t-1 text-center">
+                Bitte einloggen bzw. registrieren!
+            </div>
         {% endif %}
-
-        {#<div class="row">#}
-        {#{% set loggedIn = frontend.Account.getIsAccountLoggedIn %}#}
-        {#<div class="col-xs-6 col-md-4 {% if loggedIn %}offset-md-2{% else %}offset-xs-3 offset-md-4{% endif %}">#}
-        {#<a href="/"#}
-        {#type=""#}
-        {#class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.generalHomepage") }}</a>#}
-        {#</div>#}
-
-
-        {#{% if loggedIn %}#}
-        {#<div class="col-xs-6 col-md-4">#}
-        {#<a href="/my-account"#}
-        {#type=""#}
-        {#class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.accMyAccount") }}</a>#}
-        {#</div>#}
-        {#{% endif %}#}
-        {#</div>#}
-
-    </div>
-    <div v-if="isUserLoggedInAlert"
-            class="col-lg-8 offset-lg-3 alert alert-danger m-t-1 text-center">
-        Bitte einloggen bzw. registrieren!
     </div>
 
 
