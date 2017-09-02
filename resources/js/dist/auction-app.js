@@ -6,25 +6,33 @@
 
 Vue.component("auction-bids", {
     // name: "auctionbids",
-    props: ["template", "biddata", "auction", "bidderList", "auctionId"],
+    props: ["template", "biddata", "auction", "auctionId", "maxCustomerBid"],
     data: function data() {
         return {
             // minBid: this.bidderList[0].bidPrice,
-            testId: this.auction
-            // testBidder: this.bidderList,
-            // isInputValid: false,
+            // testId: this.auction,
+            currentBidderList: [],
+            // auction: {},
+            isInputValid: this.isValid()
             // maxCustomerBid
         };
     },
     created: function created() {
         this.$options.template = this.template;
         this.auction = JSON.parse(this.biddata);
-        this.biddata = null;
+        this.biddata = this.auction;
         /* all dataInput-handling is stupid, but I'm a js-amateur..*/
         this.auctionId = this.auction['id'];
     },
 
     methods: {
+        isValid: function isValid() {
+            if (this.maxCustomerBid < this.bidderListLastBidPrice + 1) {
+                return false;
+            } else {
+                return true;
+            }
+        },
         addBid: function addBid() {
             // var test=  this.auction['id']
             // var test =  this.auction.bidderList[1].bidderName;
@@ -34,7 +42,7 @@ Vue.component("auction-bids", {
             // alert('this.bidderListLastCustomerMaxBid: ' + this.bidderListLastCustomerMaxBid + '<br/>');
             // alert('this.bidderListLastBidderName: ' + this.bidderListLastBidderName + '<br/>');
             // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
-            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '<br/>' + 'this.isInputValid: ' + this.isInputValid);
+            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid);
         }
     },
     computed: {
