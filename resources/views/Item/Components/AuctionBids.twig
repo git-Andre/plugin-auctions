@@ -1,42 +1,51 @@
 <script type="x/template" id="vue-auction-bids">
-        {#<p>Id: ${ testId }</p>#}
-        {#<p>testBidder: ${ testBidder }</p>#}
-        <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
-            <input class="form-control form-control-lg text-muted"
-                    v-model="maxCustomerBid" number
-                    @keyup="isValid"
-                    type="float"
-                    id="maximumBid"
-                    placeholder="Ihr Maximalgebot"
-                    aria-describedby="maxBidHelpBlock"
-            >
-            <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
+    {% set loggedIn = frontend.Account.getIsAccountLoggedIn %}
+
+    <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
+        <input class="form-control form-control-lg text-muted"
+                v-model="maxCustomerBid" number
+                @keyup="isValid"
+                type="float"
+                id="maximumBid"
+                placeholder="Ihr Maximalgebot"
+                aria-describedby="maxBidHelpBlock"
+        >
+        <p id="maxBidHelpBlock"
+                class="form-text text-muted text-center">Bitte geben Sie mindestens
+            <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
+
+        {% if loggedIn %}
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
                     :disabled="!isInputValid"
                     @click="addBid"
-                    >Gebot abgeben
-            </button>
-            <div class="row">
-                {% set loggedIn = frontend.Account.getIsAccountLoggedIn %}
-                <div class="col-xs-6 col-md-4 {% if loggedIn %}offset-md-2{% else %}offset-xs-3 offset-md-4{% endif %}">
-                    <a href="/" type="" class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.generalHomepage") }}</a>
-                </div>
+            >Gebot abgeben
+        </button>
+        {% endif %}
+
+        {#<div class="row">#}
+        {#{% set loggedIn = frontend.Account.getIsAccountLoggedIn %}#}
+        {#<div class="col-xs-6 col-md-4 {% if loggedIn %}offset-md-2{% else %}offset-xs-3 offset-md-4{% endif %}">#}
+        {#<a href="/"#}
+        {#type=""#}
+        {#class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.generalHomepage") }}</a>#}
+        {#</div>#}
 
 
-                {% if loggedIn %}
-                    <div class="col-xs-6 col-md-4">
-                        <a href="/my-account" type="" class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.accMyAccount") }}</a>
-                    </div>
-                {% endif %}
-            </div>
+        {#{% if loggedIn %}#}
+        {#<div class="col-xs-6 col-md-4">#}
+        {#<a href="/my-account"#}
+        {#type=""#}
+        {#class="btn btn-primary btn-block bg-primary">{{ trans("Ceres::Template.accMyAccount") }}</a>#}
+        {#</div>#}
+        {#{% endif %}#}
+        {#</div>#}
 
-        </div>
-        <div v-if="isUserLoggedInAlert"
-                class="col-lg-8 offset-lg-3 alert alert-danger m-t-1 text-center">
-            Bitte einloggen bzw. registrieren!
-        </div>
+    </div>
+    <div v-if="isUserLoggedInAlert"
+            class="col-lg-8 offset-lg-3 alert alert-danger m-t-1 text-center">
+        Bitte einloggen bzw. registrieren!
+    </div>
 
 
 </script>
