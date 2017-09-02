@@ -3,8 +3,8 @@
         {#<p>testBidder: ${ testBidder }</p>#}
         <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
-                    v-model="maxCustomerBid" number
-                    @keyup.enter="isValid | debounce 500"
+                    v-model="maxCustomerBid"
+                    @keyup="isValid | debounce 500"
                     type="number"
                     id="maximumBid"
                     placeholder="Ihr Maximalgebot"

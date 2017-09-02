@@ -9,7 +9,7 @@ Vue.component("auction-bids", {
     data: function data() {
         return {
             currentBidderList: [],
-            isInputValid: { default: false }
+            isInputValid: false
         };
     },
     created: function created() {
@@ -34,7 +34,7 @@ Vue.component("auction-bids", {
             // var test = this.bidderListLastPrice
 
             // alert('this.bidderListCustomerId: ' + this.bidderListCustomerId + '<br/>');
-            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid);
+            alert('(this.bidderListLastBidPrice + 1): ' + (this.bidderListLastBidPrice + 1) + '\n' + '');
         }
     },
     computed: {
