@@ -1,4 +1,3 @@
-// let interval = null;
 Vue.component( "auction-countdown", {
     ready() {
         window.setInterval( () => {
@@ -14,7 +13,6 @@ Vue.component( "auction-countdown", {
     data() {
         return {
             now: Math.trunc( (new Date()).getTime() / 1000 ),
-            test: this.twoDigits( 6 ),
             diff: 0
         }
     },
@@ -55,14 +53,4 @@ Vue.component( "auction-countdown", {
             }
         }
     }
-
 } );
-
-// ##########
-
-// Vue.filter( 'twoDigits', (value) => {
-//     if ( value.toString().length <= 1 ) {
-//         return '0' + value.toString()
-//     }
-//     return value.toString()
-// } )
