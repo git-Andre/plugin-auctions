@@ -19,9 +19,9 @@
                     >Gebot abgeben
             </button>
         </div>
-        <div v-show="!isUserLoggedIn"
-                class="col-lg-8 offset-lg-2 alert alert-danger">
-            Für ein Gebot bitte einloggen bzw. registrieren!
+        <div v-if="!isUserLoggedIn"
+                class="col-lg-8 offset-lg-3 alert alert-danger m-t-1 text-center">
+            Bitte einloggen bzw. registrieren!
         </div>
 
 

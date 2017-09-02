@@ -9,16 +9,18 @@ Vue.component("auction-bids", {
     data: function data() {
         return {
             currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
-            minBid: this.bidderListLastBidPrice + 1,
+            // minBid: 1.99,
             isInputValid: false,
-            isUserLoggedIn: false,
-            maxCustomerBid: 2.99
+            isUserLoggedIn: true,
+            maxCustomerBid: 2.99,
+            minBid: 1.99
         };
     },
     created: function created() {
         this.$options.template = this.template;
         this.biddata = JSON.parse(this.biddata);
         this.auctionId = this.biddata['id'];
+        this.minBid = this.bidderListLastBidPrice + 1;
     },
 
     methods: {
