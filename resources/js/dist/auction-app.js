@@ -5,12 +5,14 @@
 // const ResourceService = require("services/ResourceService");
 
 Vue.component("auction-bids", {
-    props: ["template", "biddata", "auctionId", "maxCustomerBid"],
+    props: ["template", "biddata", "auctionId"],
     data: function data() {
         return {
             currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
-            isInputValid: false
-            // minBid: this.bidderListLastBidPrice
+            minBid: this.bidderListLastBidPrice + 1,
+            isInputValid: false,
+            isUserLoggedIn: false,
+            maxCustomerBid: 2.99
         };
     },
     created: function created() {
@@ -21,13 +23,11 @@ Vue.component("auction-bids", {
 
     methods: {
         isValid: function isValid() {
-
             if (this.maxCustomerBid < this.bidderListLastBidPrice + 1) {
                 this.isInputValid = false;
             } else {
                 this.isInputValid = true;
             }
-            alert('this.maxCustomerBid: ' + this.maxCustomerBid + '\n' + 'this.isInputValid: ' + this.isInputValid);
         },
         addBid: function addBid() {
             // var test=  this.biddata['id']

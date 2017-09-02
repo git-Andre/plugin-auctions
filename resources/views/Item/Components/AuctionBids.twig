@@ -3,7 +3,7 @@
         {#<p>testBidder: ${ testBidder }</p>#}
         <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
-                    v-model="maxCustomerBid"
+                    v-model="maxCustomerBid" number
                     @keyup="isValid | debounce 500"
                     type="number"
                     id="maximumBid"
@@ -19,6 +19,12 @@
                     >Gebot abgeben
             </button>
         </div>
+        <div v-show="!isUserLoggedIn"
+                class="col-lg-8 offset-lg-2 alert alert-danger">
+            Für ein Gebot bitte einloggen bzw. registrieren!
+        </div>
+
+
 </script>
 <style>
     .alarm {
