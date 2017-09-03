@@ -48,11 +48,12 @@
                     {% if (bidderListLast.bidPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">
+                            {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
 
-                            <span v-resource-bind:currentAuction="bidderListLast.bidPrice"
-                                    content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
-                                {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
-                            </span>
+                            {#<span v-resource-bind:currentAuction="bidderListLast.bidPrice"#}
+                            {#content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">#}
+                            {#{{ bidderListLast.bidPrice | formatMonetary('EUR') }}#}
+                            {#</span>#}
 
                         </dd>
 
