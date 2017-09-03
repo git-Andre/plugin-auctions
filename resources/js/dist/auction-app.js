@@ -23,13 +23,6 @@ Vue.component("auction-bids", {
     },
 
     methods: {
-        isValid: function isValid() {
-            if (this.maxCustomerBid >= this.minBid) {
-                this.isInputValid = true;
-            } else {
-                this.isInputValid = false;
-            }
-        },
         addBid: function addBid() {
 
             if (this.maxCustomerBid > this.bidderListLastCustomerMaxBid) {
@@ -55,6 +48,7 @@ Vue.component("auction-bids", {
             return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice;
         },
         bidderListLastCustomerMaxBid: function bidderListLastCustomerMaxBid() {
+            cache: false;
             return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid;
         },
         bidderListLastBidderName: function bidderListLastBidderName() {
@@ -62,6 +56,16 @@ Vue.component("auction-bids", {
         },
         bidderListLastCustomerId: function bidderListLastCustomerId() {
             return this.auction.bidderList[this.auction.bidderList.length - 1].customerId;
+        }
+    },
+    watch: {
+        maxCustomerBid: function maxCustomerBid() {
+            alert('angekommen');
+            if (this.maxCustomerBid >= this.minBid) {
+                this.isInputValid = true;
+            } else {
+                this.isInputValid = false;
+            }
         }
     }
 });

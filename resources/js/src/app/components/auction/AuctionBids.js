@@ -24,14 +24,6 @@ Vue.component( "auction-bids", {
         this.minBid            = this.bidderListLastBidPrice + 1;
     },
     methods: {
-        isValid() {
-            if ( this.maxCustomerBid >= this.minBid ) {
-                this.isInputValid = true;
-            }
-            else {
-                this.isInputValid = false;
-            }
-        },
         addBid() {
 
             if ( this.maxCustomerBid > this.bidderListLastCustomerMaxBid ) {
@@ -66,6 +58,16 @@ Vue.component( "auction-bids", {
         },
         bidderListLastCustomerId() {
             return this.auction.bidderList[this.auction.bidderList.length - 1].customerId
+        }
+    },
+    watch: {
+        maxCustomerBid: function(){
+            if ( this.maxCustomerBid >= this.minBid ) {
+                this.isInputValid = true;
+            }
+            else {
+                this.isInputValid = false;
+            }
         }
     }
 } );

@@ -16,6 +16,7 @@
     {% set bidderListLength = auction.bidderList | length %}
 
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+    <resource name="bidderListLast" :data="{{ bidderListLast | json_encode() }}"></resource>
 
     <div id="addAuctionVue">
 
@@ -47,12 +48,14 @@
                     {% if (bidderListLast.bidPrice != 0) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">
+
                             <span v-resource-bind:currentAuction="bidderListLast.bidPrice"
                                     content="{{ bidderListLast.bidPrice | formatMonetary('EUR') }}">
                                 {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
                             </span>
 
                         </dd>
+
                         <dt>Start Preis:</dt>
                         <dd>{{ auction.currentPrice | formatMonetary('EUR') }}
                         </dd>
