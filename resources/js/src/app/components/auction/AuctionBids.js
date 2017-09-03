@@ -1,4 +1,6 @@
-// const ApiService      = require("services/ApiService");
+const ApiService          = require( "services/ApiService" );
+// /plugin-ceres/resources/js/src/app/services/ApiService.js
+const NotificationService = require( "services/NotificationService" );
 // const ResourceService = require("services/ResourceService");
 
 Vue.component( "auction-bids", {
@@ -10,7 +12,6 @@ Vue.component( "auction-bids", {
     ],
     data: function data() {
         return {
-            currentBidderList: { 'bidPrice': 1, 'customerMaxBid': 2, 'bidderName': 'test***Kunde1', 'customerId': 3 },
             isInputValid: false,
             maxCustomerBid: null,
             minBid: 1.99,
@@ -25,34 +26,73 @@ Vue.component( "auction-bids", {
     },
     methods: {
         addBid() {
+            var currentBidderList   = {
+                'bidPrice': 1,
+                'customerMaxBid': 2,
+                'bidderName': 'test***Kunde1',
+                'customerId': 3
+            };
+            var bidderListLastEntry = this.getBidderListLastEntry();
+            if ( this.maxCustomerBid > bidderListLastEntry ) {
 
-            if ( this.maxCustomerBid > this.bidderListLastCustomerMaxBid ) {
-                this.currentBidderList.bidPrice       = this.bidderListLastCustomerMaxBid + 1;
-                this.currentBidderList.customerMaxBid = this.maxCustomerBid;
-                this.currentBidderList.bidderName     = this.userdata.firstName;
-                this.currentBidderList.customerId     = this.userdata.id;
-                alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
+                currentBidderList.bidPrice       = bidderListLastEntry.customerMaxBid + 1;
+                currentBidderList.customerMaxBid = this.maxCustomerBid;
+                currentBidderList.bidderName     = this.userdata.firstName;
+                currentBidderList.customerId     = this.userdata.id;
+
+                // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
+                this.updateAuction();
+                NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." )
+                    .closeAfter( 3000 );
             }
             else {
-                this.currentBidderList.bidPrice       = this.maxCustomerBid;
-                this.currentBidderList.customerMaxBid = this.bidderListLastCustomerMaxBid;
-                this.currentBidderList.bidderName     = this.bidderListLastBidderName;
-                this.currentBidderList.customerId     = this.bidderListLastCustomerId;
+                currentBidderList.bidPrice       = this.maxCustomerBid;
+                currentBidderList.customerMaxBid = bidderListLastEntry.bidPrice;
+                currentBidderList.bidderName     = this.bidderListLastBidderName;
+                currentBidderList.customerId     = this.bidderListLastCustomerId;
 
-                alert( 'Es gibt leider schon ein höheres Gebot...' );
+                // alert( 'Es gibt leider schon ein höheres Gebot...' );
+                this.updateAuction(this.auctionId);
+                NotificationService.success( "Es gibt leider schon ein höheres Gebot..." )
+                    .closeAfter( 3000 );
+
             }
 
             // alert( 'this.userdata): ' + this.userdata.id + '\n' + '' );
         },
+        getBidderListLastEntry() {
+
+            ApiService.get( "/api/auction/" + this.auctionId, {}, { supressNotifications: true } )
+                .done( function (auction) {
+
+                    alert( auction.bidderList[auction.bidderList.length - 1].customerMaxBid );
+                    return auction.bidderList[auction.bidderList.length - 1];
+                } )
+                .fail( function (auction) {
+                    alert( 'Schade - ein Fehler beim abholen' );
+                } );
+        },
+        updateAuction() {
+            ApiService.put( "/api/bidderlist/" + this.auctionId, currentBidderList,
+                                                                 { supressNotifications: false }
+            )
+                .done( function (auction) {
+                    // alert ("super!!!! abgespeichert");
+                } )
+                .fail( function (auction) {
+                    NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
+                    alert( 'Schade - ein Fehler beim abspeichern' );
+                } );
+        }
     },
     computed: {
         bidderListLastBidPrice() {
             return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice
         },
-        bidderListLastCustomerMaxBid() {
-            cache: false;
-            return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid
-        },
+        // bidderListLastCustomerMaxBid() {
+        //     cache: false;
+        //     return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid
+        // },
         bidderListLastBidderName() {
             return this.auction.bidderList[this.auction.bidderList.length - 1].bidderName
         },
@@ -61,7 +101,7 @@ Vue.component( "auction-bids", {
         }
     },
     watch: {
-        maxCustomerBid: function(){
+        maxCustomerBid: function () {
             if ( this.maxCustomerBid >= this.minBid ) {
                 this.isInputValid = true;
             }
@@ -69,5 +109,5 @@ Vue.component( "auction-bids", {
                 this.isInputValid = false;
             }
         }
-    }
+    },
 } );

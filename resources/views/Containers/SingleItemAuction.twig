@@ -92,7 +92,7 @@
             <div class="row container m-t-0 m-b-3">
                 <auction-bids
                         template="#vue-auction-bids"
-                        auction="{{ auction | json_encode }}"
+                        auctionid="{{ auction.id | json_encode }}"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
             </div>
