@@ -33,21 +33,21 @@ Vue.component( "auction-bids", {
             }
         },
         addBid() {
-            var newBidPrice = this.minBid;
 
-            if (newBidPrice > this.bidderListLastCustomerMaxBid) {
-                this.currentBidderList.bidPrice = newBidPrice;
+            if ( this.maxCustomerBid > this.bidderListLastCustomerMaxBid ) {
+                this.currentBidderList.bidPrice       = this.bidderListLastCustomerMaxBid + 1;
                 this.currentBidderList.customerMaxBid = this.maxCustomerBid;
-                this.currentBidderList.bidderName = this.userdata.firstName;
-                this.currentBidderList.customerId = this.userdata.id;
+                this.currentBidderList.bidderName     = this.userdata.firstName;
+                this.currentBidderList.customerId     = this.userdata.id;
+                alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
             }
             else {
-                this.currentBidderList.bidPrice = newBidPrice;
+                this.currentBidderList.bidPrice       = this.maxCustomerBid;
                 this.currentBidderList.customerMaxBid = this.bidderListLastCustomerMaxBid;
-                this.currentBidderList.bidderName = this.bidderListLastBidderName;
-                this.currentBidderList.customerId = this.bidderListLastCustomerId;
+                this.currentBidderList.bidderName     = this.bidderListLastBidderName;
+                this.currentBidderList.customerId     = this.bidderListLastCustomerId;
 
-                alert('Es gibt leider schon ein höheres Gebot...');
+                alert( 'Es gibt leider schon ein höheres Gebot...' );
             }
 
             // alert( 'this.userdata): ' + this.userdata.id + '\n' + '' );
@@ -58,6 +58,7 @@ Vue.component( "auction-bids", {
             return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice
         },
         bidderListLastCustomerMaxBid() {
+            cache: false;
             return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid
         },
         bidderListLastBidderName() {
