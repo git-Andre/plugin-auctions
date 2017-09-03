@@ -39,3 +39,21 @@ export function updateAuction(auctionId, newBid)
 
 
 export default {updateAuction};
+
+// initMinBidPrice() {
+//     return new Promise( (resolve, reject) => {
+//                             if ( this.auctionid ) {
+//                                 // commit("getBidPrice", )
+//                                 ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
+//                                     .done( auction => {
+//                                         auction.bidderList[auction.bidderList.length - 1].bidPrice + 1;
+//                                         resolve();
+//                                     } )
+//                                     .fail( () => {
+//                                         alert( 'Schade - ein Fehler beim abholen' );
+//                                         reject();
+//                                     } );
+//                             }
+//                         }
+//     )
+// },
