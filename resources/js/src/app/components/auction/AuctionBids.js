@@ -26,17 +26,32 @@ Vue.component( "auction-bids", {
     methods: {
         isValid() {
             if ( this.maxCustomerBid >= this.minBid ) {
-                this.isInputValid        = true;
+                this.isInputValid = true;
             }
             else {
-                this.isInputValid        = false;
+                this.isInputValid = false;
             }
         },
         addBid() {
+            var newBidPrice = this.minBid;
 
-            alert( 'this.userdata): ' + this.userdata + '\n' + '' );
-        }
-        ,
+            if (newBidPrice > this.bidderListLastCustomerMaxBid) {
+                this.currentBidderList.bidPrice = newBidPrice;
+                this.currentBidderList.customerMaxBid = this.maxCustomerBid;
+                this.currentBidderList.bidderName = this.userdata.firstName;
+                this.currentBidderList.customerId = this.userdata.id;
+            }
+            else {
+                this.currentBidderList.bidPrice = newBidPrice;
+                this.currentBidderList.customerMaxBid = this.bidderListLastCustomerMaxBid;
+                this.currentBidderList.bidderName = this.bidderListLastBidderName;
+                this.currentBidderList.customerId = this.bidderListLastCustomerId;
+
+                alert('Es gibt leider schon ein höheres Gebot...');
+            }
+
+            // alert( 'this.userdata): ' + this.userdata.id + '\n' + '' );
+        },
     },
     computed: {
         bidderListLastBidPrice() {

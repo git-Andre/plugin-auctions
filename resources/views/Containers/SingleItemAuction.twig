@@ -10,11 +10,13 @@
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
 
 {% if ( auction ) %}
-    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
 
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
+
+    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+
     <div id="addAuctionVue">
 
         {#Zukunft#}
@@ -72,7 +74,7 @@
                     <dd>muß noch gefunden werden...</dd>
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
-                        <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+                        <dd> {{ bidderListLength - 1 }} <a href="#"> - alle anzeigen</a></dd>
                     {% endif %}
 
                 </dl>
