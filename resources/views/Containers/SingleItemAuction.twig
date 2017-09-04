@@ -35,8 +35,8 @@
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
-                <dt>Versandpreis:</dt>
-                <dd>muß noch gefunden werden...</dd>
+                {#<dt>Versandpreis:</dt>#}
+                {#<dd>muß noch gefunden werden...</dd>#}
             </dl>
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
@@ -74,8 +74,8 @@
                     <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
                     <dt>Artikel ID:</dt>
                     <dd>{{ auction.itemId }}</dd>
-                    <dt>Versandpreis:</dt>
-                    <dd>muß noch gefunden werden...</dd>
+                    {#<dt>Versandpreis:</dt>#}
+                    {#<dd>muß noch gefunden werden...</dd>#}
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
                         <dd> {{ bidderListLength - 1 }} <a href="#"> - alle anzeigen</a></dd>

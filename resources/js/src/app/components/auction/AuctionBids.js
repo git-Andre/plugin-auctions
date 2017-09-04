@@ -7,9 +7,10 @@ Vue.component( "auction-bids", {
         "template",
         "auctionid",
         "userdata",
-        "minBid"
+        "minBid",
+        "versand",
     ],
-    data: function data() {
+    data() {
         return {
             isInputValid: false,
             maxCustomerBid: null,
@@ -17,102 +18,111 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
+        this.minBid = 0;
+        this.initAuctionParams();
         this.userdata          = JSON.parse( this.userdata );
         this.auctionid         = parseInt( this.auctionid );
     },
     ready() {
-        this.initMinBidPrice();
     },
     methods: {
         addBid() {
-            var bidderListLastEntry = {};
-            AuctionBidderService.getBidderListLastEntry( this.auctionid )
-                .resolve(
-                    response => {
-                        bidderListLastEntry = response;
-                        alert( 'response33: ' + response );
-                    },
-                    error => {
-                        alert( 'error: ' + error );
-                    }
-                );
 
-            alert( 'addBid: ' + bidderListLastEntry.bidPrice );
-            // this.getBidderListLastEntry.then(
-            //     response => {
-            //         bidderListLastEntry.bidPrice = response;
-            //     },
-            //     error => {
-            //     }
-            // );
-            var currentBid = {
+            var currentBid       = {
                 'bidPrice': 1,
-                'customerMaxBid': 2,
-                'bidderName': 'test***Kunde1',
+                'customerMaxBid': 2.1,
+                'bidderName': "versand***Kunde1",
                 'customerId': 3
             };
+            const maxCustomerBid = this.toFloatTwoDecimal( this.maxCustomerBid );
+            const bidderName     = this.userdata.firstName + "...";
+            const userId         = parseInt( this.userdata.id );
 
-            if ( this.maxCustomerBid > bidderListLastEntry.customerMaxBid ) {
+            AuctionBidderService.getBidderListLastEntry( this.auctionid ).then(
+                response => {
 
-                currentBid.bidPrice       = bidderListLastEntry.customerMaxBid + 1;
-                currentBid.customerMaxBid = this.maxCustomerBid;
-                currentBid.bidderName     = this.userdata.firstName;
-                currentBid.customerId     = this.userdata.id;
+                    const bidderListLastEntry = response;
 
-                // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-                // this.updateAuction();
-                NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." )
-                    .closeAfter( 3000 );
-            }
-            else {
-                currentBid.bidPrice       = this.maxCustomerBid;
-                currentBid.customerMaxBid = bidderListLastEntry.bidPrice;
-                currentBid.bidderName     = bidderListLastEntry.bidderName;
-                currentBid.customerId     = bidderListLastEntry.customerId;
+                    var lastBidPrice = this.toFloatTwoDecimal( bidderListLastEntry.bidPrice );
+                    if ( lastBidPrice < 1.1 ) {
+                        lastBidPrice = this.toFloatTwoDecimal( this.minBid - 1 );
+                    }
+                    const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
+                    const lastUserId         = parseInt( bidderListLastEntry.customerId );
 
-                // alert( 'Es gibt leider schon ein höheres Gebot...' );
-                // this.updateAuction( this.auctionid );
+                    if ( lastUserId == userId ) {
+                        NotificationService.success( "Sie haben Ihr eigenes Gebot erhöht!" )
+                            .closeAfter( 3000 );
+                        alert( 'Sie haben Ihr eigenes Gebot erhöht!' );
+                    }
+                    if ( maxCustomerBid > lastCustomerMaxBid ) {
 
-                NotificationService.success( "Es gibt leider schon ein höheres Gebot..." )
-                    .closeAfter( 3000 );
+                        currentBid.bidPrice       = lastBidPrice + 1;
+                        currentBid.customerMaxBid = maxCustomerBid;
+                        currentBid.bidderName     = bidderName;
+                        currentBid.customerId     = userId;
+                        // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
+                        NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." );
+                        // .closeAfter( 3000 );
+                    }
+                    else {
+                        currentBid.bidPrice       = maxCustomerBid;
+                        currentBid.customerMaxBid = lastCustomerMaxBid;
+                        currentBid.bidderName     = bidderListLastEntry.bidderName;
+                        currentBid.customerId     = lastUserId;
 
-            }
+                        alert( 'Es gibt leider schon ein höheres Gebot...' );
 
-            // alert( 'this.userdata): ' + this.userdata.id + '\n' + '' );
-        },
-        initMinBidPrice() {
-            ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
-                .done( auction => {
-                    this.minBid = parseFloat( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1;
-                } )
-                .fail( () => {
-                    alert( 'Schade - ein Fehler beim abholen' );
-                } );
+                        NotificationService.success( "Es gibt leider schon ein höheres Gebot..." )
+                            .closeAfter( 3000 );
+
+                    }
+                    this.versand = currentBid;
+                    this.updateAuction();
+                    this.versand = {};
+                },
+                error => {
+                    NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
+                    alert( 'error2: ' + error.toString() );
+                }
+            );
+
         },
         updateAuction() {
-            ApiService.put( "/api/bidderlist/" + this.auctionid, currentBid,
-                                                                 { supressNotifications: false }
+            ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.versand ),
+                                                                 { contentType: "application/json" }
             )
-                .done( function (auction) {
-                    alert( "super!!!! abgespeichert" );
+                .then( response => {
+                           // alert( "super!!!! abgespeichert" );
+                           NotificationService.success( "test" );
+                           /*.closeAfter( 3000 );*/
+                           location.reload();
+                       },
+                       error => {
+                           NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
+                           alert( 'error2: ' + error.toString() );
+                       }
+                );
+        },
+        initAuctionParams() {
+            ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: false } )
+                .done( auction => {
+                    NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
+
+                    this.minBid =
+                        this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1 );
+                    if ( this.minBid < 1.1 ) {
+                        this.minBid = this.toFloatTwoDecimal( auction.currentPrice + 1 );
+                    }
                 } )
-                .fail( function (auction) {
-                    NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
-                    alert( 'Schade - ein Fehler beim abspeichern' );
+                .fail( () => {
+                    alert( 'Upps - ein Fehler beim abholen ??!!' );
                 } );
+            this.versand = {};
         },
-        // getBidderListLastEntry() {
-        //     var lastBid = {};
-        //
-        //     ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
-        //         .then( function () {
-        //             lastBid = auction.bidderList[auction.bidderList.length - 1];
-        //         } );
-        //     return lastBid;
-        // },
-        getBidderListLastEntry() {
-            return AuctionBidderService.getBidderListLastEntry;
-        },
+        toFloatTwoDecimal(value) {
+            return Math.round( parseFloat( value ) * 100 ) / 100.0
+        }
     },
     computed: {},
     watch: {

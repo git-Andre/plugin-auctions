@@ -180,14 +180,14 @@
 
         /**
          * @param $id
-         * @param $bid
-         * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model|string
+         * @param $sendedBid
+         * @return bool|string
          */
         public function updateBidderList($id, $sendedBid)
         {
             if ($sendedBid)
             {
-                $bid = (object)$sendedBid;
+                $bid = (object) $sendedBid;
 
                 $auction = $this -> getValue(Auction_7::class, $id);
 
@@ -210,7 +210,12 @@
 
                     $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
-                    return $this -> setValue($auction);
+                    if ($this -> setValue($auction))
+                    {
+                        return "ok";
+//                        return $auction;
+                    }
+                    return "Fehler in updateBidderList";
                 }
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }

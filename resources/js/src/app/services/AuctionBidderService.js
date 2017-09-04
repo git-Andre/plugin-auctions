@@ -1,4 +1,5 @@
 var ApiService = require( "services/ApiService" );
+const NotificationService  = require( "services/NotificationService" );
 
 module.exports = (function ($) {
 
@@ -13,42 +14,22 @@ module.exports = (function ($) {
         return new Promise( (resolve, reject) => {
                                 if ( auctionId ) {
                                     ApiService.get( "/api/auction/" + auctionId )
-                                        .done( function (response) {
-                                            // alert( 'response.bidderList[response.bidderList.length - 1]: ' + response.bidderList[response.bidderList.length - 1] );
-
-                                            resolve();
-                                        } )
-                                        .fail( () => {
-                                            reject();
-                                        } );
+                                        .then( response => {
+                                                   NotificationService.error( "TEST" ).closeAfter( 3000 );
+                                                   // setTimeout( () =>
+                                                   //     resolve( response.bidderList[response.bidderList.length - 1] ), 1000 );
+                                                   resolve( response.bidderList[response.bidderList.length - 1] );
+                                               },
+                                               error => {
+                                                   reject( error );
+                                               }
+                                        )
                                 }
                                 else {
-                                    resolve();
+                                    alert( 'Fehler mit id:: ' + auctionId );
                                 }
                             }
         )
     }
-
-// function getBidderListLastEntry(auctionId) {
-//     alert('getPromise: ' + getPromise);
-//     if ( !getPromise ) {
-//         alert( "1" + bidderListLastEntry.bidPrice )
-//         if ( auctionId ) {
-//             getPromise = $.Deferred();
-//             alert( "2" + bidderListLastEntry.customerId )
-//
-//             getPromise.resolve();
-//         }
-//         else {
-//             alert('getPromise2: ' + getPromise);
-//
-//             getPromise = ApiService.get( "/api/auction/" + auctionid )
-//                 .done( function (response) {
-//                     bidderListLastEntry = response.bidderList[response.bidderList.length - 1];
-//                 } );
-//         }
-//     }
-//     return getPromise;
-// }
 })
 ( jQuery );

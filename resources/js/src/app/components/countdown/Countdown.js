@@ -8,7 +8,7 @@ Vue.component( "auction-countdown", {
         "template",
         "deadline",
         "date",
-        "stop"
+        // "stop"
     ],
     data() {
         return {
@@ -27,29 +27,35 @@ Vue.component( "auction-countdown", {
                 return '0' + value.toString()
             }
             return value.toString()
+        },
+        stopAuction() {
+// Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
+            location.reload();
         }
     },
     computed: {
         seconds() {
-            return this.twoDigits((this.date - this.now) % 60);
+            return this.twoDigits( (this.date - this.now) % 60 );
         },
         minutes() {
-            return this.twoDigits(Math.trunc( (this.date - this.now) / 60 ) % 60);
+            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 ) % 60 );
         },
         hours() {
-            return this.twoDigits(Math.trunc( (this.date - this.now) / 60 / 60 ) % 24);
+            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 / 60 ) % 24 );
         },
         days() {
-            return this.twoDigits(Math.trunc( (this.date - this.now) / 60 / 60 / 24 ));
+            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 / 60 / 24 ) );
         },
     },
     watch: {
         now(value) {
             this.diff = this.date - this.now;
-            if ( this.diff <= 0 || this.stop ) {
+            if ( this.diff <= 0) {
+            // if ( this.diff <= 0 || this.stop ) {
                 this.diff = 0;
                 // Remove interval
                 window.clearInterval();
+                this.stopAuction();
             }
         }
     }
