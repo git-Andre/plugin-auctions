@@ -18,10 +18,10 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
-        this.minBid = 0;
+        this.minBid            = 0;
         this.initAuctionParams();
-        this.userdata          = JSON.parse( this.userdata );
-        this.auctionid         = parseInt( this.auctionid );
+        this.userdata  = JSON.parse( this.userdata );
+        this.auctionid = parseInt( this.auctionid );
     },
     ready() {
     },
@@ -78,7 +78,7 @@ Vue.component( "auction-bids", {
 
                     }
                     this.versand = currentBid;
-                    this.updateAuction();
+                    // this.updateAuction();
                     this.versand = {};
                 },
                 error => {
@@ -107,7 +107,7 @@ Vue.component( "auction-bids", {
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: false } )
                 .done( auction => {
-                    NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
+                    // NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
 
                     this.minBid =
                         this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1 );

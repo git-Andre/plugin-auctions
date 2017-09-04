@@ -16,7 +16,7 @@
     {% set bidderListLength = auction.bidderList | length %}
 
     <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
-    <resource name="bidderListLast" :data="{{ bidderListLast | json_encode() }}"></resource>
+    {#<resource name="bidderListLast" :data="{{ bidderListLast | json_encode() }}"></resource>#}
 
     <div id="addAuctionVue">
 

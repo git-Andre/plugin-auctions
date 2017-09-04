@@ -71,7 +71,7 @@ Vue.component("auction-bids", {
                     NotificationService.success("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
                 }
                 _this.versand = currentBid;
-                _this.updateAuction();
+                // this.updateAuction();
                 _this.versand = {};
             }, function (error) {
                 NotificationService.error('Schade - ein Fehler beim abspeichern').closeAfter(3000);
@@ -93,7 +93,7 @@ Vue.component("auction-bids", {
             var _this2 = this;
 
             ApiService.get("/api/auction/" + this.auctionid, {}, { supressNotifications: false }).done(function (auction) {
-                NotificationService.error('Juchuuh').closeAfter(3000);
+                // NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
 
                 _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
                 if (_this2.minBid < 1.1) {
@@ -110,13 +110,14 @@ Vue.component("auction-bids", {
     },
     computed: {},
     watch: {
-        maxCustomerBid: function maxCustomerBid() {
-            if (this.maxCustomerBid >= this.minBid) {
-                this.isInputValid = true;
-            } else {
-                this.isInputValid = false;
-            }
-        }
+        // maxCustomerBid: function () {
+        //     if ( this.maxCustomerBid >= this.minBid ) {
+        //         this.isInputValid = true;
+        //     }
+        //     else {
+        //         this.isInputValid = false;
+        //     }
+        // }
     }
 });
 
