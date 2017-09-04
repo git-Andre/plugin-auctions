@@ -1,59 +1,54 @@
-const ApiService      = require("services/ApiService");
-// const CheckoutService = require("services/CheckoutService");
+var ApiService = require( "services/ApiService" );
 
-/**
- * Create a new address
- * @param address
- * @param addressType
- * @param setActive
- * @returns {*}
- */
-// export function createAddress(address, addressType, setActive)
-// {
-//     return ApiService.post("/rest/io/customer/address?typeId=" + addressType, address, {supressNotifications: true})
-//         .done(response =>
-//         {
-//             if (setActive)
-//             {
-//                 if (addressType === 1)
-//                 {
-//                     CheckoutService.setBillingAddressId(response.id);
-//                 }
-//                 else if (addressType === 2)
-//                 {
-//                     CheckoutService.setDeliveryAddressId(response.id);
-//                 }
-//             }
-//         });
+module.exports = (function ($) {
+
+    var bidderListLastEntry;
+    var getPromise;
+
+    return {
+        getBidderListLastEntry: getBidderListLastEntry,
+    };
+
+    function getBidderListLastEntry(auctionId) {
+        return new Promise( (resolve, reject) => {
+                                if ( auctionId ) {
+                                    ApiService.get( "/api/auction/" + auctionId )
+                                        .done( function (response) {
+                                            // alert( 'response.bidderList[response.bidderList.length - 1]: ' + response.bidderList[response.bidderList.length - 1] );
+
+                                            resolve();
+                                        } )
+                                        .fail( () => {
+                                            reject();
+                                        } );
+                                }
+                                else {
+                                    resolve();
+                                }
+                            }
+        )
+    }
+
+// function getBidderListLastEntry(auctionId) {
+//     alert('getPromise: ' + getPromise);
+//     if ( !getPromise ) {
+//         alert( "1" + bidderListLastEntry.bidPrice )
+//         if ( auctionId ) {
+//             getPromise = $.Deferred();
+//             alert( "2" + bidderListLastEntry.customerId )
+//
+//             getPromise.resolve();
+//         }
+//         else {
+//             alert('getPromise2: ' + getPromise);
+//
+//             getPromise = ApiService.get( "/api/auction/" + auctionid )
+//                 .done( function (response) {
+//                     bidderListLastEntry = response.bidderList[response.bidderList.length - 1];
+//                 } );
+//         }
+//     }
+//     return getPromise;
 // }
-
-/**
- * Update an existing auction
- * @param auctionId
- * @param newBid
- */
-export function updateAuction(auctionId, newBid)
-{
-    return ApiService.put("/api/bidderlist/" + auctionId, newBid, {supressNotifications: true});
-}
-
-
-export default {updateAuction};
-
-// initMinBidPrice() {
-//     return new Promise( (resolve, reject) => {
-//                             if ( this.auctionid ) {
-//                                 // commit("getBidPrice", )
-//                                 ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
-//                                     .done( auction => {
-//                                         auction.bidderList[auction.bidderList.length - 1].bidPrice + 1;
-//                                         resolve();
-//                                     } )
-//                                     .fail( () => {
-//                                         alert( 'Schade - ein Fehler beim abholen' );
-//                                         reject();
-//                                     } );
-//                             }
-//                         }
-//     )
-// },
+})
+( jQuery );

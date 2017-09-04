@@ -3,6 +3,7 @@
 
 var ApiService = require("services/ApiService"); // /plugin-ceres/resources/js/src/app/services/ApiService.js
 var NotificationService = require("services/NotificationService");
+var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-bids", {
     props: ["template", "auctionid", "userdata", "minBid"],
@@ -15,19 +16,30 @@ Vue.component("auction-bids", {
     created: function created() {
         this.$options.template = this.template;
         this.userdata = JSON.parse(this.userdata);
+        this.auctionid = parseInt(this.auctionid);
     },
-
     ready: function ready() {
         this.initMinBidPrice();
     },
+
     methods: {
         addBid: function addBid() {
             var bidderListLastEntry = {};
-            this.getBidderListLastEntry().then(function (response) {
-                bidderListLastEntry.bidPrice = response;
+            AuctionBidderService.getBidderListLastEntry(this.auctionid).resolve(function (response) {
+                bidderListLastEntry = response;
+                alert('response33: ' + response);
             }, function (error) {
-                alert("Fehler const bidderListLastEntry");
+                alert('error: ' + error);
             });
+
+            alert('addBid: ' + bidderListLastEntry.bidPrice);
+            // this.getBidderListLastEntry.then(
+            //     response => {
+            //         bidderListLastEntry.bidPrice = response;
+            //     },
+            //     error => {
+            //     }
+            // );
             var currentBid = {
                 'bidPrice': 1,
                 'customerMaxBid': 2,
@@ -35,7 +47,7 @@ Vue.component("auction-bids", {
                 'customerId': 3
             };
 
-            if (this.maxCustomerBid > bidderListLastEntry) {
+            if (this.maxCustomerBid > bidderListLastEntry.customerMaxBid) {
 
                 currentBid.bidPrice = bidderListLastEntry.customerMaxBid + 1;
                 currentBid.customerMaxBid = this.maxCustomerBid;
@@ -43,7 +55,7 @@ Vue.component("auction-bids", {
                 currentBid.customerId = this.userdata.id;
 
                 // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-                this.updateAuction();
+                // this.updateAuction();
                 NotificationService.success("Glückwunsch - Sie sind der Höchstbietende...").closeAfter(3000);
             } else {
                 currentBid.bidPrice = this.maxCustomerBid;
@@ -52,7 +64,7 @@ Vue.component("auction-bids", {
                 currentBid.customerId = bidderListLastEntry.customerId;
 
                 // alert( 'Es gibt leider schon ein höheres Gebot...' );
-                this.updateAuction(this.auctionid);
+                // this.updateAuction( this.auctionid );
 
                 NotificationService.success("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
             }
@@ -63,71 +75,34 @@ Vue.component("auction-bids", {
             var _this = this;
 
             ApiService.get("/api/auction/" + this.auctionid, {}, { supressNotifications: true }).done(function (auction) {
-                _this.minBid = auction.bidderList[auction.bidderList.length - 1].bidPrice + 1;
+                _this.minBid = parseFloat(auction.bidderList[auction.bidderList.length - 1].bidPrice) + 1;
             }).fail(function () {
                 alert('Schade - ein Fehler beim abholen');
             });
         },
-        updateSuccessBid: function updateSuccessBid() {
-            // ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
-            //     .done( function (auction) {
-            //         this.minBid = auction.bidderList[auction.bidderList.length - 1].bisPrice + 1;
-            //
-            //         ApiService.put( "/api/bidderlist/" + this.auctionid, currentBid,
-            //                                                              { supressNotifications: false }
-            //         )
-            //             .done( function (auction) {
-            //                 // alert ("super!!!! abgespeichert");
-            //                 this.currentBid.bidPrice       = bidderListLastEntry.customerMaxBid + 1;
-            //                 this.currentBid.customerMaxBid = this.maxCustomerBid;
-            //                 this.currentBid.bidderName     = this.userdata.firstName;
-            //                 this.currentBid.customerId     = this.userdata.id;
-            //
-            //                 // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-            //                 NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." )
-            //                     .closeAfter( 3000 );
-            //             } )
-            //             .fail( function (auction) {
-            //                 NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
-            //                 alert( 'Schade - ein Fehler beim abspeichern' );
-            //             } );
-            //     } )
-            //     .fail( function (auction) {
-            //         alert( 'Schade - ein Fehler beim abholen' );
-            //     } );
-        },
         updateAuction: function updateAuction() {
             ApiService.put("/api/bidderlist/" + this.auctionid, currentBid, { supressNotifications: false }).done(function (auction) {
-                // alert ("super!!!! abgespeichert");
+                alert("super!!!! abgespeichert");
             }).fail(function (auction) {
                 NotificationService.error('Schade - ein Fehler beim abspeichern').closeAfter(3000);
                 alert('Schade - ein Fehler beim abspeichern');
             });
         },
-        getBidderListLastEntry: function getBidderListLastEntry() {
 
-            ApiService.get("/api/auction/" + this.auctionid, {}, { supressNotifications: true }).done(function (auction) {
-                return auction.bidderList[auction.bidderList.length - 1];
-            }).fail(function (auction) {
-                alert('Schade - ein Fehler beim abholen');
-            });
+        // getBidderListLastEntry() {
+        //     var lastBid = {};
+        //
+        //     ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
+        //         .then( function () {
+        //             lastBid = auction.bidderList[auction.bidderList.length - 1];
+        //         } );
+        //     return lastBid;
+        // },
+        getBidderListLastEntry: function getBidderListLastEntry() {
+            return AuctionBidderService.getBidderListLastEntry;
         }
     },
-    computed: {
-        // bidderListLastBidPrice() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice
-        // },
-        // // bidderListLastCustomerMaxBid() {
-        // //     cache: false;
-        // //     return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid
-        // // },
-        // bidderListLastBidderName() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].bidderName
-        // },
-        // bidderListLastCustomerId() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].customerId
-        // }
-    },
+    computed: {},
     watch: {
         maxCustomerBid: function maxCustomerBid() {
             if (this.maxCustomerBid >= this.minBid) {
@@ -139,7 +114,7 @@ Vue.component("auction-bids", {
     }
 });
 
-},{"services/ApiService":4,"services/NotificationService":5}],2:[function(require,module,exports){
+},{"services/ApiService":3,"services/AuctionBidderService":4,"services/NotificationService":5}],2:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -199,16 +174,6 @@ Vue.component("auction-countdown", {
 });
 
 },{}],3:[function(require,module,exports){
-'use strict';
-
-Vue.filter('twoDigits', function (value) {
-    if (value.toString().length <= 1) {
-        return '0' + value.toString();
-    }
-    return value.toString();
-});
-
-},{}],4:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -344,7 +309,60 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":5,"services/WaitScreenService":6}],5:[function(require,module,exports){
+},{"services/NotificationService":5,"services/WaitScreenService":6}],4:[function(require,module,exports){
+"use strict";
+
+var ApiService = require("services/ApiService");
+
+module.exports = function ($) {
+
+    var bidderListLastEntry;
+    var getPromise;
+
+    return {
+        getBidderListLastEntry: getBidderListLastEntry
+    };
+
+    function getBidderListLastEntry(auctionId) {
+        return new Promise(function (resolve, reject) {
+            if (auctionId) {
+                ApiService.get("/api/auction/" + auctionId).done(function (response) {
+                    alert('response.bidderList[response.bidderList.length - 1]: ' + response.bidderList[response.bidderList.length - 1]);
+
+                    resolve = response.bidderList[response.bidderList.length - 1];
+                }).fail(function () {
+                    reject();
+                });
+            } else {
+                resolve();
+            }
+        });
+    }
+
+    // function getBidderListLastEntry(auctionId) {
+    //     alert('getPromise: ' + getPromise);
+    //     if ( !getPromise ) {
+    //         alert( "1" + bidderListLastEntry.bidPrice )
+    //         if ( auctionId ) {
+    //             getPromise = $.Deferred();
+    //             alert( "2" + bidderListLastEntry.customerId )
+    //
+    //             getPromise.resolve();
+    //         }
+    //         else {
+    //             alert('getPromise2: ' + getPromise);
+    //
+    //             getPromise = ApiService.get( "/api/auction/" + auctionid )
+    //                 .done( function (response) {
+    //                     bidderListLastEntry = response.bidderList[response.bidderList.length - 1];
+    //                 } );
+    //         }
+    //     }
+    //     return getPromise;
+    // }
+}(jQuery);
+
+},{"services/ApiService":3}],5:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -554,7 +572,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3])
+},{}]},{},[1,2])
 
 
 

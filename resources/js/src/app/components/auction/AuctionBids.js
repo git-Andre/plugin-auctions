@@ -1,5 +1,6 @@
-const ApiService          = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
-const NotificationService = require( "services/NotificationService" );
+const ApiService           = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
+const NotificationService  = require( "services/NotificationService" );
+const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
     props: [
@@ -17,21 +18,33 @@ Vue.component( "auction-bids", {
     created() {
         this.$options.template = this.template;
         this.userdata          = JSON.parse( this.userdata );
+        this.auctionid         = parseInt( this.auctionid );
     },
-    ready: function ready() {
+    ready() {
         this.initMinBidPrice();
     },
     methods: {
         addBid() {
-            const bidderListLastEntry = {};
-            this.getBidderListLastEntry().then(
-                response => {
-                    bidderListLastEntry.bidPrice = response;
-                },
-                error => {
-                    alert( "Fehler const bidderListLastEntry" );
-                }
-            );
+            var bidderListLastEntry = {};
+            AuctionBidderService.getBidderListLastEntry( this.auctionid )
+                .resolve(
+                    response => {
+                        bidderListLastEntry = response;
+                        alert( 'response33: ' + response );
+                    },
+                    error => {
+                        alert( 'error: ' + error );
+                    }
+                );
+
+            alert( 'addBid: ' + bidderListLastEntry.bidPrice );
+            // this.getBidderListLastEntry.then(
+            //     response => {
+            //         bidderListLastEntry.bidPrice = response;
+            //     },
+            //     error => {
+            //     }
+            // );
             var currentBid = {
                 'bidPrice': 1,
                 'customerMaxBid': 2,
@@ -39,7 +52,7 @@ Vue.component( "auction-bids", {
                 'customerId': 3
             };
 
-            if ( this.maxCustomerBid > bidderListLastEntry ) {
+            if ( this.maxCustomerBid > bidderListLastEntry.customerMaxBid ) {
 
                 currentBid.bidPrice       = bidderListLastEntry.customerMaxBid + 1;
                 currentBid.customerMaxBid = this.maxCustomerBid;
@@ -47,7 +60,7 @@ Vue.component( "auction-bids", {
                 currentBid.customerId     = this.userdata.id;
 
                 // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-                this.updateAuction();
+                // this.updateAuction();
                 NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." )
                     .closeAfter( 3000 );
             }
@@ -58,7 +71,7 @@ Vue.component( "auction-bids", {
                 currentBid.customerId     = bidderListLastEntry.customerId;
 
                 // alert( 'Es gibt leider schon ein höheres Gebot...' );
-                this.updateAuction( this.auctionid );
+                // this.updateAuction( this.auctionid );
 
                 NotificationService.success( "Es gibt leider schon ein höheres Gebot..." )
                     .closeAfter( 3000 );
@@ -70,7 +83,7 @@ Vue.component( "auction-bids", {
         initMinBidPrice() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
                 .done( auction => {
-                    this.minBid = auction.bidderList[auction.bidderList.length - 1].bidPrice + 1;
+                    this.minBid = parseFloat( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1;
                 } )
                 .fail( () => {
                     alert( 'Schade - ein Fehler beim abholen' );
@@ -81,39 +94,27 @@ Vue.component( "auction-bids", {
                                                                  { supressNotifications: false }
             )
                 .done( function (auction) {
-                    // alert ("super!!!! abgespeichert");
+                    alert( "super!!!! abgespeichert" );
                 } )
                 .fail( function (auction) {
                     NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
                     alert( 'Schade - ein Fehler beim abspeichern' );
                 } );
         },
+        // getBidderListLastEntry() {
+        //     var lastBid = {};
+        //
+        //     ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
+        //         .then( function () {
+        //             lastBid = auction.bidderList[auction.bidderList.length - 1];
+        //         } );
+        //     return lastBid;
+        // },
         getBidderListLastEntry() {
-
-            ApiService.get( "/api/auction/" + this.auctionid, {}, { supressNotifications: true } )
-                .done( function (auction) {
-                    return auction.bidderList[auction.bidderList.length - 1];
-                } )
-                .fail( function (auction) {
-                    alert( 'Schade - ein Fehler beim abholen' );
-                } );
+            return AuctionBidderService.getBidderListLastEntry;
         },
     },
-    computed: {
-        // bidderListLastBidPrice() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice
-        // },
-        // // bidderListLastCustomerMaxBid() {
-        // //     cache: false;
-        // //     return this.auction.bidderList[this.auction.bidderList.length - 1].customerMaxBid
-        // // },
-        // bidderListLastBidderName() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].bidderName
-        // },
-        // bidderListLastCustomerId() {
-        //     return this.auction.bidderList[this.auction.bidderList.length - 1].customerId
-        // }
-    },
+    computed: {},
     watch: {
         maxCustomerBid: function () {
             if ( this.maxCustomerBid >= this.minBid ) {
