@@ -2,6 +2,7 @@
 {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
 {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
+{{ component( "PluginAuctions::Item.Components.AuctionBidderList" ) }}
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
@@ -41,8 +42,8 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <h2 class="m-b-3" style="color: #c50000;">Laufende Auktion:</h2>
-
+            <h2 class="m-b-0" style="color: #c50000;">Laufende Auktion:</h2>
+            <hr class="m-b-2 m-r-2 m-l-2">
             <div class="row container m-t-1 m-b-0">
                 <dl class="auctionList">
                     {% if (bidderListLast.bidPrice != 0) %}
@@ -76,9 +77,15 @@
                     <dd>{{ auction.itemId }}</dd>
                     {#<dt>Versandpreis:</dt>#}
                     {#<dd>muß noch gefunden werden...</dd>#}
+
+
+
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
-                        <dd> {{ bidderListLength - 1 }} <a href="#"> - alle anzeigen</a></dd>
+                    <dd> {{ bidderListLength - 1 }}
+                        <a href="#" id="toggleAuctionList" class="toggle-basket-preview">
+                            - alle anzeigen <i class="fa fa-list-ul" aria-hidden="true"></i></a></dd>
+
                     {% endif %}
 
                 </dl>
@@ -128,6 +135,12 @@
                 <dd>{{ auction.itemId }}</dd>
             </dl>
 
+{#bidderList...#}
+
+            <div class="wrapper wrapper-right">
+                <auction-bidderlist template="#vue-auction-bidderlist"></auction-bidderlist>
+                {#<basket-preview template="#vue-basket-preview"></basket-preview>#}
+            </div>
 
         {% endif %}
     </div>

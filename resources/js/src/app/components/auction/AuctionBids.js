@@ -64,8 +64,6 @@ Vue.component( "auction-bids", {
                         }
                         else {
                             alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-                            // NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." );
-                            // .closeAfter( 3000 );
                         }
 
                     }
@@ -89,7 +87,6 @@ Vue.component( "auction-bids", {
                     location.reload();
                 },
                 error => {
-                    // NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
                     alert( 'error2: ' + error.toString() );
                 }
             );
@@ -100,18 +97,16 @@ Vue.component( "auction-bids", {
                                                                  { contentType: "application/json" }
             )
                 .then( response => {
-                           alert( response );
+                           // alert( response );
                        },
                        error => {
-                           alert( 'error2: ' + error.toString() );
+                           alert( 'error3: ' + error.toString() );
                        }
                 );
         },
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
                 .done( auction => {
-                    // NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
-
                     this.minBid =
                         this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1 );
                     if ( this.minBid < 1.1 ) {
