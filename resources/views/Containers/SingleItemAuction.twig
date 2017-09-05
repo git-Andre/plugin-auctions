@@ -2,7 +2,7 @@
 {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
 {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
-{{ component( "PluginAuctions::Item.Components.AuctionBidderListOverlay" ) }}
+{#{{ component( "PluginAuctions::Item.Components.AuctionBidderListOverlay" ) }}#}
 {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
 
 {% set itemId = itemData.item.id %}
@@ -81,14 +81,15 @@
 
 
                     {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }}
-                        <span>
+                        <dt>Anzahl Gebote:</dt>
+                        <dd> {{ bidderListLength - 1 }}
+                            <span>
                             <auction-show-bidderlist
                                     template="#vue-auction-show-bidderlist">
                                 </auction-show-bidderlist>
                         </span>
-                        {% endif %}
+                        </dd>
+                    {% endif %}
 
                 </dl>
             </div>

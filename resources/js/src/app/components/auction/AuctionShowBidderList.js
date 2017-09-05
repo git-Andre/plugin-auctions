@@ -8,7 +8,7 @@ Vue.component( "auction-show-bidderlist", {
 
     data() {
         return {
-
+            test: "test"
         };
     },
 
