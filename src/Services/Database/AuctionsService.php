@@ -212,8 +212,8 @@
 
                     if ($this -> setValue($auction))
                     {
-                        return "ok";
 //                        return $auction;
+                        return "ok";
                     }
                     return "Fehler in updateBidderList";
                 }
