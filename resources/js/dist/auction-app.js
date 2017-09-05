@@ -2,7 +2,7 @@
 "use strict";
 
 var ApiService = require("services/ApiService"); // /plugin-ceres/resources/js/src/app/services/ApiService.js
-var NotificationService = require("services/NotificationService");
+// const NotificationService  = require( "services/NotificationService" );
 var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-bids", {
@@ -16,11 +16,13 @@ Vue.component("auction-bids", {
     created: function created() {
         this.$options.template = this.template;
         this.minBid = 0;
-        this.initAuctionParams();
-        this.userdata = JSON.parse(this.userdata);
         this.auctionid = parseInt(this.auctionid);
+        this.initAuctionParams();
+        this.versand = {};
     },
-    ready: function ready() {},
+    ready: function ready() {
+        this.userdata = JSON.parse(this.userdata);
+    },
 
     methods: {
         addBid: function addBid() {
@@ -47,52 +49,57 @@ Vue.component("auction-bids", {
                 var lastCustomerMaxBid = _this.toFloatTwoDecimal(bidderListLastEntry.customerMaxBid);
                 var lastUserId = parseInt(bidderListLastEntry.customerId);
 
-                if (lastUserId == userId) {
-                    NotificationService.success("Sie haben Ihr eigenes Gebot erhöht!").closeAfter(3000);
-                    alert('Sie haben Ihr eigenes Gebot erhöht!');
-                }
                 if (maxCustomerBid > lastCustomerMaxBid) {
 
                     currentBid.bidPrice = lastBidPrice + 1;
                     currentBid.customerMaxBid = maxCustomerBid;
                     currentBid.bidderName = bidderName;
                     currentBid.customerId = userId;
-                    // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
-                    NotificationService.success("Glückwunsch - Sie sind der Höchstbietende...");
-                    // .closeAfter( 3000 );
+
+                    if (lastUserId == userId) {
+                        // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+                        alert('Sie haben Ihr eigenes Maximal-Gebot erhöht!');
+                    } else {
+                        alert('Glückwunsch - Sie sind der Höchstbietende...');
+                        // NotificationService.success( "Glückwunsch - Sie sind der Höchstbietende..." );
+                        // .closeAfter( 3000 );
+                    }
                 } else {
                     currentBid.bidPrice = maxCustomerBid;
                     currentBid.customerMaxBid = lastCustomerMaxBid;
                     currentBid.bidderName = bidderListLastEntry.bidderName;
                     currentBid.customerId = lastUserId;
-
-                    alert('Es gibt leider schon ein höheres Gebot...');
-
-                    NotificationService.success("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
+                    if (lastUserId == userId) {
+                        // ToDo: Abfrage: eigenes Gebot wirklich ändern?
+                        alert('Sie haben Ihr eigenes Gebot erhöht!');
+                    } else {
+                        alert('Es gibt leider schon ein höheres Gebot...');
+                        // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
+                    }
                 }
-                _this.versand = currentBid;
-                // this.updateAuction();
+                _this.versand = JSON.stringify(currentBid);
+                _this.updateAuction();
                 _this.versand = {};
+                location.reload();
             }, function (error) {
-                NotificationService.error('Schade - ein Fehler beim abspeichern').closeAfter(3000);
+                // NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
                 alert('error2: ' + error.toString());
             });
         },
         updateAuction: function updateAuction() {
-            ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(this.versand), { contentType: "application/json" }).then(function (response) {
+            ApiService.put("/api/bidderlist/" + this.auctionid, this.versand, { contentType: "application/json" }).then(function (response) {
                 // alert( "super!!!! abgespeichert" );
-                NotificationService.success("test");
+                // NotificationService.success( "test" );
                 /*.closeAfter( 3000 );*/
-                location.reload();
             }, function (error) {
-                NotificationService.error('Schade - ein Fehler beim abspeichern').closeAfter(3000);
-                alert('error2: ' + error.toString());
+                // NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
+                // alert( 'error2: ' + error.toString() );
             });
         },
         initAuctionParams: function initAuctionParams() {
             var _this2 = this;
 
-            ApiService.get("/api/auction/" + this.auctionid, {}, { supressNotifications: false }).done(function (auction) {
+            ApiService.get("/api/auction/" + this.auctionid, {}, {}).done(function (auction) {
                 // NotificationService.error( 'Juchuuh' ).closeAfter( 3000 );
 
                 _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
@@ -102,7 +109,6 @@ Vue.component("auction-bids", {
             }).fail(function () {
                 alert('Upps - ein Fehler beim abholen ??!!');
             });
-            this.versand = {};
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
@@ -110,18 +116,17 @@ Vue.component("auction-bids", {
     },
     computed: {},
     watch: {
-        // maxCustomerBid: function () {
-        //     if ( this.maxCustomerBid >= this.minBid ) {
-        //         this.isInputValid = true;
-        //     }
-        //     else {
-        //         this.isInputValid = false;
-        //     }
-        // }
+        maxCustomerBid: function maxCustomerBid() {
+            if (this.maxCustomerBid >= this.minBid) {
+                this.isInputValid = true;
+            } else {
+                this.isInputValid = false;
+            }
+        }
     }
 });
 
-},{"services/ApiService":3,"services/AuctionBidderService":4,"services/NotificationService":5}],2:[function(require,module,exports){
+},{"services/ApiService":3,"services/AuctionBidderService":4}],2:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
