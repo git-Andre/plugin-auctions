@@ -77,7 +77,7 @@ Vue.component("auction-bids", {
                         // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
                     }
                 }
-                _this.versand = JSON.stringify(currentBid);
+                _this.versand = currentBid;
                 _this.updateAuction();
                 _this.versand = {};
                 location.reload();
@@ -87,13 +87,10 @@ Vue.component("auction-bids", {
             });
         },
         updateAuction: function updateAuction() {
-            ApiService.put("/api/bidderlist/" + this.auctionid, this.versand, { contentType: "application/json" }).then(function (response) {
-                // alert( "super!!!! abgespeichert" );
-                // NotificationService.success( "test" );
-                /*.closeAfter( 3000 );*/
+            ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(this.versand), { contentType: "application/json" }).then(function (response) {
+                alert(response);
             }, function (error) {
-                // NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
-                // alert( 'error2: ' + error.toString() );
+                alert('error2: ' + error.toString());
             });
         },
         initAuctionParams: function initAuctionParams() {
