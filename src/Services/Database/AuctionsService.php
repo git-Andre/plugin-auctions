@@ -213,7 +213,7 @@
                     if ($this -> setValue($auction))
                     {
 //                        return $auction;
-                        return json_encode($auction -> bidPrice);
+                        return json_encode($auction -> tense);
                     }
                     return "Fehler in updateBidderList";
                 }
