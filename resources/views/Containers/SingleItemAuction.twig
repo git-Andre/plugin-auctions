@@ -2,7 +2,7 @@
 {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
 {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
-{{ component( "PluginAuctions::Item.Components.AuctionBidderList" ) }}
+{{ component( "PluginAuctions::Item.Components.AuctionBidderListOverlay" ) }}
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
@@ -82,9 +82,9 @@
 
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }}
-                        <a href="#" id="toggleAuctionList" class="toggle-basket-preview">
-                            - alle anzeigen <i class="fa fa-list-ul" aria-hidden="true"></i></a></dd>
+                        <dd> {{ bidderListLength - 1 }}
+                            <a href="#" id="toggleAuctionList" class="toggle-basket-preview"> <i class="fa fa-list-ul"
+                                        aria-hidden="true"></i> alle anzeigen </a></dd>
 
                     {% endif %}
 
@@ -123,30 +123,32 @@
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
 
+            {#bidderList...#}
                 {% if bidderListLength != 1 %}
                     <dt>End Preis:</dt>
                     <dd> {{ bidderListLast.bidPrice | formatMonetary('EUR') }} </dd>
 
                     <dt>Anzahl Gebote:</dt>
                     <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
+
                 {% endif %}
 
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
             </dl>
 
-{#bidderList...#}
-
-            <div class="wrapper wrapper-right">
-                <auction-bidderlist template="#vue-auction-bidderlist"></auction-bidderlist>
-                {#<basket-preview template="#vue-basket-preview"></basket-preview>#}
-            </div>
+        <div class="wrapper wrapper-bottom">
+            <!-- BidderList MODAL -->
+            <auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"
+                    :bidderlist="{{ auction.bidderList | json_encode() }}"
+            >
+            </auction-bidderlist-overlay>
+            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
+            <!-- ./BidderList MODAL -->
+        </div>
 
         {% endif %}
     </div>
-    <!-- BidderList MODAL -->
-    {#<add-item-to-basket-overlay template="#vue-add-item-to-basket-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></add-item-to-basket-overlay>#}
-    <!-- ./BidderList MODAL -->
 
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
