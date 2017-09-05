@@ -1,4 +1,4 @@
-const NotificationService = require( "services/NotificationService" );
+// const NotificationService = require( "services/NotificationService" );
 
 Vue.component( "auction-show-bidderlist", {
 
