@@ -36,14 +36,14 @@
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
-                {#<dt>Versandpreis:</dt>#}
-                {#<dd>muß noch gefunden werden...</dd>#}
+                <dt>Versandkosten:</dt>
+                <dd>Keine!</dd>
             </dl>
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-0" style="color: #c50000;">Laufende Auktion:</h2>
-            <hr class="m-b-2 m-r-2 m-l-2">
+            {#<hr class="m-b-2 m-r-3 m-l-2">#}
             <div class="row container m-t-1 m-b-0">
                 <dl class="auctionList">
                     {% if (bidderListLast.bidPrice != 0) %}
@@ -75,18 +75,19 @@
                     <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
                     <dt>Artikel ID:</dt>
                     <dd>{{ auction.itemId }}</dd>
-                    {#<dt>Versandpreis:</dt>#}
-                    {#<dd>muß noch gefunden werden...</dd>#}
-
+                    <dt>Versandkosten:</dt>
+                    <dd>Keine!</dd>
 
 
                     {% if bidderListLength != 1 %}
-                        <dt>Anzahl Gebote:</dt>
-                        <dd> {{ bidderListLength - 1 }}
-                            <a href="#" id="toggleAuctionList" class="toggle-basket-preview"> <i class="fa fa-list-ul"
-                                        aria-hidden="true"></i> alle anzeigen </a></dd>
-
-                    {% endif %}
+                    <dt>Anzahl Gebote:</dt>
+                    <dd> {{ bidderListLength - 1 }}
+                        <span>
+                            <auction-show-bidderlist
+                                    template="#vue-auction-show-bidderlist">
+                                </auction-show-bidderlist>
+                        </span>
+                        {% endif %}
 
                 </dl>
             </div>
@@ -123,7 +124,7 @@
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
 
-            {#bidderList...#}
+                {#bidderList...#}
                 {% if bidderListLength != 1 %}
                     <dt>End Preis:</dt>
                     <dd> {{ bidderListLast.bidPrice | formatMonetary('EUR') }} </dd>
@@ -137,15 +138,15 @@
                 <dd>{{ auction.itemId }}</dd>
             </dl>
 
-        <div class="wrapper wrapper-bottom">
-            <!-- BidderList MODAL -->
-            <auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"
-                    :bidderlist="{{ auction.bidderList | json_encode() }}"
-            >
-            </auction-bidderlist-overlay>
-            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
-            <!-- ./BidderList MODAL -->
-        </div>
+            <div class="wrapper wrapper-bottom">
+                <!-- BidderList MODAL -->
+                <auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"
+                        :bidderlist="{{ auction.bidderList | json_encode() }}"
+                >
+                </auction-bidderlist-overlay>
+                {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
+                <!-- ./BidderList MODAL -->
+            </div>
 
         {% endif %}
     </div>

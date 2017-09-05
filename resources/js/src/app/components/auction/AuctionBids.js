@@ -1,5 +1,5 @@
 const ApiService = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
-// const NotificationService  = require( "services/NotificationService" );
+const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
@@ -61,6 +61,7 @@ Vue.component( "auction-bids", {
                         if ( lastUserId == userId ) {
                             // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
                             alert( 'Sie haben Ihr eigenes Maximal-Gebot erhöht!' );
+                            NotificationService.success(Translations.Template.itemWishListAdded)
                         }
                         else {
                             alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
