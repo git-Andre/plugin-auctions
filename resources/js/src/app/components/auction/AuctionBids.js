@@ -1,4 +1,4 @@
-const ApiService           = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
+const ApiService = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
 // const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
@@ -19,12 +19,12 @@ Vue.component( "auction-bids", {
     created() {
         this.$options.template = this.template;
         this.minBid            = 0;
-        this.auctionid = parseInt( this.auctionid );
+        this.auctionid         = parseInt( this.auctionid );
         this.initAuctionParams();
         this.versand = {};
     },
     ready() {
-        this.userdata  = JSON.parse( this.userdata );
+        this.userdata = JSON.parse( this.userdata );
     },
     methods: {
         addBid() {
@@ -82,9 +82,8 @@ Vue.component( "auction-bids", {
                             alert( 'Es gibt leider schon ein höheres Gebot...' );
                             // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
                         }
-
                     }
-                    this.versand = JSON.stringify(currentBid);
+                    this.versand = currentBid;
                     this.updateAuction();
                     this.versand = {};
                     location.reload();
@@ -97,17 +96,14 @@ Vue.component( "auction-bids", {
 
         },
         updateAuction() {
-            ApiService.put( "/api/bidderlist/" + this.auctionid,  this.versand ,
+            ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.versand ),
                                                                  { contentType: "application/json" }
             )
                 .then( response => {
-                           // alert( "super!!!! abgespeichert" );
-                           // NotificationService.success( "test" );
-                           /*.closeAfter( 3000 );*/
+                           alert( response );
                        },
                        error => {
-                           // NotificationService.error( 'Schade - ein Fehler beim abspeichern' ).closeAfter( 3000 );
-                           // alert( 'error2: ' + error.toString() );
+                           alert( 'error2: ' + error.toString() );
                        }
                 );
         },
