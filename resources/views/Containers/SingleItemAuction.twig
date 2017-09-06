@@ -122,6 +122,9 @@
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
 
+                <dt>Versandkosten:</dt>
+                <dd>Keine.</dd>
+
                 {#bidderList...#}
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
@@ -138,31 +141,20 @@
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
             </dl>
-            {#<!-- BidderList MODAL -->#}
-            {#<div id="bidderlist">#}
-                {#<div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">#}
-                    {#<auction-show-bidderlist#}
-                            {#template="#vue-auction-show-bidderlist">#}
-                    {#</auction-show-bidderlist>#}
-                    {#<auction-countdown#}
-                            {#template="#vue-auction-countdown"#}
-                            {#deadline="{{ auction.expiryDate }}" number>#}
-                    {#</auction-countdown>#}
+            <!-- BidderList MODAL -->
+            <div id="bidderlist">
+                <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
+                    <auction-show-bidderlist
+                            template="#vue-auction-show-bidderlist">
+                    </auction-show-bidderlist>
+                    <auction-countdown
+                            template="#vue-auction-countdown"
+                            deadline="{{ auction.expiryDate }}" number>
+                    </auction-countdown>
 
-                {#</div>#}
-            {#</div>#}
-            {#<!-- ./BidderList MODAL -->#}
-
-
-            {#<div class="wrapper wrapper-bottom">#}
-            {#<!-- BidderList MODAL -->#}
-            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"#}
-            {#:bidderlist="{{ auction.bidderList | json_encode() }}"#}
-            {#>#}
-            {#</auction-bidderlist-overlay>#}
-            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
-            {#<!-- ./BidderList MODAL -->#}
-            {#</div>#}
+                </div>
+            </div>
+            <!-- ./BidderList MODAL -->
 
         {% endif %}
     </div>
