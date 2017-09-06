@@ -1,138 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-var ResourceService = require("services/ResourceService");
-var ModalService = require("services/ModalService");
-
-Vue.component("auction-bidderlist-overlay", {
-
-    props: ["bidderlist"],
-
-    data: function data() {
-        return {
-            // basketItem: { currentBasketItem: {} },
-            // timeToClose: 0,
-            // price: 0,
-            // currency: ""
-        };
-    },
-    created: function created() {
-        this.$options.template = this.template;
-    },
-    ready: function ready() {
-        // ResourceService.bind( "basketItem", this );
-    },
-
-
-    watch: {
-        // basketItem() {
-        //     if ( this.basketAddInformation === "overlay" ) {
-        //         ModalService.findModal( document.getElementById( "auction-bidderlist-overlay" ) ).show();
-        //     }
-        //     else if ( this.basketAddInformation === "preview" &&
-        //         Object.keys( this.basketItem.currentBasketItem ).length != 0 ) {
-        //         setTimeout( function () {
-        //             $( "body" ).toggleClass( "open-right" );
-        //         }, 1 );
-        //     }
-        // }
-    },
-
-    methods: {
-        //
-        // /**
-        //  * check if current basket object exist and start rendering
-        //  */
-        // startRendering() {
-        //     const render = Object.keys( this.basketItem.currentBasketItem ).length != 0;
-        //
-        //     if ( render ) {
-        //         this.startCounter();
-        //     }
-        //
-        //     this.setPriceFromData();
-        //
-        //     return render;
-        // },
-        //
-        // setPriceFromData() {
-        //     if ( this.basketItem.currentBasketItem.calculatedPrices ) {
-        //         this.price    =
-        //             this.basketItem.currentBasketItem.calculatedPrices.default.price + this.calculateSurcharge();
-        //         this.currency = this.basketItem.currentBasketItem.calculatedPrices.default.currency;
-        //     }
-        // },
-        //
-        // calculateSurcharge() {
-        //
-        //     let sumSurcharge = 0;
-        //
-        //     for (const property of this.basketItem.currentBasketItem.properties) {
-        //
-        //         if ( property.property.value && property.property.value.length > 0 ) {
-        //             if ( property.surcharge > 0 ) {
-        //                 sumSurcharge += property.surcharge;
-        //             }
-        //             else if ( property.property.surcharge > 0 ) {
-        //                 sumSurcharge += property.property.surcharge;
-        //             }
-        //         }
-        //     }
-        //
-        //     return sumSurcharge;
-        // },
-        //
-        // /**
-        //  * @returns {string}
-        //  */
-        // getImage() {
-        //     let path = "";
-        //
-        //     for (let i = 0; i < this.basketItem.currentBasketItem.variationImageList.length; i++) {
-        //         if ( this.basketItem.currentBasketItem.variationImageList[i].path !== "" ) {
-        //             path = this.basketItem.currentBasketItem.variationImageList[i].path;
-        //         }
-        //     }
-        //
-        //     return "/" + path;
-        // },
-        //
-        // startCounter() {
-        //     this.timeToClose = 10;
-        //
-        //     const timerVar = setInterval( () => {
-        //         this.timeToClose -= 1;
-        //
-        //         if ( this.timeToClose === 0 ) {
-        //             ModalService.findModal( document.getElementById( "add-item-to-basket-overlay" ) ).hide();
-        //
-        //             clearInterval( timerVar );
-        //         }
-        //     }, 1000 );
-        // }
-    },
-
-    computed: {
-        //     /**
-        //      * returns itemData.texts[0]
-        //      */
-        //     texts() {
-        //         return this.basketItem.currentBasketItem.texts;
-        //     },
-        //
-        //     imageUrl() {
-        //         const img = this.$options.filters.itemImages( this.basketItem.currentBasketItem.images,
-        //                                                       "urlPreview"
-        //         )[0];
-        //
-        //         return img.url;
-        //     }
-    }
-});
-
-},{"services/ModalService":7,"services/ResourceService":9}],2:[function(require,module,exports){
-"use strict";
-
 var ApiService = require("services/ApiService"); // /plugin-ceres/resources/js/src/app/services/ApiService.js
 var NotificationService = require("services/NotificationService");
 var AuctionBidderService = require("services/AuctionBidderService");
@@ -183,16 +51,21 @@ Vue.component("auction-bids", {
 
                 if (maxCustomerBid > lastCustomerMaxBid) {
 
-                    currentBid.bidPrice = lastBidPrice + 1;
-                    currentBid.customerMaxBid = maxCustomerBid;
-                    currentBid.bidderName = bidderName;
-                    currentBid.customerId = userId;
-
                     if (lastUserId == userId) {
+                        currentBid.bidPrice = lastBidPrice;
+                        currentBid.customerMaxBid = maxCustomerBid;
+                        currentBid.bidderName = bidderName;
+                        currentBid.customerId = userId;
+
                         // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                        alert('Sie haben Ihr eigenes Maximal-Gebot erhöht!');
-                        NotificationService.success(Translations.Template.itemWishListAdded);
+                        alert('Sie haben Ihren eigene Maximal-Gebot verändert!');
+                        // NotificationService.success(Translations.Template.itemWishListAdded)
                     } else {
+                        currentBid.bidPrice = lastCustomerMaxBid + 1;
+                        currentBid.customerMaxBid = maxCustomerBid;
+                        currentBid.bidderName = bidderName;
+                        currentBid.customerId = userId;
+
                         alert('Glückwunsch - Sie sind der Höchstbietende...');
                     }
                 } else {
@@ -251,7 +124,7 @@ Vue.component("auction-bids", {
     }
 });
 
-},{"services/ApiService":5,"services/AuctionBidderService":6,"services/NotificationService":8}],3:[function(require,module,exports){
+},{"services/ApiService":4,"services/AuctionBidderService":5,"services/NotificationService":6}],2:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -301,7 +174,7 @@ Vue.component("auction-show-bidderlist", {
     }
 });
 
-},{"services/NotificationService":8,"services/ResourceService":9}],4:[function(require,module,exports){
+},{"services/NotificationService":6,"services/ResourceService":7}],3:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -366,7 +239,7 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -502,7 +375,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":8,"services/WaitScreenService":10}],6:[function(require,module,exports){
+},{"services/NotificationService":6,"services/WaitScreenService":8}],5:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -535,122 +408,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":5,"services/NotificationService":8}],7:[function(require,module,exports){
-"use strict";
-
-module.exports = function ($) {
-
-    var paused = false;
-    var timeout = -1;
-    var interval;
-    var timeRemaining;
-    var timeStart;
-
-    return {
-        findModal: findModal
-    };
-
-    function findModal(element) {
-        return new Modal(element);
-    }
-
-    function Modal(element) {
-        var self = this;
-        var $bsModal;
-
-        if ($(element).is(".modal")) {
-            $bsModal = $(element);
-        } else {
-            $bsModal = $(element).find(".modal").first();
-        }
-
-        return {
-            show: show,
-            hide: hide,
-            setTimeout: setTimeout,
-            startTimeout: startTimeout,
-            pauseTimeout: pauseTimeout,
-            continueTimeout: continueTimeout,
-            stopTimeout: stopTimeout,
-            getModalContainer: getModalContainer
-        };
-
-        function show() {
-            $bsModal.modal("show");
-
-            if ($bsModal.timeout > 0) {
-                startTimeout();
-            }
-
-            return self;
-        }
-
-        function hide() {
-            $bsModal.modal("hide");
-            return self;
-        }
-
-        function getModalContainer() {
-            return $bsModal;
-        }
-
-        function setTimeout(timeout) {
-            $bsModal.timeout = timeout;
-
-            $bsModal.find(".modal-content").mouseover(function () {
-                pauseTimeout();
-            });
-
-            $bsModal.find(".modal-content").mouseout(function () {
-                continueTimeout();
-            });
-
-            return this;
-        }
-
-        function startTimeout() {
-            timeRemaining = $bsModal.timeout;
-            timeStart = new Date().getTime();
-
-            timeout = window.setTimeout(function () {
-                window.clearInterval(interval);
-                hide();
-            }, $bsModal.timeout);
-
-            $bsModal.find(".timer").text(timeRemaining / 1000);
-            interval = window.setInterval(function () {
-                if (!paused) {
-                    var secondsRemaining = timeRemaining - new Date().getTime() + timeStart;
-
-                    secondsRemaining = Math.round(secondsRemaining / 1000);
-                    $bsModal.find(".timer").text(secondsRemaining);
-                }
-            }, 1000);
-        }
-
-        function pauseTimeout() {
-            paused = true;
-            timeRemaining -= new Date().getTime() - timeStart;
-            window.clearTimeout(timeout);
-        }
-
-        function continueTimeout() {
-            paused = false;
-            timeStart = new Date().getTime();
-            timeout = window.setTimeout(function () {
-                hide();
-                window.clearInterval(interval);
-            }, timeRemaining);
-        }
-
-        function stopTimeout() {
-            window.clearTimeout(timeout);
-            window.clearInterval(interval);
-        }
-    }
-}(jQuery);
-
-},{}],8:[function(require,module,exports){
+},{"services/ApiService":4,"services/NotificationService":6}],6:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -817,7 +575,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1282,7 +1040,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":5}],10:[function(require,module,exports){
+},{"services/ApiService":4}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -1325,7 +1083,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4])
+},{}]},{},[1,2,3])
 
 
 

@@ -60,7 +60,7 @@ Vue.component( "auction-bids", {
                         currentBid.customerId     = userId;
 
                             // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                            alert( 'Sie haben Ihren eigenen Maximal Betrag verändert!' );
+                            alert( 'Sie haben Ihren eigene Maximal-Gebot verändert!' );
                             // NotificationService.success(Translations.Template.itemWishListAdded)
                         }
                         else {
@@ -74,15 +74,20 @@ Vue.component( "auction-bids", {
 
                     }
                     else {
+
+                        if ( lastUserId == userId ) {
                         currentBid.bidPrice       = maxCustomerBid;
                         currentBid.customerMaxBid = lastCustomerMaxBid;
                         currentBid.bidderName     = bidderListLastEntry.bidderName;
                         currentBid.customerId     = lastUserId;
-                        if ( lastUserId == userId ) {
                             // ToDo: Abfrage: eigenes Gebot wirklich ändern?
-                            alert( 'Sie haben Ihr eigenes Gebot erhöht!' );
+                            alert( 'Sie können nur Ihr eigenes Maximal-Gebot verändern!' );
                         }
                         else {
+                        currentBid.bidPrice       = maxCustomerBid;
+                        currentBid.customerMaxBid = lastCustomerMaxBid;
+                        currentBid.bidderName     = bidderListLastEntry.bidderName;
+                        currentBid.customerId     = lastUserId;
                             alert( 'Es gibt leider schon ein höheres Gebot...' );
                             // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
                         }
