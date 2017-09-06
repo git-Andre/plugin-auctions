@@ -1,8 +1,7 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
-    <a {% if shippingCat is not empty %}
-            data-toggle="modal"
+    <a      data-toggle="modal"
             href="#shippingscosts"
-        {% endif %} title="{{ trans("Ceres::Template.itemShippingCosts") }}">
+            title="{{ trans("Ceres::Template.itemShippingCosts") }}">
 
         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
     </a>
@@ -16,5 +15,14 @@
         {#<i class="fa fa-list-ul p-l-2" aria-hidden="true"></i> alle anzeigen#}
     {#</a>#}
 {#</script>#}
+
+{#<a {% if shippingCat is not empty %}#}
+    {#data-toggle="modal"#}
+    {#href="#shippingscosts"#}
+{#{% endif %} title="{{ trans("Ceres::Template.itemShippingCosts") }}">#}
+
+    {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
+{#</a>#}
+
 
 
