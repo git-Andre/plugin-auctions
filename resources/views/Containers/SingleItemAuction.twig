@@ -86,7 +86,7 @@
                             <span>    <a
                                         data-toggle="modal"
                                         href="#bidderlist-modal-wrapper"
-                                        >
+                                >
                                          <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                                      </a>
                         </span>
@@ -128,35 +128,35 @@
 
                 {#bidderList...#}
                 {#{% if bidderListLength != 1 %}#}
-                    {#<dt>Anzahl Gebote:</dt>#}
-                    {#<dd> {{ bidderListLength - 1 }}#}
-                        {#<span>    <a data-toggle="modal"#}
-                                    {#href="#bidderlist-modal-wrapper"#}
-                                    {#title="trans(PluginAuctions::Template.auctionBidderlistTitel ">#}
-                                         {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
-                                     {#</a>#}
-                        {#</span>#}
-                    {#</dd>#}
+                {#<dt>Anzahl Gebote:</dt>#}
+                {#<dd> {{ bidderListLength - 1 }}#}
+                {#<span>    <a data-toggle="modal"#}
+                {#href="#bidderlist-modal-wrapper"#}
+                {#title="trans(PluginAuctions::Template.auctionBidderlistTitel ">#}
+                {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
+                {#</a>#}
+                {#</span>#}
+                {#</dd>#}
                 {#{% endif %}#}
 
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
             </dl>
-            <!-- BidderList MODAL -->
-            <div id="shippingscosts-modal-wrapper">
-                <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
-                    <auction-countdown
-                            template="#vue-auction-countdown"
-                            deadline="{{ auction.expiryDate }}" number>
-                    </auction-countdown>
-
-                </div>
-            </div>
-            <!-- ./BidderList MODAL -->
 
         {% endif %}
     </div>
 
+    <!-- BidderList MODAL -->
+    <div id="shippingscosts-modal-wrapper">
+        <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
+            <auction-countdown
+                    template="#vue-auction-countdown"
+                    deadline="{{ auction.expiryDate }}" number>
+            </auction-countdown>
+
+        </div>
+    </div>
+    <!-- ./BidderList MODAL -->
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
 
