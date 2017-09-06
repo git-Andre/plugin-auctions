@@ -83,10 +83,11 @@
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
                         <dd> {{ bidderListLength - 1 }}
-                            <span>
-                            <auction-show-bidderlist
-                                    template="#vue-auction-show-bidderlist">
-                                </auction-show-bidderlist>
+                            <span>    <a data-toggle="modal"
+                                        href="#bidderlist-modal-wrapper"
+                                        title="{{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}">
+                                         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                                     </a>
                         </span>
                         </dd>
                     {% endif %}
@@ -134,33 +135,26 @@
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
             </dl>
+            {#<!-- BidderList MODAL -->#}
+            <div id="bidderlist-modal-wrapper">
+                <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
+                    <auction-show-bidderlist
+                            template="#vue-auction-show-bidderlist">
+                    </auction-show-bidderlist>
 
-            <!-- SHIPPINGCOSTS MODAL -->
-            <div id="shippingscosts-modal-wrapper">
-                <div class="modal fade" id="shippingscosts" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h3 class="modal-title">{{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}</h3>
-                            </div>
-                            <div class="modal-body">
-                                {% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <!-- ./SHIPPINGCOSTS MODAL -->
+            {#<!-- ./BidderList MODAL -->#}
+
 
             {#<div class="wrapper wrapper-bottom">#}
-                {#<!-- BidderList MODAL -->#}
-                {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"#}
-                        {#:bidderlist="{{ auction.bidderList | json_encode() }}"#}
-                {#>#}
-                {#</auction-bidderlist-overlay>#}
-                {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
-                {#<!-- ./BidderList MODAL -->#}
+            {#<!-- BidderList MODAL -->#}
+            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay"#}
+            {#:bidderlist="{{ auction.bidderList | json_encode() }}"#}
+            {#>#}
+            {#</auction-bidderlist-overlay>#}
+            {#<auction-bidderlist-overlay template="#vue-auction-bidderlist-overlay" :basket-add-information="{{ basketAddInformation | json_encode() }}"></auction-bidderlist-overlay>#}
+            {#<!-- ./BidderList MODAL -->#}
             {#</div>#}
 
         {% endif %}

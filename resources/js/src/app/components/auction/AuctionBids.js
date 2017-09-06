@@ -1,4 +1,4 @@
-const ApiService = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
+const ApiService           = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
 const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
@@ -35,9 +35,9 @@ Vue.component( "auction-bids", {
                 'bidderName': "versand***Kunde1",
                 'customerId': 3
             };
-            const maxCustomerBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-            const bidderName     = this.userdata.firstName + "...";
-            const userId         = parseInt( this.userdata.id );
+            const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
+            const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
+            const newUserId         = parseInt( this.userdata.id );
 
             AuctionBidderService.getBidderListLastEntry( this.auctionid ).then(
                 response => {
@@ -51,45 +51,34 @@ Vue.component( "auction-bids", {
                     const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
                     const lastUserId         = parseInt( bidderListLastEntry.customerId );
 
-                    if ( maxCustomerBid > lastCustomerMaxBid ) {
+                    if ( lastUserId == userId ) {
 
-                        if ( lastUserId == userId ) {
-                        currentBid.bidPrice       = lastBidPrice;
-                        currentBid.customerMaxBid = maxCustomerBid;
-                        currentBid.bidderName     = bidderName;
-                        currentBid.customerId     = userId;
+                            currentBid.bidPrice       = lastBidPrice;
+                            currentBid.customerMaxBid = newCustomerMaxBid;
+                            currentBid.bidderName     = newBidderName;
+                            currentBid.customerId     = newUserId;
 
                             // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                            alert( 'Sie haben Ihren eigene Maximal-Gebot verändert!' );
+                            alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
                             // NotificationService.success(Translations.Template.itemWishListAdded)
                         }
-                        else {
+                    else {
+                        if ( newCustomerMaxBid > lastCustomerMaxBid ) {
+
                             currentBid.bidPrice       = lastCustomerMaxBid + 1;
-                            currentBid.customerMaxBid = maxCustomerBid;
-                            currentBid.bidderName     = bidderName;
-                            currentBid.customerId     = userId;
+                            currentBid.customerMaxBid = newCustomerMaxBid;
+                            currentBid.bidderName     = newBidderName;
+                            currentBid.customerId     = newUserId;
 
                             alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
                         }
-
-                    }
-                    else {
-
-                        if ( lastUserId == userId ) {
-                        currentBid.bidPrice       = maxCustomerBid;
-                        currentBid.customerMaxBid = lastCustomerMaxBid;
-                        currentBid.bidderName     = bidderListLastEntry.bidderName;
-                        currentBid.customerId     = lastUserId;
-                            // ToDo: Abfrage: eigenes Gebot wirklich ändern?
-                            alert( 'Sie können nur Ihr eigenes Maximal-Gebot verändern!' );
-                        }
                         else {
-                        currentBid.bidPrice       = maxCustomerBid;
-                        currentBid.customerMaxBid = lastCustomerMaxBid;
-                        currentBid.bidderName     = bidderListLastEntry.bidderName;
-                        currentBid.customerId     = lastUserId;
+                            currentBid.bidPrice       = lastBidPrice + 1;
+                            currentBid.customerMaxBid = lastCustomerMaxBid;
+                            currentBid.bidderName     = bidderListLastEntry.bidderName;
+                            currentBid.customerId     = lastUserId;
+
                             alert( 'Es gibt leider schon ein höheres Gebot...' );
-                            // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
                         }
                     }
                     this.versand = currentBid;
