@@ -149,13 +149,32 @@
     <!-- BidderList MODAL -->
     <div id="shippingscosts-modal-wrapper">
         <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
-            <auction-countdown
-                    template="#vue-auction-countdown"
-                    deadline="{{ auction.expiryDate }}" number>
-            </auction-countdown>
+            <div class="modal-dialog"><h3>modal-dialog</h3>
+                <div class="modal-content"><h4>modal-content</h4>
+                    <div class="modal-header"><p>modal-header</p>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                        </button>
+                        <h3 class="modal-title">
+                            modal-title: {{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h1>modal-body</h1>
+                        <auction-countdown
+                                template="#vue-auction-countdown"
+                                deadline="{{ auction.expiryDate }}" number>
+                        </auction-countdown>
+                        {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
+
+
+
+
+
     <!-- ./BidderList MODAL -->
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
