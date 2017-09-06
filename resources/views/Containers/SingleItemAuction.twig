@@ -85,7 +85,7 @@
                         <dd> {{ bidderListLength - 1 }}
                             <span>    <a data-toggle="modal"
                                         href="#bidderlist-modal-wrapper"
-                                        title="{{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}">
+                                        title="trans(PluginAuctions::Template.auctionBidderlistTitel  1 ">
                                          <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                                      </a>
                         </span>
@@ -124,12 +124,15 @@
 
                 {#bidderList...#}
                 {% if bidderListLength != 1 %}
-                    <dt>End Preis:</dt>
-                    <dd> {{ bidderListLast.bidPrice | formatMonetary('EUR') }} </dd>
-
                     <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }} <a href="#"> -> alle anzeigen</a></dd>
-
+                    <dd> {{ bidderListLength - 1 }}
+                        <span>    <a data-toggle="modal"
+                                    href="#bidderlist-modal-wrapper"
+                                    title="trans(PluginAuctions::Template.auctionBidderlistTitel ">
+                                         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                                     </a>
+                        </span>
+                    </dd>
                 {% endif %}
 
                 <dt>Artikel ID:</dt>
@@ -138,9 +141,13 @@
             {#<!-- BidderList MODAL -->#}
             <div id="bidderlist-modal-wrapper">
                 <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
-                    <auction-show-bidderlist
-                            template="#vue-auction-show-bidderlist">
-                    </auction-show-bidderlist>
+                    {#<auction-show-bidderlist#}
+                            {#template="#vue-auction-show-bidderlist">#}
+                    {#</auction-show-bidderlist>#}
+                    <auction-countdown
+                            template="#vue-auction-countdown"
+                            deadline="{{ auction.expiryDate }}" number>
+                    </auction-countdown>
 
                 </div>
             </div>
