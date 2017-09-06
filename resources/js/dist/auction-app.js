@@ -275,7 +275,9 @@ Vue.component("auction-show-bidderlist", {
     props: ["template"],
 
     data: function data() {
-        return {};
+        return {
+            test: "test"
+        };
     },
     created: function created() {
         this.$options.template = this.template;
