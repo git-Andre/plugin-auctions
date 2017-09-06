@@ -83,9 +83,10 @@
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
                         <dd> {{ bidderListLength - 1 }}
-                            <span>    <a data-toggle="modal"
+                            <span>    <a
+                                        data-toggle="modal"
                                         href="#bidderlist-modal-wrapper"
-                                        title="trans(PluginAuctions::Template.auctionBidderlistTitel  1 ">
+                                        >
                                          <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                                      </a>
                         </span>
@@ -126,23 +127,23 @@
                 <dd>Keine.</dd>
 
                 {#bidderList...#}
-                {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }}
-                        <span>    <a data-toggle="modal"
-                                    href="#bidderlist-modal-wrapper"
-                                    title="trans(PluginAuctions::Template.auctionBidderlistTitel ">
-                                         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
-                                     </a>
-                        </span>
-                    </dd>
-                {% endif %}
+                {#{% if bidderListLength != 1 %}#}
+                    {#<dt>Anzahl Gebote:</dt>#}
+                    {#<dd> {{ bidderListLength - 1 }}#}
+                        {#<span>    <a data-toggle="modal"#}
+                                    {#href="#bidderlist-modal-wrapper"#}
+                                    {#title="trans(PluginAuctions::Template.auctionBidderlistTitel ">#}
+                                         {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
+                                     {#</a>#}
+                        {#</span>#}
+                    {#</dd>#}
+                {#{% endif %}#}
 
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
             </dl>
             <!-- BidderList MODAL -->
-            <div id="bidderlist">
+            <div id="shippingscosts-modal-wrapper">
                 <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
                     <auction-countdown
                             template="#vue-auction-countdown"
