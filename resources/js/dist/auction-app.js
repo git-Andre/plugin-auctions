@@ -34,9 +34,9 @@ Vue.component("auction-bids", {
                 'bidderName': "versand***Kunde1",
                 'customerId': 3
             };
-            var maxCustomerBid = this.toFloatTwoDecimal(this.maxCustomerBid);
-            var bidderName = this.userdata.firstName + "...";
-            var userId = parseInt(this.userdata.id);
+            var newCustomerMaxBid = this.toFloatTwoDecimal(this.maxCustomerBid);
+            var newBidderName = this.userdata.firstName ? this.userdata.firstName + "... ***" : "*** ... ***";
+            var newUserId = parseInt(this.userdata.id);
 
             AuctionBidderService.getBidderListLastEntry(this.auctionid).then(function (response) {
 
@@ -49,36 +49,32 @@ Vue.component("auction-bids", {
                 var lastCustomerMaxBid = _this.toFloatTwoDecimal(bidderListLastEntry.customerMaxBid);
                 var lastUserId = parseInt(bidderListLastEntry.customerId);
 
-                if (maxCustomerBid > lastCustomerMaxBid) {
+                if (lastUserId == userId) {
 
-                    if (lastUserId == userId) {
-                        currentBid.bidPrice = lastBidPrice;
-                        currentBid.customerMaxBid = maxCustomerBid;
-                        currentBid.bidderName = bidderName;
-                        currentBid.customerId = userId;
+                    currentBid.bidPrice = lastBidPrice;
+                    currentBid.customerMaxBid = newCustomerMaxBid;
+                    currentBid.bidderName = newBidderName;
+                    currentBid.customerId = newUserId;
 
-                        // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                        alert('Sie haben Ihren eigene Maximal-Gebot verändert!');
-                        // NotificationService.success(Translations.Template.itemWishListAdded)
-                    } else {
+                    // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+                    alert('Sie haben Ihr eigenes Maximal-Gebot verändert!');
+                    // NotificationService.success(Translations.Template.itemWishListAdded)
+                } else {
+                    if (newCustomerMaxBid > lastCustomerMaxBid) {
+
                         currentBid.bidPrice = lastCustomerMaxBid + 1;
-                        currentBid.customerMaxBid = maxCustomerBid;
-                        currentBid.bidderName = bidderName;
-                        currentBid.customerId = userId;
+                        currentBid.customerMaxBid = newCustomerMaxBid;
+                        currentBid.bidderName = newBidderName;
+                        currentBid.customerId = newUserId;
 
                         alert('Glückwunsch - Sie sind der Höchstbietende...');
-                    }
-                } else {
-                    currentBid.bidPrice = maxCustomerBid;
-                    currentBid.customerMaxBid = lastCustomerMaxBid;
-                    currentBid.bidderName = bidderListLastEntry.bidderName;
-                    currentBid.customerId = lastUserId;
-                    if (lastUserId == userId) {
-                        // ToDo: Abfrage: eigenes Gebot wirklich ändern?
-                        alert('Sie haben Ihr eigenes Gebot erhöht!');
                     } else {
+                        currentBid.bidPrice = lastBidPrice + 1;
+                        currentBid.customerMaxBid = lastCustomerMaxBid;
+                        currentBid.bidderName = bidderListLastEntry.bidderName;
+                        currentBid.customerId = lastUserId;
+
                         alert('Es gibt leider schon ein höheres Gebot...');
-                        // NotificationService.success( "Es gibt leider schon ein höheres Gebot..." ).closeAfter( 3000 );
                     }
                 }
                 _this.versand = currentBid;
@@ -208,7 +204,7 @@ Vue.component("auction-countdown", {
         },
         stopAuction: function stopAuction() {
             // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
-            location.reload();
+            //             location.reload();
         }
     },
     computed: {

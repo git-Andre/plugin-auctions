@@ -30,7 +30,7 @@ Vue.component( "auction-countdown", {
         },
         stopAuction() {
 // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
-            location.reload();
+//             location.reload();
         }
     },
     computed: {
