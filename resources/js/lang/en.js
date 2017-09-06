@@ -1,1 +1,6 @@
-var Languages = Languages || {}; Languages['en'] = {Template: {accAccountSettings: "Account settings"},};
+var Languages   = Languages || {};
+Languages['en'] = { Template: {
+    accAccountSettings: "Account settings",
+    auctionBidderlistTitel: "Bidderlist"
+
+}, };
