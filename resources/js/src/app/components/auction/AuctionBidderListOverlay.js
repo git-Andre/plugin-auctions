@@ -21,112 +21,112 @@ Vue.component( "auction-bidderlist-overlay", {
     },
 
     ready() {
-        ResourceService.bind( "basketItem", this );
+        // ResourceService.bind( "basketItem", this );
     },
 
     watch: {
-        basketItem() {
-            if ( this.basketAddInformation === "overlay" ) {
-                ModalService.findModal( document.getElementById( "auction-bidderlist-overlay" ) ).show();
-            }
-            else if ( this.basketAddInformation === "preview" &&
-                Object.keys( this.basketItem.currentBasketItem ).length != 0 ) {
-                setTimeout( function () {
-                    $( "body" ).toggleClass( "open-right" );
-                }, 1 );
-            }
-        }
+        // basketItem() {
+        //     if ( this.basketAddInformation === "overlay" ) {
+        //         ModalService.findModal( document.getElementById( "auction-bidderlist-overlay" ) ).show();
+        //     }
+        //     else if ( this.basketAddInformation === "preview" &&
+        //         Object.keys( this.basketItem.currentBasketItem ).length != 0 ) {
+        //         setTimeout( function () {
+        //             $( "body" ).toggleClass( "open-right" );
+        //         }, 1 );
+        //     }
+        // }
     },
 
     methods: {
-
-        /**
-         * check if current basket object exist and start rendering
-         */
-        startRendering() {
-            const render = Object.keys( this.basketItem.currentBasketItem ).length != 0;
-
-            if ( render ) {
-                this.startCounter();
-            }
-
-            this.setPriceFromData();
-
-            return render;
-        },
-
-        setPriceFromData() {
-            if ( this.basketItem.currentBasketItem.calculatedPrices ) {
-                this.price    =
-                    this.basketItem.currentBasketItem.calculatedPrices.default.price + this.calculateSurcharge();
-                this.currency = this.basketItem.currentBasketItem.calculatedPrices.default.currency;
-            }
-        },
-
-        calculateSurcharge() {
-
-            let sumSurcharge = 0;
-
-            for (const property of this.basketItem.currentBasketItem.properties) {
-
-                if ( property.property.value && property.property.value.length > 0 ) {
-                    if ( property.surcharge > 0 ) {
-                        sumSurcharge += property.surcharge;
-                    }
-                    else if ( property.property.surcharge > 0 ) {
-                        sumSurcharge += property.property.surcharge;
-                    }
-                }
-            }
-
-            return sumSurcharge;
-        },
-
-        /**
-         * @returns {string}
-         */
-        getImage() {
-            let path = "";
-
-            for (let i = 0; i < this.basketItem.currentBasketItem.variationImageList.length; i++) {
-                if ( this.basketItem.currentBasketItem.variationImageList[i].path !== "" ) {
-                    path = this.basketItem.currentBasketItem.variationImageList[i].path;
-                }
-            }
-
-            return "/" + path;
-        },
-
-        startCounter() {
-            this.timeToClose = 10;
-
-            const timerVar = setInterval( () => {
-                this.timeToClose -= 1;
-
-                if ( this.timeToClose === 0 ) {
-                    ModalService.findModal( document.getElementById( "add-item-to-basket-overlay" ) ).hide();
-
-                    clearInterval( timerVar );
-                }
-            }, 1000 );
-        }
+        //
+        // /**
+        //  * check if current basket object exist and start rendering
+        //  */
+        // startRendering() {
+        //     const render = Object.keys( this.basketItem.currentBasketItem ).length != 0;
+        //
+        //     if ( render ) {
+        //         this.startCounter();
+        //     }
+        //
+        //     this.setPriceFromData();
+        //
+        //     return render;
+        // },
+        //
+        // setPriceFromData() {
+        //     if ( this.basketItem.currentBasketItem.calculatedPrices ) {
+        //         this.price    =
+        //             this.basketItem.currentBasketItem.calculatedPrices.default.price + this.calculateSurcharge();
+        //         this.currency = this.basketItem.currentBasketItem.calculatedPrices.default.currency;
+        //     }
+        // },
+        //
+        // calculateSurcharge() {
+        //
+        //     let sumSurcharge = 0;
+        //
+        //     for (const property of this.basketItem.currentBasketItem.properties) {
+        //
+        //         if ( property.property.value && property.property.value.length > 0 ) {
+        //             if ( property.surcharge > 0 ) {
+        //                 sumSurcharge += property.surcharge;
+        //             }
+        //             else if ( property.property.surcharge > 0 ) {
+        //                 sumSurcharge += property.property.surcharge;
+        //             }
+        //         }
+        //     }
+        //
+        //     return sumSurcharge;
+        // },
+        //
+        // /**
+        //  * @returns {string}
+        //  */
+        // getImage() {
+        //     let path = "";
+        //
+        //     for (let i = 0; i < this.basketItem.currentBasketItem.variationImageList.length; i++) {
+        //         if ( this.basketItem.currentBasketItem.variationImageList[i].path !== "" ) {
+        //             path = this.basketItem.currentBasketItem.variationImageList[i].path;
+        //         }
+        //     }
+        //
+        //     return "/" + path;
+        // },
+        //
+        // startCounter() {
+        //     this.timeToClose = 10;
+        //
+        //     const timerVar = setInterval( () => {
+        //         this.timeToClose -= 1;
+        //
+        //         if ( this.timeToClose === 0 ) {
+        //             ModalService.findModal( document.getElementById( "add-item-to-basket-overlay" ) ).hide();
+        //
+        //             clearInterval( timerVar );
+        //         }
+        //     }, 1000 );
+        // }
     },
 
     computed:
         {
-            /**
-             * returns itemData.texts[0]
-             */
-            texts() {
-                return this.basketItem.currentBasketItem.texts;
-            },
-
-            imageUrl() {
-                const img = this.$options.filters.itemImages( this.basketItem.currentBasketItem.images,
-                                                              "urlPreview"
-                )[0];
-
-                return img.url;
-            }
+        //     /**
+        //      * returns itemData.texts[0]
+        //      */
+        //     texts() {
+        //         return this.basketItem.currentBasketItem.texts;
+        //     },
+        //
+        //     imageUrl() {
+        //         const img = this.$options.filters.itemImages( this.basketItem.currentBasketItem.images,
+        //                                                       "urlPreview"
+        //         )[0];
+        //
+        //         return img.url;
+        //     }
         }
 } );
