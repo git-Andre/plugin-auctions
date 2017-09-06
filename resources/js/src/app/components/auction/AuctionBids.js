@@ -53,17 +53,22 @@ Vue.component( "auction-bids", {
 
                     if ( maxCustomerBid > lastCustomerMaxBid ) {
 
-                        currentBid.bidPrice       = lastBidPrice + 1;
+                        if ( lastUserId == userId ) {
+                        currentBid.bidPrice       = lastBidPrice;
                         currentBid.customerMaxBid = maxCustomerBid;
                         currentBid.bidderName     = bidderName;
                         currentBid.customerId     = userId;
 
-                        if ( lastUserId == userId ) {
                             // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                            alert( 'Sie haben Ihr eigenes Maximal-Gebot erhöht!' );
-                            NotificationService.success(Translations.Template.itemWishListAdded)
+                            alert( 'Sie haben Ihren eigenen Maximal Betrag verändert!' );
+                            // NotificationService.success(Translations.Template.itemWishListAdded)
                         }
                         else {
+                            currentBid.bidPrice       = lastCustomerMaxBid + 1;
+                            currentBid.customerMaxBid = maxCustomerBid;
+                            currentBid.bidderName     = bidderName;
+                            currentBid.customerId     = userId;
+
                             alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
                         }
 

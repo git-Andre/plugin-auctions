@@ -106,11 +106,6 @@
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
             </div>
-            {#<auction-bids template="#vue-auction-bids"#}
-            {#v-resource-push:auction data-accessor="true"#}
-            {#resource="currentAuction">#}
-            {#</auction-bids>#}
-
 
             {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
