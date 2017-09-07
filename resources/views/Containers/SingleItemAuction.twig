@@ -155,14 +155,20 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
                         </button>
                         <h3 class="modal-title">
-                            modal-title: {{ trans("PluginAuctions::TemplateAo.auctionBidderlistTitel") }}</h3>
+                            Alle Gebote:</h3>
                     </div>
                     <div class="modal-body">
 
+                        <auction-show-bidderlist
+                                template="#vue-auction-show-bidderlist"
+                                bidderdata="{{ auction.bidderList | json_encode() }}"
+                        >
+                        </auction-show-bidderlist>
 
                         <auction-countdown
                                 template="#vue-auction-countdown"
-                                deadline="{{ auction.expiryDate }}" number>
+                                deadline="{{ auction.expiryDate }}" number
+                        >
                         </auction-countdown>
                         {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
                     </div>
@@ -203,6 +209,9 @@
         width: 95%;
     }
 
+    a:focus {
+        outline: none;
+    }
 </style>
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>#}
 
