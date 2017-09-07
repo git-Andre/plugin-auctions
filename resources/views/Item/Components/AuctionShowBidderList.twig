@@ -1,8 +1,9 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
-<h2>in der component</h2>
-{#{% for bidder in bidderList %}#}
-{#<p>Bieter: <span>{{ bidder. }}</span><span></span><span></span>{{ bidderListView }}</p>#}
+    {% for bid in bidderList %}
+    <h4>Bieter: {{ bid.bidderName }}
+        <span>Gebot: {{ bid.bidPrice }}</span><span>Gebots Zeit: {{ bid.bidTimeStamp | date('D d. M Y H:i:s e') }}</span>
+    </h4>
 </script>
 
 {#<script type="x/template" id="vue-auction-show-bidderlist">#}

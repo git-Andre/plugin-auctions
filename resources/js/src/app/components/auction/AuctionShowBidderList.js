@@ -10,62 +10,34 @@ Vue.component( "auction-show-bidderlist", {
 
     data() {
         return {
-            bidderList: [{}]
+            bidderList: []
         };
     },
 
     created() {
         this.$options.template = this.template;
 
-        console.dir( this.bidderdata );
 
-        this.bidderdata = JSON.parse(this.bidderdata );
+        this.bidderdata = JSON.parse( this.bidderdata );
         this.bidderList = [];
-        var bid         = {};
-        var bidView     = {"bidderName": "Name", "bidPrice": 1.1, "bidTime": 152};
 
-        for (bid in this.bidderdata) {
-            console.dir(bid);
+        for (var i = this.bidderdata.length; --i >= 0;) {
+            var bidView     = { };
 
-            bidView = bidView["bidderName"] = bid.bidderName;
-            bidView = bidView["bidPrice"] = bid["bidPrice"];
-            bidView = bidView["bidTime"] = bid.bidTime;
+            bidView.bidderName = this.bidderdata[i].bidderName;
+            bidView.bidPrice = this.bidderdata[i].bidPrice;
+            bidView.bidTimeStamp = this.bidderdata[i].bidTimeStamp;
 
-            this.bidderList.push(bidView);
+            this.bidderList.push( bidView );
         }
-
-        // this.bidderdata = {}
+        this.bidderdata = [];
     },
 
     ready() {
-        // this.changeTooltipText();
+
     },
 
     methods:
         {
-            showBidderList() {
-                alert( 'show Bidder List...' );
-
-                // if ( this.item.filter.isSalable ) {
-                //     const basketObject =
-                //               {
-                //                   variationId: this.variationId,
-                //                   quantity: this.quantity,
-                //                   basketItemOrderParams: this.item.properties
-                //               };
-                //
-                //     ResourceService.getResource( "basketItems" ).push( basketObject )
-                //         .done( function () {
-                //             this.openAddToBasketOverlay();
-                //         }
-                //                    .bind( this ) )
-                //         .fail( function (response) {
-                //             NotificationService.error(
-                //                 Translations.Template[ExceptionMap.get( response.data.exceptionCode.toString() )] )
-                //                 .closeAfter( 5000 );
-                //         } );
-                // }
-
-            },
         }
 } );

@@ -133,30 +133,27 @@ Vue.component("auction-show-bidderlist", {
 
     data: function data() {
         return {
-            bidderList: [{}]
+            bidderList: []
         };
     },
     created: function created() {
         this.$options.template = this.template;
 
-        console.dir(this.bidderdata);
-
         this.bidderdata = JSON.parse(this.bidderdata);
         this.bidderList = [];
-        var bid = {};
-        var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTime": 152 };
 
-        for (bid in this.bidderdata) {
-            console.dir(bid);
+        for (var i = this.bidderdata.length; --i >= 0;) {
+            var bidView = {};
 
-            bidView = bidView["bidderName"] = bid.bidderName;
-            bidView = bidView["bidPrice"] = bid["bidPrice"];
-            bidView = bidView["bidTime"] = bid.bidTime;
+            bidView.bidderName = this.bidderdata[i].bidderName;
+            bidView.bidPrice = this.bidderdata[i].bidPrice;
+            bidView.bidTimeStamp = this.bidderdata[i].bidTimeStamp;
 
             this.bidderList.push(bidView);
         }
 
-        // this.bidderdata = {}
+        // this.bidderdata = [];
+        // this.bidderList.reverse();
     },
     ready: function ready() {
         // this.changeTooltipText();
