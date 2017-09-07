@@ -36,7 +36,8 @@ Vue.component( "auction-bids", {
                 'customerId': 3
             };
             const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-            const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
+            const newBidderName     = this.userdata.email.slice(1, 2)  + " ... ***";
+            // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             const newUserId         = parseInt( this.userdata.id );
 
             AuctionBidderService.getBidderListLastEntry( this.auctionid ).then(

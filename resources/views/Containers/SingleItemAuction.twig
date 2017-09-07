@@ -17,7 +17,7 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
-    <resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>
+    {#<resource name="currentAuction" :data="{{ auction | json_encode() }}"></resource>#}
     {#<resource name="bidderListLast" :data="{{ bidderListLast | json_encode() }}"></resource>#}
 
     <div id="addAuctionVue">
@@ -165,11 +165,12 @@
                         >
                         </auction-show-bidderlist>
 
-                        <auction-countdown
-                                template="#vue-auction-countdown"
-                                deadline="{{ auction.expiryDate }}" number
-                        >
-                        </auction-countdown>
+                        {#<auction-countdown#}
+                                {#template="#vue-auction-countdown"#}
+                                {#deadline="{{ auction.expiryDate }}" number#}
+                        {#>#}
+                        {#</auction-countdown>#}
+
                         {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
                     </div>
                 </div>

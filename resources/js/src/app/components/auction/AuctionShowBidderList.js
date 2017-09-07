@@ -10,22 +10,30 @@ Vue.component( "auction-show-bidderlist", {
 
     data() {
         return {
-            bidderList: [{ }]
+            bidderList: [{}]
         };
     },
 
     created() {
         this.$options.template = this.template;
 
-        console.dir(this.bidderdata);
+        console.dir( this.bidderdata );
 
+        this.bidderdata = JSON.parse(this.bidderdata );
+        this.bidderList = [];
+        var bid         = {};
+        var bidView     = {"bidderName": "Name", "bidPrice": 1.1, "bidTime": 152};
 
-        //  var bid;
-        // for (bid in this.bidderdata) {
-        //
-        // }
-        // this.bidderList =
-        //
+        for (bid in this.bidderdata) {
+            console.dir(bid);
+
+            bidView = bidView["bidderName"] = bid.bidderName;
+            bidView = bidView["bidPrice"] = bid["bidPrice"];
+            bidView = bidView["bidTime"] = bid.bidTime;
+
+            this.bidderList.push(bidView);
+        }
+
         // this.bidderdata = {}
     },
 
