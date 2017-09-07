@@ -17,7 +17,8 @@ Vue.component( "auction-show-bidderlist", {
     created() {
         this.$options.template = this.template;
 
-        console.dir(bidderdata);
+        console.dir(this.bidderdata);
+
 
         //  var bid;
         // for (bid in this.bidderdata) {

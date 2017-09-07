@@ -128,15 +128,25 @@ var ResourceService = require("services/ResourceService");
 
 Vue.component("auction-show-bidderlist", {
 
-    props: ["template"],
+    props: ["template", "bidderdata"],
 
     data: function data() {
         return {
-            test: "test"
+            bidderList: [{}]
         };
     },
     created: function created() {
         this.$options.template = this.template;
+
+        console.dir(bidderdata);
+
+        //  var bid;
+        // for (bid in this.bidderdata) {
+        //
+        // }
+        // this.bidderList =
+        //
+        // this.bidderdata = {}
     },
     ready: function ready() {
         // this.changeTooltipText();
