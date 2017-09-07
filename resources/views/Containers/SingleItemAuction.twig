@@ -155,9 +155,11 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
                         </button>
                         <h3 class="modal-title">
-                            modal-title: {{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}</h3>
+                            modal-title: {{ trans("PluginAuctions::TemplateAo.auctionBidderlistTitel") }}</h3>
                     </div>
                     <div class="modal-body">
+
+
                         <auction-countdown
                                 template="#vue-auction-countdown"
                                 deadline="{{ auction.expiryDate }}" number>

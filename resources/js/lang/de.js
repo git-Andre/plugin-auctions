@@ -1,6 +1,6 @@
-var Languages   = Languages || {};
-Languages['de'] = {
-    Template:
+var LanguagesAo   = LanguagesAo || {};
+LanguagesAo['de'] = {
+    TemplateAo:
         {
             accAccountSettings: "Kontoeinstellungen",
             auctionBidderlistTitel: "Alle Gebote zu dieser Auktion"

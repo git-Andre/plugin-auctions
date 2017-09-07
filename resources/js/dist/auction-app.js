@@ -49,7 +49,7 @@ Vue.component("auction-bids", {
                 var lastCustomerMaxBid = _this.toFloatTwoDecimal(bidderListLastEntry.customerMaxBid);
                 var lastUserId = parseInt(bidderListLastEntry.customerId);
 
-                if (lastUserId == userId) {
+                if (lastUserId == newUserId) {
 
                     currentBid.bidPrice = lastBidPrice;
                     currentBid.customerMaxBid = newCustomerMaxBid;
