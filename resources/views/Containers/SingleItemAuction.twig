@@ -149,16 +149,15 @@
     <!-- BidderList MODAL -->
     <div id="shippingscosts-modal-wrapper">
         <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
-            <div class="modal-dialog"><h3>modal-dialog</h3>
-                <div class="modal-content"><h4>modal-content</h4>
-                    <div class="modal-header"><p>modal-header</p>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
                         </button>
                         <h3 class="modal-title">
                             modal-title: {{ trans("PluginAuctions::Template.auctionBidderlistTitel") }}</h3>
                     </div>
                     <div class="modal-body">
-                        <h1>modal-body</h1>
                         <auction-countdown
                                 template="#vue-auction-countdown"
                                 deadline="{{ auction.expiryDate }}" number>
