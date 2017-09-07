@@ -2,25 +2,10 @@
 
     {% for bid in bidderList %}
     <h4>Bieter: {{ bid.bidderName }}
-        <span>Gebot: {{ bid.bidPrice }}</span><span>Gebots Zeit: {{ bid.bidTimeStamp | date('D d. M Y H:i:s e') }}</span>
+        <span>Gebot: {{ bid.bidPrice }}</span>
+        <span>Gebots Zeit: {{ bid.bidTimeStamp | date('D d. M Y H:i:s e') }}</span>
     </h4>
+    {% endfor %}
 </script>
-
-{#<script type="x/template" id="vue-auction-show-bidderlist">#}
-    {#<a class="no"#}
-            {#href="javascript:void(0)"#}
-            {#@click="showBidderList()">#}
-
-        {#<i class="fa fa-list-ul p-l-2" aria-hidden="true"></i> alle anzeigen#}
-    {#</a>#}
-{#</script>#}
-
-{#<a {% if shippingCat is not empty %}#}
-    {#data-toggle="modal"#}
-    {#href="#shippingscosts"#}
-{#{% endif %} title="{{ trans("Ceres::Template.itemShippingCosts") }}">#}
-
-    {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
-{#</a>#}
 
 
