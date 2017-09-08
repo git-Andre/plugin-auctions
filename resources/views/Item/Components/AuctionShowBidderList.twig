@@ -4,21 +4,18 @@
     {#<p>2: ${ bidderList}</p>#}
 
     {#{% set bids = (bidderList | json_encode) %}#}
-    <p>3: ${ bidderList }</p>
+    {#<p>3: ${ bidderList }</p>#}
 
     <div class="tab-pane" id="assessments-details" role="tabpanel">
 
         <div class="m-y-2">
             <table class="table table-striped table-hover table-sm">
                 <tbody>
-                {% for bid in bidderList %}
-                    <tr>
-                        <td><h3>Tester:</h3></td>
+                    <tr v-for="bid in bidderList">
                         <td><h4>Bieter: ${ bid.bidderName } </h4></td>
                         <td>Gebot: ${ bid.bidPrice | currency }</td>
                         <td>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</td>
                     </tr>
-                {% endfor %}
                 </tbody>
             </table>
         </div>
