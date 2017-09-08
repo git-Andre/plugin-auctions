@@ -42,7 +42,8 @@
             </dl>
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
-
+            {% set shippingCat = config("Ceres.global.shippingCostsCategoryId") %}
+<h1>{{ shippingCat }}</h1>
             <h2 class="m-b-0" style="color: #c50000;">Laufende Auktion:</h2>
             {#<hr class="m-b-2 m-r-3 m-l-2">#}
             <div class="row container m-t-1 m-b-0">
