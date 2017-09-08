@@ -33,10 +33,10 @@ Vue.component( "auction-show-bidderlist", {
                     bidView.bidPrice     = bidderData[i].bidPrice;
                     bidView.bidTimeStamp = bidderData[i].bidTimeStamp;
 
-                    console.dir( bidView );
-
                     this.bidderList.push( bidView );
                 }
+                console.dir( this.bidderList );
+
             },
             error => {
                 alert( 'error4: ' + error.toString() );
