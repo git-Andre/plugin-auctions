@@ -1,5 +1,5 @@
-const NotificationService = require( "services/NotificationService" );
-const ResourceService     = require( "services/ResourceService" );
+const NotificationService  = require( "services/NotificationService" );
+const ResourceService      = require( "services/ResourceService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-show-bidderlist", {
@@ -16,37 +16,32 @@ Vue.component( "auction-show-bidderlist", {
     },
 
     created() {
+        this.$options.template = this.template;
+
         AuctionBidderService.getBidderList( this.auctionid ).then(
             response => {
 
-                const bidderList = response;
+                const bidderData = response;
 
+                // this.bidderdata = JSON.parse( this.bidderData );
+                this.bidderList = [];
+                for (var i = bidderData.length; --i >= 0;) {
+                    // var bidView = {};
+                    var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
+                    bidView.bidderName   = bidderData[i].bidderName;
+                    bidView.bidPrice     = bidderData[i].bidPrice;
+                    bidView.bidTimeStamp = bidderData[i].bidTimeStamp;
+
+                    console.dir( bidView );
+
+                    this.bidderList.push( bidView );
+                }
             },
             error => {
                 alert( 'error4: ' + error.toString() );
             }
         );
-
-
-
-
-        this.$options.template = this.template;
-
-
-        this.bidderdata = JSON.parse( this.bidderdata );
-        this.bidderList = [];
-
-        for (var i = this.bidderdata.length; --i >= 0;) {
-            var bidView     = { };
-
-            bidView.bidderName = this.bidderdata[i].bidderName;
-            bidView.bidPrice = this.bidderdata[i].bidPrice;
-            bidView.bidTimeStamp = this.bidderdata[i].bidTimeStamp;
-
-            this.bidderList.push( bidView );
-        }
-        this.bidderdata = [];
     },
 
     ready() {
@@ -54,6 +49,5 @@ Vue.component( "auction-show-bidderlist", {
     },
 
     methods:
-        {
-        }
+        {}
 } );

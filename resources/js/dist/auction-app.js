@@ -139,28 +139,31 @@ Vue.component("auction-show-bidderlist", {
         };
     },
     created: function created() {
-        AuctionBidderService.getBidderList(this.auctionid).then(function (response) {
-
-            var bidderList = response;
-        }, function (error) {
-            alert('error4: ' + error.toString());
-        });
+        var _this = this;
 
         this.$options.template = this.template;
 
-        this.bidderdata = JSON.parse(this.bidderdata);
-        this.bidderList = [];
+        AuctionBidderService.getBidderList(this.auctionid).then(function (response) {
 
-        for (var i = this.bidderdata.length; --i >= 0;) {
-            var bidView = {};
+            var bidderData = response;
 
-            bidView.bidderName = this.bidderdata[i].bidderName;
-            bidView.bidPrice = this.bidderdata[i].bidPrice;
-            bidView.bidTimeStamp = this.bidderdata[i].bidTimeStamp;
+            // this.bidderdata = JSON.parse( this.bidderData );
+            _this.bidderList = [];
+            for (var i = bidderData.length; --i >= 0;) {
+                // var bidView = {};
+                var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
-            this.bidderList.push(bidView);
-        }
-        this.bidderdata = [];
+                bidView.bidderName = bidderData[i].bidderName;
+                bidView.bidPrice = bidderData[i].bidPrice;
+                bidView.bidTimeStamp = bidderData[i].bidTimeStamp;
+
+                console.dir(bidView);
+
+                _this.bidderList.push(bidView);
+            }
+        }, function (error) {
+            alert('error4: ' + error.toString());
+        });
     },
     ready: function ready() {},
 
