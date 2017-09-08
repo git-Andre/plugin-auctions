@@ -1,6 +1,7 @@
-    {% set auction = auctions.auction.getAuctionForItemId(item.documents[0].data.item.id) %}
+{% set itemId = itemData.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-    <!-- BidderList MODAL -->
+<!-- BidderList MODAL -->
     <div id="shippingscosts-modal-wrapper">
         <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
             <div class="modal-dialog">
