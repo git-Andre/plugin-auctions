@@ -2,27 +2,27 @@
 
     <h1>test3</h1>
     {#<p>2: ${ bidderList}</p>#}
-    <p>2: ${ bidderList | json_encode }</p>
 
     {% set bids = bidderList | json_encode %}
+    <p>2: ${ bids }</p>
 
-    {% for bid in bids %}
+    <div class="tab-pane" id="assessments-details" role="tabpanel">
 
-        <div class="tab-pane" id="assessments-details" role="tabpanel">
-            <div class="m-y-2">
-                <table class="table table-striped table-hover table-sm">
-                    <tbody>
+        <div class="m-y-2">
+            <table class="table table-striped table-hover table-sm">
+                <tbody>
+                {% for bid in bids %}
                     <tr>
                         <td><h4>Bieter: ${ bid.bidderName } </h4></td>
                         <td>Gebot: ${ bid.bidPrice | currency }</td>
                         <td>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
+    </div>
 
-    {% endfor %}
 
 </script>
 
