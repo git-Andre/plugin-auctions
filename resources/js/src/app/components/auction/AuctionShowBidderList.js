@@ -26,8 +26,8 @@ Vue.component( "auction-show-bidderlist", {
                 // this.bidderdata = JSON.parse( this.bidderData );
                 this.bidderList = [];
                 for (var i = bidderData.length; --i >= 0;) {
-                    // var bidView = {};
-                    var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
+                    var bidView = {};
+                    // var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
                     bidView.bidderName   = bidderData[i].bidderName;
                     bidView.bidPrice     = bidderData[i].bidPrice;
@@ -35,8 +35,6 @@ Vue.component( "auction-show-bidderlist", {
 
                     this.bidderList.push( bidView );
                 }
-                console.dir( this.bidderList );
-
             },
             error => {
                 alert( 'error4: ' + error.toString() );
