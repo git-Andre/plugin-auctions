@@ -2,10 +2,16 @@
 
     {% for bid in bidderList %}
     <h4>Bieter: ${ bid.bidderName }
-        <span>Gebot: ${ bid.bidPrice }</span>
-        <span>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</span>
     </h4>
+        <p>bid</p>
+        {#<p>bidderList</p>#}
+
+
+        {#<span>Gebot: ${ bid.bidPrice }</span>#}
+
+        {#<span>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</span>#}
     {% endfor %}
+
 </script>
 
 
