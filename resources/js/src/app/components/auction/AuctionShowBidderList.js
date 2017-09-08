@@ -13,7 +13,8 @@ Vue.component( "auction-show-bidderlist", {
         return {
             bidderList: [],
             expiryDate: 0,
-            isAuctionPresent
+            isAuctionPresent: false,
+            bidders: 0
         };
     },
 
@@ -33,12 +34,11 @@ Vue.component( "auction-show-bidderlist", {
 
                     bidView.bidderName = bidderData[i].bidderName;
                     bidView.bidPrice   = bidderData[i].bidPrice;
-
-                    // var date = new Date (bidderData[i].bidTimeStamp * 1000);
-
                     bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
                     this.bidderList.push( bidView );
+
+
                 }
             },
             error => {

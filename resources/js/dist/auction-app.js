@@ -36,7 +36,8 @@ Vue.component("auction-bids", {
             };
             var newCustomerMaxBid = this.toFloatTwoDecimal(this.maxCustomerBid);
             var pos = this.userdata.email.indexOf("@");
-            var newBidderName = this.userdata.email.substring(0, 2) + " *** " + this.userdata.email.substring(pos - 2, pos);
+            var newBidderName = this.userdata.email.slice(0, 2) + " *** " + this.userdata.email.slice(pos - 2, pos);
+
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             var newUserId = parseInt(this.userdata.id);
 
@@ -137,7 +138,10 @@ Vue.component("auction-show-bidderlist", {
 
     data: function data() {
         return {
-            bidderList: []
+            bidderList: [],
+            expiryDate: 0,
+            isAuctionPresent: false,
+            bidders: 0
         };
     },
     created: function created() {
@@ -164,6 +168,13 @@ Vue.component("auction-show-bidderlist", {
         }, function (error) {
             alert('error4: ' + error.toString());
         });
+        AuctionBidderService.getExpiryDate(this.auctionid).then(function (response) {
+            _this.expiryDate = response;
+        }, function (error) {
+            alert('error5: ' + error.toString());
+        });
+
+        this.isAuctionPresent = Math.trunc(new Date().getTime() / 1000) < this.expiryDate;
     },
     ready: function ready() {},
 
@@ -384,7 +395,8 @@ module.exports = function ($) {
     var getPromise;
 
     return {
-        getBidderList: getBidderList
+        getBidderList: getBidderList,
+        getExpiryDate: getExpiryDate
     };
 
     function getBidderList(auctionId) {
@@ -408,6 +420,19 @@ module.exports = function ($) {
                 });
             } else {
                 alert('Fehler in id:: ' + auctionId);
+            }
+        });
+    }
+    function getExpiryDate(auctionId) {
+        return new Promise(function (resolve, reject) {
+            if (auctionId) {
+                ApiService.get("/api/auction/" + auctionId).then(function (auction) {
+                    return auction.expiryDate;
+                }, function (error) {
+                    reject(error);
+                });
+            } else {
+                alert('Fehler in id (Date):: ' + auctionId);
             }
         });
     }
