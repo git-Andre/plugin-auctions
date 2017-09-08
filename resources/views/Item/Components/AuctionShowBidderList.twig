@@ -1,16 +1,19 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
-    {% for bid in bidderList %}
-    <h4>Bieter: ${ bid.bidderName }
-    </h4>
-        <p>bid</p>
+
+    <p>{{ bidderList | json }}</p>
+
+    {#{% for bid in bidderList %}#}
+    {#<h4>Bieter: ${ bid.bidderName }#}
+    {#</h4>#}
+        {#<p>bid</p>#}
         {#<p>bidderList</p>#}
 
 
         {#<span>Gebot: ${ bid.bidPrice }</span>#}
 
         {#<span>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</span>#}
-    {% endfor %}
+    {#{% endfor %}#}
 
 </script>
 

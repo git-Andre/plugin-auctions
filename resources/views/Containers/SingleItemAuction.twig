@@ -37,8 +37,8 @@
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
                 <dt>Artikel ID:</dt>
                 <dd>{{ auction.itemId }}</dd>
-                <dt>Versandkosten:</dt>
-                <dd>Keine.</dd>
+                <dt>Versand:</dt>
+                <dd>kostenlos.</dd>
             </dl>
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
@@ -79,8 +79,8 @@
                     <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
                     <dt>Artikel ID:</dt>
                     <dd>{{ auction.itemId }}</dd>
-                    <dt>Versandkosten:</dt>
-                    <dd>keine</dd>
+                    <dt>Versand:</dt>
+                    <dd>kostenlos</dd>
 
 
                     {% if bidderListLength != 1 %}
@@ -169,8 +169,8 @@
                         </auction-show-bidderlist>
 
                         {#<auction-countdown#}
-                                {#template="#vue-auction-countdown"#}
-                                {#deadline="{{ auction.expiryDate }}" number#}
+                        {#template="#vue-auction-countdown"#}
+                        {#deadline="{{ auction.expiryDate }}" number#}
                         {#>#}
                         {#</auction-countdown>#}
 
@@ -178,7 +178,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
