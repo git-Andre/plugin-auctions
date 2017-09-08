@@ -1,6 +1,6 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
-    <h1>test4</h1>
+    {#<h1>test4</h1>#}
     {#<p>2: ${ bidderList}</p>#}
 
     {#{% set bids = (bidderList | json_encode) %}#}
@@ -11,16 +11,20 @@
         <div class="m-y-2">
             <table class="table table-striped table-hover table-sm">
                 <tbody>
+                <tr>
+                    <th><h3>Bieter</h3></th>
+                    <th><h5>Gebots-Preis</h5></th>
+                    <th><h4>Gebots-Zeitpunkt</h4></th>
+                </tr>
                     <tr v-for="bid in bidderList">
-                        <td><h4>Bieter: ${ bid.bidderName } </h4></td>
-                        <td>Gebot: ${ bid.bidPrice | currency }</td>
-                        <td>Gebots Zeit: ${ bid.bidTimeStamp | date('D d. M Y H:i:s e') }</td>
+                        <td>${ bid.bidderName }</td>
+                        <td>${ bid.bidPrice | currency }</td>
+                        <td>${ bid.bidTimeStamp | date }</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 
 </script>
 
