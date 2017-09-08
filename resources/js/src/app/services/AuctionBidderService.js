@@ -1,5 +1,5 @@
-var ApiService = require( "services/ApiService" );
-const NotificationService  = require( "services/NotificationService" );
+var ApiService            = require( "services/ApiService" );
+const NotificationService = require( "services/NotificationService" );
 
 module.exports = (function ($) {
 
@@ -7,10 +7,10 @@ module.exports = (function ($) {
     var getPromise;
 
     return {
-        getBidderListLastEntry: getBidderListLastEntry,
+        getBidderList: getBidderList,
     };
 
-    function getBidderListLastEntry(auctionId) {
+    function getBidderList(auctionId, lastEntry = false) {
         return new Promise( (resolve, reject) => {
                                 if ( auctionId ) {
                                     ApiService.get( "/api/auction/" + auctionId )
@@ -18,7 +18,12 @@ module.exports = (function ($) {
                                                    NotificationService.error( "TEST" ).closeAfter( 3000 );
                                                    // setTimeout( () =>
                                                    //     resolve( response.bidderList[response.bidderList.length - 1] ), 1000 );
-                                                   resolve( response.bidderList[response.bidderList.length - 1] );
+                                                   if ( lastEntry ) {
+                                                       resolve( response.bidderList[response.bidderList.length - 1] );
+                                                   }
+                                                   else {
+                                                       resolve( response.bidderList );
+                                                   }
                                                },
                                                error => {
                                                    reject( error );
@@ -26,7 +31,7 @@ module.exports = (function ($) {
                                         )
                                 }
                                 else {
-                                    alert( 'Fehler mit id:: ' + auctionId );
+                                    alert( 'Fehler in id:: ' + auctionId );
                                 }
                             }
         )

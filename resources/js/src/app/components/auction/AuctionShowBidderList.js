@@ -1,11 +1,12 @@
 const NotificationService = require( "services/NotificationService" );
 const ResourceService     = require( "services/ResourceService" );
+const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-show-bidderlist", {
 
     props: [
         "template",
-        "bidderdata"
+        "auctionid"
     ],
 
     data() {
@@ -15,6 +16,21 @@ Vue.component( "auction-show-bidderlist", {
     },
 
     created() {
+        AuctionBidderService.getBidderList( this.auctionid ).then(
+            response => {
+
+                const bidderList = response;
+
+
+            },
+            error => {
+                alert( 'error4: ' + error.toString() );
+            }
+        );
+
+
+
+
         this.$options.template = this.template;
 
 

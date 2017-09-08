@@ -164,7 +164,8 @@
 
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
-                                bidderdata="{{ auction.bidderList | json_encode() }}"
+                                {#bidderdata="{{ auction.bidderList | json_encode() }}"#}
+                                auctionid="{{ auction.id }}"
                         >
                         </auction-show-bidderlist>
 

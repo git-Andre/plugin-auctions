@@ -29,18 +29,19 @@ Vue.component( "auction-bids", {
     methods: {
         addBid() {
 
-            var currentBid       = {
+            var currentBid          = {
                 'bidPrice': 1,
                 'customerMaxBid': 2.1,
                 'bidderName': "versand***Kunde1",
                 'customerId': 3
             };
             const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-            const newBidderName     = this.userdata.email.slice(1, 2)  + " ... ***";
+            const newBidderName     = this.userdata.email.slice( 1, 2 ) + " ... ***";
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             const newUserId         = parseInt( this.userdata.id );
+            const lastEntry         = true;
 
-            AuctionBidderService.getBidderListLastEntry( this.auctionid ).then(
+            AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
                 response => {
 
                     const bidderListLastEntry = response;
@@ -54,15 +55,15 @@ Vue.component( "auction-bids", {
 
                     if ( lastUserId == newUserId ) {
 
-                            currentBid.bidPrice       = lastBidPrice;
-                            currentBid.customerMaxBid = newCustomerMaxBid;
-                            currentBid.bidderName     = newBidderName;
-                            currentBid.customerId     = newUserId;
+                        currentBid.bidPrice       = lastBidPrice;
+                        currentBid.customerMaxBid = newCustomerMaxBid;
+                        currentBid.bidderName     = newBidderName;
+                        currentBid.customerId     = newUserId;
 
-                            // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                            alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
-                            // NotificationService.success(Translations.Template.itemWishListAdded)
-                        }
+                        // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+                        alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
+                        // NotificationService.success(Translations.Template.itemWishListAdded)
+                    }
                     else {
                         if ( newCustomerMaxBid > lastCustomerMaxBid ) {
 

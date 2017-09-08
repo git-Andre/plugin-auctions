@@ -38,8 +38,9 @@ Vue.component("auction-bids", {
             var newBidderName = this.userdata.email.slice(1, 2) + " ... ***";
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             var newUserId = parseInt(this.userdata.id);
+            var lastEntry = true;
 
-            AuctionBidderService.getBidderListLastEntry(this.auctionid).then(function (response) {
+            AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
 
                 var bidderListLastEntry = response;
 
@@ -126,10 +127,11 @@ Vue.component("auction-bids", {
 
 var NotificationService = require("services/NotificationService");
 var ResourceService = require("services/ResourceService");
+var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-show-bidderlist", {
 
-    props: ["template", "bidderdata"],
+    props: ["template", "auctionid"],
 
     data: function data() {
         return {
@@ -137,6 +139,13 @@ Vue.component("auction-show-bidderlist", {
         };
     },
     created: function created() {
+        AuctionBidderService.getBidderList(this.auctionid).then(function (response) {
+
+            var bidderList = response;
+        }, function (error) {
+            alert('error4: ' + error.toString());
+        });
+
         this.$options.template = this.template;
 
         this.bidderdata = JSON.parse(this.bidderdata);
@@ -159,7 +168,7 @@ Vue.component("auction-show-bidderlist", {
     methods: {}
 });
 
-},{"services/NotificationService":6,"services/ResourceService":7}],3:[function(require,module,exports){
+},{"services/AuctionBidderService":5,"services/NotificationService":6,"services/ResourceService":7}],3:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -372,22 +381,28 @@ module.exports = function ($) {
     var getPromise;
 
     return {
-        getBidderListLastEntry: getBidderListLastEntry
+        getBidderList: getBidderList
     };
 
-    function getBidderListLastEntry(auctionId) {
+    function getBidderList(auctionId) {
+        var lastEntry = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
         return new Promise(function (resolve, reject) {
             if (auctionId) {
                 ApiService.get("/api/auction/" + auctionId).then(function (response) {
                     NotificationService.error("TEST").closeAfter(3000);
                     // setTimeout( () =>
                     //     resolve( response.bidderList[response.bidderList.length - 1] ), 1000 );
-                    resolve(response.bidderList[response.bidderList.length - 1]);
+                    if (lastEntry) {
+                        resolve(response.bidderList[response.bidderList.length - 1]);
+                    } else {
+                        resolve(response.bidderList);
+                    }
                 }, function (error) {
                     reject(error);
                 });
             } else {
-                alert('Fehler mit id:: ' + auctionId);
+                alert('Fehler in id:: ' + auctionId);
             }
         });
     }
