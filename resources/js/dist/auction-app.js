@@ -39,6 +39,7 @@ Vue.component("auction-bids", {
             var newBidderName = this.userdata.email.substring(0, 2) + " *** " + this.userdata.email.substring(pos - 2, pos);
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             var newUserId = parseInt(this.userdata.id);
+
             var lastEntry = true;
 
             AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
@@ -391,14 +392,16 @@ module.exports = function ($) {
 
         return new Promise(function (resolve, reject) {
             if (auctionId) {
-                ApiService.get("/api/auction/" + auctionId).then(function (response) {
+                ApiService.get("/api/auction/" + auctionId).then(function (auction) {
                     NotificationService.error("TEST").closeAfter(3000);
                     // setTimeout( () =>
-                    //     resolve( response.bidderList[response.bidderList.length - 1] ), 1000 );
+                    //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
                     if (lastEntry) {
-                        resolve(response.bidderList[response.bidderList.length - 1]);
+                        resolve(auction.bidderList[auction.bidderList.length - 1]);
                     } else {
-                        resolve(response.bidderList);
+                        auction.bidderList[0].bidPrice = auction.currentPrice;
+
+                        resolve(auction.bidderList);
                     }
                 }, function (error) {
                     reject(error);

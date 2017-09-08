@@ -19,6 +19,11 @@
             "description" : "Schaffrath SingleItemPlug für Auktionen"
         },
         {
+            "key"         : "PluginAuctions\\Containers\\BidderListModalContainer",
+            "name"        : "BidderListModal",
+            "description" : "Schaffrath SingleItemPlug für Auktionen Bieter Liste Modal"
+        },
+        {
             "key"         : "PluginAuctions\\Containers\\VueComponentAuctionContainer",
             "name"        : "VueComponentAuction",
             "description" : "Auction Vue Component JS-Script"

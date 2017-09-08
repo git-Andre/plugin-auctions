@@ -1,0 +1,26 @@
+    {% set auction = auctions.auction.getAuctionForItemId(item.documents[0].data.item.id) %}
+
+    <!-- BidderList MODAL -->
+    <div id="shippingscosts-modal-wrapper">
+        <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                        </button>
+                        <h3 class="modal-title">
+                            Alle Gebote:</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <auction-show-bidderlist
+                                template="#vue-auction-show-bidderlist"
+                                auctionid="{{ auction.id }}"
+                        >
+                        </auction-show-bidderlist>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
