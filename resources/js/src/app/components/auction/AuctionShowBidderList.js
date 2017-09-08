@@ -11,7 +11,8 @@ Vue.component( "auction-show-bidderlist", {
 
     data() {
         return {
-            bidderList: []
+            bidderList: [],
+            expiryDate: 0
         };
     },
 
@@ -41,6 +42,14 @@ Vue.component( "auction-show-bidderlist", {
             },
             error => {
                 alert( 'error4: ' + error.toString() );
+            }
+        );
+        AuctionBidderService.getExpiryDate( this.auctionid ).then(
+            response => {
+                this.expiryDate = response;
+            },
+            error => {
+                alert( 'error5: ' + error.toString() );
             }
         );
     },

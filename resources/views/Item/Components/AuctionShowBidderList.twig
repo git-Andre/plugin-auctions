@@ -3,11 +3,11 @@
 
     <auction-countdown
             template="#vue-auction-countdown"
-            deadline="{{ auction.expiryDate }}" number
+            deadline="expiryDate" number
     >
     </auction-countdown>
 
-    {% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}
+    {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
     <div class="tab-pane" id="assessments-details" role="tabpanel">
 
@@ -15,14 +15,14 @@
             <table class="table table-striped table-hover table-sm">
                 <tbody>
                 <tr>
-                    <th class="column p-l-3"><i class="fa fa-user fa-2" aria-hidden="true"></i><h4>Bieter</h4></th>
-                    <th class="column text-right p-r-3"><i class="fa fa-money fa-2" aria-hidden="true"><h4>Gebots-Preis</h4></th>
-                    <th class="column text-right p-r-3"><h4><i class="fa fa-calendar-times-o" aria-hidden="true">Gebots-Zeitpunkt</h4></th>
+                    <th class="column p-l-3"><h4>Bieter </h4><i class="fa fa-user" aria-hidden="true"></i></th>
+                    <th class="column text-right p-r-3"><h4>Gebots-Preis </h4><i class="fa fa-money" aria-hidden="true"></i></th>
+                    <th class="column-right text-right p-r-3"><h4>Gebots-Zeitpunkt </h4><i class="fa fa-calendar-check-o" aria-hidden="true"></i></th>
                 </tr>
                 <tr v-for="bid in bidderList">
                     <td class="bid p-l-3">${ bid.bidderName }</td>
                     <td class="bid text-right p-r-3">${ bid.bidPrice | currency }</td>
-                    <td class="bid text-right p-r-3">${ bid.bidTimeStamp | date "LLLL" }</td>
+                    <td class="bid text-right p-r-3">${ bid.bidTimeStamp | date "ddd DD.MMM.YYYY HH:mm:ss zz" }</td>
                 </tr>
                 </tbody>
             </table>
@@ -36,7 +36,10 @@
     .bid {
         font-family: 'Abel', sans-serif;
     }
+    .column-right {
+        width: 44%;
+    }
     .column {
-        width: 33%;
+        width: 28%;
     }
 </style>

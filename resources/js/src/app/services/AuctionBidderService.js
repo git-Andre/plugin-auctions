@@ -8,6 +8,7 @@ module.exports = (function ($) {
 
     return {
         getBidderList: getBidderList,
+        getExpiryDate: getExpiryDate,
     };
 
     function getBidderList(auctionId, lastEntry = false) {
@@ -34,6 +35,24 @@ module.exports = (function ($) {
                                 }
                                 else {
                                     alert( 'Fehler in id:: ' + auctionId );
+                                }
+                            }
+        )
+    }
+    function getExpiryDate(auctionId) {
+        return new Promise( (resolve, reject) => {
+                                if ( auctionId ) {
+                                    ApiService.get( "/api/auction/" + auctionId )
+                                        .then( auction => {
+                                                    return auction.expiryDate;
+                                               },
+                                               error => {
+                                                   reject( error );
+                                               }
+                                        )
+                                }
+                                else {
+                                    alert( 'Fehler in id (Date):: ' + auctionId );
                                 }
                             }
         )
