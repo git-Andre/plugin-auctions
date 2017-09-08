@@ -31,7 +31,7 @@ Vue.component( "auction-show-bidderlist", {
 
                     bidView.bidderName   = bidderData[i].bidderName;
                     bidView.bidPrice     = bidderData[i].bidPrice;
-                    bidView.bidTimeStamp = bidderData[i].bidTimeStamp;
+                    bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
                     this.bidderList.push( bidView );
                 }

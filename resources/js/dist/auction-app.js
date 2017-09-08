@@ -35,7 +35,8 @@ Vue.component("auction-bids", {
                 'customerId': 3
             };
             var newCustomerMaxBid = this.toFloatTwoDecimal(this.maxCustomerBid);
-            var newBidderName = this.userdata.email.slice(1, 2) + " ... ***";
+            var pos = this.userdata.email.indexOf("@");
+            var newBidderName = this.userdata.email.substring(0, 2) + " *** " + this.userdata.email.substring(pos - 2, pos);
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             var newUserId = parseInt(this.userdata.id);
             var lastEntry = true;
@@ -150,14 +151,12 @@ Vue.component("auction-show-bidderlist", {
             // this.bidderdata = JSON.parse( this.bidderData );
             _this.bidderList = [];
             for (var i = bidderData.length; --i >= 0;) {
-                // var bidView = {};
-                var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
+                var bidView = {};
+                // var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
                 bidView.bidderName = bidderData[i].bidderName;
                 bidView.bidPrice = bidderData[i].bidPrice;
-                bidView.bidTimeStamp = bidderData[i].bidTimeStamp;
-
-                console.dir(bidView);
+                bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
                 _this.bidderList.push(bidView);
             }
