@@ -1,12 +1,23 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
 
-    <auction-countdown
-            template="#vue-auction-countdown"
-            deadline="expiryDate" number
-    >
-    </auction-countdown>
+    <div class="right" v-if="isAuctionPresent">
+        <auction-countdown
+                template="#vue-auction-countdown"
+                deadline="${expiryDate}" number
+        >
+        </auction-countdown>
+    </div>
 
+
+    <div class="bidder-list-info">
+        <h4>
+            ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length}<span class="small muted"> Gebote</span>
+        </h4>
+    </div>
+
+    <p class="muted small">Maximalgebote des jeweiligen Bieters werden nicht angezeigt... - Maximalgebote können
+                           jederzeit vor Ablauf der Auktion abgegeben werden!</p>
     {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
     <div class="tab-pane" id="assessments-details" role="tabpanel">
@@ -15,9 +26,12 @@
             <table class="table table-striped table-hover table-sm">
                 <tbody>
                 <tr>
-                    <th class="column p-l-3"><h4>Bieter </h4><i class="fa fa-user" aria-hidden="true"></i></th>
-                    <th class="column text-right p-r-3"><h4>Gebots-Preis </h4><i class="fa fa-money" aria-hidden="true"></i></th>
-                    <th class="column-right text-right p-r-3"><h4>Gebots-Zeitpunkt </h4><i class="fa fa-calendar-check-o" aria-hidden="true"></i></th>
+                    <th class="column p-l-3"><h4>Bieter </h4><span><i class="fa fa-user" aria-hidden="true"></i></span>
+                    </th>
+                    <th class="column text-right p-r-3"><h4>Gebots-Preis </h4><span><i class="fa fa-money"
+                                    aria-hidden="true"></i></span></th>
+                    <th class="column-right text-right p-r-3"><h4>Gebots-Zeitpunkt </h4>
+                        <span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span></th>
                 </tr>
                 <tr v-for="bid in bidderList">
                     <td class="bid p-l-3">${ bid.bidderName }</td>
@@ -36,9 +50,11 @@
     .bid {
         font-family: 'Abel', sans-serif;
     }
+
     .column-right {
         width: 44%;
     }
+
     .column {
         width: 28%;
     }

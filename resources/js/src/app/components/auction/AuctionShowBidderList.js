@@ -12,7 +12,8 @@ Vue.component( "auction-show-bidderlist", {
     data() {
         return {
             bidderList: [],
-            expiryDate: 0
+            expiryDate: 0,
+            isAuctionPresent
         };
     },
 
@@ -30,8 +31,8 @@ Vue.component( "auction-show-bidderlist", {
                     var bidView = {};
                     // var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
-                    bidView.bidderName   = bidderData[i].bidderName;
-                    bidView.bidPrice     = bidderData[i].bidPrice;
+                    bidView.bidderName = bidderData[i].bidderName;
+                    bidView.bidPrice   = bidderData[i].bidPrice;
 
                     // var date = new Date (bidderData[i].bidTimeStamp * 1000);
 
@@ -52,6 +53,8 @@ Vue.component( "auction-show-bidderlist", {
                 alert( 'error5: ' + error.toString() );
             }
         );
+
+        this.isAuctionPresent = Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate;
     },
 
     ready() {
