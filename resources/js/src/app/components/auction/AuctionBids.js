@@ -37,7 +37,9 @@ Vue.component( "auction-bids", {
             };
             const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
             const pos = this.userdata.email.indexOf("@");
-            const newBidderName     = this.userdata.email.substring( 0, 2 ) + " *** " + this.userdata.email.substring(pos-2, pos);
+            console.log( 'pos: ' + pos );
+            const newBidderName     = this.userdata.email.substr( 0, 2 ) + " *** " + this.userdata.email.substr(pos - 3, pos - 1);
+
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             const newUserId         = parseInt( this.userdata.id );
 
