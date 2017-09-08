@@ -1,8 +1,10 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
 
-    <p>1: {{ bidderList | json }}</p>
+    <h5>1: {{ bidderList | json_encode }}</h5>
+    <h6>1: {{ bidderList | json }}</h6>
     <p>2: ${ bidderList | json }</p>
+    <h4>2: ${ bidderList | json_encode }</h4>
 
     {#{% for bid in bidderList %}#}
     {#<h4>Bieter: ${ bid.bidderName }#}
