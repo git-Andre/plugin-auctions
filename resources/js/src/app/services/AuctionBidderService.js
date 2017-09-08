@@ -14,15 +14,17 @@ module.exports = (function ($) {
         return new Promise( (resolve, reject) => {
                                 if ( auctionId ) {
                                     ApiService.get( "/api/auction/" + auctionId )
-                                        .then( response => {
+                                        .then( auction => {
                                                    NotificationService.error( "TEST" ).closeAfter( 3000 );
                                                    // setTimeout( () =>
-                                                   //     resolve( response.bidderList[response.bidderList.length - 1] ), 1000 );
+                                                   //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
                                                    if ( lastEntry ) {
-                                                       resolve( response.bidderList[response.bidderList.length - 1] );
+                                                       resolve( auction.bidderList[auction.bidderList.length - 1] );
                                                    }
                                                    else {
-                                                       resolve( response.bidderList );
+                                                       auction.bidderList[0].bidPrice = auction.currentPrice;
+
+                                                       resolve( auction.bidderList );
                                                    }
                                                },
                                                error => {

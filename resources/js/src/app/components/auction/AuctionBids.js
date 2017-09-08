@@ -40,6 +40,7 @@ Vue.component( "auction-bids", {
             const newBidderName     = this.userdata.email.substring( 0, 2 ) + " *** " + this.userdata.email.substring(pos-2, pos);
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
             const newUserId         = parseInt( this.userdata.id );
+
             const lastEntry         = true;
 
             AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
