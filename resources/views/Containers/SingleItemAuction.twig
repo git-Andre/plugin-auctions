@@ -5,8 +5,8 @@
 {#{{ component( "PluginAuctions::Item.Components.AuctionBidderListOverlay" ) }}#}
 {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
 
-{#{% set itemId = itemData.item.id %}#}
-{#{% set auction = auctions.auction.getAuctionForItemId(itemId) %}#}
+{% set itemId = itemData.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
 {#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
