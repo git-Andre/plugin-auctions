@@ -1,13 +1,13 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
 
-    <div class="right" v-if="isAuctionPresent">
-        <auction-countdown
-                template="#vue-auction-countdown"
-                deadline="${expiryDate}" number
-        >
-        </auction-countdown>
-    </div>
+    {#<div class="right" v-if="isAuctionPresent">#}
+        {#<auction-countdown#}
+                {#template="#vue-auction-countdown"#}
+                {#deadline="${expiryDate}" number#}
+        {#>#}
+        {#</auction-countdown>#}
+    {#</div>#}
 
 
     <div class="bidder-list-info">
@@ -16,8 +16,8 @@
         </h4>
     </div>
 
-    <p class="muted small">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und auch geändert werden!<br>
-                           Die Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
+    <p class="muted small">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben werden!<br>
+                           Maximalgebote des jeweiligen Bieters werden nicht angezeigt...</p>
     {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
     <div class="tab-pane" id="assessments-details" role="tabpanel">

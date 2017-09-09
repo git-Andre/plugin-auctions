@@ -6,7 +6,8 @@ Vue.component( "auction-show-bidderlist", {
 
     props: [
         "template",
-        "auctionid"
+        "auctionid",
+        "differentBidders"
     ],
 
     data() {
@@ -24,22 +25,28 @@ Vue.component( "auction-show-bidderlist", {
         AuctionBidderService.getBidderList( this.auctionid ).then(
             response => {
 
-                const bidderData = response;
+                const bidderData     = response;
+                var differentBidders = [];
 
-                // this.bidderdata = JSON.parse( this.bidderData );
-                this.bidderList = [];
+                this.bidderList      = [];
                 for (var i = bidderData.length; --i >= 0;) {
                     var bidView = {};
-                    // var bidView = { "bidderName": "Name", "bidPrice": 1.1, "bidTimeStamp": 152 };
 
-                    bidView.bidderName = bidderData[i].bidderName;
-                    bidView.bidPrice   = bidderData[i].bidPrice;
+                    bidView.bidderName   = bidderData[i].bidderName;
+                    bidView.bidPrice     = bidderData[i].bidPrice;
                     bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
-                    this.bidderList.push( bidView );
-
-
+                    // this.bidderList.push( bidView );
+                    //
+                    // const currentUserId = bidderData[i].customerId;
+                    // for (var j = 0; j++ >= differentBidders.length;) {
+                    //     if (differentBidders[j] == currentUserId ) {
+                    //         break
+                    //     }
+                    //     differentBidders.push(currentUserId);
+                    // }
                 }
+                this.bidders = differentBidders.length;
             },
             error => {
                 alert( 'error4: ' + error.toString() );
