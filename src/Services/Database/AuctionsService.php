@@ -136,6 +136,7 @@
 
                 $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
                 $auction -> bidderList[0] -> bidPrice = $auction -> currentPrice;
+                $auction -> bidderList[0] -> customerMaxBid = $auction -> currentPrice - 1;
 
                 $auction -> updatedAt = $auction -> createdAt;
 

@@ -165,22 +165,10 @@ Vue.component("auction-show-bidderlist", {
 
                 var currentUserId = bidderData[i].customerId;
 
-                // var bidderCounter = differentBidders.length;
-                console.log('currentUserId out: ' + currentUserId);
-                // console.log( 'bidderCounter: ' + bidderCounter );
-
-                // for (var j = 0; j < bidderCounter; j++) {
-                // if ( differentBidders[j + 1] === currentUserId || currentUserId === 0 ) {
-
-                if (differentBidders.indexOf(currentUserId) >= 0) {
-
-                    console.log('currentUserId INNER IF: ' + currentUserId);
-                } else {
+                if (differentBidders.indexOf(currentUserId) < 0) {
                     differentBidders.push(currentUserId);
-                    console.log('differentBidders.length NACH PUSH: ' + differentBidders.length);
                 }
             }
-            console.dir(differentBidders);
             _this.bidders = differentBidders.length - 1;
         }, function (error) {
             alert('error4: ' + error.toString());
