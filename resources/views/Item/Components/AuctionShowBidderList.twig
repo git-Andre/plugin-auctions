@@ -2,17 +2,17 @@
 
     <p class="muted small">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben werden!<br>
                            Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
-    <div class="d-flex justify-content-between">
+    <div class="row container">
 
-        <div class="align-self-end">
+        <div class="col-md-5 align-text-bottom">
             <h4>
                 ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
             </h4>
         </div>
-        <div v-if="isAuctionPresent">
+        <div class="col-md-7" v-if="isAuctionPresent">
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline=${expiryDate} number
+                    :deadline="${expiryDate}" number
             >
             </auction-countdown>
         </div>
