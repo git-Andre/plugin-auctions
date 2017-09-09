@@ -14,6 +14,8 @@
 
 {% if ( auction ) %}
 
+    <resource name="deadline" :data="{{ auction.expiryDate }}"></resource>
+
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
