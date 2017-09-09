@@ -135,6 +135,7 @@
                 $auction -> createdAt = time();
 
                 $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
+                $auction -> bidderList[0] -> bidPrice = $auction -> currentPrice;
 
                 $auction -> updatedAt = $auction -> createdAt;
 

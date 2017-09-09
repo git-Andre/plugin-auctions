@@ -39,11 +39,14 @@ Vue.component( "auction-show-bidderlist", {
                         this.bidderList.push( bidView );
 
                         const currentUserId = bidderData[i].customerId;
-                        for (var j = 0; j++ >= differentBidders.length;) {
+
+                            console.log( 'currentUserId: ' + currentUserId );
+                        for (var j = 0; j++ < differentBidders.length;) {
                             if ( differentBidders[j] == currentUserId ) {
                                 break
                             }
                             differentBidders.push( currentUserId );
+                            console.dir(differentBidders);
                         }
                     }
                     this.bidders = differentBidders.length;
