@@ -134,12 +134,12 @@ var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-show-bidderlist", {
 
-    props: ["template", "auctionid", "differentBidders"],
+    props: ["template", "auctionid", "differentBidders", "expiryDate"],
 
     data: function data() {
         return {
             bidderList: [],
-            expiryDate: 0,
+            // expiryDate: 0,
             isAuctionPresent: false,
             bidders: 0
         };

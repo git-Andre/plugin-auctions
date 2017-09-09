@@ -5,7 +5,7 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-<resource name="currentAuctionExpiryDate" :data="{{ auction.expiryDate | json_encode() }}"></resource>
+<resource name="deadline" :data="{{ auction.expiryDate | json_encode() }}"></resource>
 
 <!-- BidderList MODAL -->
     <div id="shippingscosts-modal-wrapper">
