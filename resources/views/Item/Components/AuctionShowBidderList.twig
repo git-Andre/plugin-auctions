@@ -9,16 +9,14 @@
         {#</auction-countdown>#}
     {#</div>#}
 
-
-    <div class="bidder-list-info">
-        <h4>
-            ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length}<span class="small muted"> Gebote</span>
-        </h4>
-    </div>
+    {#<div class="bidder-list-info">#}
+        {#<h4>#}
+            {#${bidders}<span class="small muted"> Bieter, </span>${bidderList.length}<span class="small muted"> Gebote</span>#}
+        {#</h4>#}
+    {#</div>#}
 
     <p class="muted small">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben werden!<br>
                            Maximalgebote des jeweiligen Bieters werden nicht angezeigt...</p>
-    {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
     <div class="tab-pane" id="assessments-details" role="tabpanel">
 

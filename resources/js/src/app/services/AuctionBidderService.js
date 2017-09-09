@@ -8,7 +8,7 @@ module.exports = (function ($) {
 
     return {
         getBidderList: getBidderList,
-        getExpiryDate: getExpiryDate,
+        getExpiryDate: getExpiryDate
     };
 
     function getBidderList(auctionId, lastEntry = false) {
@@ -39,12 +39,14 @@ module.exports = (function ($) {
                             }
         )
     }
+
     function getExpiryDate(auctionId) {
         return new Promise( (resolve, reject) => {
                                 if ( auctionId ) {
+
                                     ApiService.get( "/api/auction/" + auctionId )
                                         .then( auction => {
-                                                    return auction.expiryDate;
+                                                   resolve( auction.expiryDate);
                                                },
                                                error => {
                                                    reject( error );

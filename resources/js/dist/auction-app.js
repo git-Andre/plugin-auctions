@@ -150,7 +150,6 @@ Vue.component("auction-show-bidderlist", {
         this.$options.template = this.template;
 
         AuctionBidderService.getBidderList(this.auctionid).then(function (response) {
-
             var bidderData = response;
             var differentBidders = [];
 
@@ -162,14 +161,14 @@ Vue.component("auction-show-bidderlist", {
                 bidView.bidPrice = bidderData[i].bidPrice;
                 bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
-                // this.bidderList.push( bidView );
-                //
+                _this.bidderList.push(bidView);
+
                 // const currentUserId = bidderData[i].customerId;
                 // for (var j = 0; j++ >= differentBidders.length;) {
-                //     if (differentBidders[j] == currentUserId ) {
+                //     if ( differentBidders[j] == currentUserId ) {
                 //         break
                 //     }
-                //     differentBidders.push(currentUserId);
+                //     differentBidders.push( currentUserId );
                 // }
             }
             _this.bidders = differentBidders.length;
@@ -431,11 +430,13 @@ module.exports = function ($) {
             }
         });
     }
+
     function getExpiryDate(auctionId) {
         return new Promise(function (resolve, reject) {
             if (auctionId) {
+
                 ApiService.get("/api/auction/" + auctionId).then(function (auction) {
-                    return auction.expiryDate;
+                    resolve(auction.expiryDate);
                 }, function (error) {
                     reject(error);
                 });
