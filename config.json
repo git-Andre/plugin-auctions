@@ -2,7 +2,7 @@
   {
     "tab"       : "Global",
     "key"       : "global.liveAuctionCategoryId",
-    "label"     : "Category to present an auction",
+    "label"     : "Category to provide an auction",
     "type"      : "category_select"
   }
 ]

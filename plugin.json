@@ -1,7 +1,10 @@
 {
   "version"          : "0.9.0",
   "name"             : "PluginAuctions",
-  //    "marketplaceName"   : {"de": "PluginAuctions","en": "PluginAuctions"},
+  "marketplaceName"  : {
+    "de" : "PluginAuctions",
+    "en" : "PluginAuctions"
+  },
   "description"      : "This plugin provides auctions in Ceres Webshops",
   "author"           : "Andre Oelschlaegel",
   "license"          : "AGPL-3.0",
@@ -21,13 +24,14 @@
     "Auction",
     "ceres"
   ],
-  "type"             : "general",
+  "type"             : "theme",
   "require"          : [
     "IO",
     "Ceres"
   ],
   "namespace"        : "PluginAuctions",
   "serviceProvider"  : "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
+  "javaScriptFiles"  : [],
   "runOnBuild"       : [
     "PluginAuctions\\Migrations\\AuctionTableMigration_0_8"
   ],
