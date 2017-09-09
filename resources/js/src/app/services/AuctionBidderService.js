@@ -24,6 +24,7 @@ module.exports = (function ($) {
                                                    }
                                                    else {
                                                        auction.bidderList[0].bidPrice = auction.currentPrice;
+                                                       auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                                                        resolve( auction.bidderList );
                                                    }
