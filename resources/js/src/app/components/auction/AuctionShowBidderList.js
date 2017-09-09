@@ -7,7 +7,8 @@ Vue.component( "auction-show-bidderlist", {
     props: [
         "template",
         "auctionid",
-        "differentBidders"
+        "differentBidders",
+        "expiryDate"
     ],
 
     data() {
@@ -50,24 +51,24 @@ Vue.component( "auction-show-bidderlist", {
                     alert( 'error4: ' + error.toString() );
                 }
             );
-        // AuctionBidderService.getExpiryDate( this.auctionid )
-        //     .then(
-        //         response => {
-        //
-        //             this.expiryDate = response;
-        //
-        //             if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
-        //                 this.isAuctionPresent = true;
-        //             }
-        //             else {
-        //                 this.isAuctionPresent = false;
-        //             }
-        //             ;
-        //         },
-        //         error => {
-        //             alert( 'error5: ' + error.toString() );
-        //         }
-        //     );
+        AuctionBidderService.getExpiryDate( this.auctionid )
+            .then(
+                response => {
+
+                    this.expiryDate = response;
+
+                    if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
+                        this.isAuctionPresent = true;
+                    }
+                    else {
+                        this.isAuctionPresent = false;
+                    }
+                    ;
+                },
+                error => {
+                    alert( 'error5: ' + error.toString() );
+                }
+            );
     },
 
     ready() {
