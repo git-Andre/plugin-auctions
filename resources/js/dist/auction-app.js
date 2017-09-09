@@ -163,25 +163,25 @@ Vue.component("auction-show-bidderlist", {
 
                 _this.bidderList.push(bidView);
 
-                // const currentUserId = bidderData[i].customerId;
-                // for (var j = 0; j++ >= differentBidders.length;) {
-                //     if ( differentBidders[j] == currentUserId ) {
-                //         break
-                //     }
-                //     differentBidders.push( currentUserId );
-                // }
+                var currentUserId = bidderData[i].customerId;
+                for (var j = 0; j++ >= differentBidders.length;) {
+                    if (differentBidders[j] == currentUserId) {
+                        break;
+                    }
+                    differentBidders.push(currentUserId);
+                }
             }
             _this.bidders = differentBidders.length;
         }, function (error) {
             alert('error4: ' + error.toString());
         });
         AuctionBidderService.getExpiryDate(this.auctionid).then(function (response) {
+
             _this.expiryDate = response;
+            // this.isAuctionPresent = Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate;
         }, function (error) {
             alert('error5: ' + error.toString());
         });
-
-        this.isAuctionPresent = Math.trunc(new Date().getTime() / 1000) < this.expiryDate;
     },
     ready: function ready() {},
 
@@ -419,6 +419,7 @@ module.exports = function ($) {
                         resolve(auction.bidderList[auction.bidderList.length - 1]);
                     } else {
                         auction.bidderList[0].bidPrice = auction.currentPrice;
+                        auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                         resolve(auction.bidderList);
                     }
