@@ -1,39 +1,51 @@
 {
-    "version"          : "0.9.0",
-    "name"             : "PluginAuctions",
-    "marketplaceName"   : {"de": "PluginAuctions","en": "PluginAuctions"},
-    "description"       : "This plugin provides auctions in Ceres Webshops",
-    "author"           : "Andre Oelschlaegel",
-    "license"          : "AGPL-3.0",
-    "pluginIcon"        : "icon_plugin_xs.png",
-    "price"            : "0.00",
-    "shortDescription" : "Auktionen für Plentymarkets Ceres Webshops",
-    "authorIcon"        : "icon_author_xs.png",
-    "email"             : "web@andre-oelschlaegel.de",
-    "categories"       : "[]",
-    "keywords"          : ["plentymarkets", "plugins", "Auction", "ceres"],
-    "type"             : "template",
-    "require"           : ["IO", "Ceres"],
-    "namespace"        : "PluginAuctions",
-    "serviceProvider"  : "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
-    "runOnBuild"       : [
-        "PluginAuctions\\Migrations\\AuctionTableMigration_0_8"
-    ],
-    "dataProviders"    : [
-        {
-            "key"         : "PluginAuctions\\Containers\\SingleItemAuctionContainer",
-            "name"        : "SingleItemAuction",
-            "description" : "Schaffrath SingleItemPlug für Auktionen"
-        },
-        {
-            "key"         : "PluginAuctions\\Containers\\BidderListModalContainer",
-            "name"        : "BidderListModal",
-            "description" : "Schaffrath SingleItemPlug für Auktionen Bieter Liste Modal"
-        },
-        {
-            "key"         : "PluginAuctions\\Containers\\VueComponentAuctionContainer",
-            "name"        : "VueComponentAuction",
-            "description" : "Auction Vue Component JS-Script"
-        }
-    ]
+  "version"          : "0.9.0",
+  "name"             : "PluginAuctions",
+  //    "marketplaceName"   : {"de": "PluginAuctions","en": "PluginAuctions"},
+  "description"      : "This plugin provides auctions in Ceres Webshops",
+  "author"           : "Andre Oelschlaegel",
+  "license"          : "AGPL-3.0",
+  "pluginIcon"       : "icon_plugin_xs.png",
+  "price"            : "0.00",
+  "shortDescription" : {
+    "de" : "Auktionen für Plentymarkets Ceres Webshops",
+    "en" : "Auctions for Plentymarkets Ceres Webshops"
+  },
+  "authorIcon"       : "icon_author_xs.png",
+  "email"            : "web@andre-oelschlaegel.de",
+  "phone"            : "",
+  "categories"       : "[3518]",
+  "keywords"         : [
+    "plentymarkets",
+    "plugins",
+    "Auction",
+    "ceres"
+  ],
+  "type"             : "general",
+  "require"          : [
+    "IO",
+    "Ceres"
+  ],
+  "namespace"        : "PluginAuctions",
+  "serviceProvider"  : "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
+  "runOnBuild"       : [
+    "PluginAuctions\\Migrations\\AuctionTableMigration_0_8"
+  ],
+  "dataProviders"    : [
+    {
+      "key"         : "PluginAuctions\\Containers\\SingleItemAuctionContainer",
+      "name"        : "SingleItemAuction",
+      "description" : "Schaffrath SingleItemPlug für Auktionen"
+    },
+    {
+      "key"         : "PluginAuctions\\Containers\\BidderListModalContainer",
+      "name"        : "BidderListModal",
+      "description" : "Schaffrath SingleItemPlug für Auktionen Bieter Liste Modal"
+    },
+    {
+      "key"         : "PluginAuctions\\Containers\\VueComponentAuctionContainer",
+      "name"        : "VueComponentAuction",
+      "description" : "Auction Vue Component JS-Script"
+    }
+  ]
 }
