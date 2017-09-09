@@ -36,13 +36,14 @@ Vue.component( "auction-bids", {
                 'customerId': 3
             };
             const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-            const pos = this.userdata.email.indexOf("@");
-            const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice(pos - 2, pos);
+            const pos               = this.userdata.email.indexOf( "@" );
+            const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " +
+                this.userdata.email.slice( pos - 2, pos );
 
             // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
-            const newUserId         = parseInt( this.userdata.id );
+            const newUserId = parseInt( this.userdata.id );
 
-            const lastEntry         = true;
+            const lastEntry = true;
 
             AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
                 response => {
@@ -69,8 +70,12 @@ Vue.component( "auction-bids", {
                     }
                     else {
                         if ( newCustomerMaxBid > lastCustomerMaxBid ) {
-
-                            currentBid.bidPrice       = lastCustomerMaxBid + 1;
+                            if ( newCustomerMaxBid > lastCustomerMaxBid + 1 ) {
+                                currentBid.bidPrice = lastCustomerMaxBid + 1;
+                            }
+                            else {
+                                currentBid.bidPrice = lastCustomerMaxBid;
+                            }
                             currentBid.customerMaxBid = newCustomerMaxBid;
                             currentBid.bidderName     = newBidderName;
                             currentBid.customerId     = newUserId;

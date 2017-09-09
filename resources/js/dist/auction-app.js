@@ -66,8 +66,11 @@ Vue.component("auction-bids", {
                     // NotificationService.success(Translations.Template.itemWishListAdded)
                 } else {
                     if (newCustomerMaxBid > lastCustomerMaxBid) {
-
-                        currentBid.bidPrice = lastCustomerMaxBid + 1;
+                        if (newCustomerMaxBid > lastCustomerMaxBid + 1) {
+                            currentBid.bidPrice = lastCustomerMaxBid + 1;
+                        } else {
+                            currentBid.bidPrice = lastCustomerMaxBid;
+                        }
                         currentBid.customerMaxBid = newCustomerMaxBid;
                         currentBid.bidderName = newBidderName;
                         currentBid.customerId = newUserId;

@@ -1,16 +1,6 @@
 
-{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
-{#{{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}#}
-{#{{ component( "PluginAuctions::Item.Components.Countdown" ) }}#}
-{#{{ component( "PluginAuctions::Item.Components.AuctionBidderListOverlay" ) }}#}
-{#{{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}#}
-
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-
-{#{% include "PluginAuctions::VarDump" with { 'testDescription': 'item', 'dumpData': itemData } %}#}
-{#{% include "PluginAuctions::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}#}
-    {#<resource name="currentAuctionExpiryDate" :data="{{ auction.expiryDate | json_encode() }}"></resource>#}
 
 {% if ( auction ) %}
 
