@@ -5,11 +5,14 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
+
 <resource name="deadline" :data="{{ auction.expiryDate }}"></resource>
 
 <!-- BidderList MODAL -->
-    <div id="shippingscosts-modal-wrapper">
-        <div class="modal fade" id="bidderlist-modal-wrapper" tabindex="-1" role="dialog">
+    <div id="bidderlist-modal-wrapper">
+        <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

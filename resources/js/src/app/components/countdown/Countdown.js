@@ -6,7 +6,7 @@ Vue.component( "auction-countdown", {
     },
     props: [
         "template",
-        "deadline",
+        "deadline"
         // "stop"
     ],
     data() {
@@ -17,6 +17,7 @@ Vue.component( "auction-countdown", {
     },
     created() {
         this.$options.template = this.template;
+        this.deadline = 0;
     },
     methods: {
         twoDigits(value) {

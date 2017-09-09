@@ -205,7 +205,9 @@ Vue.component("auction-countdown", {
         }, 1000);
     },
 
-    props: ["template", "deadline"],
+    props: ["template", "deadline"
+    // "stop"
+    ],
     data: function data() {
         return {
             now: Math.trunc(new Date().getTime() / 1000),
@@ -214,6 +216,7 @@ Vue.component("auction-countdown", {
     },
     created: function created() {
         this.$options.template = this.template;
+        this.deadline = 0;
     },
 
     methods: {
