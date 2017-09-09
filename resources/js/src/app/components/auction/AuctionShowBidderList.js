@@ -26,7 +26,7 @@ Vue.component( "auction-show-bidderlist", {
             .then(
                 response => {
                     const bidderData     = response;
-                    var differentBidders = [];
+                    var differentBidders = [0];
 
                     this.bidderList = [];
                     for (var i = bidderData.length; --i >= 0;) {
@@ -40,16 +40,11 @@ Vue.component( "auction-show-bidderlist", {
 
                         const currentUserId = bidderData[i].customerId;
 
-                            console.log( 'currentUserId: ' + currentUserId );
-                        for (var j = 0; j++ < differentBidders.length;) {
-                            if ( differentBidders[j] == currentUserId ) {
-                                break
-                            }
+                        if ( differentBidders.indexOf( currentUserId ) < 0 ) {
                             differentBidders.push( currentUserId );
-                            console.dir(differentBidders);
                         }
                     }
-                    this.bidders = differentBidders.length;
+                    this.bidders = differentBidders.length - 1;
                 },
                 error => {
                     alert( 'error4: ' + error.toString() );
@@ -60,19 +55,27 @@ Vue.component( "auction-show-bidderlist", {
                 response => {
 
                     this.expiryDate = response;
-                    // this.isAuctionPresent = Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate;
+
+                    if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
+                        this.isAuctionPresent = true;
+                    }
+                    else {
+                        this.isAuctionPresent = false;
+                    }
+                    ;
                 },
                 error => {
                     alert( 'error5: ' + error.toString() );
                 }
             );
-
     },
 
     ready() {
 
-    },
+    }
+    ,
 
     methods:
         {}
-} );
+} )
+;

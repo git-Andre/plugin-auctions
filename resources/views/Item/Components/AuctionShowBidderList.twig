@@ -1,17 +1,18 @@
 <script type="x/template" id="vue-auction-show-bidderlist">
 
 
-    <div class="right" v-if="isAuctionPresent">
+    <div class="align-right" v-if="isAuctionPresent">
+        <p>${expiryDate}</p>
         <auction-countdown
                 template="#vue-auction-countdown"
-                deadline="${expiryDate}" number
+                deadline="expiryDate" number
         >
         </auction-countdown>
     </div>
 
     <div class="bidder-list-info">
         <h4>
-            ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebote</span>
+            ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
         </h4>
     </div>
 

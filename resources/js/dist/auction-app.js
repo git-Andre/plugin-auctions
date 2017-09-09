@@ -151,7 +151,7 @@ Vue.component("auction-show-bidderlist", {
 
         AuctionBidderService.getBidderList(this.auctionid).then(function (response) {
             var bidderData = response;
-            var differentBidders = [];
+            var differentBidders = [0];
 
             _this.bidderList = [];
             for (var i = bidderData.length; --i >= 0;) {
@@ -165,23 +165,36 @@ Vue.component("auction-show-bidderlist", {
 
                 var currentUserId = bidderData[i].customerId;
 
-                console.log('currentUserId: ' + currentUserId);
-                for (var j = 0; j++ < differentBidders.length;) {
-                    if (differentBidders[j] == currentUserId) {
-                        break;
-                    }
+                // var bidderCounter = differentBidders.length;
+                console.log('currentUserId out: ' + currentUserId);
+                // console.log( 'bidderCounter: ' + bidderCounter );
+
+                // for (var j = 0; j < bidderCounter; j++) {
+                // if ( differentBidders[j + 1] === currentUserId || currentUserId === 0 ) {
+
+                if (differentBidders.indexOf(currentUserId) >= 0) {
+
+                    console.log('currentUserId INNER IF: ' + currentUserId);
+                } else {
                     differentBidders.push(currentUserId);
-                    console.dir(differentBidders);
+                    console.log('differentBidders.length NACH PUSH: ' + differentBidders.length);
                 }
             }
-            _this.bidders = differentBidders.length;
+            console.dir(differentBidders);
+            _this.bidders = differentBidders.length - 1;
         }, function (error) {
             alert('error4: ' + error.toString());
         });
         AuctionBidderService.getExpiryDate(this.auctionid).then(function (response) {
 
             _this.expiryDate = response;
-            // this.isAuctionPresent = Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate;
+
+            if (Math.trunc(new Date().getTime() / 1000) < _this.expiryDate) {
+                _this.isAuctionPresent = true;
+            } else {
+                _this.isAuctionPresent = false;
+            }
+            ;
         }, function (error) {
             alert('error5: ' + error.toString());
         });
