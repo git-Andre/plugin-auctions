@@ -2,26 +2,18 @@
 
     <div class="row container">
 
-        <div class="col-md-6 p-t-1">
+        <div class="col-md-5 p-t-1">
             <h4>
                 ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
             </h4>
         </div>
-        <div class="col-md-6" v-if="isAuctionPresent">
+        <div class="col-md-7" v-if="isAuctionPresent">
             <auction-countdown
             template="#vue-auction-countdown"
                     v-resource-push:deadline
                     resource="deadline"
-
-                    {#deadline="currentAuctionExpiryDate" number#}
             >
             </auction-countdown>
-
-            {#<auction-countdown#}
-                    {#template="#vue-auction-countdown"#}
-                    {#deadline="${expiryDate}" number#}
-            {#>#}
-            {#</auction-countdown>#}
         </div>
     </div>
     <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben werden!<br>

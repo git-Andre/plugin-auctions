@@ -7,7 +7,6 @@ Vue.component( "auction-show-bidderlist", {
     props: [
         "template",
         "auctionid",
-        "differentBidders",
         "expiryDate"
     ],
 

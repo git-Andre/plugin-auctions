@@ -7,7 +7,6 @@ Vue.component( "auction-countdown", {
     props: [
         "template",
         "deadline",
-        "date"
         // "stop"
     ],
     data() {
@@ -18,8 +17,6 @@ Vue.component( "auction-countdown", {
     },
     created() {
         this.$options.template = this.template;
-        this.date              = this.deadline;
-        /* String to Number ??? */
     },
     methods: {
         twoDigits(value) {
@@ -35,21 +32,21 @@ Vue.component( "auction-countdown", {
     },
     computed: {
         seconds() {
-            return this.twoDigits( (this.date - this.now) % 60 );
+            return this.twoDigits( (this.deadline - this.now) % 60 );
         },
         minutes() {
-            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 ) % 60 );
+            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 ) % 60 );
         },
         hours() {
-            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 / 60 ) % 24 );
+            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 ) % 24 );
         },
         days() {
-            return this.twoDigits( Math.trunc( (this.date - this.now) / 60 / 60 / 24 ) );
+            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 / 24 ) );
         },
     },
     watch: {
         now(value) {
-            this.diff = this.date - this.now;
+            this.diff = this.deadline - this.now;
             if ( this.diff <= 0) {
             // if ( this.diff <= 0 || this.stop ) {
                 this.diff = 0;

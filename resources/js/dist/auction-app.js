@@ -134,7 +134,7 @@ var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-show-bidderlist", {
 
-    props: ["template", "auctionid", "differentBidders", "expiryDate"],
+    props: ["template", "auctionid", "expiryDate"],
 
     data: function data() {
         return {
@@ -205,7 +205,7 @@ Vue.component("auction-countdown", {
         }, 1000);
     },
 
-    props: ["template", "deadline", "date"],
+    props: ["template", "deadline"],
     data: function data() {
         return {
             now: Math.trunc(new Date().getTime() / 1000),
@@ -214,8 +214,6 @@ Vue.component("auction-countdown", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.date = this.deadline;
-        /* String to Number ??? */
     },
 
     methods: {
@@ -232,21 +230,21 @@ Vue.component("auction-countdown", {
     },
     computed: {
         seconds: function seconds() {
-            return this.twoDigits((this.date - this.now) % 60);
+            return this.twoDigits((this.deadline - this.now) % 60);
         },
         minutes: function minutes() {
-            return this.twoDigits(Math.trunc((this.date - this.now) / 60) % 60);
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60) % 60);
         },
         hours: function hours() {
-            return this.twoDigits(Math.trunc((this.date - this.now) / 60 / 60) % 24);
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60) % 24);
         },
         days: function days() {
-            return this.twoDigits(Math.trunc((this.date - this.now) / 60 / 60 / 24));
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60 / 24));
         }
     },
     watch: {
         now: function now(value) {
-            this.diff = this.date - this.now;
+            this.diff = this.deadline - this.now;
             if (this.diff <= 0) {
                 // if ( this.diff <= 0 || this.stop ) {
                 this.diff = 0;
