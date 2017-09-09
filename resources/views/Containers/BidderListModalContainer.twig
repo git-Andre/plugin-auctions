@@ -5,9 +5,6 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-{# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
-
 <!-- BidderList MODAL -->
     <div id="bidderlist-modal-wrapper">
         <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
