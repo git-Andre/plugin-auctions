@@ -90,7 +90,9 @@
             <div class="row container">
                 <auction-countdown
                         template="#vue-auction-countdown"
-                        deadline="{{ auction.expiryDate }}" number>
+                        v-resource-push:deadline
+                        resource="deadline"
+                >
                 </auction-countdown>
             </div>
             <div class="row container m-t-0 m-b-3">
