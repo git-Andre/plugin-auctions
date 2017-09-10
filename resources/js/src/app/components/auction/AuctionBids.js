@@ -74,7 +74,7 @@ Vue.component( "auction-bids", {
                                 currentBid.bidPrice = lastCustomerMaxBid + 1;
                             }
                             else {
-                                currentBid.bidPrice = lastCustomerMaxBid;
+                                currentBid.bidPrice = lastCustomerMaxBid + 0.1;
                             }
                             currentBid.customerMaxBid = newCustomerMaxBid;
                             currentBid.bidderName     = newBidderName;
