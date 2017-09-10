@@ -1,4 +1,3 @@
-
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
@@ -24,8 +23,8 @@
                 <dd>{{ auction.auctionDuration }} Tage</dd>
                 <dt>End Datum:</dt>
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-                <dt>Artikel ID:</dt>
-                <dd>{{ auction.itemId }}</dd>
+                {#<dt>Artikel ID:</dt>#}
+                {#<dd>{{ auction.itemId }}</dd>#}
                 <dt>Versand:</dt>
                 <dd>kostenlos.</dd>
             </dl>
@@ -60,8 +59,8 @@
                     <dd>{{ auction.auctionDuration }} Tage</dd>
                     <dt>End Datum:</dt>
                     <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
-                    <dt>Artikel ID:</dt>
-                    <dd>{{ auction.itemId }}</dd>
+                    {#<dt>Artikel ID:</dt>#}
+                    {#<dd>{{ auction.itemId }}</dd>#}
                     <dt>Versand:</dt>
                     <dd>kostenlos</dd>
 
@@ -115,28 +114,20 @@
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
                     <dd> {{ bidderListLength - 1 }}
-                        <span>    <a
-                                    data-toggle="modal"
-                                    href="#bidderlist"
-                            >
-                                         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                        <span>    <a data-toggle="modal"
+                                    href="#bidderlist">
+                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                                      </a>
                         </span>
                     </dd>
                 {% endif %}
 
-                <dt>Artikel ID:</dt>
-                <dd>{{ auction.itemId }}</dd>
+                {#<dt>Artikel ID:</dt>#}
+                {#<dd>{{ auction.itemId }}</dd>#}
             </dl>
 
         {% endif %}
     </div>
-
-
-
-
-
-
     <!-- ./BidderList MODAL -->
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
