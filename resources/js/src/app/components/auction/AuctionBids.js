@@ -65,16 +65,15 @@ Vue.component( "auction-bids", {
                         currentBid.customerId     = newUserId;
 
                         // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                        alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
-                        // NotificationService.success(Translations.Template.itemWishListAdded)
+                        // alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
                     }
                     else {
                         if ( newCustomerMaxBid > lastCustomerMaxBid ) {
-                            if ( newCustomerMaxBid > lastCustomerMaxBid + 1 ) {
-                                currentBid.bidPrice = lastCustomerMaxBid + 1;
+                            if ( newCustomerMaxBid < lastCustomerMaxBid + 1 ) {
+                                currentBid.bidPrice = newCustomerMaxBid;
                             }
                             else {
-                                currentBid.bidPrice = lastCustomerMaxBid + 0.1;
+                                currentBid.bidPrice = lastCustomerMaxBid + 1;
                             }
                             currentBid.customerMaxBid = newCustomerMaxBid;
                             currentBid.bidderName     = newBidderName;
@@ -91,10 +90,16 @@ Vue.component( "auction-bids", {
                             alert( 'Es gibt leider schon ein höheres Gebot...' );
                         }
                     }
+                    NotificationService.error( "Translations.Template.itemWishListAdded" )
+                    NotificationService.success( "YEAH Translations.Template.itemWishListAdded" )
+                    console.dir( NotificationService.getNotifications() );
+
+                    this.showModal( "Hallo" );
+
                     this.versand = currentBid;
                     this.updateAuction();
                     this.versand = {};
-                    location.reload();
+                    // location.reload();
                 },
                 error => {
                     alert( 'error2: ' + error.toString() );
@@ -129,7 +134,22 @@ Vue.component( "auction-bids", {
         },
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
+        },
+        showModal: function (content, isExternalContent) {
+            var $modal     = $( this.$els.modal );
+            var $modalBody = $( this.$els.modalContent );
+
+            console.log( 'content: ' + content );
+            if ( isExternalContent ) {
+                $modalBody.html( "<iframe src=\"" + content + "\">" );
+            }
+            else {
+                $modalBody.html( content );
+            }
+
+            $modal.modal( "show" );
         }
+
     },
     computed: {},
     watch: {

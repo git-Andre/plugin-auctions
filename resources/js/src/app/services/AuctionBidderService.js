@@ -16,7 +16,6 @@ module.exports = (function ($) {
                                 if ( auctionId ) {
                                     ApiService.get( "/api/auction/" + auctionId )
                                         .then( auction => {
-                                                   NotificationService.error( "TEST" ).closeAfter( 3000 );
                                                    // setTimeout( () =>
                                                    //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
                                                    if ( lastEntry ) {
@@ -27,6 +26,8 @@ module.exports = (function ($) {
                                                        auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                                                        resolve( auction.bidderList );
+                                                       NotificationService.success( "TEST" ).closeAfter( 3000 );
+
                                                    }
                                                },
                                                error => {

@@ -62,14 +62,13 @@ Vue.component("auction-bids", {
                     currentBid.customerId = newUserId;
 
                     // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                    alert('Sie haben Ihr eigenes Maximal-Gebot verändert!');
-                    // NotificationService.success(Translations.Template.itemWishListAdded)
+                    // alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
                 } else {
                     if (newCustomerMaxBid > lastCustomerMaxBid) {
-                        if (newCustomerMaxBid > lastCustomerMaxBid + 1) {
-                            currentBid.bidPrice = lastCustomerMaxBid + 1;
+                        if (newCustomerMaxBid < lastCustomerMaxBid + 1) {
+                            currentBid.bidPrice = newCustomerMaxBid;
                         } else {
-                            currentBid.bidPrice = lastCustomerMaxBid;
+                            currentBid.bidPrice = lastCustomerMaxBid + 1;
                         }
                         currentBid.customerMaxBid = newCustomerMaxBid;
                         currentBid.bidderName = newBidderName;
@@ -85,10 +84,16 @@ Vue.component("auction-bids", {
                         alert('Es gibt leider schon ein höheres Gebot...');
                     }
                 }
+                NotificationService.error("Translations.Template.itemWishListAdded");
+                NotificationService.success("YEAH Translations.Template.itemWishListAdded");
+                console.dir(NotificationService.getNotifications());
+
+                _this.showModal("Hallo");
+
                 _this.versand = currentBid;
                 _this.updateAuction();
                 _this.versand = {};
-                location.reload();
+                // location.reload();
             }, function (error) {
                 alert('error2: ' + error.toString());
             });
@@ -114,7 +119,22 @@ Vue.component("auction-bids", {
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
+        },
+
+        showModal: function showModal(content, isExternalContent) {
+            var $modal = $(this.$els.modal);
+            var $modalBody = $(this.$els.modalContent);
+
+            console.log('content: ' + content);
+            if (isExternalContent) {
+                $modalBody.html("<iframe src=\"" + content + "\">");
+            } else {
+                $modalBody.html(content);
+            }
+
+            $modal.modal("show");
         }
+
     },
     computed: {},
     watch: {
@@ -131,8 +151,8 @@ Vue.component("auction-bids", {
 },{"services/ApiService":4,"services/AuctionBidderService":5,"services/NotificationService":6}],2:[function(require,module,exports){
 "use strict";
 
-var NotificationService = require("services/NotificationService");
-var ResourceService = require("services/ResourceService");
+// const NotificationService  = require( "services/NotificationService" );
+// const ResourceService      = require( "services/ResourceService" );
 var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-show-bidderlist", {
@@ -142,7 +162,6 @@ Vue.component("auction-show-bidderlist", {
     data: function data() {
         return {
             bidderList: [],
-            // expiryDate: 0,
             isAuctionPresent: false,
             bidders: 0
         };
@@ -184,8 +203,7 @@ Vue.component("auction-show-bidderlist", {
                 _this.isAuctionPresent = true;
             } else {
                 _this.isAuctionPresent = false;
-            }
-            ;
+            };
         }, function (error) {
             alert('error5: ' + error.toString());
         });
@@ -196,7 +214,7 @@ Vue.component("auction-show-bidderlist", {
     methods: {}
 });
 
-},{"services/AuctionBidderService":5,"services/NotificationService":6,"services/ResourceService":7}],3:[function(require,module,exports){
+},{"services/AuctionBidderService":5}],3:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -398,7 +416,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":6,"services/WaitScreenService":8}],5:[function(require,module,exports){
+},{"services/NotificationService":6,"services/WaitScreenService":7}],5:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -420,7 +438,6 @@ module.exports = function ($) {
         return new Promise(function (resolve, reject) {
             if (auctionId) {
                 ApiService.get("/api/auction/" + auctionId).then(function (auction) {
-                    NotificationService.error("TEST").closeAfter(3000);
                     // setTimeout( () =>
                     //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
                     if (lastEntry) {
@@ -430,6 +447,7 @@ module.exports = function ($) {
                         auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                         resolve(auction.bidderList);
+                        NotificationService.success("TEST").closeAfter(3000);
                     }
                 }, function (error) {
                     reject(error);
@@ -467,7 +485,7 @@ module.exports = function ($) {
     var notifications = new NotificationList();
 
     var handlerList = [];
-
+    var printStackTrace = true;
     return {
         log: _log,
         info: _info,
@@ -491,12 +509,10 @@ module.exports = function ($) {
     function _log(message, prefix) {
         var notification = new Notification(message);
 
-        if (App.config.logMessages) {
-            console.log((prefix || "") + "[" + notification.code + "] " + notification.message);
+        console.log((prefix || "") + "[" + notification.code + "] " + notification.message);
 
-            for (var i = 0; i < notification.stackTrace.length; i++) {
-                _log(notification.stackTrace[i], " + ");
-            }
+        for (var i = 0; i < notification.stackTrace.length; i++) {
+            _log(notification.stackTrace[i], " + ");
         }
 
         return notification;
@@ -505,9 +521,7 @@ module.exports = function ($) {
     function _info(message) {
         var notification = new Notification(message, "info");
 
-        if (App.config.printInfos) {
-            _printNotification(notification);
-        }
+        _printNotification(notification);
 
         return notification;
     }
@@ -515,9 +529,7 @@ module.exports = function ($) {
     function _warn(message) {
         var notification = new Notification(message, "warning");
 
-        if (App.config.printWarnings) {
-            _printNotification(notification);
-        }
+        _printNotification(notification);
 
         return notification;
     }
@@ -525,9 +537,7 @@ module.exports = function ($) {
     function _error(message) {
         var notification = new Notification(message, "danger");
 
-        if (App.config.printErrors) {
-            _printNotification(notification);
-        }
+        _printNotification(notification);
 
         return notification;
     }
@@ -535,9 +545,7 @@ module.exports = function ($) {
     function _success(message) {
         var notification = new Notification(message, "success");
 
-        if (App.config.printSuccess) {
-            _printNotification(notification);
-        }
+        _printNotification(notification);
 
         return notification;
     }
@@ -556,7 +564,7 @@ module.exports = function ($) {
     }
 
     function Notification(data, context) {
-        if (!App.config.printStackTrace && (typeof data === "undefined" ? "undefined" : _typeof(data)) === "object") {
+        if (!this.printStackTrace && (typeof data === "undefined" ? "undefined" : _typeof(data)) === "object") {
             data.stackTrace = [];
         }
         var id = notificationCount++;
@@ -586,7 +594,7 @@ module.exports = function ($) {
         }
 
         function trace(message, code) {
-            if (App.config.printStackTrace) {
+            if (this.printStackTrace) {
                 self.stackTrace.push({
                     code: code || 0,
                     message: message
@@ -624,471 +632,6 @@ module.exports = function ($) {
 }(jQuery);
 
 },{}],7:[function(require,module,exports){
-"use strict";
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var ApiService = require("services/ApiService");
-
-module.exports = function ($) {
-
-    var resources = {};
-
-    return {
-        registerResource: registerResource,
-        registerResourceList: registerResourceList,
-        getResource: getResource,
-        watch: watch,
-        bind: bind
-    };
-
-    /**
-     * Register a new resource
-     * @param {string}  name          The name of the resource. Must be a unique identifier
-     * @param {string}  route         The route to bind the resource to
-     * @param {*}       initialValue  The initial value to assign to the resource
-     *
-     * @returns {Resource} The created resource.
-     */
-    function registerResource(name, route, initialValue, responseTemplate) {
-        if (!name) {
-            throw new Error("Cannot register resource. Name is required.");
-        }
-
-        if (!route && typeof initialValue === "undefined") {
-            throw new Error("Cannot register resource. Route or initial value is required.");
-        }
-
-        if (resources[name]) {
-            throw new Error("Resource '" + name + "' already exists.");
-        }
-
-        var data;
-
-        try {
-            data = $.parseJSON(initialValue);
-        } catch (err) {
-            data = initialValue;
-        }
-
-        name = name.toLowerCase();
-        resources[name] = new Resource(route, data, responseTemplate);
-
-        return resources[name];
-    }
-
-    /**
-     * Register a new list resource
-     * @param {string}  name          The name of the resource. Must be a unique identifier
-     * @param {string}  route         The route to bind the resource to
-     * @param {*}       initialValue  The initial value to assign to the resource
-     *
-     * @returns {Resource}            The created resource.
-     */
-    function registerResourceList(name, route, initialValue, responseTemplate) {
-        if (!name) {
-            throw new Error("Cannot register resource. Name is required.");
-        }
-
-        if (!route && typeof initialValue === "undefined") {
-            throw new Error("Cannot register resource. Route or initial value is required.");
-        }
-
-        if (resources[name]) {
-            throw new Error("Resource '" + name + "' already exists.");
-        }
-
-        var data;
-
-        try {
-            data = $.parseJSON(initialValue);
-        } catch (err) {
-            data = initialValue;
-        }
-
-        name = name.toLowerCase();
-        resources[name] = new ResourceList(route, data, responseTemplate);
-
-        return resources[name];
-    }
-
-    /**
-     * Receive a registered resource by its name
-     * @param {string}  name    The name of the resource to receive
-     *
-     * @returns {Resource}      The resource
-     */
-    function getResource(name) {
-        name = name.toLowerCase();
-
-        if (!resources[name]) {
-            throw new Error("Unkown resource: " + name);
-        }
-
-        return resources[name];
-    }
-
-    /**
-     * Track changes of a given resource.
-     * @param {string}      name        The name of the resource to watch
-     * @param {function}    callback    The handler to call on each change
-     */
-    function watch(name, callback) {
-        getResource(name).watch(callback);
-    }
-
-    /**
-     * Bind a resource to a property of a vue instance.
-     * @param {string}  name        The name of the resource to bind
-     * @param {Vue}     vue         The vue instance
-     * @param {string}  property    The property of the vue instance. Optional if the property name is equal to the resource name.
-     */
-    function bind(name, vue, property) {
-        property = property || name;
-        getResource(name).bind(vue, property);
-    }
-
-    /**
-     * @class Observable
-     * Automatically notify all attached listeners on any changes.
-     */
-    function Observable() {
-        var _value;
-        var _watchers = [];
-
-        return {
-            get value() {
-                return _value;
-            },
-            set value(newValue) {
-                for (var i = 0; i < _watchers.length; i++) {
-                    var watcher = _watchers[i];
-
-                    watcher.apply({}, [newValue, _value]);
-                }
-                _value = newValue;
-            },
-            watch: function watch(cb) {
-                _watchers.push(cb);
-            }
-        };
-    }
-
-    /**
-     * @class Resource
-     * @param {string}  url              The url to bind the resource to
-     * @param {string}  initialValue     The initial value to assign to the resource
-     * @param {string}  responseTemplate The path to the response fields file
-     */
-    function Resource(url, initialValue, responseTemplate) {
-        var data = new Observable();
-        var ready = false;
-
-        // initialize resource
-        if (typeof initialValue !== "undefined") {
-            // Initial value that was given by constructor
-            data.value = initialValue;
-            ready = true;
-        } else if (url) {
-            // If no initial value was given, get the value from the URL
-            ApiService.get(url, { template: this.responseTemplate }).done(function (response) {
-                data.value = response;
-                ready = true;
-            });
-        } else {
-            throw new Error("Cannot initialize resource.");
-        }
-
-        return {
-            watch: watch,
-            bind: bind,
-            val: val,
-            set: set,
-            update: update,
-            listen: listen
-        };
-
-        /**
-         * Update this resource on a given event triggered by ApiService.
-         * @param {string} event        The event to listen on
-         * @param {string} usePayload   A property of the payload to assign to this resource.
-         *                              The resource will be updated by GET request if not set.
-         */
-        function listen(event, usePayload) {
-            ApiService.listen(event, function (payload) {
-                if (usePayload) {
-                    update(payload[usePayload]);
-                } else {
-                    update();
-                }
-            });
-        }
-
-        /**
-         * Add handler to track changes on this resource
-         * @param {function} cb     The callback to call on each change
-         */
-        function watch(cb) {
-            if (typeof cb !== "function") {
-                throw new Error("Callback expected but got '" + (typeof cb === "undefined" ? "undefined" : _typeof(cb)) + "'.");
-            }
-            data.watch(cb);
-            if (ready) {
-                cb.apply({}, [data.value, null]);
-            }
-        }
-
-        /**
-         * Bind a property of a vue instance to this resource
-         * @param {Vue}     vue         The vue instance
-         * @param {string}   property    The property of the vue instance
-         */
-        function bind(vue, property) {
-            if (!vue) {
-                throw new Error("Vue instance not set.");
-            }
-
-            if (!property) {
-                throw new Error("Cannot bind undefined property.");
-            }
-
-            watch(function (newValue) {
-                vue.$set(property, newValue);
-            });
-        }
-
-        /**
-         * Receive the current value of this resource
-         * @returns {*}
-         */
-        function val() {
-            return data.value;
-        }
-
-        /**
-         * Set the value of the resource.
-         * @param {*}   value   The value to set.
-         * @returns {Deferred}  The PUT request to the url of the resource
-         */
-        function set(value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.put(url, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-
-            data.value = value;
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Update the value of the resource.
-         * @param {*}           value   The new value to assign to this resource. Will receive current value from url if not set
-         * @returns {Deferred}          The GET request to the url of the resource
-         */
-        function update(value) {
-            if (value) {
-                var deferred = $.Deferred();
-
-                data.value = value;
-                deferred.resolve();
-                return deferred;
-            } else if (url) {
-                return ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            throw new Error("Cannot update resource. Neither an URL nor a value is prodivded.");
-        }
-    }
-
-    /**
-     * @class ResourceList
-     * @param {string}  url              The url to bind the resource to
-     * @param {string}  initialValue     The initial value to assign to the resource
-     * @param {string}  responseTemplate The path to the response fields file
-     */
-    function ResourceList(url, initialValue, responseTemplate) {
-        var data = new Observable();
-        var ready = false;
-
-        if (url.charAt(url.length - 1) !== "/") {
-            url += "/";
-        }
-
-        if (typeof initialValue !== "undefined") {
-            data.value = initialValue;
-            ready = true;
-        } else if (url) {
-            ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                data.value = response;
-                ready = true;
-            });
-        } else {
-            throw new Error("Cannot initialize resource.");
-        }
-
-        return {
-            watch: watch,
-            bind: bind,
-            val: val,
-            set: set,
-            push: push,
-            remove: remove,
-            update: update,
-            listen: listen
-        };
-
-        /**
-         * Update this resource on a given event triggered by ApiService.
-         * @param {string} event        The event to listen on
-         * @param {string} usePayload   A property of the payload to assign to this resource.
-         *                              The resource will be updated by GET request if not set.
-         */
-        function listen(event, usePayload) {
-            ApiService.listen(event, function (payload) {
-                if (usePayload) {
-                    update(payload[usePayload]);
-                } else {
-                    update();
-                }
-            });
-        }
-
-        /**
-         * Add handler to track changes on this resource
-         * @param {function} cb     The callback to call on each change
-         */
-        function watch(cb) {
-            if (typeof cb !== "function") {
-                throw new Error("Callback expected but got '" + (typeof cb === "undefined" ? "undefined" : _typeof(cb)) + "'.");
-            }
-            data.watch(cb);
-
-            if (ready) {
-                cb.apply({}, [data.value, null]);
-            }
-        }
-
-        /**
-         * Bind a property of a vue instance to this resource
-         * @param {Vue}     vue         The vue instance
-         * @param {sting}   property    The property of the vue instance
-         */
-        function bind(vue, property) {
-            if (!vue) {
-                throw new Error("Vue instance not set.");
-            }
-
-            if (!property) {
-                throw new Error("Cannot bind undefined property.");
-            }
-
-            watch(function (newValue) {
-                vue.$set(property, newValue);
-            });
-        }
-
-        /**
-         * Receive the current value of this resource
-         * @returns {*}
-         */
-        function val() {
-            return data.value;
-        }
-
-        /**
-         * Set the value of a single element of this resource.
-         * @param {string|number}   key     The key of the element
-         * @param {*}               value   The value to set.
-         * @returns {Deferred}      The PUT request to the url of the resource
-         */
-        function set(key, value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.put(url + key, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-            var deferred = $.Deferred();
-
-            data.value = value;
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Add a new element to this resource
-         * @param {*}   value   The element to add
-         * @returns {Deferred}  The POST request to the url of the resource
-         */
-        function push(value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.post(url, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-            var list = data.value;
-
-            list.push(value);
-            data.value = list;
-
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Remove an element from this resource
-         * @param {string|number}   key     The key of the element
-         * @returns {Deferred}              The DELETE request to the url of the resource
-         */
-        function remove(key) {
-            if (url) {
-                return ApiService.delete(url + key, { template: responseTemplate }).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-            var list = data.value;
-
-            list.splice(key, 1);
-            data.value = list;
-
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Update the value of the resource.
-         * @param {*}           value   The new value to assign to this resource. Will receive current value from url if not set
-         * @returns {Deferred}          The GET request to the url of the resource
-         */
-        function update(value) {
-            if (value) {
-                var deferred = $.Deferred();
-
-                data.value = value;
-                deferred.resolve();
-                return deferred;
-            }
-
-            return ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                data.value = response;
-            });
-        }
-    }
-}(jQuery);
-
-},{"services/ApiService":4}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {

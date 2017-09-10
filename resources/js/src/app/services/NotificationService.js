@@ -5,7 +5,7 @@ module.exports = (function($)
     var notifications     = new NotificationList();
 
     var handlerList = [];
-
+var printStackTrace = true;
     return {
         log             : _log,
         info            : _info,
@@ -33,15 +33,12 @@ module.exports = (function($)
     {
         var notification = new Notification(message);
 
-        if (App.config.logMessages)
-        {
             console.log((prefix || "") + "[" + notification.code + "] " + notification.message);
 
             for (var i = 0; i < notification.stackTrace.length; i++)
             {
                 _log(notification.stackTrace[i], " + ");
             }
-        }
 
         return notification;
     }
@@ -50,10 +47,7 @@ module.exports = (function($)
     {
         var notification = new Notification(message, "info");
 
-        if (App.config.printInfos)
-        {
             _printNotification(notification);
-        }
 
         return notification;
     }
@@ -62,10 +56,7 @@ module.exports = (function($)
     {
         var notification = new Notification(message, "warning");
 
-        if (App.config.printWarnings)
-        {
             _printNotification(notification);
-        }
 
         return notification;
     }
@@ -74,10 +65,7 @@ module.exports = (function($)
     {
         var notification = new Notification(message, "danger");
 
-        if (App.config.printErrors)
-        {
             _printNotification(notification);
-        }
 
         return notification;
     }
@@ -86,10 +74,7 @@ module.exports = (function($)
     {
         var notification = new Notification(message, "success");
 
-        if (App.config.printSuccess)
-        {
             _printNotification(notification);
-        }
 
         return notification;
     }
@@ -111,7 +96,7 @@ module.exports = (function($)
 
     function Notification(data, context)
     {
-        if (!App.config.printStackTrace && typeof (data) === "object")
+        if (!this.printStackTrace && typeof (data) === "object")
         {
             data.stackTrace = [];
         }
@@ -146,7 +131,7 @@ module.exports = (function($)
 
         function trace(message, code)
         {
-            if (App.config.printStackTrace)
+            if (this.printStackTrace)
             {
                 self.stackTrace.push({
                     code   : code || 0,

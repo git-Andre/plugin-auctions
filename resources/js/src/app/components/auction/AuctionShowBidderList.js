@@ -1,5 +1,5 @@
-const NotificationService  = require( "services/NotificationService" );
-const ResourceService      = require( "services/ResourceService" );
+// const NotificationService  = require( "services/NotificationService" );
+// const ResourceService      = require( "services/ResourceService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-show-bidderlist", {
@@ -13,7 +13,6 @@ Vue.component( "auction-show-bidderlist", {
     data() {
         return {
             bidderList: [],
-            // expiryDate: 0,
             isAuctionPresent: false,
             bidders: 0
         };
@@ -61,8 +60,7 @@ Vue.component( "auction-show-bidderlist", {
                     }
                     else {
                         this.isAuctionPresent = false;
-                    }
-                    ;
+                    };
                 },
                 error => {
                     alert( 'error5: ' + error.toString() );
