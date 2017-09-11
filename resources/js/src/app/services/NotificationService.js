@@ -89,7 +89,7 @@ module.exports = (function ($) {
         var id   = notificationCount++;
         var self = {
             id: id,
-            code: data.code || 0,
+            code: data.code || null,
             message: data.message || data || "",
             context: context || "info",
             stackTrace: data.stackTrace || [],

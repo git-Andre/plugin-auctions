@@ -63,7 +63,9 @@ Vue.component("auction-bids", {
 
                     // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
                     // alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
-                    NotificationService.info({ "message": "Sie haben Ihr eigenes Maximal-Gebot verändert!", "code": 2 }).closeAfter(5000);
+                    NotificationService.info("Sie haben Ihr eigenes Maximal-Gebot verändert!")
+                    // { "message": "Sie haben Ihr eigenes Maximal-Gebot verändert!", "code": 2 } )
+                    .closeAfter(5000);
                 } else {
                     if (newCustomerMaxBid > lastCustomerMaxBid) {
                         if (newCustomerMaxBid < lastCustomerMaxBid + 1) {
@@ -75,7 +77,7 @@ Vue.component("auction-bids", {
                         currentBid.bidderName = newBidderName;
                         currentBid.customerId = newUserId;
 
-                        NotificationService.success({ "message": " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...", "code": 1 }).closeAfter(5000);
+                        NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(5000);
 
                         // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
                     } else {
@@ -84,7 +86,7 @@ Vue.component("auction-bids", {
                         currentBid.bidderName = bidderListLastEntry.bidderName;
                         currentBid.customerId = lastUserId;
 
-                        NotificationService.warn({ "message": "Es gibt leider schon ein höheres Gebot...", "code": 2 }).closeAfter(5000);
+                        NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(5000);
 
                         // alert( 'Es gibt leider schon ein höheres Gebot...' );
                     }
@@ -133,7 +135,7 @@ Vue.component("auction-bids", {
                 if (this.userdata != null) {
                     this.isInputValid = true;
                 } else {
-                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!", "code": 0 }).closeAfter(5000);
+                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(5000);
                     this.isInputValid = false;
                 }
             } else {
@@ -647,7 +649,7 @@ module.exports = function ($) {
         var id = notificationCount++;
         var self = {
             id: id,
-            code: data.code || 0,
+            code: data.code || null,
             message: data.message || data || "",
             context: context || "info",
             stackTrace: data.stackTrace || [],
