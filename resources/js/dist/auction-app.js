@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-var ApiService = require("services/ApiService"); // /plugin-ceres/resources/js/src/app/services/ApiService.js
+var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionBidderService = require("services/AuctionBidderService");
 
@@ -86,14 +86,12 @@ Vue.component("auction-bids", {
                 }
                 NotificationService.error("Translations.Template.itemWishListAdded");
                 NotificationService.success("YEAH Translations.Template.itemWishListAdded");
-                console.dir(NotificationService.getNotifications());
-
-                _this.showModal("Hallo");
+                NotificationService.console.dir(NotificationService.getNotifications());
 
                 _this.versand = currentBid;
                 _this.updateAuction();
                 _this.versand = {};
-                // location.reload();
+                location.reload();
             }, function (error) {
                 alert('error2: ' + error.toString());
             });
@@ -119,22 +117,7 @@ Vue.component("auction-bids", {
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
-        },
-
-        showModal: function showModal(content, isExternalContent) {
-            var $modal = $(this.$els.modal);
-            var $modalBody = $(this.$els.modalContent);
-
-            console.log('content: ' + content);
-            if (isExternalContent) {
-                $modalBody.html("<iframe src=\"" + content + "\">");
-            } else {
-                $modalBody.html(content);
-            }
-
-            $modal.modal("show");
         }
-
     },
     computed: {},
     watch: {

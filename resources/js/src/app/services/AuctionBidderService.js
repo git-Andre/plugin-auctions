@@ -1,5 +1,5 @@
 var ApiService            = require( "services/ApiService" );
-const NotificationService = require( "services/NotificationService" );
+const NotificationService  = require( "services/NotificationService" );
 
 module.exports = (function ($) {
 

@@ -1,4 +1,4 @@
-const ApiService           = require( "services/ApiService" ); // /plugin-ceres/resources/js/src/app/services/ApiService.js
+const ApiService           = require( "services/ApiService" );
 const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
@@ -92,14 +92,13 @@ Vue.component( "auction-bids", {
                     }
                     NotificationService.error( "Translations.Template.itemWishListAdded" )
                     NotificationService.success( "YEAH Translations.Template.itemWishListAdded" )
+                    NotificationService.
                     console.dir( NotificationService.getNotifications() );
-
-                    this.showModal( "Hallo" );
 
                     this.versand = currentBid;
                     this.updateAuction();
                     this.versand = {};
-                    // location.reload();
+                    location.reload();
                 },
                 error => {
                     alert( 'error2: ' + error.toString() );
@@ -135,21 +134,6 @@ Vue.component( "auction-bids", {
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
-        showModal: function (content, isExternalContent) {
-            var $modal     = $( this.$els.modal );
-            var $modalBody = $( this.$els.modalContent );
-
-            console.log( 'content: ' + content );
-            if ( isExternalContent ) {
-                $modalBody.html( "<iframe src=\"" + content + "\">" );
-            }
-            else {
-                $modalBody.html( content );
-            }
-
-            $modal.modal( "show" );
-        }
-
     },
     computed: {},
     watch: {
