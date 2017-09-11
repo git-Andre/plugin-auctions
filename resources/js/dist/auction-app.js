@@ -128,8 +128,8 @@ Vue.component("auction-bids", {
     computed: {},
     watch: {
         maxCustomerBid: function maxCustomerBid() {
-            if (this.maxCustomerBid >= this.minBid) {
 
+            if (this.maxCustomerBid >= this.minBid) {
                 if (this.userdata != null) {
                     this.isInputValid = true;
                 } else {
@@ -139,6 +139,7 @@ Vue.component("auction-bids", {
             } else {
                 this.isInputValid = false;
             }
+            console.log('this.isInputValid: ' + this.isInputValid);
         }
     }
 });

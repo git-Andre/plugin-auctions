@@ -14,19 +14,11 @@
                 class="form-text text-muted text-center">Bitte geben Sie mindestens
             <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
 
-        {#{% if loggedIn %}#}
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
                     :disabled="!isInputValid"
                     @click="addBid"
-            >Gebot abgeben
-            </button>
-        {#{% else %}#}
-            {#<div v-if="isInputValid"#}
-                    {#class="alert alert-danger m-t-1 text-center">#}
-                {#Bitte einloggen bzw. registrieren!#}
-            {#</div>#}
-        {#{% endif %}#}
+            >Gebot abgeben</button>
     </div>
 
 </script>

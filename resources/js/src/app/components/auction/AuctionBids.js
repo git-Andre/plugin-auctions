@@ -149,8 +149,8 @@ Vue.component( "auction-bids", {
     computed: {},
     watch: {
         maxCustomerBid: function () {
-            if ( this.maxCustomerBid >= this.minBid ) {
 
+            if ( this.maxCustomerBid >= this.minBid ) {
                 if ( this.userdata != null ) {
                     this.isInputValid = true
                 }
@@ -160,7 +160,6 @@ Vue.component( "auction-bids", {
                         .closeAfter( 5000 );
                     this.isInputValid = false;
                 }
-
             }
             else {
                 this.isInputValid = false;
