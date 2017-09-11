@@ -131,7 +131,7 @@ Vue.component("auction-bids", {
     }
 });
 
-},{"services/ApiService":4,"services/AuctionBidderService":5,"services/NotificationService":6}],2:[function(require,module,exports){
+},{"services/ApiService":6,"services/AuctionBidderService":7,"services/NotificationService":8}],2:[function(require,module,exports){
 "use strict";
 
 // const NotificationService  = require( "services/NotificationService" );
@@ -197,7 +197,79 @@ Vue.component("auction-show-bidderlist", {
     methods: {}
 });
 
-},{"services/AuctionBidderService":5}],3:[function(require,module,exports){
+},{"services/AuctionBidderService":7}],3:[function(require,module,exports){
+"use strict";
+
+var _ExceptionMap = require("exceptions/ExceptionMap");
+
+var _ExceptionMap2 = _interopRequireDefault(_ExceptionMap);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotificationService = require("services/NotificationService");
+
+Vue.component("notifications", {
+
+    props: ["initialNotifications", "template"],
+
+    data: function data() {
+        return {
+            notifications: []
+        };
+    },
+
+    created: function created() {
+        this.$options.template = this.template;
+    },
+
+    ready: function ready() {
+        var self = this;
+
+        NotificationService.listen(function (notifications) {
+            self.$set("notifications", notifications);
+        });
+
+        self.showInitialNotifications();
+    },
+
+    methods: {
+        /**
+         * Dissmiss the notification
+         * @param notification
+         */
+        dismiss: function dismiss(notification) {
+            NotificationService.getNotifications().remove(notification);
+        },
+
+        /**
+         * show initial notifications from server
+         */
+        showInitialNotifications: function showInitialNotifications() {
+            for (var key in this.initialNotifications) {
+                // set default type top 'log'
+                var type = this.initialNotifications[key].type || "log";
+                var message = this.initialNotifications[key].message;
+                var messageCode = this.initialNotifications[key].code;
+
+                if (messageCode > 0) {
+                    message = Translations.Template[_ExceptionMap2.default.get(messageCode.toString())];
+                }
+
+                // type cannot be undefined
+                if (message) {
+                    if (NotificationService[type] && typeof NotificationService[type] === "function") {
+                        NotificationService[type](message);
+                    } else {
+                        // unkown type
+                        NotificationService.log(message);
+                    }
+                }
+            }
+        }
+    }
+});
+
+},{"exceptions/ExceptionMap":5,"services/NotificationService":8}],4:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -263,7 +335,17 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var exceptionMap = exports.exceptionMap = new Map([["1", "basketItemNotAdded"], ["2", "basketNotEnoughStockItem"], ["3", "accInvalidResetPasswordUrl"], ["4", "accCheckPassword"]]);
+
+exports.default = exceptionMap;
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -399,7 +481,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":6,"services/WaitScreenService":7}],5:[function(require,module,exports){
+},{"services/NotificationService":8,"services/WaitScreenService":9}],7:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -457,7 +539,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":4,"services/NotificationService":6}],6:[function(require,module,exports){
+},{"services/ApiService":6,"services/NotificationService":8}],8:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -614,7 +696,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -657,7 +739,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3])
+},{}]},{},[1,2,3,4,5])
 
 
 
