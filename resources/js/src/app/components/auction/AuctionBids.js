@@ -66,6 +66,9 @@ Vue.component( "auction-bids", {
 
                         // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
                         // alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
+                        NotificationService.info(
+                            { "message": "Sie haben Ihr eigenes Maximal-Gebot verändert!", "code": 2 } )
+                            .closeAfter( 5000 );
                     }
                     else {
                         if ( newCustomerMaxBid > lastCustomerMaxBid ) {
@@ -79,7 +82,11 @@ Vue.component( "auction-bids", {
                             currentBid.bidderName     = newBidderName;
                             currentBid.customerId     = newUserId;
 
-                            alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
+                            NotificationService.success(
+                                { "message": " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...", "code": 1 } )
+                                .closeAfter( 5000 );
+
+                            // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
                         }
                         else {
                             currentBid.bidPrice       = lastBidPrice + 1;
@@ -87,18 +94,22 @@ Vue.component( "auction-bids", {
                             currentBid.bidderName     = bidderListLastEntry.bidderName;
                             currentBid.customerId     = lastUserId;
 
-                            alert( 'Es gibt leider schon ein höheres Gebot...' );
+                            NotificationService.warn(
+                                { "message": "Es gibt leider schon ein höheres Gebot...", "code": 2 } )
+                                .closeAfter( 5000 );
+
+                            // alert( 'Es gibt leider schon ein höheres Gebot...' );
                         }
                     }
-                    NotificationService.error( "Translations.Template.itemWishListAdded" )
-                    NotificationService.success( "YEAH Translations.Template.itemWishListAdded" )
-                    NotificationService.
-                    console.dir( NotificationService.getNotifications() );
+
+                    // NotificationService.error( {"message1": "<h4>Titel</h4> und jetzt die Nachricht", "code": 2} );
+                    // NotificationService.info({"message":"message 4", "code": null});
 
                     this.versand = currentBid;
                     this.updateAuction();
                     this.versand = {};
-                    location.reload();
+                    // location.reload();
+                    this.initAuctionParams();
                 },
                 error => {
                     alert( 'error2: ' + error.toString() );
@@ -139,11 +150,22 @@ Vue.component( "auction-bids", {
     watch: {
         maxCustomerBid: function () {
             if ( this.maxCustomerBid >= this.minBid ) {
-                this.isInputValid = true;
+
+                if ( this.userdata != null ) {
+                    this.isInputValid = true
+                }
+                else {
+                    NotificationService.error(
+                        { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!", "code": 0 } )
+                        .closeAfter( 5000 );
+                    this.isInputValid = false;
+                }
+
             }
             else {
                 this.isInputValid = false;
             }
+            console.log( 'this.isInputValid: ' + this.isInputValid );
         }
     },
 } );

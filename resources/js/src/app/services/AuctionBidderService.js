@@ -1,5 +1,5 @@
 var ApiService            = require( "services/ApiService" );
-const NotificationService  = require( "services/NotificationService" );
+const NotificationService = require( "services/NotificationService" );
 
 module.exports = (function ($) {
 
@@ -22,12 +22,10 @@ module.exports = (function ($) {
                                                        resolve( auction.bidderList[auction.bidderList.length - 1] );
                                                    }
                                                    else {
-                                                       auction.bidderList[0].bidPrice = auction.currentPrice;
+                                                       auction.bidderList[0].bidPrice     = auction.currentPrice;
                                                        auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                                                        resolve( auction.bidderList );
-                                                       NotificationService.success( "TEST" ).closeAfter( 3000 );
-
                                                    }
                                                },
                                                error => {
@@ -48,7 +46,7 @@ module.exports = (function ($) {
 
                                     ApiService.get( "/api/auction/" + auctionId )
                                         .then( auction => {
-                                                   resolve( auction.expiryDate);
+                                                   resolve( auction.expiryDate );
                                                },
                                                error => {
                                                    reject( error );

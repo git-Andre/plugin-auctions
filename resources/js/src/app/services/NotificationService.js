@@ -1,177 +1,152 @@
-module.exports = (function($)
-{
+module.exports = (function ($) {
 
     var notificationCount = 0;
     var notifications     = new NotificationList();
 
-    var handlerList = [];
-var printStackTrace = true;
+    var handlerList     = [];
+    var printStackTrace = true;
     return {
-        log             : _log,
-        info            : _info,
-        warn            : _warn,
-        error           : _error,
-        success         : _success,
+        log: _log,
+        info: _info,
+        warn: _warn,
+        error: _error,
+        success: _success,
         getNotifications: getNotifications,
-        listen          : _listen
+        listen: _listen
     };
 
-    function _listen(handler)
-    {
-        handlerList.push(handler);
+    function _listen(handler) {
+        handlerList.push( handler );
     }
 
-    function trigger()
-    {
-        for (var i = 0; i < handlerList.length; i++)
-        {
-            handlerList[i].call({}, notifications.all());
+    function trigger() {
+        for (var i = 0; i < handlerList.length; i++) {
+            handlerList[i].call( {}, notifications.all() );
         }
     }
 
-    function _log(message, prefix)
-    {
-        var notification = new Notification(message);
+    function _log(message, prefix) {
+        var notification = new Notification( message );
 
-            console.log((prefix || "") + "[" + notification.code + "] " + notification.message);
+        console.log( (prefix || "") + "[" + notification.code + "] " + notification.message );
 
-            for (var i = 0; i < notification.stackTrace.length; i++)
-            {
-                _log(notification.stackTrace[i], " + ");
-            }
+        for (var i = 0; i < notification.stackTrace.length; i++) {
+            _log( notification.stackTrace[i], " + " );
+        }
 
         return notification;
     }
 
-    function _info(message)
-    {
-        var notification = new Notification(message, "info");
+    function _info(message) {
+        var notification = new Notification( message, "info" );
 
-            _printNotification(notification);
-
-        return notification;
-    }
-
-    function _warn(message)
-    {
-        var notification = new Notification(message, "warning");
-
-            _printNotification(notification);
+        _printNotification( notification );
 
         return notification;
     }
 
-    function _error(message)
-    {
-        var notification = new Notification(message, "danger");
+    function _warn(message) {
+        var notification = new Notification( message, "warning" );
 
-            _printNotification(notification);
-
-        return notification;
-    }
-
-    function _success(message)
-    {
-        var notification = new Notification(message, "success");
-
-            _printNotification(notification);
+        _printNotification( notification );
 
         return notification;
     }
 
-    function getNotifications()
-    {
+    function _error(message) {
+        var notification = new Notification( message, "danger" );
+
+        _printNotification( notification );
+
+        return notification;
+    }
+
+    function _success(message) {
+        var notification = new Notification( message, "success" );
+
+        _printNotification( notification );
+
+        return notification;
+    }
+
+    function getNotifications() {
         return notifications;
     }
 
-    function _printNotification(notification)
-    {
-        notifications.add(notification);
-        _log(notification);
+    function _printNotification(notification) {
+        notifications.add( notification );
+        _log( notification );
 
         trigger();
 
         return notification;
     }
 
-    function Notification(data, context)
-    {
-        if (!this.printStackTrace && typeof (data) === "object")
-        {
+    function Notification(data, context) {
+        if ( !this.printStackTrace && typeof (data) === "object" ) {
             data.stackTrace = [];
         }
         var id   = notificationCount++;
         var self = {
-            id        : id,
-            code      : data.code || 0,
-            message   : data.message || data || "",
-            context   : context || "info",
+            id: id,
+            code: data.code || 0,
+            message: data.message || data || "",
+            context: context || "info",
             stackTrace: data.stackTrace || [],
-            close     : close,
+            close: close,
             closeAfter: closeAfter,
-            trace     : trace
+            trace: trace
         };
 
         return self;
 
-        function close()
-        {
-            notifications.remove(self);
+        function close() {
+            notifications.remove( self );
             trigger();
         }
 
-        function closeAfter(timeout)
-        {
-            setTimeout(function()
-            {
-                notifications.remove(self);
+        function closeAfter(timeout) {
+            setTimeout( function () {
+                notifications.remove( self );
                 trigger();
-            }, timeout);
+            }, timeout );
         }
 
-        function trace(message, code)
-        {
-            if (this.printStackTrace)
-            {
-                self.stackTrace.push({
-                    code   : code || 0,
-                    message: message
-                });
+        function trace(message, code) {
+            if ( this.printStackTrace ) {
+                self.stackTrace.push( {
+                                          code: code || 0,
+                                          message: message
+                                      } );
             }
         }
     }
 
-    function NotificationList()
-    {
+    function NotificationList() {
         var elements = [];
 
         return {
-            all   : all,
-            add   : add,
+            all: all,
+            add: add,
             remove: remove
         };
 
-        function all()
-        {
+        function all() {
             return elements;
         }
 
-        function add(notification)
-        {
-            elements.push(notification);
+        function add(notification) {
+            elements.push( notification );
         }
 
-        function remove(notification)
-        {
-            for (var i = 0; i < elements.length; i++)
-            {
-                if (elements[i].id === notification.id)
-                {
-                    elements.splice(i, 1);
+        function remove(notification) {
+            for (var i = 0; i < elements.length; i++) {
+                if ( elements[i].id === notification.id ) {
+                    elements.splice( i, 1 );
                     break;
                 }
             }
         }
     }
 
-})(jQuery);
+})( jQuery );
