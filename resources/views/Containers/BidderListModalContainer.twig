@@ -1,11 +1,21 @@
 {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
 {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
+{{ component( "PluginAuctions::Item.Components.Notifications" ) }}
+
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {% if auction %}
+
+    <div class="wrapper wrapper-top">
+        <!-- messages -->
+        <notifications-plugin-auction template="#vue-notifications-plugin-auction"
+                :initial-notifications="{{ services.notifications.getNotifications() | json_encode() }}"
+        ></notifications-plugin-auction>
+    </div>
+
 
     <!-- BidderList MODAL -->
     <div id="bidderlist-modal-wrapper">

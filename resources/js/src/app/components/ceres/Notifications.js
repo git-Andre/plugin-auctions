@@ -2,7 +2,7 @@ import ExceptionMap from "exceptions/ExceptionMap";
 
 var NotificationService = require("services/NotificationService");
 
-Vue.component("notifications", {
+Vue.component("notifications-plugin-auction", {
 
     props: [
         "initialNotifications",
