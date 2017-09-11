@@ -26,7 +26,8 @@
                 <dt>Versand:</dt>
                 <dd>kostenlos.</dd>
             </dl>
-            {#Gegenwart#}
+
+        {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
             {% set shippingCat = config("Ceres.global.shippingCostsCategoryId") %}
             {% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}
@@ -90,7 +91,7 @@
                 </auction-bids>
             </div>
 
-            {#Vergangenheit #}
+        {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 

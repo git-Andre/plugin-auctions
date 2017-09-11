@@ -64,12 +64,13 @@ Vue.component( "auction-bids", {
                         currentBid.bidderName     = newBidderName;
                         currentBid.customerId     = newUserId;
 
+                        this.versand = currentBid;
+                        this.updateAuction();
                         // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                        // alert( 'Sie haben Ihr eigenes Maximal-Gebot verändert!' );
                         NotificationService.info(
-                            "Sie haben Ihr eigenes Maximal-Gebot verändert!" )
-                        // { "message": "Sie haben Ihr eigenes Maximal-Gebot verändert!", "code": 2 } )
-                            .closeAfter( 5000 );
+                            "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
+                            ")" )
+                            .closeAfter( 4000 );
                     }
                     else {
                         if ( newCustomerMaxBid > lastCustomerMaxBid ) {
@@ -83,11 +84,14 @@ Vue.component( "auction-bids", {
                             currentBid.bidderName     = newBidderName;
                             currentBid.customerId     = newUserId;
 
+                            this.versand = currentBid;
+                            this.updateAuction();
+                            setTimeout( () => {
+                                location.reload();
+                            }, 3000 );
                             NotificationService.success(
                                 " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
-                                .closeAfter( 5000 );
-
-                            // alert( 'Glückwunsch - Sie sind der Höchstbietende...' );
+                                .closeAfter( 4000 );
                         }
                         else {
                             currentBid.bidPrice       = lastBidPrice + 1;
@@ -95,22 +99,18 @@ Vue.component( "auction-bids", {
                             currentBid.bidderName     = bidderListLastEntry.bidderName;
                             currentBid.customerId     = lastUserId;
 
+                            this.versand = currentBid;
+                            this.updateAuction();
+                            setTimeout( () => {
+                                location.reload();
+                            }, 3000 );
                             NotificationService.warn(
                                 "Es gibt leider schon ein höheres Gebot..." )
-                                .closeAfter( 5000 );
-
-                            // alert( 'Es gibt leider schon ein höheres Gebot...' );
+                                .closeAfter( 4000 );
                         }
                     }
 
-                    // NotificationService.error( {"message1": "<h4>Titel</h4> und jetzt die Nachricht", "code": 2} );
-                    // NotificationService.info({"message":"message 4", "code": null});
-
-                    this.versand = currentBid;
-                    this.updateAuction();
-                    this.versand = {};
-                    // location.reload();
-                    this.initAuctionParams();
+                    // this.initAuctionParams();
                 },
                 error => {
                     alert( 'error2: ' + error.toString() );
@@ -124,6 +124,8 @@ Vue.component( "auction-bids", {
             )
                 .then( response => {
                            // alert( response );
+                           // this.versand = {};
+                           //
                        },
                        error => {
                            alert( 'error3: ' + error.toString() );
@@ -133,10 +135,13 @@ Vue.component( "auction-bids", {
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
                 .done( auction => {
-                    this.minBid =
-                        this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) + 1 );
-                    if ( this.minBid < 1.1 ) {
-                        this.minBid = this.toFloatTwoDecimal( auction.currentPrice + 1 );
+                    const lastBid = this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
+                    const currentPrice = this.toFloatTwoDecimal( auction.currentPrice );
+
+                    this.minBid = lastBid + 1;
+
+                    if ( lastBid == currentPrice) {
+                        this.minBid = currentPrice;
                     }
                 } )
                 .fail( () => {
@@ -158,14 +163,13 @@ Vue.component( "auction-bids", {
                 else {
                     NotificationService.error(
                         { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                        .closeAfter( 5000 );
+                        .closeAfter( 4000 );
                     this.isInputValid = false;
                 }
             }
             else {
                 this.isInputValid = false;
             }
-            console.log( 'this.isInputValid: ' + this.isInputValid );
         }
     },
 } );
