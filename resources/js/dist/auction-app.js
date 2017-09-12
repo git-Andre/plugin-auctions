@@ -65,7 +65,7 @@ Vue.component("auction-bids", {
                         _this.versand = currentBid;
                         _this.updateAuction();
                         // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                        NotificationService.info("Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid + ")").closeAfter(4000);
+                        NotificationService.info("Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid + ")").closeAfter(3500);
                     } else {
                         if (newCustomerMaxBid > lastCustomerMaxBid) {
                             if (newCustomerMaxBid < lastCustomerMaxBid + 1) {
@@ -82,9 +82,9 @@ Vue.component("auction-bids", {
                             setTimeout(function () {
                                 location.reload();
                             }, 3000);
-                            NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(4000);
+                            NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(3000);
                         } else {
-                            currentBid.bidPrice = lastBidPrice + 1;
+                            currentBid.bidPrice = newCustomerMaxBid;
                             currentBid.customerMaxBid = lastCustomerMaxBid;
                             currentBid.bidderName = bidderListLastEntry.bidderName;
                             currentBid.customerId = lastUserId;
@@ -94,7 +94,7 @@ Vue.component("auction-bids", {
                             setTimeout(function () {
                                 location.reload();
                             }, 3000);
-                            NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(4000);
+                            NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
                         }
                     }
 
@@ -325,6 +325,9 @@ Vue.component("auction-countdown", {
         stopAuction: function stopAuction() {
             // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
             //             location.reload();
+        },
+        auctionend: function auctionend() {
+            this.deadline = this.now + 3;
         }
     },
     computed: {

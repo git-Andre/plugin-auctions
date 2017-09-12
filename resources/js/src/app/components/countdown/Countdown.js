@@ -17,7 +17,7 @@ Vue.component( "auction-countdown", {
     },
     created() {
         this.$options.template = this.template;
-        this.deadline = 0;
+        this.deadline          = 0;
     },
     methods: {
         twoDigits(value) {
@@ -29,7 +29,7 @@ Vue.component( "auction-countdown", {
         stopAuction() {
 // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
 //             location.reload();
-        }
+        },
     },
     computed: {
         seconds() {
@@ -48,8 +48,8 @@ Vue.component( "auction-countdown", {
     watch: {
         now(value) {
             this.diff = this.deadline - this.now;
-            if ( this.diff <= 0) {
-            // if ( this.diff <= 0 || this.stop ) {
+            if ( this.diff <= 0 ) {
+                // if ( this.diff <= 0 || this.stop ) {
                 this.diff = 0;
                 // Remove interval
                 window.clearInterval();

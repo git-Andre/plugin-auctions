@@ -8,7 +8,7 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
-    <div id="addAuctionVue" class="m-b-2">
+    <div id="addAuctionVue">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
@@ -90,7 +90,6 @@
                         </span>
                         </dd>
                     {% endif %}
-
                 </dl>
             </div>
 

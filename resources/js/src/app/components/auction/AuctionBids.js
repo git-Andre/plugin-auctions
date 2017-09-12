@@ -153,6 +153,9 @@ Vue.component( "auction-bids", {
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
+        auctionend() {
+            // this.deadline = this.now + 3;
+        }
     },
     computed: {},
     watch: {
