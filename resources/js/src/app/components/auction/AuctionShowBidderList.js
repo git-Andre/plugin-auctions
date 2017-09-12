@@ -70,8 +70,7 @@ Vue.component( "auction-show-bidderlist", {
 
     ready() {
 
-    }
-    ,
+    },
 
     methods:
         {}
