@@ -70,7 +70,7 @@ Vue.component( "auction-bids", {
                             NotificationService.info(
                                 "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
                                 ")" )
-                                .closeAfter( 4000 );
+                                .closeAfter( 3500 );
                         }
                         else {
                             if ( newCustomerMaxBid > lastCustomerMaxBid ) {
@@ -91,10 +91,10 @@ Vue.component( "auction-bids", {
                                 }, 3000 );
                                 NotificationService.success(
                                     " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
-                                    .closeAfter( 4000 );
+                                    .closeAfter( 3000 );
                             }
                             else {
-                                currentBid.bidPrice       = lastBidPrice + 1;
+                                currentBid.bidPrice       = newCustomerMaxBid;
                                 currentBid.customerMaxBid = lastCustomerMaxBid;
                                 currentBid.bidderName     = bidderListLastEntry.bidderName;
                                 currentBid.customerId     = lastUserId;
@@ -106,7 +106,7 @@ Vue.component( "auction-bids", {
                                 }, 3000 );
                                 NotificationService.warn(
                                     "Es gibt leider schon ein höheres Gebot..." )
-                                    .closeAfter( 4000 );
+                                    .closeAfter( 3000 );
                             }
                         }
 
