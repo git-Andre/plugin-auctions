@@ -1,6 +1,15 @@
 <script type="x/template" id="vue-auction-bids">
     {% set loggedIn = frontend.Account.getIsAccountLoggedIn %}
 
+    <div class="row container">
+        <auction-countdown
+                template="#vue-auction-countdown"
+                v-resource-push:deadline
+                resource="deadline"
+        >
+        </auction-countdown>
+    </div>
+
     <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
         <input class="form-control form-control-lg text-muted"
                 v-model="maxCustomerBid" number

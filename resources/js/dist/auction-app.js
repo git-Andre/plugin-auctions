@@ -131,6 +131,26 @@ Vue.component("auction-bids", {
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
+        },
+        auctionend: function auctionend() {
+            var startD = Math.trunc(new Date().getTime() / 1000);
+            console.log('startD: ' + startD);
+            startD = startD - 24 * 60 * 60 + 6;
+            var Bidtest = {
+                "startDate": startD,
+                "startHour": 16,
+                "startMinute": 45,
+                "auctionDuration": 1,
+                "currentPrice": this.minBid - 1
+            };
+
+            console.dir(Bidtest);
+
+            ApiService.put("/api/auction/28", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
+                // alert( "ok" );
+            }).fail(function () {
+                alert('Upps - ein Fehler beim updaten ??!!');
+            });
         }
     },
     computed: {},
@@ -296,17 +316,15 @@ Vue.component("auction-countdown", {
     ready: function ready() {
         var _this = this;
 
-        window.setInterval(function () {
+        this.timer = setInterval(function () {
             _this.now = Math.trunc(new Date().getTime() / 1000);
         }, 1000);
     },
 
-    props: ["template", "deadline"
-    // "stop"
-    ],
+    props: ["template", "deadline", "timer"],
     data: function data() {
         return {
-            now: Math.trunc(new Date().getTime() / 1000),
+            now: 1,
             diff: 0
         };
     },
@@ -324,10 +342,10 @@ Vue.component("auction-countdown", {
         },
         stopAuction: function stopAuction() {
             // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
+            // Remove interval
+            window.clearInterval(this.timer);
+
             //             location.reload();
-        },
-        auctionend: function auctionend() {
-            this.deadline = this.now + 3;
         }
     },
     computed: {
@@ -346,12 +364,10 @@ Vue.component("auction-countdown", {
     },
     watch: {
         now: function now(value) {
-            this.diff = this.deadline - this.now;
-            if (this.diff <= 0) {
-                // if ( this.diff <= 0 || this.stop ) {
+            if (this.deadline > this.now) {
+                this.diff = this.deadline - this.now;
+            } else {
                 this.diff = 0;
-                // Remove interval
-                window.clearInterval();
                 this.stopAuction();
             }
         }

@@ -1,18 +1,18 @@
 Vue.component( "auction-countdown", {
     ready() {
-        window.setInterval( () => {
+        this.timer = setInterval( () => {
             this.now = Math.trunc( (new Date()).getTime() / 1000 );
         }, 1000 );
     },
     props: [
         "template",
-        "deadline"
-        // "stop"
+        "deadline",
+        "timer"
     ],
     data() {
         return {
-            now: Math.trunc( (new Date()).getTime() / 1000 ),
-            diff: 0
+            now: 1,
+            diff: 1
         }
     },
     created() {
@@ -25,11 +25,7 @@ Vue.component( "auction-countdown", {
                 return '0' + value.toString()
             }
             return value.toString()
-        },
-        stopAuction() {
-// Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
-//             location.reload();
-        },
+        }
     },
     computed: {
         seconds() {
@@ -47,14 +43,14 @@ Vue.component( "auction-countdown", {
     },
     watch: {
         now(value) {
-            this.diff = this.deadline - this.now;
-            if ( this.diff <= 0 ) {
-                // if ( this.diff <= 0 || this.stop ) {
+            if ( this.deadline > this.now ) {
+                this.diff = this.deadline - this.now;
+            }
+            else {
                 this.diff = 0;
-                // Remove interval
-                window.clearInterval();
-                this.stopAuction();
+                window.clearInterval( this.timer );
             }
         }
     }
-} );
+} )
+;
