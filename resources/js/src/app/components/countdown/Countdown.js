@@ -48,6 +48,7 @@ Vue.component( "auction-countdown", {
             }
             else {
                 this.diff = 0;
+                this.$parent.auctionEnd = true;
                 window.clearInterval( this.timer );
             }
         }

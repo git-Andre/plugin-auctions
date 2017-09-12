@@ -6,7 +6,7 @@ var NotificationService = require("services/NotificationService");
 var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-bids", {
-    props: ["template", "auctionid", "userdata", "minBid", "versand"],
+    props: ["template", "auctionid", "userdata", "minBid", "versand", "auctionEnd"],
     data: function data() {
         return {
             isInputValid: false,
@@ -17,11 +17,13 @@ Vue.component("auction-bids", {
         this.$options.template = this.template;
         this.minBid = 0;
         this.auctionid = parseInt(this.auctionid);
+        this.auctionEnd = false;
         this.initAuctionParams();
         this.versand = {};
     },
     ready: function ready() {
         this.userdata = JSON.parse(this.userdata);
+        console.log('this.auctionEnd: ' + this.auctionEnd);
     },
 
     methods: {
@@ -135,13 +137,13 @@ Vue.component("auction-bids", {
         auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             console.log('startD: ' + startD);
-            startD = startD - 24 * 60 * 60 + 6;
+            startD = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
                 "startDate": startD,
                 "startHour": 16,
                 "startMinute": 45,
                 "auctionDuration": 1,
-                "currentPrice": this.minBid - 1
+                "currentPrice": this.minBid - 2
             };
 
             console.dir(Bidtest);
@@ -149,7 +151,7 @@ Vue.component("auction-bids", {
             ApiService.put("/api/auction/28", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
-                alert('Upps - ein Fehler beim updaten ??!!');
+                alert('Upps - ein Fehler beim auctionend ??!!');
             });
         }
     },
@@ -167,7 +169,15 @@ Vue.component("auction-bids", {
             } else {
                 this.isInputValid = false;
             }
+        },
+
+        auctionEnd: function auctionEnd() {
+            console.log('drin: ');
+            if (this.auctionEnd) {
+                console.log('und Action: ');
+            }
         }
+
     }
 });
 
@@ -180,12 +190,12 @@ var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-show-bidderlist", {
 
-    props: ["template", "auctionid", "expiryDate"],
+    props: ["template", "auctionid"],
 
     data: function data() {
         return {
             bidderList: [],
-            isAuctionPresent: false,
+            // isAuctionPresent: false,
             bidders: 0
         };
     },
@@ -218,18 +228,23 @@ Vue.component("auction-show-bidderlist", {
         }, function (error) {
             alert('error4: ' + error.toString());
         });
-        AuctionBidderService.getExpiryDate(this.auctionid).then(function (response) {
-
-            _this.expiryDate = response;
-
-            if (Math.trunc(new Date().getTime() / 1000) < _this.expiryDate) {
-                _this.isAuctionPresent = true;
-            } else {
-                _this.isAuctionPresent = false;
-            };
-        }, function (error) {
-            alert('error5: ' + error.toString());
-        });
+        // AuctionBidderService.getExpiryDate( this.auctionid )
+        //     .then(
+        //         response => {
+        //
+        //             this.expiryDate = response;
+        //
+        //             // if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
+        //             //     this.isAuctionPresent = true;
+        //             // }
+        //             // else {
+        //             //     this.isAuctionPresent = false;
+        //             // };
+        //         },
+        //         error => {
+        //             alert( 'error5: ' + error.toString() );
+        //         }
+        //     );
     },
     ready: function ready() {},
 
@@ -325,7 +340,7 @@ Vue.component("auction-countdown", {
     data: function data() {
         return {
             now: 1,
-            diff: 0
+            diff: 1
         };
     },
     created: function created() {
@@ -339,13 +354,6 @@ Vue.component("auction-countdown", {
                 return '0' + value.toString();
             }
             return value.toString();
-        },
-        stopAuction: function stopAuction() {
-            // Todo: herzlichen GWunsch Modal if loggedin user last Bidder... - CHECKOUT this item ???!!?
-            // Remove interval
-            window.clearInterval(this.timer);
-
-            //             location.reload();
         }
     },
     computed: {
@@ -368,7 +376,8 @@ Vue.component("auction-countdown", {
                 this.diff = this.deadline - this.now;
             } else {
                 this.diff = 0;
-                this.stopAuction();
+                this.$parent.auctionEnd = true;
+                window.clearInterval(this.timer);
             }
         }
     }

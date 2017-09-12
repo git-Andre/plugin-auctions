@@ -9,6 +9,7 @@ Vue.component( "auction-bids", {
         "userdata",
         "minBid",
         "versand",
+        "auctionEnd"
     ],
     data() {
         return {
@@ -20,6 +21,7 @@ Vue.component( "auction-bids", {
         this.$options.template = this.template;
         this.minBid            = 0;
         this.auctionid         = parseInt( this.auctionid );
+        this.auctionEnd        = false;
         this.initAuctionParams();
         this.versand = {};
     },
@@ -155,17 +157,14 @@ Vue.component( "auction-bids", {
         },
         auctionend() {
             var startD = Math.trunc( (new Date()).getTime() / 1000 );
-            console.log( 'startD: ' + startD );
-            startD = startD - 24 * 60 * 60 + 6;
+            startD      = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
                 "startDate": startD,
                 "startHour": 16,
                 "startMinute": 45,
                 "auctionDuration": 1,
-                "currentPrice": this.minBid - 1
+                "currentPrice": this.minBid - 2
             };
-
-            console.dir(Bidtest);
 
             ApiService.put( "/api/auction/28", JSON.stringify( Bidtest ), { contentType: "application/json" }
             )
@@ -173,8 +172,11 @@ Vue.component( "auction-bids", {
                     // alert( "ok" );
                 } )
                 .fail( () => {
-                    alert( 'Upps - ein Fehler beim updaten ??!!' );
+                    alert( 'Upps - ein Fehler beim auctionend ??!!' );
                 } );
+        },
+        afterAuction() {
+
         }
     },
     computed: {},
@@ -195,6 +197,16 @@ Vue.component( "auction-bids", {
             else {
                 this.isInputValid = false;
             }
+        },
+
+        auctionEnd: function () {
+            console.log( 'drin: ' );
+            if ( this.auctionEnd ) {
+                console.log( 'und Action: ' );
+                this.afterAuction();
+            }
+
         }
+
     },
 } );
