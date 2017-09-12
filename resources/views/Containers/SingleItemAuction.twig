@@ -8,7 +8,7 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
-    <div id="addAuctionVue">
+    <div id="addAuctionVue" class="m-b-2">
 
         {#Zukunft#}
         {% if (auction.tense == 'future') %}
@@ -33,7 +33,7 @@
 
             {% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}
 
-            <h2 class="m-b-0" style="color: #c50000;">Laufende Auktion:</h2>
+            <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
 
             <div class="row container">
                 <auction-countdown
@@ -43,7 +43,7 @@
                 >
                 </auction-countdown>
             </div>
-            <div class="row container m-t-0 m-b-3">
+            <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
                         auctionid="{{ auction.id }}"
@@ -52,7 +52,7 @@
             </div>
 
 
-            <div class="row container m-t-1 m-b-0">
+            <div class="row container m-t-0 m-b-1">
                 <dl class="auctionList">
                     {% if (bidderListLast.bidPrice != auction.currentPrice) %}
                         <dt>Aktuelles Gebot:</dt>
