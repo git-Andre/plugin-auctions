@@ -28,79 +28,81 @@ Vue.component("auction-bids", {
         addBid: function addBid() {
             var _this = this;
 
-            var currentBid = {
-                'bidPrice': 1,
-                'customerMaxBid': 2.1,
-                'bidderName': "versand***Kunde1",
-                'customerId': 3
-            };
-            var newCustomerMaxBid = this.toFloatTwoDecimal(this.maxCustomerBid);
-            var pos = this.userdata.email.indexOf("@");
-            var newBidderName = this.userdata.email.slice(0, 2) + " *** " + this.userdata.email.slice(pos - 2, pos);
+            if (this.isInputValid) {
+                var currentBid = {
+                    'bidPrice': 1,
+                    'customerMaxBid': 2.1,
+                    'bidderName': "versand***Kunde1",
+                    'customerId': 3
+                };
+                var newCustomerMaxBid = this.toFloatTwoDecimal(this.maxCustomerBid);
+                var pos = this.userdata.email.indexOf("@");
+                var newBidderName = this.userdata.email.slice(0, 2) + " *** " + this.userdata.email.slice(pos - 2, pos);
 
-            // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
-            var newUserId = parseInt(this.userdata.id);
+                // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
+                var newUserId = parseInt(this.userdata.id);
 
-            var lastEntry = true;
+                var lastEntry = true;
 
-            AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
+                AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
 
-                var bidderListLastEntry = response;
+                    var bidderListLastEntry = response;
 
-                var lastBidPrice = _this.toFloatTwoDecimal(bidderListLastEntry.bidPrice);
-                if (lastBidPrice < 1.1) {
-                    lastBidPrice = _this.toFloatTwoDecimal(_this.minBid - 1);
-                }
-                var lastCustomerMaxBid = _this.toFloatTwoDecimal(bidderListLastEntry.customerMaxBid);
-                var lastUserId = parseInt(bidderListLastEntry.customerId);
+                    var lastBidPrice = _this.toFloatTwoDecimal(bidderListLastEntry.bidPrice);
+                    if (lastBidPrice < 1.1) {
+                        lastBidPrice = _this.toFloatTwoDecimal(_this.minBid - 1);
+                    }
+                    var lastCustomerMaxBid = _this.toFloatTwoDecimal(bidderListLastEntry.customerMaxBid);
+                    var lastUserId = parseInt(bidderListLastEntry.customerId);
 
-                if (lastUserId == newUserId) {
+                    if (lastUserId == newUserId) {
 
-                    currentBid.bidPrice = lastBidPrice;
-                    currentBid.customerMaxBid = newCustomerMaxBid;
-                    currentBid.bidderName = newBidderName;
-                    currentBid.customerId = newUserId;
-
-                    _this.versand = currentBid;
-                    _this.updateAuction();
-                    // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                    NotificationService.info("Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid + ")").closeAfter(4000);
-                } else {
-                    if (newCustomerMaxBid > lastCustomerMaxBid) {
-                        if (newCustomerMaxBid < lastCustomerMaxBid + 1) {
-                            currentBid.bidPrice = newCustomerMaxBid;
-                        } else {
-                            currentBid.bidPrice = lastCustomerMaxBid + 1;
-                        }
+                        currentBid.bidPrice = lastBidPrice;
                         currentBid.customerMaxBid = newCustomerMaxBid;
                         currentBid.bidderName = newBidderName;
                         currentBid.customerId = newUserId;
 
                         _this.versand = currentBid;
                         _this.updateAuction();
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
-                        NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(4000);
+                        // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+                        NotificationService.info("Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid + ")").closeAfter(4000);
                     } else {
-                        currentBid.bidPrice = lastBidPrice + 1;
-                        currentBid.customerMaxBid = lastCustomerMaxBid;
-                        currentBid.bidderName = bidderListLastEntry.bidderName;
-                        currentBid.customerId = lastUserId;
+                        if (newCustomerMaxBid > lastCustomerMaxBid) {
+                            if (newCustomerMaxBid < lastCustomerMaxBid + 1) {
+                                currentBid.bidPrice = newCustomerMaxBid;
+                            } else {
+                                currentBid.bidPrice = lastCustomerMaxBid + 1;
+                            }
+                            currentBid.customerMaxBid = newCustomerMaxBid;
+                            currentBid.bidderName = newBidderName;
+                            currentBid.customerId = newUserId;
 
-                        _this.versand = currentBid;
-                        _this.updateAuction();
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
-                        NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(4000);
+                            _this.versand = currentBid;
+                            _this.updateAuction();
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                            NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(4000);
+                        } else {
+                            currentBid.bidPrice = lastBidPrice + 1;
+                            currentBid.customerMaxBid = lastCustomerMaxBid;
+                            currentBid.bidderName = bidderListLastEntry.bidderName;
+                            currentBid.customerId = lastUserId;
+
+                            _this.versand = currentBid;
+                            _this.updateAuction();
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                            NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(4000);
+                        }
                     }
-                }
 
-                // this.initAuctionParams();
-            }, function (error) {
-                alert('error2: ' + error.toString());
-            });
+                    // this.initAuctionParams();
+                }, function (error) {
+                    alert('error2: ' + error.toString());
+                });
+            }
         },
         updateAuction: function updateAuction() {
             ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(this.versand), { contentType: "application/json" }).then(function (response) {
@@ -116,12 +118,12 @@ Vue.component("auction-bids", {
 
             ApiService.get("/api/auction/" + this.auctionid, {}, {}).done(function (auction) {
                 var lastBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice);
-                var currentPrice = _this2.toFloatTwoDecimal(auction.currentPrice);
-
-                _this2.minBid = lastBid + 1;
-
-                if (lastBid == currentPrice) {
-                    _this2.minBid = currentPrice;
+                var startPrice = _this2.toFloatTwoDecimal(auction.currentPrice);
+                // Gibt es Gebote?
+                if (auction.bidderList.length > 1) {
+                    _this2.minBid = lastBid + 1;
+                } else {
+                    _this2.minBid = startPrice;
                 }
             }).fail(function () {
                 alert('Upps - ein Fehler beim abholen ??!!');

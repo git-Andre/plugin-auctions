@@ -9,10 +9,9 @@
                 id="maximumBid"
                 placeholder="Ihr Maximalgebot"
                 aria-describedby="maxBidHelpBlock"
-                @keyup.enter="addBid"
         >
         <p id="maxBidHelpBlock"
-                class="form-text text-muted text-center">Bitte geben Sie mindestens<span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
+                class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
 
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
