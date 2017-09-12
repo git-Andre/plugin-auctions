@@ -27,14 +27,31 @@
                 <dd>kostenlos.</dd>
             </dl>
 
-        {#Gegenwart#}
+            {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
             {% set shippingCat = config("Ceres.global.shippingCostsCategoryId") %}
+
             {% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}
+
             <h2 class="m-b-0" style="color: #c50000;">Laufende Auktion:</h2>
 
+            <div class="row container">
+                <auction-countdown
+                        template="#vue-auction-countdown"
+                        v-resource-push:deadline
+                        resource="deadline"
+                >
+                </auction-countdown>
+            </div>
+            <div class="row container m-t-0 m-b-3">
+                <auction-bids
+                        template="#vue-auction-bids"
+                        auctionid="{{ auction.id }}"
+                        userdata="{{ services.customer.getContact() | json_encode() }}">
+                </auction-bids>
+            </div>
 
-            {#<hr class="m-b-2 m-r-3 m-l-2">#}
+
             <div class="row container m-t-1 m-b-0">
                 <dl class="auctionList">
                     {% if (bidderListLast.bidPrice != auction.currentPrice) %}
@@ -75,23 +92,8 @@
                     {% endif %}
                 </dl>
             </div>
-            <div class="row container">
-                <auction-countdown
-                        template="#vue-auction-countdown"
-                        v-resource-push:deadline
-                        resource="deadline"
-                >
-                </auction-countdown>
-            </div>
-            <div class="row container m-t-0 m-b-3">
-                <auction-bids
-                        template="#vue-auction-bids"
-                        auctionid="{{ auction.id }}"
-                        userdata="{{ services.customer.getContact() | json_encode() }}">
-                </auction-bids>
-            </div>
 
-        {#Vergangenheit #}
+            {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
