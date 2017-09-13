@@ -23,7 +23,6 @@ Vue.component("auction-bids", {
     },
     ready: function ready() {
         this.userdata = JSON.parse(this.userdata);
-        console.log('this.auctionEnd: ' + this.auctionEnd);
     },
 
     methods: {
@@ -81,9 +80,7 @@ Vue.component("auction-bids", {
 
                             _this.versand = currentBid;
                             _this.updateAuction();
-                            setTimeout(function () {
-                                location.reload();
-                            }, 3000);
+                            _this.reload();
                             NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(3000);
                         } else {
                             currentBid.bidPrice = newCustomerMaxBid;
@@ -93,9 +90,8 @@ Vue.component("auction-bids", {
 
                             _this.versand = currentBid;
                             _this.updateAuction();
-                            setTimeout(function () {
-                                location.reload();
-                            }, 3000);
+                            _this.reload();
+
                             NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
                         }
                     }
@@ -107,11 +103,7 @@ Vue.component("auction-bids", {
             }
         },
         updateAuction: function updateAuction() {
-            ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(this.versand), { contentType: "application/json" }).then(function (response) {
-                // alert( response );
-                // this.versand = {};
-                //
-            }, function (error) {
+            ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(this.versand), { contentType: "application/json" }).then(function (response) {}, function (error) {
                 alert('error3: ' + error.toString());
             });
         },
@@ -136,7 +128,6 @@ Vue.component("auction-bids", {
         },
         auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
-            console.log('startD: ' + startD);
             startD = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
                 "startDate": startD,
@@ -146,16 +137,67 @@ Vue.component("auction-bids", {
                 "currentPrice": this.minBid - 2
             };
 
-            console.dir(Bidtest);
-
             ApiService.put("/api/auction/28", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
+        },
+        afterAuction: function afterAuction() {
+            if (this.userdata) {
+                var currentUserId = this.userdata.id;
+
+                var lastEntry = false;
+
+                AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
+
+                    var bidderList = response;
+                    var bidderListLastEntry = bidderList[bidderList.length - 1];
+
+                    var lastUserId = bidderListLastEntry.customerId;
+                    if (currentUserId == lastUserId) {
+                        // alert( "Du hast gewonnen!" );
+                        NotificationService.error("Du hast gewonnen!").close;
+
+                        // item -> Basket
+                        // Url -> Checkout
+                    } else {
+                        var isUserInBidderList = false;
+
+                        for (var i = bidderList.length; --i > 0;) {
+                            console.log('i inner: ' + i);
+                            var userId = bidderList[i].customerId;
+
+                            if (currentUserId == userId) {
+                                isUserInBidderList = true;
+                                break;
+                            }
+                        }
+                        console.log('i outer: ' + i);
+
+                        if (isUserInBidderList) {
+                            // alert("Leider überboten...")
+                            NotificationService.error("Leider überboten...").close;
+                        } else {
+                            NotificationService.info("Nicht geboten").close;
+
+                            // this.reload();
+                        }
+                    }
+                }, function (error) {
+                    alert('error5: ' + error.toString());
+                });
+            } else {
+                NotificationService.warn("Nicht angemeldet").close;
+                // this.reload();
+            }
+        },
+        reload: function reload() {
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         }
     },
-    computed: {},
     watch: {
         maxCustomerBid: function maxCustomerBid() {
 
@@ -172,13 +214,13 @@ Vue.component("auction-bids", {
         },
 
         auctionEnd: function auctionEnd() {
-            console.log('drin: ');
             if (this.auctionEnd) {
-                console.log('und Action: ');
+                this.afterAuction();
             }
         }
 
     }
+
 });
 
 },{"services/ApiService":6,"services/AuctionBidderService":7,"services/NotificationService":8}],2:[function(require,module,exports){
