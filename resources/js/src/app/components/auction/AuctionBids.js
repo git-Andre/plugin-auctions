@@ -136,7 +136,9 @@ Vue.component( "auction-bids", {
 
                     // Gibt es Gebote?
                     if ( auction.bidderList.length > 1 ) {
-                        this.minBid = this.toFloatTwoDecimal(( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) + 1);
+                        this.minBid =
+                            this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
+                                1 );
                     }
                     else {
                         this.minBid = this.toFloatTwoDecimal( auction.currentPrice );
@@ -149,26 +151,26 @@ Vue.component( "auction-bids", {
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
-        auctionend() {
-            var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-            startD      = startD - 24 * 60 * 60 + 7;
-            var Bidtest = {
-                "startDate": startD,
-                "startHour": 16,
-                "startMinute": 45,
-                "auctionDuration": 1,
-                "currentPrice": this.minBid - 2
-            };
-
-            ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
-            )
-                .done( auction => {
-                    // alert( "ok" );
-                } )
-                .fail( () => {
-                    alert( 'Upps - ein Fehler beim auctionend ??!!' );
-                } );
-        },
+        // auctionend() {
+        //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+        //     startD      = startD - 24 * 60 * 60 + 7;
+        //     var Bidtest = {
+        //         "startDate": startD,
+        //         "startHour": 16,
+        //         "startMinute": 45,
+        //         "auctionDuration": 1,
+        //         "currentPrice": this.minBid - 2
+        //     };
+        //
+        //     ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
+        //     )
+        //         .done( auction => {
+        //             // alert( "ok" );
+        //         } )
+        //         .fail( () => {
+        //             alert( 'Upps - ein Fehler beim auctionend ??!!' );
+        //         } );
+        // },
         // auctionstart() {
         //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
         //     startD      = startD - 24 * 60 * 60 + 7;
@@ -195,6 +197,8 @@ Vue.component( "auction-bids", {
 
                 const lastEntry = false;
 
+                this.timeOut( 2000 ); // um Probleme mit geringen Zeitunterschieden zu umgehen
+
                 AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
                     response => {
 
@@ -204,7 +208,8 @@ Vue.component( "auction-bids", {
                         const lastUserId = bidderListLastEntry.customerId;
                         if ( currentUserId == lastUserId ) {
                             // alert( "Du hast gewonnen!" );
-                            NotificationService.error( "Du hast gewonnen!" ).close;
+                            NotificationService.error( "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!" )
+                                .closeAfter(2500);
 
                             // item -> Basket
                             // Url -> Checkout
@@ -213,7 +218,6 @@ Vue.component( "auction-bids", {
                             var isUserInBidderList = false;
 
                             for (var i = bidderList.length; --i > 0;) {
-                                console.log( 'i inner: ' + i );
                                 const userId = bidderList[i].customerId;
 
                                 if ( currentUserId == userId ) {
@@ -221,14 +225,15 @@ Vue.component( "auction-bids", {
                                     break
                                 }
                             }
-                            console.log( 'i outer: ' + i );
 
                             if ( isUserInBidderList ) {
                                 // alert("Leider überboten...")
-                                NotificationService.error( "Leider überboten..." ).close;
+                                NotificationService.error( "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
+                                // this.reload();
 
-                            } else {
-                                NotificationService.info( "Nicht geboten -> reload" ).close;
+                            }
+                            else {
+                                NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgebotenicht geboten." ).close;
 
                                 // this.reload();
                             }
@@ -249,6 +254,11 @@ Vue.component( "auction-bids", {
             setTimeout( () => {
                 location.reload();
             }, 3000 );
+        },
+        timeOut(dauer) {
+            setTimeout( () => {
+                // location.reload();
+            }, dauer );
         }
     },
     watch: {
