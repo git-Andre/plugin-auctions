@@ -3,14 +3,7 @@ const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
-    props: [
-        "template",
-        "auctionid",
-        "userdata",
-        "minBid",
-        "versand",
-        "auctionEnd"
-    ],
+    props: ["template", "auctionid", "userdata", "minBid", "versand", "auctionEnd"],
     data() {
         return {
             isInputValid: false,
@@ -131,9 +124,6 @@ Vue.component( "auction-bids", {
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
                 .done( auction => {
-                    // const lastBid    = this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
-                    // const startPrice = this.toFloatTwoDecimal( auction.currentPrice );
-
                     // Gibt es Gebote?
                     if ( auction.bidderList.length > 1 ) {
                         this.minBid =
@@ -151,119 +141,94 @@ Vue.component( "auction-bids", {
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
-        // auctionend() {
-        //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-        //     startD      = startD - 24 * 60 * 60 + 7;
-        //     var Bidtest = {
-        //         "startDate": startD,
-        //         "startHour": 16,
-        //         "startMinute": 45,
-        //         "auctionDuration": 1,
-        //         "currentPrice": this.minBid - 2
-        //     };
-        //
-        //     ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
-        //     )
-        //         .done( auction => {
-        //             // alert( "ok" );
-        //         } )
-        //         .fail( () => {
-        //             alert( 'Upps - ein Fehler beim auctionend ??!!' );
-        //         } );
-        // },
-        // auctionstart() {
-        //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-        //     startD      = startD - 24 * 60 * 60 + 7;
-        //     var Bidtest = {
-        //         "startDate": startD,
-        //         "startHour": 16,
-        //         "startMinute": 45,
-        //         "auctionDuration": 1,
-        //         "currentPrice": this.minBid - 2
-        //     };
-        //
-        //     ApiService.put( "/api/auction/28", JSON.stringify( Bidtest ), { contentType: "application/json" }
-        //     )
-        //         .done( auction => {
-        //             // alert( "ok" );
-        //         } )
-        //         .fail( () => {
-        //             alert( 'Upps - ein Fehler beim auctionend ??!!' );
-        //         } );
-        // },
+        auctionend() {
+            var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+            startD      = startD - 24 * 60 * 60 + 7;
+            var Bidtest = {
+                "startDate": startD,
+                "startHour": 16,
+                "startMinute": 45,
+                "auctionDuration": 1,
+                "currentPrice": this.minBid - 2
+            };
+
+            ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            )
+                .done( auction => {
+                    // alert( "ok" );
+                } )
+                .fail( () => {
+                    alert( 'Upps - ein Fehler beim auctionend ??!!' );
+                } );
+        },
         afterAuction() {
-            if ( this.userdata ) {
-                const currentUserId = this.userdata.id;
+            // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
+            setTimeout( () => {
+                if ( this.userdata ) {
+                    const currentUserId = this.userdata.id;
+                    const lastEntry = false;
 
-                const lastEntry = false;
+                    AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
+                        response => {
 
-                this.timeOut( 2000 ); // um Probleme mit geringen Zeitunterschieden zu umgehen
+                            const bidderList          = response;
+                            const bidderListLastEntry = bidderList[bidderList.length - 1];
 
-                AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-                    response => {
+                            const lastUserId = bidderListLastEntry.customerId;
 
-                        const bidderList          = response;
-                        const bidderListLastEntry = bidderList[bidderList.length - 1];
+                            // Gewinner eingeloggt ??
+                            if ( currentUserId == lastUserId ) {
+                                NotificationService.success(
+                                    "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!" )
+                                    .close;
+                                alert( "  // item -> Basket\n" + "// Url -> Checkout" )
+                                // item -> Basket
+                                // Url -> Checkout
+                            }
+                            // Gewinner nicht eingeloggt !!
+                            else {
+                                var isUserInBidderList = false;
 
-                        const lastUserId = bidderListLastEntry.customerId;
-                        if ( currentUserId == lastUserId ) {
-                            // alert( "Du hast gewonnen!" );
-                            NotificationService.error( "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!" )
-                                .closeAfter(2500);
+                                for (var i = bidderList.length; --i > 0;) {
+                                    const userId = bidderList[i].customerId;
 
-                            // item -> Basket
-                            // Url -> Checkout
-                        }
-                        else {
-                            var isUserInBidderList = false;
-
-                            for (var i = bidderList.length; --i > 0;) {
-                                const userId = bidderList[i].customerId;
-
-                                if ( currentUserId == userId ) {
-                                    isUserInBidderList = true;
-                                    break
+                                    if ( currentUserId == userId ) {
+                                        isUserInBidderList = true;
+                                        break
+                                    }
+                                }
+                                // ist der eingeloggte User in BidderList
+                                if ( isUserInBidderList ) {
+                                    NotificationService.error(
+                                        "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
+                                    this.reload( 3000 );
+                                }
+                                // nein
+                                else {
+                                    NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgeboten." ).close;
+                                    this.reload( 3000 );
                                 }
                             }
-
-                            if ( isUserInBidderList ) {
-                                // alert("Leider überboten...")
-                                NotificationService.error( "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
-                                // this.reload();
-
-                            }
-                            else {
-                                NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgebotenicht geboten." ).close;
-
-                                // this.reload();
-                            }
+                        },
+                        error => {
+                            alert( 'error5: ' + error.toString() );
                         }
-                    }
-                    ,
-                    error => {
-                        alert( 'error5: ' + error.toString() );
-                    }
-                );
-            }
-            else {
-                NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
-                // this.reload();
-            }
+                    );
+                }
+                else {
+                    NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
+                    this.reload( 3000 );
+                }
+            }, 1500 );
         },
-        reload() {
+        reload(timeout) {
             setTimeout( () => {
                 location.reload();
-            }, 3000 );
+            }, timeout );
         },
-        timeOut(dauer) {
-            setTimeout( () => {
-                // location.reload();
-            }, dauer );
-        }
     },
     watch: {
         maxCustomerBid: function () {
-
             if ( this.maxCustomerBid >= this.minBid ) {
                 if ( this.userdata != null ) {
                     this.isInputValid = true
@@ -278,16 +243,12 @@ Vue.component( "auction-bids", {
             else {
                 this.isInputValid = false;
             }
-        }
-        ,
-
+        },
         auctionEnd: function () {
             if ( this.auctionEnd ) {
                 this.afterAuction();
             }
-
         }
-
     }
     ,
 } )
