@@ -169,6 +169,26 @@ Vue.component( "auction-bids", {
                     alert( 'Upps - ein Fehler beim auctionend ??!!' );
                 } );
         },
+        auctionstart() {
+            var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+            startD      = startD - 24 * 60 * 60 + 7;
+            var Bidtest = {
+                "startDate": startD,
+                "startHour": 16,
+                "startMinute": 45,
+                "auctionDuration": 1,
+                "currentPrice": this.minBid - 2
+            };
+
+            ApiService.put( "/api/auction/28", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            )
+                .done( auction => {
+                    // alert( "ok" );
+                } )
+                .fail( () => {
+                    alert( 'Upps - ein Fehler beim auctionend ??!!' );
+                } );
+        },
         afterAuction() {
             if ( this.userdata ) {
                 const currentUserId = this.userdata.id;
