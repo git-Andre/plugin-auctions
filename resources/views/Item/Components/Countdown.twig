@@ -4,7 +4,7 @@
         <dd>
             <span>
             <ul class="vue-countdown">
-                <li v-show="(days > 0)">
+                <li v-if="(days > 0)">
                     <p class="digit">${ days }</p>
                     <p class="text">tage</p>
                 </li>
@@ -16,7 +16,7 @@
                     <p class="digit" :class="{alarm: (days < 1) }">${ minutes }</p>
                     <p class="text">min</p>
                 </li>
-                <li v-show="(days < 1)">
+                <li v-if="(days < 1)">
                     <p class="digit" :class="{alarm: (days < 1)}">${ seconds }</p>
                     <p class="text">sec</p>
                 </li>

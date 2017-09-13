@@ -414,13 +414,6 @@ Vue.component("auction-countdown", {
     methods: {
         utcTimer: function utcTimer() {
             this.now = Math.trunc(new Date().getTime() / 1000);
-            console.log('this.now: ' + this.now);
-
-            var n = new Date();
-            // n = Math.trunc( n / 1000 );
-            console.log('n: ' + n);
-            console.log('nUTC: ' + n.getUTCMinutes());
-            console.log('nUTC: ' + n.getUTCSeconds());
         },
         twoDigits: function twoDigits(value) {
             if (value.toString().length <= 1) {
@@ -431,20 +424,16 @@ Vue.component("auction-countdown", {
     },
     computed: {
         seconds: function seconds() {
-            return this.twoDigits(this.now % 60) + n.getUTCSeconds();
-            // return this.twoDigits( (this.deadline - this.now) % 60 );
+            return this.twoDigits((this.deadline - this.now) % 60);
         },
         minutes: function minutes() {
-            return this.twoDigits(Math.trunc(this.now / 60) % 60);
-            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 ) % 60 );
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60) % 60);
         },
         hours: function hours() {
-            return this.twoDigits(Math.trunc(this.now / 60 / 60) % 24);
-            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 ) % 24 );
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60) % 24);
         },
         days: function days() {
-            return this.twoDigits(Math.trunc(this.now / 60 / 60 / 24));
-            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 / 24 ) );
+            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60 / 24));
         }
     },
     watch: {
