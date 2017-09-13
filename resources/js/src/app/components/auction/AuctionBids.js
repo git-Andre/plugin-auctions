@@ -131,15 +131,15 @@ Vue.component( "auction-bids", {
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
                 .done( auction => {
-                    const lastBid    = this.toFloatTwoDecimal(
-                        ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
-                    const startPrice = this.toFloatTwoDecimal( auction.currentPrice );
+                    // const lastBid    = this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
+                    // const startPrice = this.toFloatTwoDecimal( auction.currentPrice );
+
                     // Gibt es Gebote?
                     if ( auction.bidderList.length > 1 ) {
-                        this.minBid = lastBid + 1;
+                        this.minBid = this.toFloatTwoDecimal(( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) + 1);
                     }
                     else {
-                        this.minBid = startPrice;
+                        this.minBid = this.toFloatTwoDecimal( auction.currentPrice );
                     }
                 } )
                 .fail( () => {
