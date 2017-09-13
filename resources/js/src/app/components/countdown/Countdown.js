@@ -1,6 +1,6 @@
 Vue.component( "auction-countdown", {
     ready() {
-        this.timer = setInterval( () => { this.utcTimer() }, 1000 );
+        this.timer = setInterval( () => { this.Timer() }, 1000 );
     },
     props: [
         "template",
@@ -18,7 +18,7 @@ Vue.component( "auction-countdown", {
         this.deadline          = 0;
     },
     methods: {
-        utcTimer() {
+        Timer() {
             this.now = Math.trunc( (new Date()).getTime() / 1000 );
         },
         twoDigits(value) {
