@@ -1,8 +1,6 @@
 Vue.component( "auction-countdown", {
     ready() {
-        this.timer = setInterval( () => {
-            this.now = Math.trunc( (new Date()).getTime() / 1000 );
-        }, 1000 );
+        this.timer = setInterval( () => { this.utcTimer() }, 1000 );
     },
     props: [
         "template",
@@ -11,8 +9,8 @@ Vue.component( "auction-countdown", {
     ],
     data() {
         return {
-            now: 1,
-            diff: 1
+            now: Math.trunc( (new Date()).getTime() / 1000 ),
+            diff: 0
         }
     },
     created() {
@@ -20,6 +18,19 @@ Vue.component( "auction-countdown", {
         this.deadline          = 0;
     },
     methods: {
+        utcTimer() {
+            this.now = Math.trunc( (new Date()).getTime() / 1000 );
+            console.log( 'this.now: ' + this.now );
+
+            var n = new Date()
+            // n = Math.trunc( n / 1000 );
+            console.log( 'n: ' + n );
+            console.log( 'nUTC: ' + n.getUTCMinutes() );
+            console.log( 'nUTC: ' + n.getUTCSeconds() );
+
+
+
+        },
         twoDigits(value) {
             if ( value.toString().length <= 1 ) {
                 return '0' + value.toString()
@@ -29,16 +40,20 @@ Vue.component( "auction-countdown", {
     },
     computed: {
         seconds() {
-            return this.twoDigits( (this.deadline - this.now) % 60 );
+            return this.twoDigits( this.now % 60 ) + n.getUTCSeconds();
+            // return this.twoDigits( (this.deadline - this.now) % 60 );
         },
         minutes() {
-            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 ) % 60 );
+            return this.twoDigits( Math.trunc( this.now / 60 ) % 60 );
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 ) % 60 );
         },
         hours() {
-            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 ) % 24 );
+            return this.twoDigits( Math.trunc( this.now / 60 / 60 ) % 24 );
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 ) % 24 );
         },
         days() {
-            return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 / 24 ) );
+            return this.twoDigits( Math.trunc(  this.now / 60 / 60 / 24 ) );
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 / 24 ) );
         },
     },
     watch: {

@@ -137,12 +137,33 @@ Vue.component("auction-bids", {
                 "currentPrice": this.minBid - 2
             };
 
-            ApiService.put("/api/auction/28", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
+            ApiService.put("/api/auction/34", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
+
+        // auctionstart() {
+        //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+        //     startD      = startD - 24 * 60 * 60 + 7;
+        //     var Bidtest = {
+        //         "startDate": startD,
+        //         "startHour": 16,
+        //         "startMinute": 45,
+        //         "auctionDuration": 1,
+        //         "currentPrice": this.minBid - 2
+        //     };
+        //
+        //     ApiService.put( "/api/auction/28", JSON.stringify( Bidtest ), { contentType: "application/json" }
+        //     )
+        //         .done( auction => {
+        //             // alert( "ok" );
+        //         } )
+        //         .fail( () => {
+        //             alert( 'Upps - ein Fehler beim auctionend ??!!' );
+        //         } );
+        // },
         afterAuction: function afterAuction() {
             if (this.userdata) {
                 var currentUserId = this.userdata.id;
@@ -179,7 +200,7 @@ Vue.component("auction-bids", {
                             // alert("Leider überboten...")
                             NotificationService.error("Leider überboten...").close;
                         } else {
-                            NotificationService.info("Nicht geboten").close;
+                            NotificationService.info("Nicht geboten -> reload").close;
 
                             // this.reload();
                         }
@@ -188,7 +209,7 @@ Vue.component("auction-bids", {
                     alert('error5: ' + error.toString());
                 });
             } else {
-                NotificationService.warn("Nicht angemeldet").close;
+                NotificationService.warn("Nicht angemeldet... -> reload").close;
                 // this.reload();
             }
         },
@@ -374,15 +395,15 @@ Vue.component("auction-countdown", {
         var _this = this;
 
         this.timer = setInterval(function () {
-            _this.now = Math.trunc(new Date().getTime() / 1000);
+            _this.utcTimer();
         }, 1000);
     },
 
     props: ["template", "deadline", "timer"],
     data: function data() {
         return {
-            now: 1,
-            diff: 1
+            now: Math.trunc(new Date().getTime() / 1000),
+            diff: 0
         };
     },
     created: function created() {
@@ -391,6 +412,16 @@ Vue.component("auction-countdown", {
     },
 
     methods: {
+        utcTimer: function utcTimer() {
+            this.now = Math.trunc(new Date().getTime() / 1000);
+            console.log('this.now: ' + this.now);
+
+            var n = new Date();
+            // n = Math.trunc( n / 1000 );
+            console.log('n: ' + n);
+            console.log('nUTC: ' + n.getUTCMinutes());
+            console.log('nUTC: ' + n.getUTCSeconds());
+        },
         twoDigits: function twoDigits(value) {
             if (value.toString().length <= 1) {
                 return '0' + value.toString();
@@ -400,16 +431,20 @@ Vue.component("auction-countdown", {
     },
     computed: {
         seconds: function seconds() {
-            return this.twoDigits((this.deadline - this.now) % 60);
+            return this.twoDigits(this.now % 60) + n.getUTCSeconds();
+            // return this.twoDigits( (this.deadline - this.now) % 60 );
         },
         minutes: function minutes() {
-            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60) % 60);
+            return this.twoDigits(Math.trunc(this.now / 60) % 60);
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 ) % 60 );
         },
         hours: function hours() {
-            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60) % 24);
+            return this.twoDigits(Math.trunc(this.now / 60 / 60) % 24);
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 ) % 24 );
         },
         days: function days() {
-            return this.twoDigits(Math.trunc((this.deadline - this.now) / 60 / 60 / 24));
+            return this.twoDigits(Math.trunc(this.now / 60 / 60 / 24));
+            // return this.twoDigits( Math.trunc( (this.deadline - this.now) / 60 / 60 / 24 ) );
         }
     },
     watch: {
