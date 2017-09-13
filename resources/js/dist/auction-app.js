@@ -111,13 +111,14 @@ Vue.component("auction-bids", {
             var _this2 = this;
 
             ApiService.get("/api/auction/" + this.auctionid, {}, {}).done(function (auction) {
-                var lastBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice);
-                var startPrice = _this2.toFloatTwoDecimal(auction.currentPrice);
+                // const lastBid    = this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
+                // const startPrice = this.toFloatTwoDecimal( auction.currentPrice );
+
                 // Gibt es Gebote?
                 if (auction.bidderList.length > 1) {
-                    _this2.minBid = lastBid + 1;
+                    _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
                 } else {
-                    _this2.minBid = startPrice;
+                    _this2.minBid = _this2.toFloatTwoDecimal(auction.currentPrice);
                 }
             }).fail(function () {
                 alert('Upps - ein Fehler beim abholen ??!!');
@@ -143,85 +144,74 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
-
-        // auctionstart() {
-        //     var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-        //     startD      = startD - 24 * 60 * 60 + 7;
-        //     var Bidtest = {
-        //         "startDate": startD,
-        //         "startHour": 16,
-        //         "startMinute": 45,
-        //         "auctionDuration": 1,
-        //         "currentPrice": this.minBid - 2
-        //     };
-        //
-        //     ApiService.put( "/api/auction/28", JSON.stringify( Bidtest ), { contentType: "application/json" }
-        //     )
-        //         .done( auction => {
-        //             // alert( "ok" );
-        //         } )
-        //         .fail( () => {
-        //             alert( 'Upps - ein Fehler beim auctionend ??!!' );
-        //         } );
-        // },
         afterAuction: function afterAuction() {
-            if (this.userdata) {
-                var currentUserId = this.userdata.id;
+            var _this3 = this;
 
-                var lastEntry = false;
+            // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
+            setTimeout(function () {
+                console.log(' innerhalb timeout: ');
 
-                AuctionBidderService.getBidderList(this.auctionid, lastEntry).then(function (response) {
+                if (_this3.userdata) {
+                    var currentUserId = _this3.userdata.id;
 
-                    var bidderList = response;
-                    var bidderListLastEntry = bidderList[bidderList.length - 1];
+                    var lastEntry = false;
 
-                    var lastUserId = bidderListLastEntry.customerId;
-                    if (currentUserId == lastUserId) {
-                        // alert( "Du hast gewonnen!" );
-                        NotificationService.error("Du hast gewonnen!").close;
+                    AuctionBidderService.getBidderList(_this3.auctionid, lastEntry).then(function (response) {
 
-                        // item -> Basket
-                        // Url -> Checkout
-                    } else {
-                        var isUserInBidderList = false;
+                        var bidderList = response;
+                        var bidderListLastEntry = bidderList[bidderList.length - 1];
 
-                        for (var i = bidderList.length; --i > 0;) {
-                            console.log('i inner: ' + i);
-                            var userId = bidderList[i].customerId;
+                        var lastUserId = bidderListLastEntry.customerId;
 
-                            if (currentUserId == userId) {
-                                isUserInBidderList = true;
-                                break;
+                        // Gewinner eingeloggt ??
+                        if (currentUserId == lastUserId) {
+                            NotificationService.success("Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!").close;
+                            alert("  // item -> Basket\n" + "// Url -> Checkout");
+                            // item -> Basket
+                            // Url -> Checkout
+                        }
+                        // Gewinner nicht eingeloggt !!
+                        else {
+                                var isUserInBidderList = false;
+
+                                for (var i = bidderList.length; --i > 0;) {
+                                    var userId = bidderList[i].customerId;
+
+                                    if (currentUserId == userId) {
+                                        isUserInBidderList = true;
+                                        break;
+                                    }
+                                }
+                                // ist der eingeloggte User InBidderList
+                                if (isUserInBidderList) {
+                                    NotificationService.error("Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").close;
+                                    _this3.reload(3000);
+                                }
+                                // nein
+                                else {
+                                        NotificationService.info("Bei dieser Auktion haben Sie nicht mitgeboten.").close;
+                                        _this3.reload(3000);
+                                    }
                             }
-                        }
-                        console.log('i outer: ' + i);
-
-                        if (isUserInBidderList) {
-                            // alert("Leider überboten...")
-                            NotificationService.error("Leider überboten...").close;
-                        } else {
-                            NotificationService.info("Nicht geboten -> reload").close;
-
-                            // this.reload();
-                        }
-                    }
-                }, function (error) {
-                    alert('error5: ' + error.toString());
-                });
-            } else {
-                NotificationService.warn("Nicht angemeldet... -> reload").close;
-                // this.reload();
-            }
+                    }, function (error) {
+                        alert('error5: ' + error.toString());
+                    });
+                } else {
+                    NotificationService.warn("Nicht angemeldet... -> reload").close;
+                    _this3.reload(3000);
+                    console.log(' hier reload ');
+                }
+            }, 1500);
+            console.log(' sofort nach 4000: ');
         },
-        reload: function reload() {
+        reload: function reload(timeout) {
             setTimeout(function () {
                 location.reload();
-            }, 3000);
+            }, timeout);
         }
     },
     watch: {
         maxCustomerBid: function maxCustomerBid() {
-
             if (this.maxCustomerBid >= this.minBid) {
                 if (this.userdata != null) {
                     this.isInputValid = true;
@@ -233,13 +223,11 @@ Vue.component("auction-bids", {
                 this.isInputValid = false;
             }
         },
-
         auctionEnd: function auctionEnd() {
             if (this.auctionEnd) {
                 this.afterAuction();
             }
         }
-
     }
 
 });
@@ -395,7 +383,7 @@ Vue.component("auction-countdown", {
         var _this = this;
 
         this.timer = setInterval(function () {
-            _this.utcTimer();
+            _this.Timer();
         }, 1000);
     },
 
@@ -412,7 +400,7 @@ Vue.component("auction-countdown", {
     },
 
     methods: {
-        utcTimer: function utcTimer() {
+        Timer: function Timer() {
             this.now = Math.trunc(new Date().getTime() / 1000);
         },
         twoDigits: function twoDigits(value) {
