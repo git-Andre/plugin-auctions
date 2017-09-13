@@ -1,41 +1,32 @@
 <script type="x/template" id="vue-auction-bids">
+    {% set loggedIn = frontend.Account.getIsAccountLoggedIn %}
 
     <div class="row container">
-
         <auction-countdown
                 template="#vue-auction-countdown"
                 v-resource-push:deadline
                 resource="deadline"
         >
         </auction-countdown>
+    </div>
 
-        <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
-            <input class="form-control form-control-lg text-muted"
-                    v-model="maxCustomerBid" number
-                    min="${ minBid }"
-                    type="number"
-                    id="maximumBid"
-                    placeholder="Ihr Maximalgebot"
-                    aria-describedby="maxBidHelpBlock"
-            >
-            <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">Bitte geben Sie mindestens
-                <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
+    <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
+        <input class="form-control form-control-lg text-muted"
+                v-model="maxCustomerBid" number
+                min="${ minBid }"
+                type="number"
+                id="maximumBid"
+                placeholder="Ihr Maximalgebot"
+                aria-describedby="maxBidHelpBlock"
+        >
+        <p id="maxBidHelpBlock"
+                class="form-text text-muted text-center">Bitte geben Sie mindestens <span :class="{alarm: !isInputValid}">${ minBid | currency }</span> ein!</p>
 
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
                     :disabled="!isInputValid"
                     @click="addBid"
-            >Gebot verbindlich abgeben
-            </button>
-
-            <button class="btn btn-primary btn-lg btn-block"
-                    v-if="userdata.id == 7076"
-                    @click="auctionend"
-            >auctionend
-            </button>
-
-        </div>
+            >Gebot verbindlich abgeben</button>
 
     </div>
 
