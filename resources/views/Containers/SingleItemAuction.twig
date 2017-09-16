@@ -24,7 +24,7 @@
                 <dt>End Datum:</dt>
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
                 <dt>Versand:</dt>
-                <dd>kostenlos.</dd>
+                <dd>In Deutschland kostenlos.</dd>
             </dl>
 
             {#Gegenwart#}
@@ -38,9 +38,10 @@
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
-                        auctionid="{{ auction.id }}"
+                        auctionid={{ auction.id }}
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
+
             </div>
 
 
@@ -68,7 +69,7 @@
                     <dt>End Datum:</dt>
                     <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
                     <dt>Versand:</dt>
-                    <dd>kostenlos</dd>
+                    <dd>In Deutschland kostenlos</dd>
 
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
@@ -108,7 +109,7 @@
                 <dd>{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
 
                 <dt>Versand:</dt>
-                <dd>kostenlos</dd>
+                <dd>In Deutschland kostenlos</dd>
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
@@ -132,10 +133,6 @@
        definiert!!'</p>
 
 {% endif %}
-
-{#Besucherzählertest#}
-<script type="text/javascript" src="https://whomania.com/count/exg"></script><br>
-<a href='http://besucherzaehler.co'>Besucherzähler</a> <script type='text/javascript' src='https://www.whomania.com/ctr?id=7c6f088f31f58a80506c605264c46fe298d3b747'></script>
 
 <style>
     .auctionList {
