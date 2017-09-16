@@ -6,7 +6,14 @@ var NotificationService = require("services/NotificationService");
 var AuctionBidderService = require("services/AuctionBidderService");
 
 Vue.component("auction-bids", {
-    props: ["template", "auctionid", "userdata", "minBid", "versand", "auctionEnd"],
+    props: {
+        template: String,
+        auctionid: auctionid,
+        userdata: {},
+        versand: {},
+        minBid: { type: Number, default: 0 },
+        auctionEnd: { type: Boolean, default: false }
+    },
     data: function data() {
         return {
             isInputValid: false,
@@ -15,11 +22,8 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.minBid = 0;
         this.auctionid = parseInt(this.auctionid);
-        this.auctionEnd = false;
         this.initAuctionParams();
-        this.versand = {};
     },
     ready: function ready() {
         this.userdata = JSON.parse(this.userdata);
@@ -111,9 +115,6 @@ Vue.component("auction-bids", {
             var _this2 = this;
 
             ApiService.get("/api/auction/" + this.auctionid, {}, {}).done(function (auction) {
-                // const lastBid    = this.toFloatTwoDecimal( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) );
-                // const startPrice = this.toFloatTwoDecimal( auction.currentPrice );
-
                 // Gibt es Gebote?
                 if (auction.bidderList.length > 1) {
                     _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
@@ -149,11 +150,8 @@ Vue.component("auction-bids", {
 
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {
-                console.log(' innerhalb timeout: ');
-
                 if (_this3.userdata) {
                     var currentUserId = _this3.userdata.id;
-
                     var lastEntry = false;
 
                     AuctionBidderService.getBidderList(_this3.auctionid, lastEntry).then(function (response) {
@@ -165,7 +163,7 @@ Vue.component("auction-bids", {
 
                         // Gewinner eingeloggt ??
                         if (currentUserId == lastUserId) {
-                            NotificationService.success("Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!").close;
+                            NotificationService.success("Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen.").close;
                             alert("  // item -> Basket\n" + "// Url -> Checkout");
                             // item -> Basket
                             // Url -> Checkout
@@ -182,7 +180,7 @@ Vue.component("auction-bids", {
                                         break;
                                     }
                                 }
-                                // ist der eingeloggte User InBidderList
+                                // ist der eingeloggte User in BidderList
                                 if (isUserInBidderList) {
                                     NotificationService.error("Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").close;
                                     _this3.reload(3000);
@@ -199,10 +197,8 @@ Vue.component("auction-bids", {
                 } else {
                     NotificationService.warn("Nicht angemeldet... -> reload").close;
                     _this3.reload(3000);
-                    console.log(' hier reload ');
                 }
             }, 1500);
-            console.log(' sofort nach 4000: ');
         },
         reload: function reload(timeout) {
             setTimeout(function () {

@@ -3,7 +3,14 @@ const NotificationService  = require( "services/NotificationService" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
-    props: ["template", "auctionid", "userdata", "minBid", "versand", "auctionEnd"],
+    props: {
+        template: String,
+        auctionid: Number,
+        userdata: {},
+        versand: {},
+        minBid: { type: Number, default: 0 },
+        auctionEnd: { type: Boolean, default: false }
+    },
     data() {
         return {
             isInputValid: false,
@@ -12,11 +19,8 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
-        this.minBid            = 0;
         this.auctionid         = parseInt( this.auctionid );
-        this.auctionEnd        = false;
         this.initAuctionParams();
-        this.versand = {};
     },
     ready() {
         this.userdata = JSON.parse( this.userdata );
@@ -166,7 +170,7 @@ Vue.component( "auction-bids", {
             setTimeout( () => {
                 if ( this.userdata ) {
                     const currentUserId = this.userdata.id;
-                    const lastEntry = false;
+                    const lastEntry     = false;
 
                     AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
                         response => {
@@ -179,7 +183,7 @@ Vue.component( "auction-bids", {
                             // Gewinner eingeloggt ??
                             if ( currentUserId == lastUserId ) {
                                 NotificationService.success(
-                                    "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!" )
+                                    "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
                                     .close;
                                 alert( "  // item -> Basket\n" + "// Url -> Checkout" )
                                 // item -> Basket
