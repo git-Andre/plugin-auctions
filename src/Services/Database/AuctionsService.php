@@ -52,7 +52,7 @@
         {
 
             $viewBid = pluginApp(AuctionBidderListViewEntry::class);
-            $viewBids[] = [$viewBid];
+            $viewBids = [];
 
 //            $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
             foreach ($auction -> bidderList as $bid)
@@ -67,11 +67,11 @@
 //            unset($auction -> bidderList);
             $auction -> bidderList = $viewBids;
 
-            unset($viewBids);
+//            unset($viewBids);
 
             $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
-            return $auction;
+            return $viewBids;
         }
 
         /**
