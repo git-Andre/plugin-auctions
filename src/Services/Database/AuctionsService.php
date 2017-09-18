@@ -57,6 +57,11 @@
             $bidderList = array (pluginApp(AuctionBidderListEntry::class));
             $bidderList = array($auction -> bidderList);
 
+            if ($bidderList)
+            {
+                return $bidderList + '<br>bid:' + $viewBid + '<br>bids:' + $viewBids;
+            }
+
             foreach ($bidderList as $bid)
             {
                 $viewBid -> bidderName = $bid -> bidderName;
@@ -72,10 +77,6 @@
 //            unset($auction -> bidderList);
             $auction -> bidderList = $viewBids;
 
-//            if ($auction -> bidderList)
-//            {
-//                return $auction -> bidderList;
-//            }
 //            $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
 
 //            unset($viewBids);
