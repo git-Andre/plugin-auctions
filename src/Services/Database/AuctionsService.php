@@ -66,7 +66,8 @@
             }
 //            unset($auction -> bidderList);
             $auction -> bidderList = $viewBids;
-            unset($auction -> $viewBids);
+
+            unset($viewBids);
 
             $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
