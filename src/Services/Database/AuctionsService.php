@@ -55,7 +55,7 @@
             $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
 
             $bidderList = array (pluginApp(AuctionBidderListEntry::class));
-            $bidderList = array($auction -> bidderList);
+            $bidderList = $auction -> bidderList;
 
             if ($bidderList)
             {
@@ -70,9 +70,11 @@
                 $viewBid -> bidTimeStamp = $bid -> bidTimeStamp;
                 $viewBid -> bidStatus = $bid -> bidStatus;
 
-                if (count($viewBids) > 0)
+                if (true)
+//                if (count($viewBids) > 0)
                 {
-                    array_push($viewBids, $viewBid);
+                    return "<br>bid:" + $bid + "<br>bid:" + $viewBid;
+//                    array_push($viewBids, $viewBid);
                 };
             }
 //            unset($auction -> bidderList);
@@ -246,6 +248,7 @@
                     $newEntry -> customerId = $bid -> customerId;
                     $newEntry -> customerMaxBid = $bid -> customerMaxBid;
                     $newEntry -> bidPrice = $bid -> bidPrice;
+                    $newEntry -> bidStatus = $bid -> bidStatus;
                     $newEntry -> bidTimeStamp = time();
 
                     array_push($newList, $newEntry);
