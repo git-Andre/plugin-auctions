@@ -35,7 +35,9 @@
             {
                 foreach ($auctions as $auction)
                 {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                    $auction = $this -> buildAuctionView($auction);
                 }
                 unset($auction);
 
@@ -43,6 +45,15 @@
             }
 
             return false;
+        }
+
+        public function buildAuctionView($auction) : Auction_7
+        {
+            $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+            $auction -> bidderList -> customerId = 0;
+            $auction -> bidderList -> customerMaxBid = 0.1;
+
+            return $auction;
         }
 
         /**
@@ -80,7 +91,8 @@
                 $auction = (object) $auctionArray[0];
                 if ($auction -> id)
                 {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $auction = $this -> buildAuctionView($auction);
 
                     return $auction;
                 }
@@ -100,9 +112,7 @@
                 $auction = $this -> getValue(Auction_7::class, $id);
                 if ($auction instanceof Auction_7)
                 {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-
-//                    $this -> setValue($auction);
+                    $auction = $this -> buildAuctionView($auction);
 
                     return $auction;
                 }
