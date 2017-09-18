@@ -1,10 +1,10 @@
 <?php //strict
 
-namespace IO\Builder\Item\Fields;
+namespace PluginAuctions\Builder\Fields;
 
 /**
- * Class ItemDescriptionFields
- * @package IO\Builder\Item\Fields
+ * Class AuctionViewFields
+ * @package PluginAuctions\Builder\Fields
  */
 class AuctionViewFields
 {
