@@ -5,7 +5,6 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
-    use PluginAuctions\Models\Fields\AuctionBidderListViewEntry;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -50,6 +49,10 @@
 
         private function buildAuctionView($auction)
         {
+            $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
+            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
+
+
             $bidderList = array (pluginApp(AuctionBidderListEntry::class));
             $bidderList = $auction -> bidderList;
 
@@ -57,7 +60,11 @@
             {
                 unset($bid['customerId']);
                 unset($bid -> customerMaxBid);
+
+                array_push($viewBids, $bid);
+
             }
+            $auction -> bidderList = $viewBids;
 
             $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
