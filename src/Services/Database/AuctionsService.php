@@ -5,6 +5,7 @@
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+    use PluginAuctions\Models\Fields\AuctionBidderListViewEntry;
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -47,11 +48,27 @@
             return false;
         }
 
-        public function buildAuctionView($auction) : Auction_7
+        public function buildAuctionView($auction)
         {
+
+            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
+            $viewBids[] = [$viewBid];
+
+//            $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
+            foreach ($auction -> bidderList as $bid)
+            {
+                $viewBid -> bidderName = $bid -> bidderName;
+                $viewBid -> bidPrice = $bid -> bidPrice;
+                $viewBid -> bidTimeStamp = $bid -> bidTimeStamp;
+                $viewBid -> bidStatus = $bid -> bidStatus;
+
+                array_push($viewBids, $viewBid);
+            }
+            unset($auction -> bidderList);
+            $auction -> bidderList -> $viewBids;
+            unset($auction -> $viewBids);
+
             $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-            $auction -> bidderList -> customerId = 0;
-            $auction -> bidderList -> customerMaxBid = 0.1;
 
             return $auction;
         }
@@ -110,6 +127,7 @@
             if ($id > 0)
             {
                 $auction = $this -> getValue(Auction_7::class, $id);
+
                 if ($auction instanceof Auction_7)
                 {
                     $auction = $this -> buildAuctionView($auction);
