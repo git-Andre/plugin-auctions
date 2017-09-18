@@ -9,8 +9,8 @@
     class AuctionBidderListViewEntry {
 
 
-        public $bidderName     = 'Startpreis';
-        public $bidPrice       = 0.1;
-        public $bidTimeStamp   = 0;
+        public $bidderName     = "Startpreis";
+        public $bidPrice       = 0.2;
+        public $bidTimeStamp   = 1000000000;
         public $bidStatus      = "start";
     }

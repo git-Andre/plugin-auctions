@@ -51,23 +51,23 @@
         private function buildAuctionView($auction)
         {
 
-            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
             $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
+            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
 
             $bidderList = array (pluginApp(AuctionBidderListEntry::class));
             $bidderList = $auction -> bidderList;
 
             foreach ($bidderList as $bid)
             {
-                $viewBid -> bidderName = $bid -> bidderName;
-                $viewBid -> bidPrice = $bid -> bidPrice;
-                $viewBid -> bidTimeStamp = $bid -> bidTimeStamp;
-                $viewBid -> bidStatus = $bid -> bidStatus;
+                $viewBid["bidderName"] = $bid -> bidderName;
+                $viewBid["bidPrice"] = $bid -> bidPrice;
+                $viewBid["bidTimeStamp"] = $bid -> bidTimeStamp;
+                $viewBid["bidStatus"] = $bid -> bidStatus;
 
-                if ($bid)
-//                if (count($bids) > 0)
+                if ($viewBid)
+//                if (count($viewBids) > 0)
                 {
-                    return $bid;
+                    return $viewBid;
 //                    array_push($viewBids, $viewBid);
                 };
             }
