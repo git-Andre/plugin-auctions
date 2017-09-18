@@ -49,17 +49,18 @@
 
         private function buildAuctionView($auction)
         {
-            $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
-            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
+//            $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
+//            $viewBid = pluginApp(AuctionBidderListViewEntry::class);
 
+            $viewBids = [];
+//            $bidderList = array (pluginApp(AuctionBidderListEntry::class));
+//            $bidderList = $auction -> bidderList;
 
-            $bidderList = array (pluginApp(AuctionBidderListEntry::class));
-            $bidderList = $auction -> bidderList;
-
-            foreach ($bidderList as $bid)
+            foreach ($auction -> bidderList as $bid)
             {
                 unset($bid['customerId']);
-                unset($bid -> customerMaxBid);
+//                unset($bid -> customerMaxBid);
+                $bid -> customerMaxBid = null;
 
                 array_push($viewBids, $bid);
 
