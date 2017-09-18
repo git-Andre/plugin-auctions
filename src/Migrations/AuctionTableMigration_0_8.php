@@ -3,11 +3,11 @@
     namespace PluginAuctions\Migrations;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
-    use PluginAuctions\Models\LiveAuction_53;
     use PluginAuctions\Models\Auction_7;
 
     /**
-     * Class CreateAuction_5
+     * Class AuctionTableMigration_0_8
+     * @package PluginAuctions\Migrations
      */
     class AuctionTableMigration_0_8 {
 

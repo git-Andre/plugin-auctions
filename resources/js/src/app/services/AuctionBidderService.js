@@ -22,7 +22,7 @@ module.exports = (function ($) {
                                                        resolve( auction.bidderList[auction.bidderList.length - 1] );
                                                    }
                                                    else {
-                                                       auction.bidderList[0].bidPrice     = auction.currentPrice;
+                                                       auction.bidderList[0].bidPrice     = auction.startPrice;
                                                        auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                                                        resolve( auction.bidderList );

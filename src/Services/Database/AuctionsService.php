@@ -126,7 +126,7 @@
                 $auction -> startHour = $newBackendAuction ['startHour'];
                 $auction -> startMinute = $newBackendAuction ['startMinute'];
                 $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
-                $auction -> currentPrice = (float) ($newBackendAuction ['currentPrice']);
+                $auction -> startPrice = (float) ($newBackendAuction ['startPrice']);
 
                 $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
@@ -135,8 +135,8 @@
                 $auction -> createdAt = time();
 
                 $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
-                $auction -> bidderList[0] -> bidPrice = $auction -> currentPrice;
-                $auction -> bidderList[0] -> customerMaxBid = $auction -> currentPrice - 1;
+                $auction -> bidderList[0] -> bidPrice = $auction -> startPrice;
+                $auction -> bidderList[0] -> customerMaxBid = $auction -> startPrice - 1;
 
                 $auction -> updatedAt = $auction -> createdAt;
 
@@ -163,7 +163,7 @@
                     $auction -> startHour = $updatedBackendAuction ['startHour'];
                     $auction -> startMinute = $updatedBackendAuction ['startMinute'];
                     $auction -> auctionDuration = $updatedBackendAuction ['auctionDuration'];
-                    $auction -> currentPrice = (float) ($updatedBackendAuction ['currentPrice']);
+                    $auction -> startPrice = (float) ($updatedBackendAuction ['startPrice']);
 
                     $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
@@ -217,10 +217,13 @@
 //                        return $auction;
                         return json_encode($auction -> tense);
                     }
+
                     return "Fehler in updateBidderList";
                 }
+
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
+
             return false;
         }
 

@@ -5,7 +5,7 @@ const AuctionBidderService = require( "services/AuctionBidderService" );
 Vue.component( "auction-bids", {
     props: {
         template: String,
-        auctionid: Number,
+        auctionid: String,
         userdata: {},
         versand: {},
         minBid: { type: Number, default: 0 },
@@ -36,10 +36,8 @@ Vue.component( "auction-bids", {
                 };
                 const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
                 const pos               = this.userdata.email.indexOf( "@" );
-                const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " +
-                    this.userdata.email.slice( pos - 2, pos );
+                const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
 
-                // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
                 const newUserId = parseInt( this.userdata.id );
 
                 const lastEntry = true;
@@ -85,7 +83,7 @@ Vue.component( "auction-bids", {
 
                                 this.versand = currentBid;
                                 this.updateAuction();
-                                this.reload();
+                                this.reload(3000);
                                 NotificationService.success(
                                     " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
                                     .closeAfter( 3000 );
@@ -98,7 +96,7 @@ Vue.component( "auction-bids", {
 
                                 this.versand = currentBid;
                                 this.updateAuction();
-                                this.reload();
+                                this.reload(3000);
 
                                 NotificationService.warn(
                                     "Es gibt leider schon ein höheres Gebot..." )
@@ -135,7 +133,7 @@ Vue.component( "auction-bids", {
                                 1 );
                     }
                     else {
-                        this.minBid = this.toFloatTwoDecimal( auction.currentPrice );
+                        this.minBid = this.toFloatTwoDecimal( auction.startPrice );
                     }
                 } )
                 .fail( () => {
@@ -153,7 +151,7 @@ Vue.component( "auction-bids", {
                 "startHour": 16,
                 "startMinute": 45,
                 "auctionDuration": 1,
-                "currentPrice": this.minBid - 2
+                "startPrice": this.minBid - 2
             };
 
             ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }

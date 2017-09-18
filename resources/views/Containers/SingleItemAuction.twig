@@ -16,7 +16,7 @@
 
             <dl class="auctionList">
                 <dt>Start Preis:</dt>
-                <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                 <dt>Start Datum:</dt>
                 <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
                 <dt>Dauer:</dt>
@@ -47,18 +47,18 @@
 
             <div class="row container m-t-0 m-b-1">
                 <dl class="auctionList">
-                    {% if (bidderListLast.bidPrice != auction.currentPrice) %}
+                    {% if (bidderListLast.bidPrice != auction.startPrice) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">
                             {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
                         </dd>
 
                         <dt>Start Preis:</dt>
-                        <dd>{{ auction.currentPrice | formatMonetary('EUR') }}
+                        <dd>{{ auction.startPrice | formatMonetary('EUR') }}
                         </dd>
                     {% else %}
                         <dt>Start Preis:</dt>
-                        <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                        <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                     {% endif %}
 
                     <dt>Start Datum:</dt>
@@ -103,7 +103,7 @@
                 <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
 
                 <dt>Start Preis:</dt>
-                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+                <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
                 <dt>End Preis:</dt>
                 <dd>{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
