@@ -48,12 +48,17 @@
             return false;
         }
 
-        public function buildAuctionView($auction)
+        private function buildAuctionView($auction)
         {
 
             $viewBid = pluginApp(AuctionBidderListViewEntry::class);
-            $viewBids = [];
-
+            $viewBids = array (pluginApp(AuctionBidderListViewEntry::class));
+            $bidderList = array (pluginApp(AuctionBidderListEntry::class));
+            $bidderList = $auction -> bidderList;
+            if ($bidderList)
+            {
+                return $bidderList;
+            }
 //            $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
             foreach ($auction -> bidderList as $bid)
             {
