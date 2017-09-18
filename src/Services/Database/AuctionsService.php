@@ -59,7 +59,8 @@
 
             if ($bidderList)
             {
-                return $bidderList + '<br>bid:' + $viewBid + '<br>bids:' + $viewBids;
+                return $bidderList;
+//                return $bidderList + '<br>bid:' + $viewBid + '<br>bids:' + $viewBids;
             }
 
             foreach ($bidderList as $bid)
