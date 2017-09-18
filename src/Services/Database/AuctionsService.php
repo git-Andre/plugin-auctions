@@ -55,7 +55,7 @@
 
             foreach ($bidderList as $bid)
             {
-                unset($bid -> customerId);
+                unset($bid['customerId']);
                 unset($bid -> customerMaxBid);
             }
 
