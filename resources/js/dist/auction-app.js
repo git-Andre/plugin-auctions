@@ -8,7 +8,7 @@ var AuctionBidderService = require("services/AuctionBidderService");
 Vue.component("auction-bids", {
     props: {
         template: String,
-        auctionid: auctionid,
+        auctionid: String,
         userdata: {},
         versand: {},
         minBid: { type: Number, default: 0 },
@@ -44,7 +44,6 @@ Vue.component("auction-bids", {
                 var pos = this.userdata.email.indexOf("@");
                 var newBidderName = this.userdata.email.slice(0, 2) + " *** " + this.userdata.email.slice(pos - 2, pos);
 
-                // const newBidderName     = this.userdata.firstName ? this.userdata.firstName + "... ***": "*** ... ***";
                 var newUserId = parseInt(this.userdata.id);
 
                 var lastEntry = true;
@@ -84,7 +83,7 @@ Vue.component("auction-bids", {
 
                             _this.versand = currentBid;
                             _this.updateAuction();
-                            _this.reload();
+                            _this.reload(3000);
                             NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(3000);
                         } else {
                             currentBid.bidPrice = newCustomerMaxBid;
@@ -94,7 +93,7 @@ Vue.component("auction-bids", {
 
                             _this.versand = currentBid;
                             _this.updateAuction();
-                            _this.reload();
+                            _this.reload(3000);
 
                             NotificationService.warn("Es gibt leider schon ein höheres Gebot...").closeAfter(3000);
                         }
@@ -119,7 +118,7 @@ Vue.component("auction-bids", {
                 if (auction.bidderList.length > 1) {
                     _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
                 } else {
-                    _this2.minBid = _this2.toFloatTwoDecimal(auction.currentPrice);
+                    _this2.minBid = _this2.toFloatTwoDecimal(auction.startPrice);
                 }
             }).fail(function () {
                 alert('Upps - ein Fehler beim abholen ??!!');
@@ -136,7 +135,7 @@ Vue.component("auction-bids", {
                 "startHour": 16,
                 "startMinute": 45,
                 "auctionDuration": 1,
-                "currentPrice": this.minBid - 2
+                "startPrice": this.minBid - 2
             };
 
             ApiService.put("/api/auction/34", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
@@ -606,7 +605,7 @@ module.exports = function ($) {
                     if (lastEntry) {
                         resolve(auction.bidderList[auction.bidderList.length - 1]);
                     } else {
-                        auction.bidderList[0].bidPrice = auction.currentPrice;
+                        auction.bidderList[0].bidPrice = auction.startPrice;
                         auction.bidderList[0].bidTimeStamp = auction.startDate;
 
                         resolve(auction.bidderList);

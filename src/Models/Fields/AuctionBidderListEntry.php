@@ -14,4 +14,5 @@
         public $customerMaxBid = 0.1;
         public $bidPrice       = 0.1;
         public $bidTimeStamp   = 0;
+        public $bidStatus      = "start";
     }

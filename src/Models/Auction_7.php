@@ -18,7 +18,7 @@
      * @property int $startMinute
      * @property int $auctionDuration
      * @property int $expiryDate
-     * @property float $currentPrice
+     * @property float $startPrice
      * @property string $tense
      * @property array $bidderList
      */
@@ -35,7 +35,7 @@
         public $startHour       = 19;
         public $startMinute     = 1;
         public $auctionDuration = 10;
-        public $currentPrice    = 1.99;
+        public $startPrice    = 1.99;
 //calculated
         public $expiryDate = 0;
 
@@ -81,7 +81,7 @@
                 'startMinute'     => $this -> startMinute,
                 'auctionDuration' => $this -> auctionDuration,
                 'expiryDate'      => $this -> expiryDate,
-                'currentPrice'    => $this -> currentPrice,
+                'startPrice'      => $this -> startPrice,
                 'tense'           => $this -> tense,
                 'bidderList'      => $this -> bidderList,
             ];
@@ -109,8 +109,8 @@
                     return $this -> auctionDuration;
                 case 'expiryDate'        :
                     return $this -> expiryDate;
-                case 'currentPrice'        :
-                    return $this -> currentPrice;
+                case 'startPrice'        :
+                    return $this -> startPrice;
                 case 'tense'        :
                     return $this -> tense;
                 case 'bidderList'        :

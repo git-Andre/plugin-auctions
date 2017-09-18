@@ -163,9 +163,9 @@
 
                     {% elseif (auction.tense == 'present') %}
                         {#<span class="price h1">#}
-                        {#<span v-resource-bind:currentAuction="auction.currentPrice"#}
-                        {#content="{{ auction.currentPrice }}">#}
-                        {#{{ auction.currentPrice | formatMonetary('EUR') }}#}
+                        {#<span v-resource-bind:currentAuction="auction.startPrice"#}
+                        {#content="{{ auction.startPrice }}">#}
+                        {#{{ auction.startPrice | formatMonetary('EUR') }}#}
                         {#</span>#}
                         {#<sup>*</sup>#}
                         {#<span content="{{ item.documents[0].data.calculatedPrices.default.currency }}"></span>#}
@@ -176,14 +176,14 @@
 
                         {#| date("d \\T\\a\\g\\e H:i:s")#}
                         <dl class="auctionList">
-                            {% if (bidderListLast.currentPrice != 0) %}
+                            {% if (bidderListLast.startPrice != 0) %}
                                 <dt>Aktuelles Gebot:</dt>
                                 <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}<sup>*</sup>span    </dd>
                                 <dt>Start Preis:</dt>
-                                <dd>{{ auction.currentPrice | formatMonetary('EUR') }}<sup>*</sup></dd>
+                                <dd>{{ auction.startPrice | formatMonetary('EUR') }}<sup>*</sup></dd>
                             {% else %}
                                 <dt>Start Preis:</dt>
-                                <dd class="price h1 m-b-2">{{ auction.currentPrice | formatMonetary('EUR') }}<sup>*</sup></dd>
+                                <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}<sup>*</sup></dd>
                             {% endif %}
                             <dt>Ablaufdatum:</dt>
                             <dd>{{ auction.expiryDate | date('D d.M.Y H:i:s e') }}</dd>

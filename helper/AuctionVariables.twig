@@ -19,7 +19,7 @@
         <dd>{{ auction.auctionDuration }} Tage</dd>
 
         <dt>Start Preis:</dt>
-        <dd>{{ auction.currentPrice | formatMonetary('EUR') }}</dd>
+        <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
         {% set bidderListLast = auction.bidderList | last %}
         {% set bidderListLength = auction.bidderList | length %}
