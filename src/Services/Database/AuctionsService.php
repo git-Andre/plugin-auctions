@@ -64,7 +64,7 @@
                 $viewBid -> bidTimeStamp = $bid -> bidTimeStamp;
                 $viewBid -> bidStatus = $bid -> bidStatus;
 
-                if (array_count_values($viewBids) > 0)
+                if (count($viewBids) > 0)
                 {
                     array_push($viewBids, $viewBid);
                 };
