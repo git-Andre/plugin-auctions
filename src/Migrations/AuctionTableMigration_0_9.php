@@ -6,10 +6,10 @@
     use PluginAuctions\Models\Auction_7;
 
     /**
-     * Class AuctionTableMigration_0_8
+     * Class AuctionTableMigration_0_9
      * @package PluginAuctions\Migrations
      */
-    class AuctionTableMigration_0_8 {
+    class AuctionTableMigration_0_9 {
 
         /**
          * @param Migrate $migrate
