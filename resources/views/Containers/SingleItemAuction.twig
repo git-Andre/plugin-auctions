@@ -3,7 +3,7 @@
 
 {% if ( auction ) %}
 
-    <resource name="auction" :data="{{ auction }}"></resource>
+    <resource name="auction" :data="{{ auction  | json_encode() }}"></resource>
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -36,12 +36,19 @@
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
 
             <div class="row container m-t-0 m-b-2">
+
                 <auction-bids
                         template="#vue-auction-bids"
-                        auctionid="{{ auction.id }}"
-                        minBid="{{ bidderListLast.bidPrice }}"
+                        v-resource-push:auction
+                        resource="auction"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
+                {#<auction-bids#}
+                        {#template="#vue-auction-bids"#}
+                        {#auctionid="{{ auction.id }}"#}
+                        {#minBid="{{ bidderListLast.bidPrice }}"#}
+                        {#userdata="{{ services.customer.getContact() | json_encode() }}">#}
+                {#</auction-bids>#}
 
             </div>
 
