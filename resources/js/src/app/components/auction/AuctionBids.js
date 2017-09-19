@@ -1,12 +1,12 @@
 const ApiService           = require( "services/ApiService" );
 const NotificationService  = require( "services/NotificationService" );
-const AuctionBidderService = require( "services/AuctionBidderService" );
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
     props: {
         template: String,
-        auctionid: String,
         userdata: {},
+        auction: {},
         minBid: Number,
         auctionEnd: { type: Boolean, default: false }
     },
@@ -18,8 +18,17 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
-        this.auctionid         = parseInt( this.auctionid );
-        this.initAuctionParams();
+
+        this.auction  = JSON.parse( this.auction );
+
+        // this.initAuctionParams();
+        if ( auction.bidderList.length > 1 ) {
+            this.minBid = this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        }
+        else {
+            this.minBid = this.toFloatTwoDecimal( auction.startPrice );
+        }
+
     },
     ready() {
         this.userdata = JSON.parse( this.userdata );
@@ -29,12 +38,14 @@ Vue.component( "auction-bids", {
             if ( this.isInputValid ) {
 
                 const pos           = this.userdata.email.indexOf( "@" );
-                const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
+                const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
+                    this.userdata.email.slice( pos - 2, pos );
 
                 var currentBid = {
                     'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
                     'bidderName': newBidderName,
-                    'customerId': parseInt( this.userdata.id )
+                    'customerId': parseInt( this.userdata.id ),
+                    'minBid': parseInt( this.userdata.id )
                 };
 
                 ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( currentBid ),
@@ -147,26 +158,26 @@ Vue.component( "auction-bids", {
         //                }
         //         );
         // },
-        initAuctionParams() {
-            ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
-                .done( auction => {
-                    // Gibt es Gebote?
-                    if ( auction.bidderList.length > 1 ) {
-                        this.minBid =
-                            this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
-                                1 );
-                    }
-                    else {
-                        this.minBid = this.toFloatTwoDecimal( auction.startPrice );
-                    }
-                } )
-                .fail( () => {
-                    alert( 'Upps - ein Fehler beim abholen ??!!' );
-                } );
-        },
-        toFloatTwoDecimal(value) {
-            return Math.round( parseFloat( value ) * 100 ) / 100.0
-        },
+        // initAuctionParams() {
+        //     ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
+        //         .done( auction => {
+        //             // Gibt es Gebote?
+        //             if ( auction.bidderList.length > 1 ) {
+        //                 this.minBid =
+        //                     this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
+        //                         1 );
+        //             }
+        //             else {
+        //                 this.minBid = this.toFloatTwoDecimal( auction.startPrice );
+        //             }
+        //         } )
+        //         .fail( () => {
+        //             alert( 'Upps - ein Fehler beim abholen ??!!' );
+        //         } );
+        // },
+        // toFloatTwoDecimal(value) {
+        //     return Math.round( parseFloat( value ) * 100 ) / 100.0
+        // },
         auctionend() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             startD      = startD - 24 * 60 * 60 + 7;
