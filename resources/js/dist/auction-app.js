@@ -39,8 +39,6 @@ Vue.component("auction-bids", {
 
     methods: {
         addBid: function addBid() {
-            var _this = this;
-
             if (this.isInputValid) {
 
                 var pos = this.userdata.email.indexOf("@");
@@ -49,13 +47,10 @@ Vue.component("auction-bids", {
                 var currentBid = {
                     'customerMaxBid': this.toFloatTwoDecimal(this.maxCustomerBid),
                     'bidderName': newBidderName,
-                    'customerId': parseInt(this.userdata.id),
-                    'minBid': this.minBid
+                    'customerId': parseInt(this.userdata.id)
                 };
-                console.dir(currentBid);
                 ApiService.put("/api/bidderlist/" + this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                    // alert( "addBid ende" );
-                    _this.reload(500);
+                    // this.reload( 500 );
                 }, function (error) {
                     alert('error3: ' + error.toString());
                 });
