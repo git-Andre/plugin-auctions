@@ -6,7 +6,7 @@ Vue.component( "auction-show-bidderlist", {
 
     props: {
         "template": String,
-        "auction": {},
+        "bidderlist": {},
     },
 
     data() {
