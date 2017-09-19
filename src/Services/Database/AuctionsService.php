@@ -247,12 +247,15 @@
                             // Neues Max-Gebot < kleiner als letztes Max-Gebot +1  ??
                             if ($currentBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
                             {
-                                $newEntry -> bidPrice = $currentBid -> customerMaxBid;
+                                $newEntry -> bidPrice = 11.01;
+//                                $newEntry -> bidPrice = $currentBid -> customerMaxBid;
                             }
                             else
                             {
                                 // nur um 1 erhöhen
-                                $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
+
+                                return $currentBid -> customerMaxBid;
+//                                $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
                             //                         currentBid.customerMaxBid = newCustomerMaxBid;
                             $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
