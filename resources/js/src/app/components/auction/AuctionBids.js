@@ -7,8 +7,7 @@ Vue.component( "auction-bids", {
         template: String,
         auctionid: String,
         userdata: {},
-        // newBid: {},
-        minBid: { type: Number, default: 0 },
+        minBid: Number,
         auctionEnd: { type: Boolean, default: false }
     },
     data() {
@@ -30,8 +29,7 @@ Vue.component( "auction-bids", {
             if ( this.isInputValid ) {
 
                 const pos           = this.userdata.email.indexOf( "@" );
-                const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
-                    this.userdata.email.slice( pos - 2, pos );
+                const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
 
                 var currentBid = {
                     'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
@@ -43,8 +41,8 @@ Vue.component( "auction-bids", {
                                                                      { contentType: "application/json" }
                 )
                     .then( response => {
-                               alert( "addBid ende" );
-                               this.reload( 3000 );
+                               // alert( "addBid ende" );
+                               this.reload( 500 );
                            },
                            error => {
                                alert( 'error3: ' + error.toString() );
