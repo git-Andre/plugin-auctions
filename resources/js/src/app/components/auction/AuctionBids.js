@@ -3,13 +3,20 @@ const NotificationService  = require( "services/NotificationService" );
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
-    props: {
-        template: String,
-        userdata: {},
-        auction: {},
-        minBid: Number,
-        auctionEnd: { type: Boolean, default: false }
-    },
+    props: [
+        "template",
+        "userdata",
+        "auction",
+        "minBid",
+        "auctionEnd"
+    ],
+    // props: {
+    //     template: String,
+    //     userdata: {},
+    //     auction: {},
+    //     minBid: Number,
+    //     auctionEnd: { type: Boolean, default: false }
+    // },
     data() {
         return {
             isInputValid: false,

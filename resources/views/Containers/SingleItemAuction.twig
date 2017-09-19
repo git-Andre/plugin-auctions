@@ -40,14 +40,9 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode() }}"
+                        {#minBid="{{ bidderListLast.bidPrice }}"#}
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
-                {#<auction-bids#}
-                        {#template="#vue-auction-bids"#}
-                        {#auctionid="{{ auction.id }}"#}
-                        {#minBid="{{ bidderListLast.bidPrice }}"#}
-                        {#userdata="{{ services.customer.getContact() | json_encode() }}">#}
-                {#</auction-bids>#}
 
             </div>
 
