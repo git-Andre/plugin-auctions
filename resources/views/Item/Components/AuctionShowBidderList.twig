@@ -35,7 +35,7 @@
                 <tr v-for="bid in bidderList">
                     <td class="bid p-l-3">${ bid.bidderName }</td>
                     <td class="bid text-right p-r-3">${ bid.bidPrice | currency }</td>
-                    <td class="bid text-right p-r-3">${ bid.bidTimeStamp | date "ddd DD.MMM.YYYY HH:mm:ss e" }</td>
+                    <td class="bid text-right p-r-3">${ bid.bidTimeStamp | date ("ddd DD.MMM.YYYY HH:mm:ss", "Europe/Berlin") }</td>
                 </tr>
                 </tbody>
             </table>

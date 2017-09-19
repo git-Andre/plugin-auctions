@@ -52,7 +52,7 @@ Vue.component( "auction-bids", {
                     );
             }
         },
-        // addBid() {
+        // addBidOld() {
         //     if ( this.isInputValid ) {
         //         var currentBid          = {
         //             'bidPrice': 1,
