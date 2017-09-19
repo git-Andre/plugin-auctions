@@ -217,7 +217,8 @@
 
                     $newList = $auction -> bidderList;
 
-                    $bidderListLastEntry = end(array_keys($auction -> bidderList));
+                    $bidderListLastEntry = array_slice($auction -> bidderList, -1, 1 , true);
+//                    $bidderListLastEntry = end(array_keys($auction -> bidderList));
 
                     $bidderListLastEntry -> customerId = $bidderListLastEntry -> customerId;
 
