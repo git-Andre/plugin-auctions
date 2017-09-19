@@ -3,6 +3,7 @@
 
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
+
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-bids", {
@@ -22,17 +23,19 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
+    },
+    compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         // this.initAuctionParams();
         this.auction = JSON.parse(this.auction);
-    },
-    ready: function ready() {
-        if (auction.bidderList.length > 1) {
-            this.minBid = this.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
+
+        if (this.auction.bidderList.length > 1) {
+            this.minBid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
         } else {
-            this.minBid = this.toFloatTwoDecimal(auction.startPrice);
+            this.minBid = this.toFloatTwoDecimal(this.auction.startPrice);
         }
     },
+    ready: function ready() {},
 
     methods: {
         addBid: function addBid() {
@@ -173,9 +176,10 @@ Vue.component("auction-bids", {
         //             alert( 'Upps - ein Fehler beim abholen ??!!' );
         //         } );
         // },
-        // toFloatTwoDecimal(value) {
-        //     return Math.round( parseFloat( value ) * 100 ) / 100.0
-        // },
+
+        toFloatTwoDecimal: function toFloatTwoDecimal(value) {
+            return Math.round(parseFloat(value) * 100) / 100.0;
+        },
         auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             startD = startD - 24 * 60 * 60 + 7;
@@ -276,12 +280,12 @@ Vue.component("auction-bids", {
 
 });
 
-},{"services/ApiService":6,"services/NotificationService":8}],2:[function(require,module,exports){
+},{"services/ApiService":5,"services/NotificationService":6}],2:[function(require,module,exports){
 "use strict";
 
 // const NotificationService  = require( "services/NotificationService" );
 // const ResourceService      = require( "services/ResourceService" );
-var AuctionBidderService = require("services/AuctionBidderService");
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-show-bidderlist", {
 
@@ -374,15 +378,11 @@ Vue.component("auction-show-bidderlist", {
     methods: {}
 });
 
-},{"services/AuctionBidderService":7}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
-var _ExceptionMap = require("exceptions/ExceptionMap");
-
-var _ExceptionMap2 = _interopRequireDefault(_ExceptionMap);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+// import ExceptionMap from "exceptions/ExceptionMap";
+//
 var NotificationService = require("services/NotificationService");
 
 Vue.component("notifications-plugin-auction", {
@@ -429,7 +429,7 @@ Vue.component("notifications-plugin-auction", {
                 var messageCode = this.initialNotifications[key].code;
 
                 if (messageCode > 0) {
-                    message = Translations.Template[_ExceptionMap2.default.get(messageCode.toString())];
+                    message = Translations.Template[ExceptionMap.get(messageCode.toString())];
                 }
 
                 // type cannot be undefined
@@ -446,7 +446,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"exceptions/ExceptionMap":5,"services/NotificationService":8}],4:[function(require,module,exports){
+},{"services/NotificationService":6}],4:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -509,16 +509,6 @@ Vue.component("auction-countdown", {
 });
 
 },{}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var exceptionMap = exports.exceptionMap = new Map([["1", "basketItemNotAdded"], ["2", "basketNotEnoughStockItem"], ["3", "accInvalidResetPasswordUrl"], ["4", "accCheckPassword"]]);
-
-exports.default = exceptionMap;
-
-},{}],6:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -654,64 +644,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":8,"services/WaitScreenService":9}],7:[function(require,module,exports){
-"use strict";
-
-var ApiService = require("services/ApiService");
-var NotificationService = require("services/NotificationService");
-
-module.exports = function ($) {
-
-    var bidderListLastEntry;
-    var getPromise;
-
-    return {
-        getBidderList: getBidderList,
-        getExpiryDate: getExpiryDate
-    };
-
-    function getBidderList(auctionId) {
-        var lastEntry = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-        return new Promise(function (resolve, reject) {
-            if (auctionId) {
-                ApiService.get("/api/auction/" + auctionId).then(function (auction) {
-                    // setTimeout( () =>
-                    //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
-                    if (lastEntry) {
-                        resolve(auction.bidderList[auction.bidderList.length - 1]);
-                    } else {
-                        auction.bidderList[0].bidPrice = auction.startPrice;
-                        auction.bidderList[0].bidTimeStamp = auction.startDate;
-
-                        resolve(auction.bidderList);
-                    }
-                }, function (error) {
-                    reject(error);
-                });
-            } else {
-                alert('Fehler in id:: ' + auctionId);
-            }
-        });
-    }
-
-    function getExpiryDate(auctionId) {
-        return new Promise(function (resolve, reject) {
-            if (auctionId) {
-
-                ApiService.get("/api/auction/" + auctionId).then(function (auction) {
-                    resolve(auction.expiryDate);
-                }, function (error) {
-                    reject(error);
-                });
-            } else {
-                alert('Fehler in id (Date):: ' + auctionId);
-            }
-        });
-    }
-}(jQuery);
-
-},{"services/ApiService":6,"services/NotificationService":8}],8:[function(require,module,exports){
+},{"services/NotificationService":6,"services/WaitScreenService":7}],6:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -868,7 +801,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],9:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -911,8 +844,16 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4,5])
+},{}]},{},[1,2,3,4])
 
 
+// var ao = new Vue( {
+//                       el: '#addAuctionVue',
+//                       data: {
+//                           // messages: []
+//                       }
+//
+//                   } )
+//
 
 //# sourceMappingURL=auction-app.js.map
