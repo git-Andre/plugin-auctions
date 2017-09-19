@@ -224,6 +224,7 @@
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
                     {
+                        return $bidderListLastEntry;
                         //                     currentBid.bidPrice       = lastBidPrice;
                         $currentBid -> bidPrice = $bidderListLastEntry -> bidPrice;
                         //                     currentBid.customerMaxBid = newustomerMaxBid;
