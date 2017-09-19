@@ -4,10 +4,10 @@ const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-show-bidderlist", {
 
-    props: [
-        "template",
-        "bidderlist",
-    ],
+    props: {
+        "template": String,
+        "auction": {},
+    },
 
     data() {
         return {
@@ -19,9 +19,10 @@ Vue.component( "auction-show-bidderlist", {
     created() {
         this.$options.template = this.template;
 
-        this.bidderlist = JSON.parse( this.bidderlist );
+        // this.auction = JSON.parse( this.auction );
+console.dir(this.auction);
 
-        const bidderData     = this.bidderlist;
+        const bidderData     = this.auction.bidderList;
         var differentBidders = [0];
 
         this.bidderList = [];
