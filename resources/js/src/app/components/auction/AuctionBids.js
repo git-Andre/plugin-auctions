@@ -25,9 +25,12 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
+        this.userdata = JSON.parse( this.userdata );
         // this.initAuctionParams();
         this.auction  = JSON.parse( this.auction );
-        this.userdata = JSON.parse( this.userdata );
+
+    },
+    ready() {
         if ( auction.bidderList.length > 1 ) {
             this.minBid =
                 this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) + 1 );
@@ -35,8 +38,6 @@ Vue.component( "auction-bids", {
         else {
             this.minBid = this.toFloatTwoDecimal( auction.startPrice );
         }
-    },
-    ready() {
     },
     methods: {
         addBid() {

@@ -6,13 +6,14 @@ var NotificationService = require("services/NotificationService");
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-bids", {
-    props: {
-        template: String,
-        userdata: {},
-        auction: {},
-        minBid: Number,
-        auctionEnd: { type: Boolean, default: false }
-    },
+    props: ["template", "userdata", "auction", "minBid", "auctionEnd"],
+    // props: {
+    //     template: String,
+    //     userdata: {},
+    //     auction: {},
+    //     minBid: Number,
+    //     auctionEnd: { type: Boolean, default: false }
+    // },
     data: function data() {
         return {
             isInputValid: false,
@@ -21,16 +22,17 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
-        // this.initAuctionParams();
-        // this.auction  = JSON.parse( this.auction );
         this.userdata = JSON.parse(this.userdata);
+        // this.initAuctionParams();
+        this.auction = JSON.parse(this.auction);
+    },
+    ready: function ready() {
         if (auction.bidderList.length > 1) {
             this.minBid = this.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
         } else {
             this.minBid = this.toFloatTwoDecimal(auction.startPrice);
         }
     },
-    ready: function ready() {},
 
     methods: {
         addBid: function addBid() {
@@ -298,7 +300,6 @@ Vue.component("auction-show-bidderlist", {
         this.$options.template = this.template;
 
         this.auction = JSON.parse(this.auction);
-        console.dir(this.auction);
 
         var bidderData = this.auction.bidderList;
         var differentBidders = [0];
