@@ -12,7 +12,6 @@ Vue.component( "auction-show-bidderlist", {
     data() {
         return {
             bidderList: [],
-            // isAuctionPresent: false,
             bidders: 0
         };
     },
