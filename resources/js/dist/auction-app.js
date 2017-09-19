@@ -22,7 +22,7 @@ Vue.component("auction-bids", {
     created: function created() {
         this.$options.template = this.template;
         // this.initAuctionParams();
-        this.auction = JSON.parse(this.auction);
+        // this.auction  = JSON.parse( this.auction );
         this.userdata = JSON.parse(this.userdata);
         if (auction.bidderList.length > 1) {
             this.minBid = this.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
@@ -297,7 +297,7 @@ Vue.component("auction-show-bidderlist", {
     created: function created() {
         this.$options.template = this.template;
 
-        // this.auction = JSON.parse( this.auction );
+        this.auction = JSON.parse(this.auction);
         console.dir(this.auction);
 
         var bidderData = this.auction.bidderList;

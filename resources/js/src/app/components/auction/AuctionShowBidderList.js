@@ -19,7 +19,7 @@ Vue.component( "auction-show-bidderlist", {
     created() {
         this.$options.template = this.template;
 
-        // this.auction = JSON.parse( this.auction );
+        this.auction = JSON.parse( this.auction );
 console.dir(this.auction);
 
         const bidderData     = this.auction.bidderList;

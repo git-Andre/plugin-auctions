@@ -39,9 +39,7 @@
 
                 <auction-bids
                         template="#vue-auction-bids"
-                        {#v-resource-if:auction="tense == 'present'"#}
-                        v-resource-push:auction
-                        resource="auction"
+                        auction="{{ auction | json_encode() }}"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
                 {#<auction-bids#}
