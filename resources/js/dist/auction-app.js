@@ -3,15 +3,14 @@
 
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
-var AuctionBidderService = require("services/AuctionBidderService");
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-bids", {
     props: {
         template: String,
-        auctionid: String,
         userdata: {},
-        // newBid: {},
-        minBid: { type: Number, default: 0 },
+        auction: {},
+        minBid: Number,
         auctionEnd: { type: Boolean, default: false }
     },
     data: function data() {
@@ -22,11 +21,16 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.auctionid = parseInt(this.auctionid);
-        this.initAuctionParams();
+        // this.initAuctionParams();
     },
     ready: function ready() {
+        this.auction = JSON.parse(this.auction);
         this.userdata = JSON.parse(this.userdata);
+        if (auction.bidderList.length > 1) {
+            this.minBid = this.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
+        } else {
+            this.minBid = this.toFloatTwoDecimal(auction.startPrice);
+        }
     },
 
     methods: {
@@ -41,19 +45,20 @@ Vue.component("auction-bids", {
                 var currentBid = {
                     'customerMaxBid': this.toFloatTwoDecimal(this.maxCustomerBid),
                     'bidderName': newBidderName,
-                    'customerId': parseInt(this.userdata.id)
+                    'customerId': parseInt(this.userdata.id),
+                    'minBid': parseInt(this.userdata.id)
                 };
 
                 ApiService.put("/api/bidderlist/" + this.auctionid, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                    alert("addBid ende");
-                    _this.reload(3000);
+                    // alert( "addBid ende" );
+                    _this.reload(500);
                 }, function (error) {
                     alert('error3: ' + error.toString());
                 });
             }
         },
 
-        // addBid() {
+        // addBidOld() {
         //     if ( this.isInputValid ) {
         //         var currentBid          = {
         //             'bidPrice': 1,
@@ -150,23 +155,26 @@ Vue.component("auction-bids", {
         //                }
         //         );
         // },
-        initAuctionParams: function initAuctionParams() {
-            var _this2 = this;
-
-            ApiService.get("/api/auction/" + this.auctionid, {}, {}).done(function (auction) {
-                // Gibt es Gebote?
-                if (auction.bidderList.length > 1) {
-                    _this2.minBid = _this2.toFloatTwoDecimal(auction.bidderList[auction.bidderList.length - 1].bidPrice + 1);
-                } else {
-                    _this2.minBid = _this2.toFloatTwoDecimal(auction.startPrice);
-                }
-            }).fail(function () {
-                alert('Upps - ein Fehler beim abholen ??!!');
-            });
-        },
-        toFloatTwoDecimal: function toFloatTwoDecimal(value) {
-            return Math.round(parseFloat(value) * 100) / 100.0;
-        },
+        // initAuctionParams() {
+        //     ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
+        //         .done( auction => {
+        //             // Gibt es Gebote?
+        //             if ( auction.bidderList.length > 1 ) {
+        //                 this.minBid =
+        //                     this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
+        //                         1 );
+        //             }
+        //             else {
+        //                 this.minBid = this.toFloatTwoDecimal( auction.startPrice );
+        //             }
+        //         } )
+        //         .fail( () => {
+        //             alert( 'Upps - ein Fehler beim abholen ??!!' );
+        //         } );
+        // },
+        // toFloatTwoDecimal(value) {
+        //     return Math.round( parseFloat( value ) * 100 ) / 100.0
+        // },
         auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             startD = startD - 24 * 60 * 60 + 7;
@@ -185,15 +193,15 @@ Vue.component("auction-bids", {
             });
         },
         afterAuction: function afterAuction() {
-            var _this3 = this;
+            var _this2 = this;
 
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {
-                if (_this3.userdata) {
-                    var currentUserId = _this3.userdata.id;
+                if (_this2.userdata) {
+                    var currentUserId = _this2.userdata.id;
                     var lastEntry = false;
 
-                    AuctionBidderService.getBidderList(_this3.auctionid, lastEntry).then(function (response) {
+                    AuctionBidderService.getBidderList(_this2.auctionid, lastEntry).then(function (response) {
 
                         var bidderList = response;
                         var bidderListLastEntry = bidderList[bidderList.length - 1];
@@ -222,12 +230,12 @@ Vue.component("auction-bids", {
                                 // ist der eingeloggte User in BidderList
                                 if (isUserInBidderList) {
                                     NotificationService.error("Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").close;
-                                    _this3.reload(3000);
+                                    _this2.reload(3000);
                                 }
                                 // nein
                                 else {
                                         NotificationService.info("Bei dieser Auktion haben Sie nicht mitgeboten.").close;
-                                        _this3.reload(3000);
+                                        _this2.reload(3000);
                                     }
                             }
                     }, function (error) {
@@ -235,7 +243,7 @@ Vue.component("auction-bids", {
                     });
                 } else {
                     NotificationService.warn("Nicht angemeldet... -> reload").close;
-                    _this3.reload(3000);
+                    _this2.reload(3000);
                 }
             }, 1500);
         },
@@ -267,7 +275,7 @@ Vue.component("auction-bids", {
 
 });
 
-},{"services/ApiService":6,"services/AuctionBidderService":7,"services/NotificationService":8}],2:[function(require,module,exports){
+},{"services/ApiService":6,"services/NotificationService":8}],2:[function(require,module,exports){
 "use strict";
 
 // const NotificationService  = require( "services/NotificationService" );
