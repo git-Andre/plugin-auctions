@@ -221,10 +221,6 @@
 
                     $bidderListLastEntry = array_slice($auction -> bidderList, -1, 1 , true);
 
-                    if ($newList)
-                    {
-                        return "'$bidderListLastEntry: ' + $bidderListLastEntry + '$newList: ' + $newList";
-                    }
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
                     {
