@@ -7,7 +7,7 @@ Vue.component( "auction-bids", {
         template: String,
         auctionid: String,
         userdata: {},
-        versand: {},
+        // newBid: {},
         minBid: { type: Number, default: 0 },
         auctionEnd: { type: Boolean, default: false }
     },
@@ -28,101 +28,127 @@ Vue.component( "auction-bids", {
     methods: {
         addBid() {
             if ( this.isInputValid ) {
-                var currentBid          = {
-                    'bidPrice': 1,
-                    'customerMaxBid': 2.1,
-                    'bidderName': "versand***Kunde1",
-                    'customerId': 3
+
+                const pos           = this.userdata.email.indexOf( "@" );
+                const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
+                    this.userdata.email.slice( pos - 2, pos );
+
+                var currentBid = {
+                    'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
+                    'bidderName': newBidderName,
+                    'customerId': parseInt( this.userdata.id )
                 };
-                const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-                const pos               = this.userdata.email.indexOf( "@" );
-                const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
 
-                const newUserId = parseInt( this.userdata.id );
-
-                const lastEntry = true;
-
-                AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-                    response => {
-
-                        const bidderListLastEntry = response;
-
-                        var lastBidPrice = this.toFloatTwoDecimal( bidderListLastEntry.bidPrice );
-                        if ( lastBidPrice < 1.1 ) {
-                            lastBidPrice = this.toFloatTwoDecimal( this.minBid - 1 );
-                        }
-                        const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
-                        const lastUserId         = parseInt( bidderListLastEntry.customerId );
-
-                        if ( lastUserId == newUserId ) {
-
-                            currentBid.bidPrice       = lastBidPrice;
-                            currentBid.customerMaxBid = newCustomerMaxBid;
-                            currentBid.bidderName     = newBidderName;
-                            currentBid.customerId     = newUserId;
-
-                            this.versand = currentBid;
-                            this.updateAuction();
-                            // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-                            NotificationService.info(
-                                "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
-                                ")" )
-                                .closeAfter( 3500 );
-                        }
-                        else {
-                            if ( newCustomerMaxBid > lastCustomerMaxBid ) {
-                                if ( newCustomerMaxBid < lastCustomerMaxBid + 1 ) {
-                                    currentBid.bidPrice = newCustomerMaxBid;
-                                }
-                                else {
-                                    currentBid.bidPrice = lastCustomerMaxBid + 1;
-                                }
-                                currentBid.customerMaxBid = newCustomerMaxBid;
-                                currentBid.bidderName     = newBidderName;
-                                currentBid.customerId     = newUserId;
-
-                                this.versand = currentBid;
-                                this.updateAuction();
-                                this.reload(3000);
-                                NotificationService.success(
-                                    " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
-                                    .closeAfter( 3000 );
-                            }
-                            else {
-                                currentBid.bidPrice       = newCustomerMaxBid;
-                                currentBid.customerMaxBid = lastCustomerMaxBid;
-                                currentBid.bidderName     = bidderListLastEntry.bidderName;
-                                currentBid.customerId     = lastUserId;
-
-                                this.versand = currentBid;
-                                this.updateAuction();
-                                this.reload(3000);
-
-                                NotificationService.warn(
-                                    "Es gibt leider schon ein höheres Gebot..." )
-                                    .closeAfter( 3000 );
-                            }
-                        }
-
-                        // this.initAuctionParams();
-                    },
-                    error => {
-                        alert( 'error2: ' + error.toString() );
-                    }
-                );
+                ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( currentBid ),
+                                                                     { contentType: "application/json" }
+                )
+                    .then( response => {
+                               alert( "addBid ende" );
+                               this.reload( 3000 );
+                           },
+                           error => {
+                               alert( 'error3: ' + error.toString() );
+                           }
+                    );
             }
         },
-        updateAuction() {
-            ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.versand ),
-                                                                 { contentType: "application/json" }
-            )
-                .then( response => {
-                       },
-                       error => {
-                           alert( 'error3: ' + error.toString() );
-                       }
-                );
-        },
+        // addBid() {
+        //     if ( this.isInputValid ) {
+        //         var currentBid          = {
+        //             'bidPrice': 1,
+        //             'customerMaxBid': 2.1,
+        //             'bidderName': "newBid***Kunde1",
+        //             'customerId': 3
+        //         };
+        //         const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
+        //         const pos               = this.userdata.email.indexOf( "@" );
+        //         const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
+        //
+        //         const newUserId = parseInt( this.userdata.id );
+        //
+        //         const lastEntry = true;
+        //
+        //         AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
+        //             response => {
+        //
+        //                 const bidderListLastEntry = response;
+        //
+        //                 var lastBidPrice = this.toFloatTwoDecimal( bidderListLastEntry.bidPrice );
+        //                 if ( lastBidPrice < 1.1 ) {
+        //                     lastBidPrice = this.toFloatTwoDecimal( this.minBid - 1 );
+        //                 }
+        //                 const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
+        //                 const lastUserId         = parseInt( bidderListLastEntry.customerId );
+        //
+        //                 if ( lastUserId == newUserId ) {
+        //
+        //                     currentBid.bidPrice       = lastBidPrice;
+        //                     currentBid.customerMaxBid = newCustomerMaxBid;
+        //                     currentBid.bidderName     = newBidderName;
+        //                     currentBid.customerId     = newUserId;
+        //
+        //                     this.newBid = currentBid;
+        //                     this.updateAuctionWithNewBid();
+        //                     // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+        //                     NotificationService.info(
+        //                         "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
+        //                         ")" )
+        //                         .closeAfter( 3500 );
+        //                 }
+        //                 else {
+        //                     if ( newCustomerMaxBid > lastCustomerMaxBid ) {
+        //                         if ( newCustomerMaxBid < lastCustomerMaxBid + 1 ) {
+        //                             currentBid.bidPrice = newCustomerMaxBid;
+        //                         }
+        //                         else {
+        //                             currentBid.bidPrice = lastCustomerMaxBid + 1;
+        //                         }
+        //                         currentBid.customerMaxBid = newCustomerMaxBid;
+        //                         currentBid.bidderName     = newBidderName;
+        //                         currentBid.customerId     = newUserId;
+        //
+        //                         this.newBid = currentBid;
+        //                         this.updateAuctionWithNewBid();
+        //                         this.reload(3000);
+        //                         NotificationService.success(
+        //                             " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
+        //                             .closeAfter( 3000 );
+        //                     }
+        //                     else {
+        //                         currentBid.bidPrice       = newCustomerMaxBid;
+        //                         currentBid.customerMaxBid = lastCustomerMaxBid;
+        //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
+        //                         currentBid.customerId     = lastUserId;
+        //
+        //                         this.newBid = currentBid;
+        //                         this.updateAuctionWithNewBid();
+        //                         this.reload(3000);
+        //
+        //                         NotificationService.warn(
+        //                             "Es gibt leider schon ein höheres Gebot..." )
+        //                             .closeAfter( 3000 );
+        //                     }
+        //                 }
+        //
+        //                 // this.initAuctionParams();
+        //             },
+        //             error => {
+        //                 alert( 'error2: ' + error.toString() );
+        //             }
+        //         );
+        //     }
+        // },
+        // updateAuctionWithNewBid() {
+        //     ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.newBid ),
+        //                                                          { contentType: "application/json" }
+        //     )
+        //         .then( response => {
+        //                },
+        //                error => {
+        //                    alert( 'error3: ' + error.toString() );
+        //                }
+        //         );
+        // },
         initAuctionParams() {
             ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
                 .done( auction => {

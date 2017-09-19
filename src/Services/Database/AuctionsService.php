@@ -55,7 +55,6 @@
                 unset($bid['customerMaxBid']);
 
                 array_push($viewBids, $bid);
-
             }
             $auction -> bidderList = $viewBids;
 
@@ -63,7 +62,6 @@
 
             return $auction;
         }
-
 
 //        /**
 //         * @param $startDate
@@ -201,14 +199,14 @@
 
         /**
          * @param $id
-         * @param $sendedBid
+         * @param $newBi
          * @return bool|string
          */
-        public function updateBidderList($id, $sendedBid)
+        public function updateBidderList($id, $currentBid)
         {
-            if ($sendedBid)
+            if ($currentBid)
             {
-                $bid = (object) $sendedBid;
+                $newBid = (object) $currentBid;
 
                 $auction = $this -> getValue(Auction_7::class, $id);
 
@@ -219,12 +217,72 @@
 
                     $newList = $auction -> bidderList;
 
-                    $newEntry -> bidderName = $bid -> bidderName;
-                    $newEntry -> customerId = $bid -> customerId;
-                    $newEntry -> customerMaxBid = $bid -> customerMaxBid;
-                    $newEntry -> bidPrice = $bid -> bidPrice;
-                    $newEntry -> bidStatus = $bid -> bidStatus;
+                    $bidderListLastEntry = end($auction -> bidderList);
+
+                    $bidderListLastEntry -> customerId = $bidderListLastEntry -> customerId;
+
+                    if ($bidderListLastEntry -> customerId == $newBid -> customerId)
+                    {
+                        //                     currentBid.bidPrice       = lastBidPrice;
+                        //                     currentBid.customerMaxBid = newustomerMaxBid;
+                        //ok
+                        //                     currentBid.bidderName     = newBidderName;
+                        //ok
+                        //                     currentBid.customerId     = newUserId;
+                        //ok
+                        // return status eigenes Gebot ändern
+                        $newBid -> bidStatus = "changedOwnBid";
+
+                    }
+                    else
+                    {
+                        if ($newBid -> customerMaxBid > $bidderListLastEntry -> customerMaxBid)
+                        {
+                            if ($newBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
+                            {
+                                $newBid -> bidPrice = $newBid -> customerMaxBid;
+                            }
+                            else
+                            {
+                                $newBid -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
+                            }
+                            //                         currentBid.customerMaxBid = newCustomerMaxBid;
+                            //ok
+                            //                         currentBid.bidderName     = newBidderName;
+                            //ok
+                            //                         currentBid.customerId     = newUserId;
+                            //ok
+
+                            // return status GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende
+                            $newBid -> bidStatus = "highestBid";
+
+                        }
+                        else
+                        {
+                            //                         currentBid.bidPrice       = newCustomerMaxBid;
+                            //ok
+                            //                         currentBid.customerMaxBid = lastCustomerMaxBid;
+                            $newBid -> customerMaxBid = $bidderListLastEntry -> customerMaxBid;
+                            //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
+                            $newBid -> bidderName = $auction -> bidderList -> bidderName;
+                            //                         currentBid.customerId     = lastUserId;
+                            $newBid -> customerMaxBid = $bidderListLastEntry -> customerId;
+
+                            // return status  Es gibt leider schon ein höheres Gebot...
+                            $newBid -> bidStatus = "lowerBid";
+                        }
+                    }
+
+
+                    $newEntry -> bidderName = $newBid -> bidderName;
+                    $newEntry -> customerId = $newBid -> customerId;
+                    $newEntry -> customerMaxBid = $newBid -> customerMaxBid;
+
+
+                    $newEntry -> bidPrice = $newBid -> bidPrice;
+                    $newEntry -> bidStatus = $newBid -> bidStatus;
                     $newEntry -> bidTimeStamp = time();
+
 
                     array_push($newList, $newEntry);
 
