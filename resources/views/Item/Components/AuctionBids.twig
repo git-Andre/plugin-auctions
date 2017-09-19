@@ -4,8 +4,7 @@
     <div class="row container">
         <auction-countdown
                 template="#vue-auction-countdown"
-                v-resource-push:deadline
-                resource="auction.expiryDate"
+                deadline="{{ auction.expiryDate }}"
         >
         </auction-countdown>
 
