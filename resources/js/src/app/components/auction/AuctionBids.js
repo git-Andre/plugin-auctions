@@ -55,7 +55,6 @@ Vue.component( "auction-bids", {
                     'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
                     'bidderName': newBidderName,
                     'customerId': parseInt( this.userdata.id ),
-                    'minBid': this.minBid
                 };
                 ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
                                                                      { contentType: "application/json" }

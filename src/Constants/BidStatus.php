@@ -12,6 +12,6 @@ class BidStatus
 	const OWN_BID_CHANGED = "ownBidChanged";
 	const HIGHEST_BID = "highestBid";
 	const LOWER_BID = "lowerBid";
-	const START = "start";
+	const START = "withoutBid";
 
 }
