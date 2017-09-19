@@ -223,7 +223,7 @@
 
                     if ($newList)
                     {
-                        return '$bidderListLastEntry: ' + $bidderListLastEntry + '$newList: ' + $newList;
+                        return "'$bidderListLastEntry: ' + $bidderListLastEntry + '$newList: ' + $newList";
                     }
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
