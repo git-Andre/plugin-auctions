@@ -12,7 +12,6 @@
 {% if auction %}
 
     <resource name="auction" :data="{{ auction | json_encode() }}"></resource>
-    <resource name="auctionBidderlist" :data="{{ auction.bidderList[0] | json_encode() }}"></resource>
     <resource name="deadline" :data="{{ auction.expiryDate }}"></resource>
 
 
@@ -39,10 +38,7 @@
 
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
-                                {#auction="{{ auction | json_encode() }}"#}
-                                v-resource-push:bidderlist
-                                resource="auctionBidderlist"
-
+                                auction="{{ auction | json_encode() }}"
                         >
                         </auction-show-bidderlist>
                     </div>

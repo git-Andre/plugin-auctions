@@ -6,7 +6,7 @@ Vue.component( "auction-show-bidderlist", {
 
     props: {
         "template": String,
-        "bidderlist": {},
+        "auction": {},
     },
 
     data() {
@@ -19,9 +19,9 @@ Vue.component( "auction-show-bidderlist", {
     created() {
         this.$options.template = this.template;
 
-        this.bidderlist = JSON.parse( this.bidderlist );
+        this.auction = JSON.parse( this.auction );
 
-        const bidderData     = this.bidderlist;
+        const bidderData     = this.auction.bidderList;
         var differentBidders = [0];
 
         this.bidderList = [];
