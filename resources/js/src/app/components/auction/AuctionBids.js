@@ -57,13 +57,11 @@ Vue.component( "auction-bids", {
                     'customerId': parseInt( this.userdata.id ),
                     'minBid': this.minBid
                 };
-                console.dir( currentBid );
                 ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
                                                                      { contentType: "application/json" }
                 )
                     .then( response => {
-                               // alert( "addBid ende" );
-                               this.reload( 500 );
+                               // this.reload( 500 );
                            },
                            error => {
                                alert( 'error3: ' + error.toString() );
