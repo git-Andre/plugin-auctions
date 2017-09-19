@@ -254,7 +254,7 @@
                             {
                                 // nur um 1 erhöhen
 
-                                return $currentBid -> customerMaxBid;
+                                return $bidderListLastEntry -> customerMaxBid;
 //                                $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
                             //                         currentBid.customerMaxBid = newCustomerMaxBid;
