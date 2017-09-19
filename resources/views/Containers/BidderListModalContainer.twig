@@ -12,6 +12,8 @@
 {% if auction %}
 
     <resource name="auction" :data="{{ auction | json_encode() }}"></resource>
+    <resource name="auction-bidderlist" :data="{{ auction.bidderList | json_encode() }}"></resource>
+    <resource name="deadline" :data="{{ auction.expiryDate }}"></resource>
 
 
     <div class="wrapper wrapper-top">

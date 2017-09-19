@@ -1,6 +1,6 @@
 // const NotificationService  = require( "services/NotificationService" );
 // const ResourceService      = require( "services/ResourceService" );
-const AuctionBidderService = require( "services/AuctionBidderService" );
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-show-bidderlist", {
 
