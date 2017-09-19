@@ -239,17 +239,17 @@
                     // anderer Customer !
                     else
                     {
-                        // Neues Max-Gebot höher als Max-Gebot letzter Eintrag?
+                        // Neues Max-Gebot > Max-Gebot letzter Eintrag?
                         if ($newBid -> customerMaxBid > $bidderListLastEntry -> customerMaxBid)
                         {
-                            // Neues Max-Gebot kleiner als letztes Max-Gebot +1  ??
+                            // Neues Max-Gebot < kleiner als letztes Max-Gebot +1  ??
                             if ($newBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
                             {
                                 $newBid -> bidPrice = $newBid -> customerMaxBid;
                             }
                             else
                             {
-                                // nur um 1
+                                // nur um 1 erhöhen
                                 $newBid -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
                             //                         currentBid.customerMaxBid = newCustomerMaxBid;
@@ -307,7 +307,7 @@
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
-            return false;
+            return $currentBid;
         }
 
         /**

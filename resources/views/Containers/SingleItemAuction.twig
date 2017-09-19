@@ -3,7 +3,7 @@
 
 {% if ( auction ) %}
 
-    <resource name="deadline" :data="{{ auction.expiryDate }}"></resource>
+    <resource name="auction" :data="{{ auction }}"></resource>
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -39,6 +39,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auctionid="{{ auction.id }}"
+                        minBid="{{ bidderListLast.bidPrice }}"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
 
