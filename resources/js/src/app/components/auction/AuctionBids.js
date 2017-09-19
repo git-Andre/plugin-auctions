@@ -57,8 +57,8 @@ Vue.component( "auction-bids", {
                     'customerId': parseInt( this.userdata.id ),
                     'minBid': this.minBid
                 };
-
-                ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( currentBid ),
+                console.dir( currentBid );
+                ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
                                                                      { contentType: "application/json" }
                 )
                     .then( response => {
