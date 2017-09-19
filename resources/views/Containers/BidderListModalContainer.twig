@@ -37,9 +37,7 @@
 
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
-                                v-resource-push:auction
-                                resource="auction"
-                                data-accessor="true"
+                                auction="{{ auction | json_encode() }}"
                         >
                         </auction-show-bidderlist>
                     </div>
@@ -47,8 +45,7 @@
             </div>
         </div>
     </div>
-
-
+    <!-- ./BidderList MODAL -->
 
 {% endif %}
 <style>
