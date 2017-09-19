@@ -3,6 +3,7 @@
     namespace PluginAuctions\Services\Database;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+    use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
 
@@ -219,13 +220,12 @@
                     $newList = $auction -> bidderList;
 
                     $bidderListLastEntry = array_slice($auction -> bidderList, -1, 1 , true);
-//                    $bidderListLastEntry = end(array_keys($auction -> bidderList));
 
-                    $bidderListLastEntry -> customerId = $bidderListLastEntry -> customerId;
-
+                    // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $newBid -> customerId)
                     {
                         //                     currentBid.bidPrice       = lastBidPrice;
+                        $newBid -> bidPrice = $bidderListLastEntry -> bidPrice;
                         //                     currentBid.customerMaxBid = newustomerMaxBid;
                         //ok
                         //                     currentBid.bidderName     = newBidderName;
@@ -233,19 +233,23 @@
                         //                     currentBid.customerId     = newUserId;
                         //ok
                         // return status eigenes Gebot ändern
-                        $newBid -> bidStatus = "changedOwnBid";
+                        $newBid -> bidStatus = BidStatus::OWN_BID_CHANGED;
 
                     }
+                    // anderer Customer !
                     else
                     {
+                        // Neues Max-Gebot höher als Max-Gebot letzter Eintrag?
                         if ($newBid -> customerMaxBid > $bidderListLastEntry -> customerMaxBid)
                         {
+                            // Neues Max-Gebot kleiner als letztes Max-Gebot +1  ??
                             if ($newBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
                             {
                                 $newBid -> bidPrice = $newBid -> customerMaxBid;
                             }
                             else
                             {
+                                // nur um 1
                                 $newBid -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
                             //                         currentBid.customerMaxBid = newCustomerMaxBid;
@@ -256,7 +260,7 @@
                             //ok
 
                             // return status GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende
-                            $newBid -> bidStatus = "highestBid";
+                            $newBid -> bidStatus = BidStatus::HIGHEST_BID;
 
                         }
                         else
@@ -266,12 +270,12 @@
                             //                         currentBid.customerMaxBid = lastCustomerMaxBid;
                             $newBid -> customerMaxBid = $bidderListLastEntry -> customerMaxBid;
                             //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
-                            $newBid -> bidderName = $auction -> bidderList -> bidderName;
+                            $newBid -> bidderName = $bidderListLastEntry -> bidderName;
                             //                         currentBid.customerId     = lastUserId;
                             $newBid -> customerMaxBid = $bidderListLastEntry -> customerId;
 
                             // return status  Es gibt leider schon ein höheres Gebot...
-                            $newBid -> bidStatus = "lowerBid";
+                            $newBid -> bidStatus = BidStatus::LOWER_BID;
                         }
                     }
 
