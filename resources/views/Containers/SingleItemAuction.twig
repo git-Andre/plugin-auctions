@@ -3,7 +3,7 @@
 
 {% if ( auction ) %}
 
-    <resource name="auction" :data="{{ auction  | json_encode() }}"></resource>
+    {#<resource name="auction" :data="{{ auction  | json_encode() }}"></resource>#}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}

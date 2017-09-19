@@ -6,8 +6,7 @@ Vue.component( "auction-show-bidderlist", {
 
     props: [
         "template",
-        "auctionid",
-        // "expiryDate"
+        "bidderlist",
     ],
 
     data() {
@@ -21,34 +20,57 @@ Vue.component( "auction-show-bidderlist", {
     created() {
         this.$options.template = this.template;
 
-        AuctionBidderService.getBidderList( this.auctionid )
-            .then(
-                response => {
-                    const bidderData     = response;
-                    var differentBidders = [0];
+        this.bidderlist = JSON.parse( this.bidderlist );
 
-                    this.bidderList = [];
-                    for (var i = bidderData.length; --i >= 0;) {
-                        var bidView = {};
+        const bidderData     = this.bidderlist;
+        var differentBidders = [0];
 
-                        bidView.bidderName   = bidderData[i].bidderName;
-                        bidView.bidPrice     = bidderData[i].bidPrice;
-                        bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
+        this.bidderList = [];
+        for (var i = bidderData.length; --i >= 0;) {
+            var bidView = {};
 
-                        this.bidderList.push( bidView );
+            bidView.bidderName   = bidderData[i].bidderName;
+            bidView.bidPrice     = bidderData[i].bidPrice;
+            bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
-                        const currentUserId = bidderData[i].customerId;
+            this.bidderList.push( bidView );
 
-                        if ( differentBidders.indexOf( currentUserId ) < 0 ) {
-                            differentBidders.push( currentUserId );
-                        }
-                    }
-                    this.bidders = differentBidders.length - 1;
-                },
-                error => {
-                    alert( 'error4: ' + error.toString() );
-                }
-            );
+            const currentUserId = bidderData[i].customerId;
+
+            if ( differentBidders.indexOf( currentUserId ) < 0 ) {
+                differentBidders.push( currentUserId );
+            }
+        }
+        this.bidders = differentBidders.length - 1;
+
+        // AuctionBidderService.getBidderList( this.auctionid )
+        //     .then(
+        //         response => {
+        //             const bidderData     = response;
+        //             var differentBidders = [0];
+        //
+        //             this.bidderList = [];
+        //             for (var i = bidderData.length; --i >= 0;) {
+        //                 var bidView = {};
+        //
+        //                 bidView.bidderName   = bidderData[i].bidderName;
+        //                 bidView.bidPrice     = bidderData[i].bidPrice;
+        //                 bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
+        //
+        //                 this.bidderList.push( bidView );
+        //
+        //                 const currentUserId = bidderData[i].customerId;
+        //
+        //                 if ( differentBidders.indexOf( currentUserId ) < 0 ) {
+        //                     differentBidders.push( currentUserId );
+        //                 }
+        //             }
+        //             this.bidders = differentBidders.length - 1;
+        //         },
+        //         error => {
+        //             alert( 'error4: ' + error.toString() );
+        //         }
+        //     );
         // AuctionBidderService.getExpiryDate( this.auctionid )
         //     .then(
         //         response => {

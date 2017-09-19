@@ -7,6 +7,10 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
+<resource name="auction" :data="{{ auction | json_encode() }}"></resource>
+<resource name="auctionBidderlist" :data="{{ auction.bidderList | json_encode() }}"></resource>
+{#<resource name="user" :data="{ isLoggedIn: {{ frontend.Account.getIsAccountLoggedIn | json_encode() }} }" ></resource>#}
+
 {% if auction %}
 
     <div class="wrapper wrapper-top">
@@ -32,7 +36,8 @@
 
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
-                                auctionid="{{ auction.id }}"
+                                v-resource-push:bidderlist
+                                resource="auctionBidderlist"
                         >
                         </auction-show-bidderlist>
                     </div>
