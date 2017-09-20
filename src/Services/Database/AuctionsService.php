@@ -221,12 +221,6 @@
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
-
-//                    if (true)
-//                    {
-//                        return $bidderListLastEntry;
-//                    }
-//
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
                     {
@@ -280,7 +274,7 @@
                             //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
                             $newEntry -> bidderName = $bidderListLastEntry -> bidderName;
                             //                         currentBid.customerId     = lastUserId;
-                            $newEntry -> customerMaxBid = $bidderListLastEntry -> customerId;
+                            $newEntry -> customerId = $bidderListLastEntry -> customerId;
 
                             // return status  Es gibt leider schon ein höheres Gebot...
                             $newEntry -> bidStatus = BidStatus::LOWER_BID;
