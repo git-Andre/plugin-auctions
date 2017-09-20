@@ -2,8 +2,8 @@
 
     namespace PluginAuctions\Services\Database;
 
-    use IO\Services\CustomerService;
-    use IO\Services\SessionStorageService;
+//    use IO\Services\CustomerService;
+//    use IO\Services\SessionStorageService;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
 
@@ -19,28 +19,33 @@
     class AuctionsService extends DataBaseService {
 
         protected $tableName = 'auctions';
-        /**
-         * @var CustomerService
-         */
-        private $customerService;
-
-        /**
-         * @var SessionStorageService
-         */
-        private $sessionStorage;
+//        /**
+//         * @var CustomerService
+//         */
+//        private $customerService;
+//
+//        /**
+//         * @var SessionStorageService
+//         */
+//        private $sessionStorage;
 
         /**
          * AuctionsService constructor.
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
+        public function __construct(DataBase $dataBase)
         {
             parent ::__construct($dataBase);
-            $this -> customerService = $customerService;
-            $this -> sessionStorage = $sessionStorage;
         }
 
+//        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
+//        {
+//            parent ::__construct($dataBase);
+//            $this -> customerService = $customerService;
+//            $this -> sessionStorage = $sessionStorage;
+//        }
+//
         /**
          * @return bool|string
          */
@@ -67,7 +72,10 @@
 
             foreach ($auction -> bidderList as $bid)
             {
-                unset($bid['customerId']);
+//                unset($bid['customerId']);
+
+                // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
+                $bid['customerId'] = $bid['customerId'] + 46987;
                 unset($bid['customerMaxBid']);
 
                 array_push($viewBids, $bid);
@@ -255,10 +263,10 @@
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
                     $loggedInUser = $this -> customerService -> getContactId();
-
-                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
-                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
-                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
+//
+//                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
+//                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
+//                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
 
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
