@@ -1,11 +1,3 @@
-{#<div class="col-md-7" v-if="isAuctionPresent">#}
-            {#<auction-countdown#}
-                    {#template="#vue-auction-countdown"#}
-                    {#v-resource-push:deadline#}
-                    {#resource="deadline"#}
-            {#>#}
-            {#</auction-countdown>#}
-        {#</div>#}
 <script type="x/template" id="vue-auction-show-bidderlist">
 
     <div class="row container">
@@ -15,10 +7,10 @@
                 ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
             </h4>
         </div>
-        <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben werden!<br>
+        <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und geändert werden!<br>
                                      Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
 
-        <div class="tab-pane" id="assessments-details" role="tabpanel">
+        <div class="tab-pane" id="ao-bidderList" role="tabpanel">
 
             <div class="m-y-2">
                 <table class="table table-striped table-hover table-sm">
