@@ -26,7 +26,10 @@
                     </tr>
                     <tr v-for="bid in bidderList">
                         <td class="bid p-l-3">${ bid.bidderName }</td>
-                        <td class="bid text-right p-r-3">${ bid.bidPrice | currency }</td>
+                        <td class="bid text-right p-r-1">
+                            <span class="p-r-1 small text-muted">${ bid.bidStatus }</span>
+                            ${ bid.bidPrice | currency }
+                        </td>
                         <td class="bid text-right p-r-3">${ bid.bidTimeStamp | date ("ddd DD.MMM.YYYY HH:mm:ss") }
                         </td>
                     </tr>

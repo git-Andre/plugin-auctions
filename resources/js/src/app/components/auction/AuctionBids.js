@@ -39,34 +39,24 @@ Vue.component( "auction-bids", {
             // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
             if ( sessionStorage.getItem( "bidId" ) == this.userdata.id + 46987 ) {
                 console.log( 'anjekommen' );
-                // timeStamp von letzter bid bis jetzt < 1 Minute ??
-                const duration         = 2 * 60; // 1 Minute
-                const now              = Math.trunc( (new Date()).getTime() / 1000 );
-                const lastBidTimeStamp = this.auction.bidderList[this.auction.bidderList.length - 1].bidTimeStamp;
 
-                console.log( 'now: ' + now );
-                console.log( 'lastBidTimeStamp: ' + lastBidTimeStamp );
-                console.log( 'now - lastBidTimeStamp: ' + (now - lastBidTimeStamp) );
-
-                if ( (now - lastBidTimeStamp) < duration ) {
-                    // bidStatus von letzter bid ???
-                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
-                        case AuctionConstants.OWN_BID_CHANGED: {
-                            NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 5000 );
-                            break;
-                        }
-                        case AuctionConstants.HIGHEST_BID: {
-                            NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 5000 );
-                            break;
-                        }
-                        case AuctionConstants.LOWER_BID: {
-                            NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 5000 );
-                            break;
-                        }
-                            console.log( 'keine Info / bidStatus ?????: ' );
+                // bidStatus von letzter bid ???
+                switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                    case AuctionConstants.OWN_BID_CHANGED: {
+                        NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 5000 );
+                        break;
                     }
-
+                    case AuctionConstants.HIGHEST_BID: {
+                        NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 5000 );
+                        break;
+                    }
+                    case AuctionConstants.LOWER_BID: {
+                        NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 5000 );
+                        break;
+                    }
+                        console.log( 'keine Info / bidStatus ?????: ' );
                 }
+
             }
         }
     },
@@ -86,10 +76,6 @@ Vue.component( "auction-bids", {
                 ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ), { contentType: "application/json" } )
                     .then( response => {
                                // user merken für Gebots-Erfolgsmeldungen...
-
-                               // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
-                               sessionStorage.setItem( "bidId", this.userdata.id + 46987 ); // mini encrypt...
-
                                this.reload( 10 );
                            },
                            error => {
