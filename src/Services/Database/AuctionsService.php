@@ -45,6 +45,22 @@
 
             return false;
         }
+        public function getAuctionsHelper()
+        {
+            $auctions = $this -> getValues(Auction_7::class);
+            if ($auctions)
+            {
+                foreach ($auctions as $auction)
+                {
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                }
+                unset($auction);
+
+                return json_encode($auctions);
+            }
+
+            return false;
+        }
 
         private function buildAuctionView($auction)
         {
