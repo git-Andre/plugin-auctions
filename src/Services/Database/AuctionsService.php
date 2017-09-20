@@ -304,7 +304,6 @@
                         $newEntry -> bidderName = $currentBid -> bidderName;
                         $newEntry -> customerId = $currentBid -> customerId;
 
-                        // return status eigenes Gebot ändern
                         $newEntry -> bidStatus = BidStatus::OWN_BID_CHANGED;
 
                     }
@@ -328,7 +327,6 @@
                             $newEntry -> bidderName = $currentBid -> bidderName;
                             $newEntry -> customerId = $currentBid -> customerId;
 
-                            // return status GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende
                             $newEntry -> bidStatus = BidStatus::HIGHEST_BID;
 
                         }
@@ -340,7 +338,6 @@
                             $newEntry -> bidderName = $bidderListLastEntry -> bidderName;
                             $newEntry -> customerId = $bidderListLastEntry -> customerId;
 
-                            // return status  Es gibt leider schon ein höheres Gebot...
                             $newEntry -> bidStatus = BidStatus::LOWER_BID;
                         }
                     }
@@ -360,10 +357,8 @@
 
                     return "Fehler in updateBidderList";
                 }
-
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
-
             return $currentBid;
         }
 
