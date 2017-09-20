@@ -219,7 +219,7 @@
 
                     $newList = $auction -> bidderList;
 
-                    $bidderListLastEntry = array_pop(array_slice($newList, - 1));
+                    $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
 
 //                    if (true)
