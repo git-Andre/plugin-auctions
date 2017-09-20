@@ -238,15 +238,11 @@
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
-                    if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
+                    if ( $currentBid -> customerId == $bidderListLastEntry -> customerId )
                     {
-                        //                     currentBid.bidPrice       = lastBidPrice;
                         $newEntry -> bidPrice = $bidderListLastEntry -> bidPrice;
-                        //                     currentBid.customerMaxBid = newustomerMaxBid;
                         $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
-                        //                     currentBid.bidderName     = newBidderName;
                         $newEntry -> bidderName = $currentBid -> bidderName;
-                        //                     currentBid.customerId     = newUserId;
                         $newEntry -> customerId = $currentBid -> customerId;
 
                         // return status eigenes Gebot ändern
@@ -264,17 +260,13 @@
                             {
                                 $newEntry -> bidPrice = $currentBid -> customerMaxBid;
                             }
+                            // mehr als 1 EUR
                             else
                             {
                                 $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
-                            //                         currentBid.customerMaxBid = newCustomerMaxBid;
                             $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
-
-                            //                         currentBid.bidderName     = newBidderName;
                             $newEntry -> bidderName = $currentBid -> bidderName;
-
-                            //                         currentBid.customerId     = newUserId;
                             $newEntry -> customerId = $currentBid -> customerId;
 
                             // return status GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende
@@ -282,14 +274,11 @@
 
                         }
                         else
+                            // überboten
                         {
-                            //                         currentBid.bidPrice       = newCustomerMaxBid;
                             $newEntry -> bidPrice = $currentBid -> customerMaxBid;
-                            //                         currentBid.customerMaxBid = lastCustomerMaxBid;
                             $newEntry -> customerMaxBid = $bidderListLastEntry -> customerMaxBid;
-                            //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
                             $newEntry -> bidderName = $bidderListLastEntry -> bidderName;
-                            //                         currentBid.customerId     = lastUserId;
                             $newEntry -> customerId = $bidderListLastEntry -> customerId;
 
                             // return status  Es gibt leider schon ein höheres Gebot...
