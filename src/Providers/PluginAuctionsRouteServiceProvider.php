@@ -20,7 +20,7 @@
         {
             $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], function ($api) {
 
-                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
+//                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
 
 //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
 //                    $api -> get('api/auction/{id}', ['uses' => '\AuctionsController@getAuction']);
@@ -34,6 +34,7 @@
             ;
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
+            $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
                     -> where('id', '\d+')
             ;
