@@ -35,26 +35,33 @@ Vue.component( "auction-bids", {
         }
     },
     ready() {
-        // "present" und Customer eingelogged ??
+        // tense "present" und Customer eingelogged ??
+        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata != null ) {
 
-        console.log( 'AuctionConstants.PRESENT: ' + AuctionConstants.PRESENT );
-        console.log( 'AuctionConstants.START: ' + AuctionConstants.START );
+            // timeStamp von letzter bid bis jetzt < 1 Minute ??
+            const duration = 1 * 60; // 1 Minute
+            const now              = Math.trunc( (new Date()).getTime() / 1000 );
+            const lastBidTimeStamp = this.auction.bidderList[this.auction.bidderList.length - 1].bidTimeStamp;
 
-        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata.id != null ) {
 
-            // bidStatus ???
-            switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus) {
+
+            // bidStatus von letzter bid ???
+            switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                 case AuctionConstants.OWN_BID_CHANGED: {
                     NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 5000 );
+                    break;
                 }
                 case AuctionConstants.HIGHEST_BID: {
-                    NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 5000 );
+                    NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
+                        .closeAfter( 5000 );
+                    break;
                 }
                 case AuctionConstants.LOWER_BID: {
                     NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 5000 );
+                    break;
                 }
+                    console.log( 'keine Info / bidStatus ?????: ' );
             }
-
         }
     },
     methods: {

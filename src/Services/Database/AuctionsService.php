@@ -2,10 +2,15 @@
 
     namespace PluginAuctions\Services\Database;
 
+    use IO\Services\CustomerService;
+    use IO\Services\SessionStorageService;
+
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+
 
     //    use Illuminate\Support\Facades\App;
 //    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
@@ -13,17 +18,27 @@
 
     class AuctionsService extends DataBaseService {
 
-
         protected $tableName = 'auctions';
+        /**
+         * @var CustomerService
+         */
+        private $customerService;
+
+        /**
+         * @var SessionStorageService
+         */
+        private $sessionStorage;
 
         /**
          * AuctionsService constructor.
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase)
+        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
         {
             parent ::__construct($dataBase);
+            $this -> customerService = $customerService;
+            $this -> sessionStorage = $sessionStorage;
         }
 
         /**
@@ -37,22 +52,6 @@
                 foreach ($auctions as $auction)
                 {
                     $auction = $this -> buildAuctionView($auction);
-                }
-                unset($auction);
-
-                return json_encode($auctions);
-            }
-
-            return false;
-        }
-        public function getAuctionsHelper()
-        {
-            $auctions = $this -> getValues(Auction_7::class);
-            if ($auctions)
-            {
-                foreach ($auctions as $auction)
-                {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
                 }
                 unset($auction);
 
@@ -80,11 +79,6 @@
             return $auction;
         }
 
-//        /**
-//         * @param $startDate
-//         * @param $endDate
-//         * @return string
-//         */
         public function calculateTense($startDate, $endDate) : string
         {
             $now = time();
@@ -105,6 +99,29 @@
             {
                 return 'Fehler - startDate: ' . $startDate . ' - endDate: ' . $endDate . ' - now: ' . $now;
             }
+        }
+
+//        /**
+//         * @param $startDate
+//         * @param $endDate
+//         * @return string
+//         */
+
+        public function getAuctionsHelper()
+        {
+            $auctions = $this -> getValues(Auction_7::class);
+            if ($auctions)
+            {
+                foreach ($auctions as $auction)
+                {
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                }
+                unset($auction);
+
+                return json_encode($auctions);
+            }
+
+            return false;
         }
 
         public function getAuctionForItemId($itemId)
@@ -237,8 +254,14 @@
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
+                    $loggedInUser = $this -> customerService -> getContactId();
+
+                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
+                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
+                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
+
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
-                    if ( $currentBid -> customerId == $bidderListLastEntry -> customerId )
+                    if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
                     {
                         $newEntry -> bidPrice = $bidderListLastEntry -> bidPrice;
                         $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;

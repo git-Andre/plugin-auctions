@@ -29,27 +29,32 @@ Vue.component("auction-bids", {
         }
     },
     ready: function ready() {
-        // "present" und Customer eingelogged ??
+        // tense "present" und Customer eingelogged ??
+        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata != null) {
 
-        console.log('AuctionConstants.PRESENT: ' + AuctionConstants.PRESENT);
-        console.log('AuctionConstants.START: ' + AuctionConstants.START);
+            // timeStamp von letzter bid bis jetzt < 1 Minute ??
+            var duration = 1 * 60; // 1 Minute
+            var now = Math.trunc(new Date().getTime() / 1000);
+            var lastBidTimeStamp = this.auction.bidderList[this.auction.bidderList.length - 1].bidTimeStamp;
 
-        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id != null) {
-
-            // bidStatus ???
-            switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus) {
+            // bidStatus von letzter bid ???
+            switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                 case AuctionConstants.OWN_BID_CHANGED:
                     {
                         NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(5000);
+                        break;
                     }
                 case AuctionConstants.HIGHEST_BID:
                     {
                         NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(5000);
+                        break;
                     }
                 case AuctionConstants.LOWER_BID:
                     {
                         NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(5000);
+                        break;
                     }
+                    console.log('keine Info / bidStatus ?????: ');
             }
         }
     },
@@ -293,10 +298,6 @@ Vue.component("auction-bids", {
 },{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
 "use strict";
 
-// const NotificationService  = require( "services/NotificationService" );
-// const ResourceService      = require( "services/ResourceService" );
-// const AuctionBidderService = require( "services/AuctionBidderService" );
-
 Vue.component("auction-show-bidderlist", {
 
     props: {
@@ -335,57 +336,7 @@ Vue.component("auction-show-bidderlist", {
             }
         }
         this.bidders = differentBidders.length - 1;
-
-        // AuctionBidderService.getBidderList( this.auctionid )
-        //     .then(
-        //         response => {
-        //             const bidderData     = response;
-        //             var differentBidders = [0];
-        //
-        //             this.bidderList = [];
-        //             for (var i = bidderData.length; --i >= 0;) {
-        //                 var bidView = {};
-        //
-        //                 bidView.bidderName   = bidderData[i].bidderName;
-        //                 bidView.bidPrice     = bidderData[i].bidPrice;
-        //                 bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
-        //
-        //                 this.bidderList.push( bidView );
-        //
-        //                 const currentUserId = bidderData[i].customerId;
-        //
-        //                 if ( differentBidders.indexOf( currentUserId ) < 0 ) {
-        //                     differentBidders.push( currentUserId );
-        //                 }
-        //             }
-        //             this.bidders = differentBidders.length - 1;
-        //         },
-        //         error => {
-        //             alert( 'error4: ' + error.toString() );
-        //         }
-        //     );
-        // AuctionBidderService.getExpiryDate( this.auctionid )
-        //     .then(
-        //         response => {
-        //
-        //             this.expiryDate = response;
-        //
-        //             // if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
-        //             //     this.isAuctionPresent = true;
-        //             // }
-        //             // else {
-        //             //     this.isAuctionPresent = false;
-        //             // };
-        //         },
-        //         error => {
-        //             alert( 'error5: ' + error.toString() );
-        //         }
-        //     );
-    },
-    ready: function ready() {},
-
-
-    methods: {}
+    }
 });
 
 },{}],3:[function(require,module,exports){
