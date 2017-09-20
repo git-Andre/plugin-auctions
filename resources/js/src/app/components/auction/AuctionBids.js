@@ -1,6 +1,6 @@
 const ApiService          = require( "services/ApiService" );
 const NotificationService = require( "services/NotificationService" );
-
+const AuctionConstants = require("constants/AuctionConstants");
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
@@ -35,6 +35,13 @@ Vue.component( "auction-bids", {
         }
     },
     ready() {
+        // "present" ??
+
+
+        switch (this.auction.tense) {
+            case AuctionConstants.OWN_BID_CHANGED
+        }
+        AuctionConstants.OWN_BID_CHANGED
     },
     methods: {
         addBid() {
@@ -61,6 +68,110 @@ Vue.component( "auction-bids", {
                     );
             }
         },
+        // addBidOld() {
+        //     if ( this.isInputValid ) {
+        //         var currentBid          = {
+        //             'bidPrice': 1,
+        //             'customerMaxBid': 2.1,
+        //             'bidderName': "newBid***Kunde1",
+        //             'customerId': 3
+        //         };
+        //         const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
+        //         const pos               = this.userdata.email.indexOf( "@" );
+        //         const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
+        //
+        //         const newUserId = parseInt( this.userdata.id );
+        //
+        //         const lastEntry = true;
+        //
+        //         AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
+        //             response => {
+        //
+        //                 const bidderListLastEntry = response;
+        //
+        //                 var lastBidPrice = this.toFloatTwoDecimal( bidderListLastEntry.bidPrice );
+        //                 if ( lastBidPrice < 1.1 ) {
+        //                     lastBidPrice = this.toFloatTwoDecimal( this.minBid - 1 );
+        //                 }
+        //                 const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
+        //                 const lastUserId         = parseInt( bidderListLastEntry.customerId );
+        //
+        //                 if ( lastUserId == newUserId ) {
+        //
+        //                     currentBid.bidPrice       = lastBidPrice;
+        //                     currentBid.customerMaxBid = newCustomerMaxBid;
+        //                     currentBid.bidderName     = newBidderName;
+        //                     currentBid.customerId     = newUserId;
+        //
+        //                     this.newBid = currentBid;
+        //                     this.updateAuctionWithNewBid();
+        //                     // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
+        //                     NotificationService.info(
+        //                         "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
+        //                         ")" )
+        //                         .closeAfter( 3500 );
+        //                 }
+        //                 else {
+        //                     if ( newCustomerMaxBid > lastCustomerMaxBid ) {
+        //                         if ( newCustomerMaxBid < lastCustomerMaxBid + 1 ) {
+        //                             currentBid.bidPrice = newCustomerMaxBid;
+        //                         }
+        //                         else {
+        //                             currentBid.bidPrice = lastCustomerMaxBid + 1;
+        //                         }
+        //                         currentBid.customerMaxBid = newCustomerMaxBid;
+        //                         currentBid.bidderName     = newBidderName;
+        //                         currentBid.customerId     = newUserId;
+        //
+        //                         this.newBid = currentBid;
+        //                         this.updateAuctionWithNewBid();
+        //                         this.reload(3000);
+        //                         NotificationService.success(
+        //                             " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
+        //                             .closeAfter( 3000 );
+        //                     }
+        //                     else {
+        //                         currentBid.bidPrice       = newCustomerMaxBid;
+        //                         currentBid.customerMaxBid = lastCustomerMaxBid;
+        //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
+        //                         currentBid.customerId     = lastUserId;
+        //
+        //                         this.newBid = currentBid;
+        //                         this.updateAuctionWithNewBid();
+        //                         this.reload(3000);
+        //
+        //                         NotificationService.warn(
+        //                             "Es gibt leider schon ein höheres Gebot..." )
+        //                             .closeAfter( 3000 );
+        //                     }
+        //                 }
+        //
+        //                 // this.initAuctionParams();
+        //             },
+        //             error => {
+        //                 alert( 'error2: ' + error.toString() );
+        //             }
+        //         );
+        //     }
+        // },
+
+        // initAuctionParams() {
+        //     ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
+        //         .done( auction => {
+        //             // Gibt es Gebote?
+        //             if ( auction.bidderList.length > 1 ) {
+        //                 this.minBid =
+        //                     this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
+        //                         1 );
+        //             }
+        //             else {
+        //                 this.minBid = this.toFloatTwoDecimal( auction.startPrice );
+        //             }
+        //         } )
+        //         .fail( () => {
+        //             alert( 'Upps - ein Fehler beim abholen ??!!' );
+        //         } );
+        // },
 
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0

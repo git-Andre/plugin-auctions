@@ -29,6 +29,13 @@
         {
             return $this -> auctionsService -> getAuctions();
         }
+        /**
+         * @return array|bool
+         */
+        public function getAuctionsHelper()
+        {
+            return $this -> auctionsService -> getAuctionsHelper();
+        }
 
         /**
          * @param $id
