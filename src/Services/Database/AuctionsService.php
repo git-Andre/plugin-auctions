@@ -262,7 +262,7 @@
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
-                    $loggedInUser = $this -> customerService -> getContactId();
+//                    $loggedInUser = $this -> customerService -> getContactId();
 //
 //                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
 //                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
