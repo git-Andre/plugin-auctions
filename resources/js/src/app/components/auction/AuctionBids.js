@@ -1,6 +1,6 @@
 const ApiService          = require( "services/ApiService" );
 const NotificationService = require( "services/NotificationService" );
-const AuctionConstants = require("constants/AuctionConstants");
+const AuctionConstants    = require( "constants/AuctionConstants" );
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component( "auction-bids", {
@@ -36,12 +36,15 @@ Vue.component( "auction-bids", {
     },
     ready() {
         // "present" ??
+        if ( this.auction.tense == AuctionConstants.PRESENT ) {
 
+            switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus) {
+                case AuctionConstants.OWN_BID_CHANGED: {
 
-        switch (this.auction.tense) {
-            case AuctionConstants.OWN_BID_CHANGED
+                }
+            }
+
         }
-        AuctionConstants.OWN_BID_CHANGED
     },
     methods: {
         addBid() {
@@ -57,7 +60,7 @@ Vue.component( "auction-bids", {
                     'customerId': parseInt( this.userdata.id ),
                 };
                 ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
-                                                                     { contentType: "application/json" }
+                                                                      { contentType: "application/json" }
                 )
                     .then( response => {
                                this.reload( 500 );

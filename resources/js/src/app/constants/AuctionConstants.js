@@ -6,4 +6,6 @@ export
 	const LOWER_BID = "lowerBid";
 	const START = "withoutBid";
 
+	const PRESENT = "present";
+
 
