@@ -3,6 +3,9 @@ const NotificationService = require( "services/NotificationService" );
 const AuctionConstants    = require( "constants/AuctionConstants" );
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
+// (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
+const MINI_CRYPT = 46987;
+
 Vue.component( "auction-bids", {
     props: [
         "template",
@@ -33,30 +36,37 @@ Vue.component( "auction-bids", {
         }
     },
     ready() {
-        // tense "present" und Customer eingelogged ??
+        // tense "present" und Customer loggedIn ??
         if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata != null ) {
 
-            // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
-            if ( sessionStorage.getItem( "bidId" ) == this.userdata.id + 46987 ) {
-                console.log( 'anjekommen' );
-
-                // bidStatus von letzter bid ???
-                switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
-                    case AuctionConstants.OWN_BID_CHANGED: {
-                        NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 5000 );
-                        break;
+            if ( this.hasLoggedInUserBids() ) {
+                if ( this.isLastBidFromLoggedInUser() ) {
+                    // vorletztes Gebot auch von mir?
+                    if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
+                        NotificationService.success( " Sie sind immer noch der Höchstbietende..." ).closeAfter( 10000 );
                     }
-                    case AuctionConstants.HIGHEST_BID: {
-                        NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 5000 );
-                        break;
+                    else {
+                        // bidStatus von letzter bid ???
+                        switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                            case AuctionConstants.OWN_BID_CHANGED: {
+                                NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 10000 );
+                                break;
+                            }
+                            case AuctionConstants.HIGHEST_BID: {
+                                NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 10000 );
+                                break;
+                            }
+                            case AuctionConstants.LOWER_BID: {
+                                NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 10000 );
+                                break;
+                            }
+                                console.log( 'keine Info / bidStatus ?????: ' );
+                        }
                     }
-                    case AuctionConstants.LOWER_BID: {
-                        NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 5000 );
-                        break;
-                    }
-                        console.log( 'keine Info / bidStatus ?????: ' );
                 }
-
+                else {
+                    NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 10000 );
+                }
             }
         }
     },
@@ -84,7 +94,24 @@ Vue.component( "auction-bids", {
                     );
             }
         },
-
+        hasLoggedInUserBids() {
+            // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
+            for (var i = this.auction.bidderList.length; --i > 0;) {
+                if ( this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId ) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        isLastBidFromLoggedInUser() {
+            // return true if lastBid.CustomerId == loggedInCustomerID
+            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT ) {
+                return true
+            }
+            else {
+                return false
+            }
+        },
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
