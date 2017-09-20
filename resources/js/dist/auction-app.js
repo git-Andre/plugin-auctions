@@ -32,37 +32,28 @@ Vue.component("auction-bids", {
         // tense "present" und Customer eingelogged ??
         if (this.auction.tense == AuctionConstants.PRESENT && this.userdata != null) {
 
+            // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
             if (sessionStorage.getItem("bidId") == this.userdata.id + 46987) {
                 console.log('anjekommen');
-                // timeStamp von letzter bid bis jetzt < 1 Minute ??
-                var duration = 2 * 60; // 1 Minute
-                var now = Math.trunc(new Date().getTime() / 1000);
-                var lastBidTimeStamp = this.auction.bidderList[this.auction.bidderList.length - 1].bidTimeStamp;
 
-                console.log('now: ' + now);
-                console.log('lastBidTimeStamp: ' + lastBidTimeStamp);
-                console.log('now - lastBidTimeStamp: ' + (now - lastBidTimeStamp));
-
-                if (now - lastBidTimeStamp < duration) {
-                    // bidStatus von letzter bid ???
-                    switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
-                        case AuctionConstants.OWN_BID_CHANGED:
-                            {
-                                NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(5000);
-                                break;
-                            }
-                        case AuctionConstants.HIGHEST_BID:
-                            {
-                                NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(5000);
-                                break;
-                            }
-                        case AuctionConstants.LOWER_BID:
-                            {
-                                NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(5000);
-                                break;
-                            }
-                            console.log('keine Info / bidStatus ?????: ');
-                    }
+                // bidStatus von letzter bid ???
+                switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                    case AuctionConstants.OWN_BID_CHANGED:
+                        {
+                            NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(5000);
+                            break;
+                        }
+                    case AuctionConstants.HIGHEST_BID:
+                        {
+                            NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(5000);
+                            break;
+                        }
+                    case AuctionConstants.LOWER_BID:
+                        {
+                            NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(5000);
+                            break;
+                        }
+                        console.log('keine Info / bidStatus ?????: ');
                 }
             }
         }
@@ -84,8 +75,6 @@ Vue.component("auction-bids", {
                 };
                 ApiService.put("/api/bidderlist/" + this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
                     // user merken für Gebots-Erfolgsmeldungen...
-                    sessionStorage.setItem("bidId", _this.userdata.id + 46987); // mini encrypt...
-
                     _this.reload(10);
                 }, function (error) {
                     alert('error3: ' + error.toString());
@@ -235,6 +224,7 @@ Vue.component("auction-show-bidderlist", {
 
             bidView.bidderName = bidderData[i].bidderName;
             bidView.bidPrice = bidderData[i].bidPrice;
+            bidView.bidStatus = bidderData[i].bidStatus;
             bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
             this.bidderList.push(bidView);
