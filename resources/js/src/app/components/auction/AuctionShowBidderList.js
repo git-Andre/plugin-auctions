@@ -18,9 +18,10 @@ Vue.component( "auction-show-bidderlist", {
         this.auction = JSON.parse( this.auction );
 
         const bidderData     = this.auction.bidderList;
-        var differentBidders = [0];
+        var differentBidders = [];
 
         this.bidderList = [];
+
         for (var i = bidderData.length; --i >= 0;) {
             var bidView = {};
 

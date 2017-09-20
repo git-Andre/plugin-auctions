@@ -10,7 +10,7 @@
 
         const OWN_BID_CHANGED   = "eigenes Max-Gebot geändert";
         const HIGHEST_BID       = "höchstes Gebot abgegeben";
-        const LOWER_BID         = "es lag ein höheres Gebot vor";
+        const LOWER_BID         = "neues Gebot war niedriger";
         const START             = "Auktions Start";
 //	const OWN_BID_CHANGED = "ownMaxBidChanged";
 //	const HIGHEST_BID = "highestBid";
