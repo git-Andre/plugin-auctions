@@ -219,15 +219,14 @@
 
                     $newList = $auction -> bidderList;
 
-                    $bidderListLastEntry = array_pop(array_slice($newList, -1));
+                    $bidderListLastEntry = array_pop(array_slice($newList, - 1));
 
 
-
-                    if (true)
-                    {
-                        return $bidderListLastEntry;
-                    }
-
+//                    if (true)
+//                    {
+//                        return $bidderListLastEntry;
+//                    }
+//
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($bidderListLastEntry -> customerId == $currentBid -> customerId)
                     {
@@ -253,12 +252,13 @@
                             // Neues Max-Gebot < kleiner als letztes Max-Gebot +1  ??
                             if ($currentBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
                             {
-//                                $newEntry -> bidPrice = 11.01;
+                                return $bidderListLastEntry -> customerMaxBid;
                                 $newEntry -> bidPrice = $currentBid -> customerMaxBid;
                             }
                             else
                             {
                                 // nur um 1 erhöhen
+                                return $bidderListLastEntry -> customerMaxBid + 1;
 
                                 $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
                             }
