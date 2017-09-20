@@ -35,12 +35,23 @@ Vue.component( "auction-bids", {
         }
     },
     ready() {
-        // "present" ??
-        if ( this.auction.tense == AuctionConstants.PRESENT ) {
+        // "present" und Customer eingelogged ??
 
+        console.log( 'AuctionConstants.PRESENT: ' + AuctionConstants.PRESENT );
+        console.log( 'AuctionConstants.START: ' + AuctionConstants.START );
+
+        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata.id != null ) {
+
+            // bidStatus ???
             switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus) {
                 case AuctionConstants.OWN_BID_CHANGED: {
-
+                    NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( 5000 );
+                }
+                case AuctionConstants.HIGHEST_BID: {
+                    NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." ).closeAfter( 5000 );
+                }
+                case AuctionConstants.LOWER_BID: {
+                    NotificationService.warn( " Es gibt leider schon ein höheres Gebot..." ).closeAfter( 5000 );
                 }
             }
 
@@ -63,7 +74,7 @@ Vue.component( "auction-bids", {
                                                                       { contentType: "application/json" }
                 )
                     .then( response => {
-                               this.reload( 500 );
+                               this.reload( 10 );
                            },
                            error => {
                                alert( 'error3: ' + error.toString() );

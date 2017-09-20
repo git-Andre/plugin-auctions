@@ -3,18 +3,11 @@
 
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
-
+var AuctionConstants = require("constants/AuctionConstants");
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-bids", {
     props: ["template", "userdata", "auction", "minBid", "auctionEnd"],
-    // props: {
-    //     template: String,
-    //     userdata: {},
-    //     auction: {},
-    //     minBid: Number,
-    //     auctionEnd: { type: Boolean, default: false }
-    // },
     data: function data() {
         return {
             isInputValid: false,
@@ -35,10 +28,36 @@ Vue.component("auction-bids", {
             this.minBid = this.toFloatTwoDecimal(this.auction.startPrice);
         }
     },
-    ready: function ready() {},
+    ready: function ready() {
+        // "present" und Customer eingelogged ??
+
+        console.log('AuctionConstants.PRESENT: ' + AuctionConstants.PRESENT);
+        console.log('AuctionConstants.START: ' + AuctionConstants.START);
+
+        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id != null) {
+
+            // bidStatus ???
+            switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus) {
+                case AuctionConstants.OWN_BID_CHANGED:
+                    {
+                        NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(5000);
+                    }
+                case AuctionConstants.HIGHEST_BID:
+                    {
+                        NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(5000);
+                    }
+                case AuctionConstants.LOWER_BID:
+                    {
+                        NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(5000);
+                    }
+            }
+        }
+    },
 
     methods: {
         addBid: function addBid() {
+            var _this = this;
+
             if (this.isInputValid) {
 
                 var pos = this.userdata.email.indexOf("@");
@@ -50,7 +69,7 @@ Vue.component("auction-bids", {
                     'customerId': parseInt(this.userdata.id)
                 };
                 ApiService.put("/api/bidderlist/" + this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                    // this.reload( 500 );
+                    _this.reload(10);
                 }, function (error) {
                     alert('error3: ' + error.toString());
                 });
@@ -143,17 +162,7 @@ Vue.component("auction-bids", {
         //         );
         //     }
         // },
-        // updateAuctionWithNewBid() {
-        //     ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.newBid ),
-        //                                                          { contentType: "application/json" }
-        //     )
-        //         .then( response => {
-        //                },
-        //                error => {
-        //                    alert( 'error3: ' + error.toString() );
-        //                }
-        //         );
-        // },
+
         // initAuctionParams() {
         //     ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
         //         .done( auction => {
@@ -281,7 +290,7 @@ Vue.component("auction-bids", {
 
 });
 
-},{"services/ApiService":5,"services/NotificationService":6}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
 "use strict";
 
 // const NotificationService  = require( "services/NotificationService" );
@@ -447,7 +456,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":6}],4:[function(require,module,exports){
+},{"services/NotificationService":7}],4:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -510,6 +519,30 @@ Vue.component("auction-countdown", {
 });
 
 },{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AuctionConstants = function AuctionConstants() {
+  _classCallCheck(this, AuctionConstants);
+};
+
+// bidStatus
+
+
+var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "ownBidChanged";
+var HIGHEST_BID = exports.HIGHEST_BID = "highestBid";
+var LOWER_BID = exports.LOWER_BID = "lowerBid";
+var START = exports.START = "withoutBid";
+
+// tense
+var PRESENT = exports.PRESENT = "present";
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -645,7 +678,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":6,"services/WaitScreenService":7}],6:[function(require,module,exports){
+},{"services/NotificationService":7,"services/WaitScreenService":8}],7:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -802,7 +835,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -845,7 +878,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4])
+},{}]},{},[1,2,3,4,5])
 
 
 // var ao = new Vue( {
