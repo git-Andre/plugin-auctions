@@ -25,12 +25,12 @@
                                             aria-hidden="true"></i></span>Gebots-Zeitpunkt</h4></th>
                     </tr>
                     <tr v-for="bid in bidderList">
-                        <td class="bid p-l-2">${ bid.bidderName }</td>
+                        <td class="bid p-l-3">${ bid.bidderName }</td>
                         <td class="bid text-right p-r-1">
                             <span class="p-r-1 small text-muted">${ bid.bidStatus }</span>
                             ${ bid.bidPrice | currency }
                         </td>
-                        <td class="bid text-right p-r-1">${ bid.bidTimeStamp | date ("ddd DD.MMM.YYYY HH:mm:ss") }
+                        <td class="bid text-right p-r-2">${ bid.bidTimeStamp | date ("ddd DD.MMM.YYYY HH:mm:ss") }
                         </td>
                     </tr>
                     </tbody>
