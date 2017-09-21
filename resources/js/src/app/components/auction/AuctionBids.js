@@ -55,8 +55,13 @@ Vue.component( "auction-bids", {
                 ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                     .done( lastBidPrice => {
                         if ( this.toFloatTwoDecimal( lastBidPrice ) != this.minBid - 1 ) {
-                            // NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
-                            // this.reload( 5 );
+
+                            if ( !this.hasLoggedInUserBidden() ) {
+                                NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
+                                this.reload( 4000 );
+                            }else {
+                                this.reload( 4 );
+                            }
                         }
                         else {
                             const pos           = this.userdata.email.indexOf( "@" );
