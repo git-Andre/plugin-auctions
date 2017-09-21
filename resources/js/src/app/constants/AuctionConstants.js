@@ -3,10 +3,10 @@ class AuctionConstants {
 }
 
 // bidStatus
-export const OWN_BID_CHANGED = "eigenes Max-Gebot geändert";
-export const HIGHEST_BID     = "höchstes Gebot abgegeben";
-export const LOWER_BID       = "neues Gebot war niedriger";
-export const START           = "Auktions Start";
+export const OWN_BID_CHANGED = "hat eigenes Max-Gebot geändert";
+export const HIGHEST_BID     = "hat höchstes Gebot abgegeben";
+export const LOWER_BID       = "neues Max-Gebot war niedriger";
+export const START           = "Auktion beginnt!";
 
         // export const OWN_BID_CHANGED = "ownBidChanged";
         // export const HIGHEST_BID     = "highestBid";
