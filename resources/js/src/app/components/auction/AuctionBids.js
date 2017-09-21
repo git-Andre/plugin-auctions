@@ -41,12 +41,9 @@ Vue.component( "auction-bids", {
         if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata != null ) {
 
             if ( this.hasLoggedInUserBidden() ) {
-                console.log( 'User logged in' );
                 if ( this.hasLoggedInUserTheLastBid() ) {
-                    console.log( 'UserTheLastBid' );
                     // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                     if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
-                        console.log( 'vorletztes Gebot auch von mir' );
                         switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                             case AuctionConstants.OWN_BID_CHANGED: {
                                 NotificationService.info( " Sie haben Ihr eigenes Maximal-Gebot verändert!" ).closeAfter( NOTIFY_TIME );
@@ -69,7 +66,7 @@ Vue.component( "auction-bids", {
                                 break;
                             }
                             case AuctionConstants.HIGHEST_BID: {
-                                NotificationService.success( " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
+                                NotificationService.success( " GLÜCKWUNSCH<br>Sie sind der Höchstbietende..." )
                                     .closeAfter( NOTIFY_TIME );
                                 break;
                             }
