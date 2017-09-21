@@ -51,6 +51,20 @@
             return 'keine ID (oder 0)';
         }
 
+        /**
+         * @param $id
+         * @return string
+         */
+        public function getCurrentBidPrice($id)
+        {
+            if ($id && $id > 0)
+            {
+                return json_encode($this -> auctionsService -> getCurrentBidPrice($id));
+            }
+
+            return 'keine ID (oder 0)';
+        }
+
         public function getAuctionForItemId($itemId)
         {
             if ($itemId && $itemId > 0)

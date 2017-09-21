@@ -6,7 +6,6 @@
 //    use IO\Services\SessionStorageService;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
@@ -171,6 +170,34 @@
         }
 
         /**
+         * @param $id
+         * @return string
+         */
+        public function getCurrentBidPrice($id)
+        {
+            if ($id > 0)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+//                    $auction = $this -> buildAuctionView($auction);
+
+//                    $newList = array (pluginApp(AuctionBidderListEntry::class));
+//                    $newList = $auction -> bidderList;
+
+                    $bidderListLastEntry = (object) array_pop(array_slice($auction -> bidderList, - 1));
+
+                    return json_encode($bidderListLastEntry -> bidPrice);
+                }
+
+                return 'Fehler: keine gültige auction';
+            }
+
+            return 'Fehler: keine gültige ID';
+        }
+
+        /**
          * @param $newBackendAuction
          * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model
          */
@@ -256,9 +283,9 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $newList = array (pluginApp(AuctionBidderListEntry::class));
                     $newEntry = pluginApp(AuctionBidderListEntry::class);
 
+                    $newList = array (pluginApp(AuctionBidderListEntry::class));
                     $newList = $auction -> bidderList;
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));

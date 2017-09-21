@@ -37,12 +37,9 @@ Vue.component("auction-bids", {
         if (this.auction.tense == AuctionConstants.PRESENT && this.userdata != null) {
 
             if (this.hasLoggedInUserBidden()) {
-                console.log('User logged in');
                 if (this.hasLoggedInUserTheLastBid()) {
-                    console.log('UserTheLastBid');
                     // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                     if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
-                        console.log('vorletztes Gebot auch von mir');
                         switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                             case AuctionConstants.OWN_BID_CHANGED:
                                 {
@@ -51,7 +48,7 @@ Vue.component("auction-bids", {
                                 }
                             case AuctionConstants.LOWER_BID:
                                 {
-                                    NotificationService.warn(" Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    NotificationService.success(" Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
                                     break;
                                 }
                         }
@@ -66,7 +63,7 @@ Vue.component("auction-bids", {
                                 }
                             case AuctionConstants.HIGHEST_BID:
                                 {
-                                    NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    NotificationService.success(" GLÜCKWUNSCH<br>Sie sind der Höchstbietende...").closeAfter(NOTIFY_TIME);
                                     break;
                                 }
                             case AuctionConstants.LOWER_BID:
@@ -430,7 +427,7 @@ var AuctionConstants = function AuctionConstants() {
 
 var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "hat eigenes Max-Gebot geändert";
 var HIGHEST_BID = exports.HIGHEST_BID = "hat höchstes Gebot abgegeben";
-var LOWER_BID = exports.LOWER_BID = "neues Max-Gebot war niedriger";
+var LOWER_BID = exports.LOWER_BID = "nach neuem, aber geringerem Gebot";
 var START = exports.START = "Auktion beginnt!";
 
 // export const OWN_BID_CHANGED = "ownBidChanged";
