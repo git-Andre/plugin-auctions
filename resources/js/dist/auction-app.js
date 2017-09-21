@@ -52,7 +52,7 @@ Vue.component("auction-bids", {
                 ApiService.get("/api/auctionbidprice/" + this.auction.id).done(function (lastBidPrice) {
                     if (_this.toFloatTwoDecimal(lastBidPrice) != _this.minBid - 1) {
 
-                        if (!_this.hasLoggedInUserBidden()) {
+                        if (!_this.hasLoggedInUserBidden() && _this.auction.bidderList.length > 1) {
                             NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
                             _this.reload(4000);
                         } else {

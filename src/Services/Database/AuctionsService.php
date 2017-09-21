@@ -222,7 +222,7 @@
 
                 $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
 
-                $auction -> bidderList[0] -> bidPrice = $auction -> startPrice;
+                $auction -> bidderList[0] -> bidPrice = $auction -> startPrice - 1;
                 $auction -> bidderList[0] -> customerMaxBid = $auction -> startPrice - 1;
                 $auction -> bidderList[0] -> bidTimeStamp = $auction -> startDate;
 

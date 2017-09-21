@@ -28,13 +28,7 @@ Vue.component( "auction-bids", {
         this.userdata = JSON.parse( this.userdata );
         // this.initAuctionParams();
         this.auction  = JSON.parse( this.auction );
-
-        if ( this.auction.bidderList.length > 1 ) {
-            this.minBid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
-        }
-        else {
-            this.minBid = this.toFloatTwoDecimal( this.auction.startPrice );
-        }
+        this.minBid   = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
         // tense "present" und Customer loggedIn ??
@@ -54,16 +48,9 @@ Vue.component( "auction-bids", {
                 // gibt es inzwischen schon ein höheres Gebot ??
                 ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                     .done( lastBidPrice => {
-                        if ( this.toFloatTwoDecimal( lastBidPrice ) != this.minBid - 1 ) {
+                        // ist maxGebot > letzte bidPrice (StartPrice ist sowieso 1 EUR größer als last bidPrice - PHP)
+                        if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
 
-                            if ( !this.hasLoggedInUserBidden() ) {
-                                NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
-                                this.reload( 4000 );
-                            }else {
-                                this.reload( 4 );
-                            }
-                        }
-                        else {
                             const pos           = this.userdata.email.indexOf( "@" );
                             const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
                                 this.userdata.email.slice( pos - 2, pos );
@@ -83,6 +70,12 @@ Vue.component( "auction-bids", {
                                            alert( 'error3: ' + error.toString() );
                                        }
                                 );
+                        }
+                        // maxGebot kleiner als letztes Gebot ODER es liegen Gebote vor...
+                        else {
+                            NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." )
+                                .closeAfter( NOTIFY_TIME );
+                            this.reload( 4000 );
                         }
                     } )
                     .fail( () => {
