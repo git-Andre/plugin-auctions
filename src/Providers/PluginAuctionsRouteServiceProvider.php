@@ -36,8 +36,12 @@
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
+
+            $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
+                    -> where('id', '\d+');
+
+
             $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction')
                     -> where('id', '\d+')
