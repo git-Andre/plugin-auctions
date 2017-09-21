@@ -53,7 +53,7 @@ Vue.component( "auction-bids", {
                                 break;
                             }
                             case AuctionConstants.LOWER_BID: {
-                                NotificationService.warn(
+                                NotificationService.success(
                                     " Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende..." )
                                     .closeAfter( NOTIFY_TIME );
                                 break;
