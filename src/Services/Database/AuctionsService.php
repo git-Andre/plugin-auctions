@@ -180,20 +180,21 @@
             {
                 $auction = pluginApp(Auction_7::class);
 
-                $auction -> itemId = $newBackendAuction ['itemId'];
-                $auction -> startDate = $newBackendAuction ['startDate'];
-                $auction -> startHour = $newBackendAuction ['startHour'];
-                $auction -> startMinute = $newBackendAuction ['startMinute'];
-                $auction -> auctionDuration = $newBackendAuction ['auctionDuration'];
+                $auction -> itemId = (int) $newBackendAuction ['itemId'];
+                $auction -> startDate = (int) $newBackendAuction ['startDate'];
+                $auction -> startHour = (int) $newBackendAuction ['startHour'];
+                $auction -> startMinute = (int) $newBackendAuction ['startMinute'];
+                $auction -> auctionDuration = (int) $newBackendAuction ['auctionDuration'];
                 $auction -> startPrice = (float) ($newBackendAuction ['startPrice']);
 
                 $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
                 $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
-                $auction -> createdAt = time();
+                $auction -> createdAt = (int) time();
 
                 $auction -> bidderList[0] = pluginApp(AuctionBidderListEntry::class);
+
                 $auction -> bidderList[0] -> bidPrice = $auction -> startPrice;
                 $auction -> bidderList[0] -> customerMaxBid = $auction -> startPrice - 1;
                 $auction -> bidderList[0] -> bidTimeStamp = $auction -> startDate;

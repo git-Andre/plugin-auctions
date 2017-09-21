@@ -8,6 +8,7 @@ var AuctionConstants = require("constants/AuctionConstants");
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
 var MINI_CRYPT = 46987;
+var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
     props: ["template", "userdata", "auction", "minBid", "auctionEnd"],
@@ -35,34 +36,49 @@ Vue.component("auction-bids", {
         // tense "present" und Customer loggedIn ??
         if (this.auction.tense == AuctionConstants.PRESENT && this.userdata != null) {
 
-            if (this.hasLoggedInUserBids()) {
-                if (this.isLastBidFromLoggedInUser()) {
-                    // vorletztes Gebot auch von mir?
+            if (this.hasLoggedInUserBidden()) {
+                console.log('User logged in');
+                if (this.hasLoggedInUserTheLastBid()) {
+                    console.log('UserTheLastBid');
+                    // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                     if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
-                        NotificationService.success(" Sie sind immer noch der Höchstbietende...").closeAfter(10000);
-                    } else {
-                        // bidStatus von letzter bid ???
+                        console.log('vorletztes Gebot auch von mir');
                         switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                             case AuctionConstants.OWN_BID_CHANGED:
                                 {
-                                    NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(10000);
-                                    break;
-                                }
-                            case AuctionConstants.HIGHEST_BID:
-                                {
-                                    NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(10000);
+                                    NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
                                     break;
                                 }
                             case AuctionConstants.LOWER_BID:
                                 {
-                                    NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(10000);
+                                    NotificationService.warn(" Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                        }
+                    } else {
+                        // bidStatus von letzter bid ???
+                        console.log('bidStatus von letzter bid');
+                        switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                            case AuctionConstants.OWN_BID_CHANGED:
+                                {
+                                    NotificationService.info(" Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                            case AuctionConstants.HIGHEST_BID:
+                                {
+                                    NotificationService.success(" GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                            case AuctionConstants.LOWER_BID:
+                                {
+                                    NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
                                     break;
                                 }
                                 console.log('keine Info / bidStatus ?????: ');
                         }
                     }
                 } else {
-                    NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(10000);
+                    NotificationService.warn(" Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
                 }
             }
         }
@@ -90,7 +106,7 @@ Vue.component("auction-bids", {
                 });
             }
         },
-        hasLoggedInUserBids: function hasLoggedInUserBids() {
+        hasLoggedInUserBidden: function hasLoggedInUserBidden() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
                 if (this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId) {
@@ -99,7 +115,7 @@ Vue.component("auction-bids", {
             }
             return false;
         },
-        isLastBidFromLoggedInUser: function isLastBidFromLoggedInUser() {
+        hasLoggedInUserTheLastBid: function hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT) {
                 return true;
@@ -412,10 +428,10 @@ var AuctionConstants = function AuctionConstants() {
 // bidStatus
 
 
-var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "eigenes Max-Gebot geändert";
-var HIGHEST_BID = exports.HIGHEST_BID = "höchstes Gebot abgegeben";
-var LOWER_BID = exports.LOWER_BID = "neues Gebot war niedriger";
-var START = exports.START = "Auktions Start";
+var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "hat eigenes Max-Gebot geändert";
+var HIGHEST_BID = exports.HIGHEST_BID = "hat höchstes Gebot abgegeben";
+var LOWER_BID = exports.LOWER_BID = "neues Max-Gebot war niedriger";
+var START = exports.START = "Auktion beginnt!";
 
 // export const OWN_BID_CHANGED = "ownBidChanged";
 // export const HIGHEST_BID     = "highestBid";
