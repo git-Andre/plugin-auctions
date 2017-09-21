@@ -35,52 +35,10 @@ Vue.component("auction-bids", {
     ready: function ready() {
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
-
             if (this.hasLoggedInUserBidden()) {
-                if (this.hasLoggedInUserTheLastBid()) {
-                    // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                    if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
-                        switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
-                            case AuctionConstants.OWN_BID_CHANGED:
-                                {
-                                    NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
-                                    break;
-                                }
-                            case AuctionConstants.LOWER_BID:
-                                {
-                                    NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
-                                    break;
-                                }
-                        }
-                    } else {
-                        // bidStatus von letzter bid ???
-                        console.log('bidStatus von letzter bid');
-                        switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
-                            case AuctionConstants.OWN_BID_CHANGED:
-                                {
-                                    NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
-                                    break;
-                                }
-                            case AuctionConstants.HIGHEST_BID:
-                                {
-                                    NotificationService.success("STATUS:<br>GLÜCKWUNSCH<br>Sie sind der Höchstbietende...").closeAfter(NOTIFY_TIME);
-                                    break;
-                                }
-                            case AuctionConstants.LOWER_BID:
-                                {
-                                    // NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
-                                    NotificationService.warn("STATUS:<br>Es wurde inzwischen ein höheres Gebot abgegeben...").closeAfter(NOTIFY_TIME);
-
-                                    break;
-                                }
-                                console.log('keine Info / bidStatus ?????: ');
-                        }
-                    }
-                } else {
-                    NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
-                    // NotificationService.warn( "STATUS2:<br>Es wurde inzwischen ein höheres Gebot abgegeben..." )
-                    //     .closeAfter( NOTIFY_TIME );
-                }
+                this.evaluateAndNotify();
+            } else {
+                // kein Gebot in Bidderlist...
             }
         }
     },
@@ -93,8 +51,13 @@ Vue.component("auction-bids", {
                 // gibt es inzwischen schon ein höheres Gebot ??
                 ApiService.get("/api/auctionbidprice/" + this.auction.id).done(function (lastBidPrice) {
                     if (_this.toFloatTwoDecimal(lastBidPrice) != _this.minBid - 1) {
-                        NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
-                        _this.reload(4000);
+
+                        if (!_this.hasLoggedInUserBidden()) {
+                            NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
+                            _this.reload(4000);
+                        } else {
+                            _this.reload(4);
+                        }
                     } else {
                         var pos = _this.userdata.email.indexOf("@");
                         var newBidderName = _this.userdata.email.slice(0, 2) + " *** " + _this.userdata.email.slice(pos - 2, pos);
@@ -113,6 +76,50 @@ Vue.component("auction-bids", {
                 }).fail(function () {
                     alert('Upps - ein Fehler bei auctionbidprice ??!!');
                 });
+            }
+        },
+        evaluateAndNotify: function evaluateAndNotify() {
+
+            if (this.hasLoggedInUserTheLastBid()) {
+                // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
+                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
+                    switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                        case AuctionConstants.OWN_BID_CHANGED:
+                            {
+                                NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                break;
+                            }
+                        case AuctionConstants.LOWER_BID:
+                            {
+                                NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                break;
+                            }
+                    }
+                } else {
+                    // bidStatus von letzter bid ???
+                    console.log('bidStatus von letzter bid');
+                    switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                        case AuctionConstants.OWN_BID_CHANGED:
+                            {
+                                NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                break;
+                            }
+                        case AuctionConstants.HIGHEST_BID:
+                            {
+                                NotificationService.success("STATUS:<br>GLÜCKWUNSCH<br>Sie sind der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                break;
+                            }
+                        case AuctionConstants.LOWER_BID:
+                            {
+                                NotificationService.warn("STATUS:<br>Es wurde inzwischen ein höheres Gebot abgegeben...").closeAfter(NOTIFY_TIME);
+
+                                break;
+                            }
+                            console.log('keine Info / bidStatus ?????: ');
+                    }
+                }
+            } else {
+                NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
             }
         },
         hasLoggedInUserBidden: function hasLoggedInUserBidden() {
