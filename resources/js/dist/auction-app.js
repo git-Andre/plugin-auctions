@@ -3,18 +3,15 @@
 
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
-
+var AuctionConstants = require("constants/AuctionConstants");
 // const AuctionBidderService = require( "services/AuctionBidderService" );
+
+// (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
+var MINI_CRYPT = 46987;
+var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
     props: ["template", "userdata", "auction", "minBid", "auctionEnd"],
-    // props: {
-    //     template: String,
-    //     userdata: {},
-    //     auction: {},
-    //     minBid: Number,
-    //     auctionEnd: { type: Boolean, default: false }
-    // },
     data: function data() {
         return {
             isInputValid: false,
@@ -35,231 +32,196 @@ Vue.component("auction-bids", {
             this.minBid = this.toFloatTwoDecimal(this.auction.startPrice);
         }
     },
-    ready: function ready() {},
+    ready: function ready() {
+        // tense "present" und Customer loggedIn ??
+        if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
+
+            if (this.hasLoggedInUserBidden()) {
+                if (this.hasLoggedInUserTheLastBid()) {
+                    // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
+                    if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
+                        switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                            case AuctionConstants.OWN_BID_CHANGED:
+                                {
+                                    NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                            case AuctionConstants.LOWER_BID:
+                                {
+                                    NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                        }
+                    } else {
+                        // bidStatus von letzter bid ???
+                        console.log('bidStatus von letzter bid');
+                        switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                            case AuctionConstants.OWN_BID_CHANGED:
+                                {
+                                    NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                            case AuctionConstants.HIGHEST_BID:
+                                {
+                                    NotificationService.success("STATUS:<br>GLÜCKWUNSCH<br>Sie sind der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                    break;
+                                }
+                            case AuctionConstants.LOWER_BID:
+                                {
+                                    // NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
+                                    NotificationService.warn("STATUS:<br>Es wurde inzwischen ein höheres Gebot abgegeben...").closeAfter(NOTIFY_TIME);
+
+                                    break;
+                                }
+                                console.log('keine Info / bidStatus ?????: ');
+                        }
+                    }
+                } else {
+                    NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
+                    // NotificationService.warn( "STATUS2:<br>Es wurde inzwischen ein höheres Gebot abgegeben..." )
+                    //     .closeAfter( NOTIFY_TIME );
+                }
+            }
+        }
+    },
 
     methods: {
         addBid: function addBid() {
             var _this = this;
 
             if (this.isInputValid) {
+                // gibt es inzwischen schon ein höheres Gebot ??
+                ApiService.get("/api/auctionbidprice/" + this.auction.id).done(function (lastBidPrice) {
+                    if (_this.toFloatTwoDecimal(lastBidPrice) != _this.minBid - 1) {
+                        NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
+                        _this.reload(4000);
+                    } else {
+                        var pos = _this.userdata.email.indexOf("@");
+                        var newBidderName = _this.userdata.email.slice(0, 2) + " *** " + _this.userdata.email.slice(pos - 2, pos);
 
-                var pos = this.userdata.email.indexOf("@");
-                var newBidderName = this.userdata.email.slice(0, 2) + " *** " + this.userdata.email.slice(pos - 2, pos);
-
-                var currentBid = {
-                    'customerMaxBid': this.toFloatTwoDecimal(this.maxCustomerBid),
-                    'bidderName': newBidderName,
-                    'customerId': parseInt(this.userdata.id)
-                };
-                ApiService.put("/api/bidderlist/" + this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                    _this.reload(500);
-                }, function (error) {
-                    alert('error3: ' + error.toString());
+                        var currentBid = {
+                            'customerMaxBid': _this.toFloatTwoDecimal(_this.maxCustomerBid),
+                            'bidderName': newBidderName,
+                            'customerId': parseInt(_this.userdata.id)
+                        };
+                        ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
+                            _this.reload(5);
+                        }, function (error) {
+                            alert('error3: ' + error.toString());
+                        });
+                    }
+                }).fail(function () {
+                    alert('Upps - ein Fehler bei auctionbidprice ??!!');
                 });
             }
         },
-
-        // addBidOld() {
-        //     if ( this.isInputValid ) {
-        //         var currentBid          = {
-        //             'bidPrice': 1,
-        //             'customerMaxBid': 2.1,
-        //             'bidderName': "newBid***Kunde1",
-        //             'customerId': 3
-        //         };
-        //         const newCustomerMaxBid = this.toFloatTwoDecimal( this.maxCustomerBid );
-        //         const pos               = this.userdata.email.indexOf( "@" );
-        //         const newBidderName     = this.userdata.email.slice( 0, 2 ) + " *** " + this.userdata.email.slice( pos - 2, pos );
-        //
-        //         const newUserId = parseInt( this.userdata.id );
-        //
-        //         const lastEntry = true;
-        //
-        //         AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-        //             response => {
-        //
-        //                 const bidderListLastEntry = response;
-        //
-        //                 var lastBidPrice = this.toFloatTwoDecimal( bidderListLastEntry.bidPrice );
-        //                 if ( lastBidPrice < 1.1 ) {
-        //                     lastBidPrice = this.toFloatTwoDecimal( this.minBid - 1 );
-        //                 }
-        //                 const lastCustomerMaxBid = this.toFloatTwoDecimal( bidderListLastEntry.customerMaxBid );
-        //                 const lastUserId         = parseInt( bidderListLastEntry.customerId );
-        //
-        //                 if ( lastUserId == newUserId ) {
-        //
-        //                     currentBid.bidPrice       = lastBidPrice;
-        //                     currentBid.customerMaxBid = newCustomerMaxBid;
-        //                     currentBid.bidderName     = newBidderName;
-        //                     currentBid.customerId     = newUserId;
-        //
-        //                     this.newBid = currentBid;
-        //                     this.updateAuctionWithNewBid();
-        //                     // ToDo: Abfrage: eigenes Maximal-Gebot wirklich ändern?
-        //                     NotificationService.info(
-        //                         "Sie haben Ihr eigenes Maximal-Gebot verändert!<br>(auf: " + currentBid.customerMaxBid +
-        //                         ")" )
-        //                         .closeAfter( 3500 );
-        //                 }
-        //                 else {
-        //                     if ( newCustomerMaxBid > lastCustomerMaxBid ) {
-        //                         if ( newCustomerMaxBid < lastCustomerMaxBid + 1 ) {
-        //                             currentBid.bidPrice = newCustomerMaxBid;
-        //                         }
-        //                         else {
-        //                             currentBid.bidPrice = lastCustomerMaxBid + 1;
-        //                         }
-        //                         currentBid.customerMaxBid = newCustomerMaxBid;
-        //                         currentBid.bidderName     = newBidderName;
-        //                         currentBid.customerId     = newUserId;
-        //
-        //                         this.newBid = currentBid;
-        //                         this.updateAuctionWithNewBid();
-        //                         this.reload(3000);
-        //                         NotificationService.success(
-        //                             " GLÜCKWUNSCH<br>Sie sind jetzt der Höchstbietende..." )
-        //                             .closeAfter( 3000 );
-        //                     }
-        //                     else {
-        //                         currentBid.bidPrice       = newCustomerMaxBid;
-        //                         currentBid.customerMaxBid = lastCustomerMaxBid;
-        //                         currentBid.bidderName     = bidderListLastEntry.bidderName;
-        //                         currentBid.customerId     = lastUserId;
-        //
-        //                         this.newBid = currentBid;
-        //                         this.updateAuctionWithNewBid();
-        //                         this.reload(3000);
-        //
-        //                         NotificationService.warn(
-        //                             "Es gibt leider schon ein höheres Gebot..." )
-        //                             .closeAfter( 3000 );
-        //                     }
-        //                 }
-        //
-        //                 // this.initAuctionParams();
-        //             },
-        //             error => {
-        //                 alert( 'error2: ' + error.toString() );
-        //             }
-        //         );
-        //     }
-        // },
-        // updateAuctionWithNewBid() {
-        //     ApiService.put( "/api/bidderlist/" + this.auctionid, JSON.stringify( this.newBid ),
-        //                                                          { contentType: "application/json" }
-        //     )
-        //         .then( response => {
-        //                },
-        //                error => {
-        //                    alert( 'error3: ' + error.toString() );
-        //                }
-        //         );
-        // },
-        // initAuctionParams() {
-        //     ApiService.get( "/api/auction/" + this.auctionid, {}, {} )
-        //         .done( auction => {
-        //             // Gibt es Gebote?
-        //             if ( auction.bidderList.length > 1 ) {
-        //                 this.minBid =
-        //                     this.toFloatTwoDecimal( ( ( auction.bidderList[auction.bidderList.length - 1].bidPrice ) ) +
-        //                         1 );
-        //             }
-        //             else {
-        //                 this.minBid = this.toFloatTwoDecimal( auction.startPrice );
-        //             }
-        //         } )
-        //         .fail( () => {
-        //             alert( 'Upps - ein Fehler beim abholen ??!!' );
-        //         } );
-        // },
-
+        hasLoggedInUserBidden: function hasLoggedInUserBidden() {
+            // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
+            for (var i = this.auction.bidderList.length; --i > 0;) {
+                if (this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        hasLoggedInUserTheLastBid: function hasLoggedInUserTheLastBid() {
+            // return true if lastBid.CustomerId == loggedInCustomerID
+            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
         auctionend: function auctionend() {
-            var startD = Math.trunc(new Date().getTime() / 1000);
-            startD = startD - 24 * 60 * 60 + 7;
-            var Bidtest = {
-                "startDate": startD,
-                "startHour": 16,
-                "startMinute": 45,
-                "auctionDuration": 1,
-                "startPrice": this.minBid - 2
-            };
 
-            ApiService.put("/api/auction/34", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
-                // alert( "ok" );
-            }).fail(function () {
-                alert('Upps - ein Fehler beim auctionend ??!!');
-            });
+            // var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+            // startD      = startD - 24 * 60 * 60 + 7;
+            // var Bidtest = {
+            //     "startDate": startD,
+            //     "startHour": 16,
+            //     "startMinute": 45,
+            //     "auctionDuration": 1,
+            //     "startPrice": this.minBid - 2
+            // };
+            //
+            // ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            // )
+            //     .done( auction => {
+            //         // alert( "ok" );
+            //     } )
+            //     .fail( () => {
+            //         alert( 'Upps - ein Fehler beim auctionend ??!!' );
+            //     } );
         },
-
-        // afterAuction() {
-        //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
-        //     setTimeout( () => {
-        //         if ( this.userdata ) {
-        //             const currentUserId = this.userdata.id;
-        //             const lastEntry     = false;
-        //
-        //             AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-        //                 response => {
-        //
-        //                     const bidderList          = response;
-        //                     const bidderListLastEntry = bidderList[bidderList.length - 1];
-        //
-        //                     const lastUserId = bidderListLastEntry.customerId;
-        //
-        //                     // Gewinner eingeloggt ??
-        //                     if ( currentUserId == lastUserId ) {
-        //                         NotificationService.success(
-        //                             "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-        //                             .close;
-        //                         alert( "  // item -> Basket\n" + "// Url -> Checkout" )
-        //                         // item -> Basket
-        //                         // Url -> Checkout
-        //                     }
-        //                     // Gewinner nicht eingeloggt !!
-        //                     else {
-        //                         var isUserInBidderList = false;
-        //
-        //                         for (var i = bidderList.length; --i > 0;) {
-        //                             const userId = bidderList[i].customerId;
-        //
-        //                             if ( currentUserId == userId ) {
-        //                                 isUserInBidderList = true;
-        //                                 break
-        //                             }
-        //                         }
-        //                         // ist der eingeloggte User in BidderList
-        //                         if ( isUserInBidderList ) {
-        //                             NotificationService.error(
-        //                                 "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
-        //                             this.reload( 3000 );
-        //                         }
-        //                         // nein
-        //                         else {
-        //                             NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgeboten." ).close;
-        //                             this.reload( 3000 );
-        //                         }
-        //                     }
-        //                 },
-        //                 error => {
-        //                     alert( 'error5: ' + error.toString() );
-        //                 }
-        //             );
-        //         }
-        //         else {
-        //             NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
-        //             this.reload( 3000 );
-        //         }
-        //     }, 1500 );
-        // },
+        afterAuction: function afterAuction() {
+            //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
+            //     setTimeout( () => {
+            //         if ( this.userdata ) {
+            //             const currentUserId = this.userdata.id;
+            //             const lastEntry     = false;
+            //
+            //             AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
+            //                 response => {
+            //
+            //                     const bidderList          = response;
+            //                     const bidderListLastEntry = bidderList[bidderList.length - 1];
+            //
+            //                     const lastUserId = bidderListLastEntry.customerId;
+            //
+            //                     // Gewinner eingeloggt ??
+            //                     if ( currentUserId == lastUserId ) {
+            //                         NotificationService.success(
+            //                             "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
+            //                             .close;
+            //                         alert( "  // item -> Basket\n" + "// Url -> Checkout" )
+            //                         // item -> Basket
+            //                         // Url -> Checkout
+            //                     }
+            //                     // Gewinner nicht eingeloggt !!
+            //                     else {
+            //                         var isUserInBidderList = false;
+            //
+            //                         for (var i = bidderList.length; --i > 0;) {
+            //                             const userId = bidderList[i].customerId;
+            //
+            //                             if ( currentUserId == userId ) {
+            //                                 isUserInBidderList = true;
+            //                                 break
+            //                             }
+            //                         }
+            //                         // ist der eingeloggte User in BidderList
+            //                         if ( isUserInBidderList ) {
+            //                             NotificationService.error(
+            //                                 "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
+            //                             this.reload( 3000 );
+            //                         }
+            //                         // nein
+            //                         else {
+            //                             NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgeboten." ).close;
+            //                             this.reload( 3000 );
+            //                         }
+            //                     }
+            //                 },
+            //                 error => {
+            //                     alert( 'error5: ' + error.toString() );
+            //                 }
+            //             );
+            //         }
+            //         else {
+            //             NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
+            //             this.reload( 3000 );
+            //         }
+            //     }, 1500 );
+        },
         reload: function reload(timeout) {
             setTimeout(function () {
                 location.reload();
             }, timeout);
-        }
+        },
+        getCurrentBidPrice: function getCurrentBidPrice() {}
     },
     watch: {
         maxCustomerBid: function maxCustomerBid() {
@@ -267,7 +229,7 @@ Vue.component("auction-bids", {
                 if (this.userdata != null) {
                     this.isInputValid = true;
                 } else {
-                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(4000);
+                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(5000);
                     this.isInputValid = false;
                 }
             } else {
@@ -283,12 +245,8 @@ Vue.component("auction-bids", {
 
 });
 
-},{"services/ApiService":5,"services/NotificationService":6}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
 "use strict";
-
-// const NotificationService  = require( "services/NotificationService" );
-// const ResourceService      = require( "services/ResourceService" );
-// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 Vue.component("auction-show-bidderlist", {
 
@@ -309,14 +267,16 @@ Vue.component("auction-show-bidderlist", {
         this.auction = JSON.parse(this.auction);
 
         var bidderData = this.auction.bidderList;
-        var differentBidders = [0];
+        var differentBidders = [];
 
         this.bidderList = [];
+
         for (var i = bidderData.length; --i >= 0;) {
             var bidView = {};
 
             bidView.bidderName = bidderData[i].bidderName;
             bidView.bidPrice = bidderData[i].bidPrice;
+            bidView.bidStatus = bidderData[i].bidStatus;
             bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
 
             this.bidderList.push(bidView);
@@ -328,57 +288,7 @@ Vue.component("auction-show-bidderlist", {
             }
         }
         this.bidders = differentBidders.length - 1;
-
-        // AuctionBidderService.getBidderList( this.auctionid )
-        //     .then(
-        //         response => {
-        //             const bidderData     = response;
-        //             var differentBidders = [0];
-        //
-        //             this.bidderList = [];
-        //             for (var i = bidderData.length; --i >= 0;) {
-        //                 var bidView = {};
-        //
-        //                 bidView.bidderName   = bidderData[i].bidderName;
-        //                 bidView.bidPrice     = bidderData[i].bidPrice;
-        //                 bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
-        //
-        //                 this.bidderList.push( bidView );
-        //
-        //                 const currentUserId = bidderData[i].customerId;
-        //
-        //                 if ( differentBidders.indexOf( currentUserId ) < 0 ) {
-        //                     differentBidders.push( currentUserId );
-        //                 }
-        //             }
-        //             this.bidders = differentBidders.length - 1;
-        //         },
-        //         error => {
-        //             alert( 'error4: ' + error.toString() );
-        //         }
-        //     );
-        // AuctionBidderService.getExpiryDate( this.auctionid )
-        //     .then(
-        //         response => {
-        //
-        //             this.expiryDate = response;
-        //
-        //             // if ( Math.trunc( (new Date()).getTime() / 1000 ) < this.expiryDate ) {
-        //             //     this.isAuctionPresent = true;
-        //             // }
-        //             // else {
-        //             //     this.isAuctionPresent = false;
-        //             // };
-        //         },
-        //         error => {
-        //             alert( 'error5: ' + error.toString() );
-        //         }
-        //     );
-    },
-    ready: function ready() {},
-
-
-    methods: {}
+    }
 });
 
 },{}],3:[function(require,module,exports){
@@ -449,7 +359,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":6}],4:[function(require,module,exports){
+},{"services/NotificationService":7}],4:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -512,6 +422,37 @@ Vue.component("auction-countdown", {
 });
 
 },{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+        value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AuctionConstants = function AuctionConstants() {
+        _classCallCheck(this, AuctionConstants);
+};
+
+// bidStatus
+
+
+var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "hat eigenes Max-Gebot geändert";
+var HIGHEST_BID = exports.HIGHEST_BID = "hat höchstes Gebot abgegeben";
+var LOWER_BID = exports.LOWER_BID = "nach neuem, aber geringerem Gebot";
+var START = exports.START = "Auktion beginnt!";
+
+// export const OWN_BID_CHANGED = "ownBidChanged";
+// export const HIGHEST_BID     = "highestBid";
+// export const LOWER_BID       = "lowerBid";
+// export const START           = "withoutBid";
+
+
+// tense
+var PRESENT = exports.PRESENT = "present";
+var PAST = exports.PAST = "past";
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -647,7 +588,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":6,"services/WaitScreenService":7}],6:[function(require,module,exports){
+},{"services/NotificationService":7,"services/WaitScreenService":8}],7:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -804,7 +745,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -847,7 +788,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4])
+},{}]},{},[1,2,3,4,5])
 
 
 // var ao = new Vue( {

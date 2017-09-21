@@ -16,5 +16,6 @@ export const START           = "Auktion beginnt!";
 
 // tense
 export const PRESENT = "present";
+export const PAST = "past";
 
 
