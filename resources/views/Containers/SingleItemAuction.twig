@@ -49,7 +49,7 @@
 
             <div class="row container m-t-0 m-b-1">
                 <dl class="auctionList">
-                    {% if (bidderListLast.bidPrice != auction.startPrice) %}
+                    {% if (bidderListLength > 1) %}
                         <dt>Aktuelles Gebot:</dt>
                         <dd class="price h1 m-b-2">
                             {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
