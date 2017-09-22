@@ -272,7 +272,7 @@ Vue.component("auction-show-bidderlist", {
 
     props: {
         "template": String,
-        "auctionid": Number
+        "auctionid": String
     },
 
     data: function data() {
@@ -283,6 +283,7 @@ Vue.component("auction-show-bidderlist", {
     },
     created: function created() {
         this.$options.template = this.template;
+        this.auctionid = parseInt(this.auctionid);
     },
     ready: function ready() {
         this.getBidderList();

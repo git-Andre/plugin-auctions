@@ -16,19 +16,15 @@ Vue.component( "auction-show-bidderlist", {
 
     created() {
         this.$options.template = this.template;
-        this.auctionid = parseInt( this.auctionid );
+        this.auctionid         = parseInt( this.auctionid );
     },
     ready() {
         this.getBidderList();
     },
     methods: {
         getBidderList() {
-            // this.auction = JSON.parse( this.auction );
-
             ApiService.get( "/api/bidderlist/" + this.auctionid )
                 .done( biddersFromServer => {
-
-                    console.dir( biddersFromServer );
 
                     // const bidderData     = this.getBidderList();
                     var differentBidders = [];
@@ -40,7 +36,7 @@ Vue.component( "auction-show-bidderlist", {
 
                         bidView.bidderName   = biddersFromServer[i].bidderName;
                         bidView.bidPrice     = biddersFromServer[i].bidPrice;
-                        bidView.bidStatus     = biddersFromServer[i].bidStatus;
+                        bidView.bidStatus    = biddersFromServer[i].bidStatus;
                         bidView.bidTimeStamp = biddersFromServer[i].bidTimeStamp * 1000;
 
                         this.bidderList.push( bidView );
@@ -57,7 +53,6 @@ Vue.component( "auction-show-bidderlist", {
                            alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );
                        }
                 )
-
         },
         // getBidderList () {
         //     // ApiService.get( "/api/bidderlist/" + this.auctionid, JSON.stringify( bidderList ),
