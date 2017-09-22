@@ -2,16 +2,16 @@
 
     <div class="row container">
 
-        <div class="p-t-1">
-            <div class="col-md-5">
+        <div class="row container m-b-1">
+            <div class="col-md-6 p-t-5">
                 <h4>
                     ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length -
                     1}<span class="small muted"> Gebot(e)</span>
                 </h4>
             </div>
 
-            <div class="col-md-7">
-                <button class="btn btn-secondary btn-sm"
+            <div class="col-md-6 text-right">
+                <button class="btn btn-secondary"
                         @click="getBidderList"
                 ><i class="fa fa-refresh fa-2 m-r-1" aria-hidden="true"></i>reload
                 </button>
