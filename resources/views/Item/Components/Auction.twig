@@ -1,0 +1,84 @@
+<script type="x/template" id="vue-auction">
+    <div id="auction">
+
+        <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
+
+        <div class="row container m-t-0 m-b-2">
+            <auction-bids
+                    template="#vue-auction-bids"
+                    auction="{{ auction | json_encode() }}"
+                    userdata="{{ services.customer.getContact() | json_encode() }}">
+            </auction-bids>
+        </div>
+        <div class="row container m-t-0 m-b-1">
+            <dl class="auctionList">
+                {% if (bidderListLength > 1) %}
+                    <dt>Aktuelles Gebot:</dt>
+                    <dd class="price h1 m-b-2">
+                        {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                    </dd>
+
+                    <dt>Start Preis:</dt>
+                    <dd>{{ auction.startPrice | formatMonetary('EUR') }}
+                    </dd>
+                {% else %}
+                    <dt>Start Preis:</dt>
+                    <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+                {% endif %}
+
+                <dt>Start Datum:</dt>
+                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+
+                <dt>Dauer:</dt>
+                <dd>{{ auction.auctionDuration }} Tage</dd>
+                <dt>End Datum:</dt>
+                <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                <dt>Versand:</dt>
+                <dd>In Deutschland kostenlos</dd>
+
+                {% if bidderListLength != 1 %}
+                    <dt>Anzahl Gebote:</dt>
+                    <dd> {{ bidderListLength - 1 }}
+                        <span>    <a
+                                    data-toggle="modal"
+                                    href="#bidderlist"
+                            >
+                                         <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                                     </a>
+                        </span>
+                    </dd>
+                {% endif %}
+            </dl>
+        </div>
+
+
+
+    </div>
+</script>
+<style>
+    .auctionList {
+        display: block;
+        font-family: 'Abel', sans-serif;
+        padding: 1rem 1.5rem 1rem 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .auctionList dt {
+        width: 25%;
+        float: left;
+        font-weight: bold;
+    }
+
+    .auctionList dd {
+        width: 95%;
+    }
+
+    a:focus {
+        outline: none;
+    }
+
+    .alarm {
+        color: #c50000;
+    }
+
+</style>
