@@ -1,6 +1,31 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
+// const ApiService          = require( "services/ApiService" );
+// const NotificationService = require( "services/NotificationService" );
+// const AuctionConstants    = require( "constants/AuctionConstants" );
+
+// const MINI_CRYPT  = 46987;
+// const NOTIFY_TIME = 10000;
+
+Vue.component("auction", {
+    props: ["template", "auction"],
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+        this.$options.template = this.template;
+    },
+    compiled: function compiled() {},
+    ready: function ready() {},
+
+    methods: {},
+    watch: {}
+});
+
+},{}],2:[function(require,module,exports){
+"use strict";
+
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionConstants = require("constants/AuctionConstants");
@@ -263,7 +288,7 @@ Vue.component("auction-bids", {
 
 });
 
-},{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8}],3:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -293,11 +318,7 @@ Vue.component("auction-show-bidderlist", {
         getBidderList: function getBidderList() {
             var _this = this;
 
-            // this.auction = JSON.parse( this.auction );
-
             ApiService.get("/api/bidderlist/" + this.auctionid).done(function (biddersFromServer) {
-
-                console.dir(biddersFromServer);
 
                 // const bidderData     = this.getBidderList();
                 var differentBidders = [];
@@ -328,7 +349,7 @@ Vue.component("auction-show-bidderlist", {
     }
 });
 
-},{"services/ApiService":6}],3:[function(require,module,exports){
+},{"services/ApiService":7}],4:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
@@ -396,7 +417,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":7}],4:[function(require,module,exports){
+},{"services/NotificationService":8}],5:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -458,7 +479,7 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -489,7 +510,7 @@ var START = exports.START = "Auktion beginnt!";
 var PRESENT = exports.PRESENT = "present";
 var PAST = exports.PAST = "past";
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -625,7 +646,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":7,"services/WaitScreenService":8}],7:[function(require,module,exports){
+},{"services/NotificationService":8,"services/WaitScreenService":9}],8:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -782,7 +803,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -825,7 +846,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4,5])
+},{}]},{},[1,2,3,4,5,6])
 
 
 // var ao = new Vue( {
