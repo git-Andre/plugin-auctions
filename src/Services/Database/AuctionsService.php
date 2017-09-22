@@ -169,6 +169,23 @@
             return 'falsche ID';
         }
 
+        public function getBidderList($id)
+        {
+            if ($id > 0)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+
+                    return $auction -> bidderList;
+                }
+            }
+
+            return 'falsche ID in getBidderList';
+        }
+
         /**
          * @param $id
          * @return string

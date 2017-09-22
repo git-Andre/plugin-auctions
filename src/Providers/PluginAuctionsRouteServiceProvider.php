@@ -38,6 +38,9 @@
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
                     -> where('id', '\d+');
 
+            $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList')
+                    -> where('id', '\d+');
+
             $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
                     -> where('id', '\d+');
 

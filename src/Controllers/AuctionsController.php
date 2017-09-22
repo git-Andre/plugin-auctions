@@ -51,6 +51,16 @@
             return 'keine ID (oder 0)';
         }
 
+        public function getBidderList($id)
+        {
+            if ($id && $id > 0)
+            {
+                return json_encode($this -> auctionsService -> getBidderList($id));
+            }
+
+            return 'keine ID (oder 0)';
+        }
+
         /**
          * @param $id
          * @return string

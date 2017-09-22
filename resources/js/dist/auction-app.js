@@ -115,6 +115,7 @@ Vue.component("auction-bids", {
             } else {
                 NotificationService.warn("STATUS:<br>Es gibt leider ein höheres Gebot...").closeAfter(NOTIFY_TIME);
             }
+            sessionStorage.removeItem("currentBidder");
         },
         hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
