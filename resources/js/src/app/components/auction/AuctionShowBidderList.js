@@ -1,4 +1,4 @@
-const ApiService          = require( "services/ApiService" );
+const ApiService = require( "services/ApiService" );
 
 Vue.component( "auction-show-bidderlist", {
 
@@ -18,16 +18,16 @@ Vue.component( "auction-show-bidderlist", {
         this.$options.template = this.template;
     },
     ready() {
-      this.getBidderList();
+        this.getBidderList();
     },
     methods: {
-        getBidderList () {
+        getBidderList() {
             // this.auction = JSON.parse( this.auction );
 
-            ApiService.get( "/api/bidderlist/" + this.auction.id )
+            ApiService.get( "/api/bidderlist/" + this.auctionid )
                 .done( bidderlist => {
 
-                    console.dir(bidderlist);
+                    console.dir( bidderlist );
                     // const bidderData     = this.getBidderList();
                     // var differentBidders = [];
                     //
