@@ -31,13 +31,13 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <auction
-                    template="#vue-auction"
+            <auction-parent
+                    template="#vue-auction-parent"
                     auction="{{ auction | json_encode() }}"
 
             >
 
-            </auction>
+            </auction-parent>
 
             {#{% set shippingCat = config("Ceres.global.shippingCostsCategoryId") %}#}
 

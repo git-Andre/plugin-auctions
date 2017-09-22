@@ -5,25 +5,22 @@
 // const MINI_CRYPT  = 46987;
 // const NOTIFY_TIME = 10000;
 
-Vue.component( "auction", {
+Vue.component( "auction-parent", {
     props: [
         "template",
         "auction"
     ],
     data() {
-        return {
-        }
+        return {}
     },
     created() {
         this.$options.template = this.template;
+        this.auction = JSON.parse(this.auction);
     },
     compiled() {
     },
     ready() {
     },
-    methods: {
-    },
-    watch: {
-    }
-} )
-;
+    methods: {},
+    watch: {}
+} );
