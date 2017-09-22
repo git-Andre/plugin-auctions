@@ -2,11 +2,21 @@
 
     <div class="row container">
 
-        <div class="p-t-1">
+        <div class="p-t-1 col-md-5">
             <h4>
                 ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
             </h4>
         </div>
+
+        <div class="col-md-7">
+            <button class="btn btn-primary"
+                    @click="getBidderList"
+            ><i class="fa fa-reload fa-2" aria-hidden="true"></i>
+            </button>
+
+        </div>
+
+
         <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und auch geändert werden!<br>
                                      Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
 
