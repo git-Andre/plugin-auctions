@@ -8,6 +8,7 @@
 Vue.component( "auction", {
     props: [
         "template",
+        "auction"
     ],
     data() {
         return {
