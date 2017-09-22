@@ -23,22 +23,17 @@ Vue.component("auction-bids", {
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
-        // this.initAuctionParams();
+        this.currentBid = {};
         this.auction = JSON.parse(this.auction);
-
-        if (this.auction.bidderList.length > 1) {
-            this.minBid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
-        } else {
-            this.minBid = this.toFloatTwoDecimal(this.auction.startPrice);
-        }
+        this.minBid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
     ready: function ready() {
+
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
-            if (this.hasLoggedInUserBidden()) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT) {
                 this.evaluateAndNotify();
-            } else {
-                // kein Gebot in Bidderlist...
             }
         }
     },
@@ -47,39 +42,38 @@ Vue.component("auction-bids", {
         addBid: function addBid() {
             var _this = this;
 
-            if (this.isInputValid) {
-                // gibt es inzwischen schon ein höheres Gebot ??
-                ApiService.get("/api/auctionbidprice/" + this.auction.id).done(function (lastBidPrice) {
-                    if (_this.toFloatTwoDecimal(lastBidPrice) != _this.minBid - 1) {
+            ApiService.get("/api/auctionbidprice/" + this.auction.id).done(function (lastBidPrice) {
+                // ist es ein gültiges Gebot (höher als letztes Gebot) ?
+                if (_this.maxCustomerBid > _this.toFloatTwoDecimal(lastBidPrice)) {
 
-                        if (!_this.hasLoggedInUserBidden() && _this.auction.bidderList.length > 1) {
-                            NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
-                            _this.reload(4000);
-                        } else {
-                            _this.reload(4);
-                        }
-                    } else {
-                        var pos = _this.userdata.email.indexOf("@");
-                        var newBidderName = _this.userdata.email.slice(0, 2) + " *** " + _this.userdata.email.slice(pos - 2, pos);
+                    var pos = _this.userdata.email.indexOf("@");
+                    var newBidderName = _this.userdata.email.slice(0, 2) + " *** " + _this.userdata.email.slice(pos - 2, pos);
 
-                        var currentBid = {
-                            'customerMaxBid': _this.toFloatTwoDecimal(_this.maxCustomerBid),
-                            'bidderName': newBidderName,
-                            'customerId': parseInt(_this.userdata.id)
-                        };
-                        ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                            _this.reload(5);
-                        }, function (error) {
-                            alert('error3: ' + error.toString());
-                        });
+                    var currentBid = {
+                        'customerMaxBid': _this.toFloatTwoDecimal(_this.maxCustomerBid),
+                        'bidderName': newBidderName,
+                        'customerId': parseInt(_this.userdata.id)
+                    };
+
+                    // super Time Tunnel
+                    sessionStorage.setItem("currentBidder", _this.userdata.id + MINI_CRYPT);
+
+                    ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
+                        _this.reload(5);
+                    }, function (error) {
+                        alert('error3: ' + error.toString());
+                    });
+                }
+                // es gibt inzwischen schon ein höheres Gebot
+                else {
+                        NotificationService.warn("STATUS:<br>Es gibt inzwischen ein höheres Gebot...").close;
+                        _this.reload(2600); // :)
                     }
-                }).fail(function () {
-                    alert('Upps - ein Fehler bei auctionbidprice ??!!');
-                });
-            }
+            }).fail(function () {
+                alert('Upps - ein Fehler bei auctionbidprice ??!!');
+            });
         },
         evaluateAndNotify: function evaluateAndNotify() {
-
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                 if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
@@ -91,7 +85,7 @@ Vue.component("auction-bids", {
                             }
                         case AuctionConstants.LOWER_BID:
                             {
-                                NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind aber immer noch Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                     }
@@ -106,7 +100,7 @@ Vue.component("auction-bids", {
                             }
                         case AuctionConstants.HIGHEST_BID:
                             {
-                                NotificationService.success("STATUS:<br>GLÜCKWUNSCH<br>Sie sind der Höchstbietende...").closeAfter(NOTIFY_TIME);
+                                NotificationService.success("GLÜCKWUNSCH:<br>Sie sind Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
@@ -119,10 +113,10 @@ Vue.component("auction-bids", {
                     }
                 }
             } else {
-                NotificationService.warn("STATUS:<br>Es gibt leider schon ein höheres Gebot...").closeAfter(NOTIFY_TIME);
+                NotificationService.warn("STATUS:<br>Es gibt leider ein höheres Gebot...").closeAfter(NOTIFY_TIME);
             }
         },
-        hasLoggedInUserBidden: function hasLoggedInUserBidden() {
+        hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
                 if (this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId) {
@@ -446,7 +440,7 @@ var AuctionConstants = function AuctionConstants() {
 
 var OWN_BID_CHANGED = exports.OWN_BID_CHANGED = "hat eigenes Max-Gebot geändert";
 var HIGHEST_BID = exports.HIGHEST_BID = "hat höchstes Gebot abgegeben";
-var LOWER_BID = exports.LOWER_BID = "nach neuem, aber geringerem Gebot";
+var LOWER_BID = exports.LOWER_BID = "nach neuem, aber geringerem Max-Gebot";
 var START = exports.START = "Auktion beginnt!";
 
 // export const OWN_BID_CHANGED = "ownBidChanged";

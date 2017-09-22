@@ -25,67 +25,65 @@ Vue.component( "auction-bids", {
         this.$options.template = this.template;
     },
     compiled() {
-        this.userdata = JSON.parse( this.userdata );
-        // this.initAuctionParams();
-        this.auction  = JSON.parse( this.auction );
-        this.minBid   = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.userdata   = JSON.parse( this.userdata );
+        this.currentBid = {};
+        this.auction    = JSON.parse( this.auction );
+        this.minBid     = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
+
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
             this.userdata != null ) {
-            if ( this.hasLoggedInUserBidden() ) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT ) {
                 this.evaluateAndNotify();
-            }
-            else {
-                // kein Gebot in Bidderlist...
             }
         }
     },
     methods: {
         addBid() {
-            if ( this.isInputValid ) {
-                // gibt es inzwischen schon ein höheres Gebot ??
-                ApiService.get( "/api/auctionbidprice/" + this.auction.id )
-                    .done( lastBidPrice => {
-                        // ist maxGebot > letzte bidPrice (StartPrice ist sowieso 1 EUR größer als last bidPrice - PHP)
-                        if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
+            ApiService.get( "/api/auctionbidprice/" + this.auction.id )
+                .done( lastBidPrice => {
+                    // ist es ein gültiges Gebot (höher als letztes Gebot) ?
+                    if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
 
-                            const pos           = this.userdata.email.indexOf( "@" );
-                            const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
-                                this.userdata.email.slice( pos - 2, pos );
+                        const pos           = this.userdata.email.indexOf( "@" );
+                        const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
+                            this.userdata.email.slice( pos - 2, pos );
 
-                            var currentBid = {
-                                'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
-                                'bidderName': newBidderName,
-                                'customerId': parseInt( this.userdata.id ),
-                            };
-                            ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
-                                                                                  { contentType: "application/json" }
-                            )
-                                .then( response => {
-                                           this.reload( 5 );
-                                       },
-                                       error => {
-                                           alert( 'error3: ' + error.toString() );
-                                       }
-                                );
-                        }
-                        // maxGebot kleiner als letztes Gebot ODER es liegen Gebote vor...
-                        else {
-                            NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." )
-                                .closeAfter( NOTIFY_TIME );
-                            this.reload( 4000 );
-                        }
-                    } )
-                    .fail( () => {
-                               alert( 'Upps - ein Fehler bei auctionbidprice ??!!' );
-                           }
-                    )
-            }
+                        var currentBid = {
+                            'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
+                            'bidderName': newBidderName,
+                            'customerId': parseInt( this.userdata.id ),
+                        };
+
+                        // super Time Tunnel
+                        sessionStorage.setItem( "currentBidder", this.userdata.id + MINI_CRYPT );
+
+                        ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
+                                                                              { contentType: "application/json" }
+                        )
+                            .then( response => {
+                                       this.reload( 5 );
+                                   },
+                                   error => {
+                                       alert( 'error3: ' + error.toString() );
+                                   }
+                            );
+                    }
+                    // es gibt inzwischen schon ein höheres Gebot
+                    else {
+                        NotificationService.warn( "STATUS:<br>Es gibt inzwischen ein höheres Gebot..." ).close;
+                        this.reload( 2600 ); // :)
+                    }
+                } )
+                .fail( () => {
+                           alert( 'Upps - ein Fehler bei auctionbidprice ??!!' );
+                       }
+                )
         },
         evaluateAndNotify() {
-
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                 if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
@@ -97,7 +95,7 @@ Vue.component( "auction-bids", {
                         }
                         case AuctionConstants.LOWER_BID: {
                             NotificationService.success(
-                                "STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind immer noch der Höchstbietende..." )
+                                "STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind aber immer noch Höchstbietende(r)..." )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
@@ -113,7 +111,7 @@ Vue.component( "auction-bids", {
                             break;
                         }
                         case AuctionConstants.HIGHEST_BID: {
-                            NotificationService.success( "STATUS:<br>GLÜCKWUNSCH<br>Sie sind der Höchstbietende..." )
+                            NotificationService.success( "GLÜCKWUNSCH:<br>Sie sind Höchstbietende(r)..." )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
@@ -128,10 +126,10 @@ Vue.component( "auction-bids", {
                 }
             }
             else {
-                NotificationService.warn( "STATUS:<br>Es gibt leider schon ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
+                NotificationService.warn( "STATUS:<br>Es gibt leider ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
             }
         },
-        hasLoggedInUserBidden() {
+        hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
                 if ( this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId ) {
