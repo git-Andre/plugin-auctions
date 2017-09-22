@@ -285,5 +285,4 @@ Vue.component( "auction-bids", {
         }
     }
     ,
-} )
-;
+} );
