@@ -2,20 +2,19 @@
 
     <div class="row container">
 
-        <div class="p-t-1 col-md-5">
+        <div class="p-t-1">
             <h4>
                 ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length - 1}<span class="small muted"> Gebot(e)</span>
             </h4>
+            <span class="m-l-3">
+
+                <button class="btn btn-secondary btn-sm"
+                        @click="getBidderList"
+                ><i class="fa fa-refresh fa-2" aria-hidden="true"></i>
+                </button>
+
+            </span>
         </div>
-
-        <div class="col-md-7">
-            <button class="btn btn-primary"
-                    @click="getBidderList"
-            ><i class="fa fa-reload fa-2" aria-hidden="true"></i>
-            </button>
-
-        </div>
-
 
         <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und auch geändert werden!<br>
                                      Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
@@ -60,6 +59,7 @@
     .column-right {
         width: 30%;
     }
+
     .column-left {
         width: 26%;
     }
