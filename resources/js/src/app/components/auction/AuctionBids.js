@@ -36,7 +36,7 @@ Vue.component( "auction-bids", {
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
             this.userdata != null ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT ) {
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
                 this.evaluateAndNotify();
             }
         }
@@ -74,7 +74,10 @@ Vue.component( "auction-bids", {
                     }
                     // es gibt inzwischen schon ein höheres Gebot
                     else {
-                        NotificationService.warn( "STATUS:<br>Es gibt inzwischen ein höheres Gebot..." ).close;
+                        NotificationService.warn(
+                            // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                            "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
+                            .close;
                         this.reload( 2600 ); // :)
                     }
                 } )
@@ -89,13 +92,20 @@ Vue.component( "auction-bids", {
                 if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
                     switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
-                            NotificationService.info( "STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!" )
+                            NotificationService.info(
+                                // "<span><i class=\"fa fa-info-circle p-l-0 p-r-1\"></span>" +
+                                "<h3>Letzte Aktion:</h3><hr>" +
+                                "Sie haben Ihr eigenes Maximal-Gebot geändert!" )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
                         case AuctionConstants.LOWER_BID: {
-                            NotificationService.success(
-                                "STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind aber immer noch Höchstbietende(r)..." )
+                            NotificationService.success( {
+                                                             "message":
+                                                             // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                                             "<h3>STATUS:</h3><hr>Es wurde ein geringeres Maximal-Gebot abgegeben... " +
+                                                             "<br> Sie sind aber immer noch Höchstbietende(r)..."
+                                                         } )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
@@ -106,17 +116,23 @@ Vue.component( "auction-bids", {
                     console.log( 'bidStatus von letzter bid' );
                     switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
-                            NotificationService.info( "STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!" )
+                            NotificationService.info(
+                                // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>STATUS:</h3><hr>Sie haben Ihr eigenes Maximal-Gebot verändert!" )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
                         case AuctionConstants.HIGHEST_BID: {
-                            NotificationService.success( "GLÜCKWUNSCH:<br>Sie sind Höchstbietende(r)..." )
+                            NotificationService.success(
+                                // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>GLÜCKWUNSCH:</h3><hr>Sie sind derzeit Höchstbietende(r)..." )
                                 .closeAfter( NOTIFY_TIME );
                             break;
                         }
                         case AuctionConstants.LOWER_BID: {
-                            NotificationService.warn( "STATUS:<br>Es wurde inzwischen ein höheres Gebot abgegeben..." )
+                            NotificationService.warn(
+                                // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
                                 .closeAfter( NOTIFY_TIME );
 
                             break;
@@ -126,9 +142,12 @@ Vue.component( "auction-bids", {
                 }
             }
             else {
-                NotificationService.warn( "STATUS:<br>Es gibt leider ein höheres Gebot..." ).closeAfter( NOTIFY_TIME );
+                NotificationService.warn(
+                    // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                    "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
+                    .closeAfter( NOTIFY_TIME );
             }
-            sessionStorage.removeItem("currentBidder");
+            sessionStorage.removeItem( "currentBidder" );
         },
         hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)

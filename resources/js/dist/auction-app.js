@@ -66,7 +66,9 @@ Vue.component("auction-bids", {
                 }
                 // es gibt inzwischen schon ein höheres Gebot
                 else {
-                        NotificationService.warn("STATUS:<br>Es gibt inzwischen ein höheres Gebot...").close;
+                        NotificationService.warn(
+                        // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                        "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").close;
                         _this.reload(2600); // :)
                     }
             }).fail(function () {
@@ -80,12 +82,18 @@ Vue.component("auction-bids", {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
-                                NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                NotificationService.info(
+                                // "<span><i class=\"fa fa-info-circle p-l-0 p-r-1\"></span>" +
+                                "<h3>Letzte Aktion:</h3><hr>" + "Sie haben Ihr eigenes Maximal-Gebot geändert!").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
-                                NotificationService.success("STATUS:<br>Es wurde ein geringeres Gebot abgegeben... <br> Sie sind aber immer noch Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
+                                NotificationService.success({
+                                    "message":
+                                    // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                    "<h3>STATUS:</h3><hr>Es wurde ein geringeres Maximal-Gebot abgegeben... " + "<br> Sie sind aber immer noch Höchstbietende(r)..."
+                                }).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                     }
@@ -95,17 +103,23 @@ Vue.component("auction-bids", {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
-                                NotificationService.info("STATUS:<br>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                NotificationService.info(
+                                // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>STATUS:</h3><hr>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.HIGHEST_BID:
                             {
-                                NotificationService.success("GLÜCKWUNSCH:<br>Sie sind Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
+                                NotificationService.success(
+                                // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>GLÜCKWUNSCH:</h3><hr>Sie sind derzeit Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
-                                NotificationService.warn("STATUS:<br>Es wurde inzwischen ein höheres Gebot abgegeben...").closeAfter(NOTIFY_TIME);
+                                NotificationService.warn(
+                                // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").closeAfter(NOTIFY_TIME);
 
                                 break;
                             }
@@ -113,7 +127,9 @@ Vue.component("auction-bids", {
                     }
                 }
             } else {
-                NotificationService.warn("STATUS:<br>Es gibt leider ein höheres Gebot...").closeAfter(NOTIFY_TIME);
+                NotificationService.warn(
+                // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").closeAfter(NOTIFY_TIME);
             }
             sessionStorage.removeItem("currentBidder");
         },
@@ -250,11 +266,13 @@ Vue.component("auction-bids", {
 },{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
 "use strict";
 
+var ApiService = require("services/ApiService");
+
 Vue.component("auction-show-bidderlist", {
 
     props: {
         "template": String,
-        "auction": {}
+        "auctionid": Number
     },
 
     data: function data() {
@@ -265,35 +283,48 @@ Vue.component("auction-show-bidderlist", {
     },
     created: function created() {
         this.$options.template = this.template;
+    },
+    ready: function ready() {
+        this.getBidderList();
+    },
 
-        this.auction = JSON.parse(this.auction);
+    methods: {
+        getBidderList: function getBidderList() {
+            // this.auction = JSON.parse( this.auction );
 
-        var bidderData = this.auction.bidderList;
-        var differentBidders = [];
+            ApiService.get("/api/bidderlist/" + this.auction.id).done(function (bidderlist) {
 
-        this.bidderList = [];
-
-        for (var i = bidderData.length; --i >= 0;) {
-            var bidView = {};
-
-            bidView.bidderName = bidderData[i].bidderName;
-            bidView.bidPrice = bidderData[i].bidPrice;
-            bidView.bidStatus = bidderData[i].bidStatus;
-            bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
-
-            this.bidderList.push(bidView);
-
-            var currentUserId = bidderData[i].customerId;
-
-            if (differentBidders.indexOf(currentUserId) < 0) {
-                differentBidders.push(currentUserId);
-            }
+                console.dir(bidderlist);
+                // const bidderData     = this.getBidderList();
+                // var differentBidders = [];
+                //
+                // this.bidderList = [];
+                //
+                // for (var i = bidderData.length; --i >= 0;) {
+                //     var bidView = {};
+                //
+                //     bidView.bidderName   = bidderData[i].bidderName;
+                //     bidView.bidPrice     = bidderData[i].bidPrice;
+                //     bidView.bidStatus     = bidderData[i].bidStatus;
+                //     bidView.bidTimeStamp = bidderData[i].bidTimeStamp * 1000;
+                //
+                //     this.bidderList.push( bidView );
+                //
+                //     const currentUserId = bidderData[i].customerId;
+                //
+                //     if ( differentBidders.indexOf( currentUserId ) < 0 ) {
+                //         differentBidders.push( currentUserId );
+                //     }
+                // }
+                // this.bidders = differentBidders.length - 1;
+            }).fail(function () {
+                alert('Upps - ein Fehler bei bidderlist ??!!');
+            });
         }
-        this.bidders = differentBidders.length - 1;
     }
 });
 
-},{}],3:[function(require,module,exports){
+},{"services/ApiService":6}],3:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
