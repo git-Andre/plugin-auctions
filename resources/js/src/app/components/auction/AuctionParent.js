@@ -39,7 +39,7 @@ Vue.component( "auction-parent", {
             ApiService.get( "/api/auction/" + this.auctionid )
                 .done( auction => {
                     this.auction = auction;
-                    // this.$children['AuctionBids'].auction = this.auction;
+                    this.$children['AuctionBids'].auction = this.auction;
                 } )
                 .fail( () => {
                            alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );

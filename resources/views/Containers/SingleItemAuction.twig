@@ -31,70 +31,78 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <auction-parent
-                    template="#vue-auction-parent"
-                    auctionid="{{ auction.id }}"
-            >
-            </auction-parent>
+            {#<auction-parent#}
+            {#template="#vue-auction-parent"#}
+            {#auctionid="{{ auction.id }}"#}
+            {#>#}
+            {#</auction-parent>#}
 
             {#{% set shippingCat = config("Ceres.global.shippingCostsCategoryId") %}#}
 
             {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
-            {#<h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>#}
-
-            {#<div class="row container m-t-0 m-b-2">#}
-
-            {#<auction-bids#}
-            {#template="#vue-auction-bids"#}
-            {#auction="{{ auction | json_encode() }}"#}
-            {#minbid="{{ bidderListLast.bidPrice }}"#}
-            {#userdata="{{ services.customer.getContact() | json_encode() }}">#}
-            {#</auction-bids>#}
-
-            {#</div>#}
+            <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
+            <auction-countdown
+                    template="#vue-auction-countdown"
+                    {#deadline="1506287097"#}
+                    v-resource-push:deadline
+                    resource="deadline"
+            >
+            </auction-countdown>
 
 
-            {#<div class="row container m-t-0 m-b-1">#}
-            {#<dl class="auctionList">#}
-            {#{% if (bidderListLength > 1) %}#}
-            {#<dt>Aktuelles Gebot:</dt>#}
-            {#<dd class="price h1 m-b-2">#}
-            {#{{ bidderListLast.bidPrice | formatMonetary('EUR') }}#}
-            {#</dd>#}
+            <div class="row container m-t-0 m-b-2">
 
-            {#<dt>Start Preis:</dt>#}
-            {#<dd>{{ auction.startPrice | formatMonetary('EUR') }}#}
-            {#</dd>#}
-            {#{% else %}#}
-            {#<dt>Start Preis:</dt>#}
-            {#<dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>#}
-            {#{% endif %}#}
+                <auction-bids
+                        template="#vue-auction-bids"
+                        auction="{{ auction | json_encode() }}"
+                        minbid="{{ bidderListLast.bidPrice }}"
+                        userdata="{{ services.customer.getContact() | json_encode() }}">
+                </auction-bids>
 
-            {#<dt>Start Datum:</dt>#}
-            {#<dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>#}
+            </div>
 
-            {#<dt>Dauer:</dt>#}
-            {#<dd>{{ auction.auctionDuration }} Tage</dd>#}
-            {#<dt>End Datum:</dt>#}
-            {#<dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>#}
-            {#<dt>Versand:</dt>#}
-            {#<dd>In Deutschland kostenlos</dd>#}
 
-            {#{% if bidderListLength != 1 %}#}
-            {#<dt>Anzahl Gebote:</dt>#}
-            {#<dd> {{ bidderListLength - 1 }}#}
-            {#<span>    <a#}
-            {#data-toggle="modal"#}
-            {#href="#bidderlist"#}
-            {#>#}
-            {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
-            {#</a>#}
-            {#</span>#}
-            {#</dd>#}
-            {#{% endif %}#}
-            {#</dl>#}
-            {#</div>#}
+            <div class="row container m-t-0 m-b-1">
+                <dl class="auctionList">
+                    {% if (bidderListLength > 1) %}
+                        <dt>Aktuelles Gebot:</dt>
+                        <dd class="price h1 m-b-2">
+                            {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                        </dd>
+
+                        <dt>Start Preis:</dt>
+                        <dd>{{ auction.startPrice | formatMonetary('EUR') }}
+                        </dd>
+                    {% else %}
+                        <dt>Start Preis:</dt>
+                        <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+                    {% endif %}
+
+                    <dt>Start Datum:</dt>
+                    <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+
+                    <dt>Dauer:</dt>
+                    <dd>{{ auction.auctionDuration }} Tage</dd>
+                    <dt>End Datum:</dt>
+                    <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                    <dt>Versand:</dt>
+                    <dd>In Deutschland kostenlos</dd>
+
+                    {% if bidderListLength != 1 %}
+                        <dt>Anzahl Gebote:</dt>
+                        <dd> {{ bidderListLength - 1 }}
+                            <span>    <a
+                                        data-toggle="modal"
+                                        href="#bidderlist"
+                                >
+            <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+            </a>
+            </span>
+                        </dd>
+                    {% endif %}
+                </dl>
+            </div>
 
             {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
@@ -165,5 +173,10 @@
     a:focus {
         outline: none;
     }
+
+    .alarm {
+        color: #c50000;
+    }
+
 </style>
 
