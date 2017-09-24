@@ -1,7 +1,8 @@
 <script type="x/template" id="vue-auction-countdown">
-    <dl class="auctionList">
-        <dt>Restzeit:</dt>
-        <dd>
+    <div id="countdown">
+        <dl class="auctionList">
+            <dt>Restzeit:</dt>
+            <dd>
             <span>
             <ul class="vue-countdown">
                 <li v-if="(days > 0)">
@@ -22,9 +23,10 @@
                 </li>
             </ul>
             </span>
-        </dd>
-    </dl>
+            </dd>
+        </dl>
 
+    </div>
 </script>
 
 
