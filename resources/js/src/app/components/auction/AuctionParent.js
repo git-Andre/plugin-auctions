@@ -10,10 +10,12 @@ Vue.component( "auction-parent", {
         // "template",
         // "auction"
     ],
-    el: 'addAuctionVue',
+    // el() {
+    //     return  '#addAuctionVue'
+    // },
     data() {
         return {
-            test: ""
+            // test: ""
         }
     },
     created() {
@@ -24,9 +26,11 @@ Vue.component( "auction-parent", {
     },
     ready() {
     },
-    events: {
-        'auction-bids-test' function(test) {
-            this.test = test
+    events() {
+        return {
+            // 'auction-bids-test': function (maxCustomerBid) {
+            //     this.test = maxCustomerBid
+            }
         }
     },
     methods: {},

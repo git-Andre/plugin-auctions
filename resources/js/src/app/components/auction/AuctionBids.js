@@ -12,7 +12,7 @@ Vue.component( "auction-bids", {
         "template",
         "userdata",
         "auction",
-        "minBid",
+        "minbid",
         "auctionEnd"
     ],
     data() {
@@ -28,7 +28,7 @@ Vue.component( "auction-bids", {
         this.userdata   = JSON.parse( this.userdata );
         this.currentBid = {};
         this.auction    = JSON.parse( this.auction );
-        this.minBid     = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.minbid     = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
 
@@ -42,11 +42,6 @@ Vue.component( "auction-bids", {
         }
     },
     methods: {
-        notify() {
-            if (this.maxCustomerBid.trim() ) {
-                this.$dispatch('auction-bids-test', this.maxCustomerBid)
-            }
-        },
         addBid() {
             ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                 .done( lastBidPrice => {
@@ -185,7 +180,7 @@ Vue.component( "auction-bids", {
             //     "startHour": 16,
             //     "startMinute": 45,
             //     "auctionDuration": 1,
-            //     "startPrice": this.minBid - 2
+            //     "startPrice": this.minbid - 2
             // };
             //
             // ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
@@ -268,7 +263,7 @@ Vue.component( "auction-bids", {
     },
     watch: {
         maxCustomerBid: function () {
-            if ( this.maxCustomerBid >= this.minBid ) {
+            if ( this.maxCustomerBid >= this.minbid ) {
                 if ( this.userdata != null ) {
                     this.isInputValid = true
                 }

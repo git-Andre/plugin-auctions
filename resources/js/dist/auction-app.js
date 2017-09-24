@@ -11,7 +11,7 @@ var MINI_CRYPT = 46987;
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minBid", "auctionEnd"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd"],
     data: function data() {
         return {
             isInputValid: false,
@@ -25,7 +25,7 @@ Vue.component("auction-bids", {
         this.userdata = JSON.parse(this.userdata);
         this.currentBid = {};
         this.auction = JSON.parse(this.auction);
-        this.minBid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+        this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
     ready: function ready() {
 
@@ -39,6 +39,10 @@ Vue.component("auction-bids", {
     },
 
     methods: {
+        notify: function notify() {
+            console.log('this.maxCustomerBid: ' + this.maxCustomerBid);
+            this.$dispatch('auction-bids-test', this.maxCustomerBid);
+        },
         addBid: function addBid() {
             var _this = this;
 
@@ -162,7 +166,7 @@ Vue.component("auction-bids", {
             //     "startHour": 16,
             //     "startMinute": 45,
             //     "auctionDuration": 1,
-            //     "startPrice": this.minBid - 2
+            //     "startPrice": this.minbid - 2
             // };
             //
             // ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
@@ -243,7 +247,7 @@ Vue.component("auction-bids", {
     },
     watch: {
         maxCustomerBid: function maxCustomerBid() {
-            if (this.maxCustomerBid >= this.minBid) {
+            if (this.maxCustomerBid >= this.minbid) {
                 if (this.userdata != null) {
                     this.isInputValid = true;
                 } else {
@@ -274,16 +278,31 @@ Vue.component("auction-bids", {
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auction"],
+    props: [
+        // "template",
+        // "auction"
+    ],
+    el: function el() {
+        return '#addAuctionVue';
+    },
     data: function data() {
-        return {};
+        return {
+            test: ""
+        };
     },
     created: function created() {
-        this.$options.template = this.template;
-        this.auction = JSON.parse(this.auction);
+        // this.$options.template = this.template;
+        // this.auction = JSON.parse(this.auction);
     },
     compiled: function compiled() {},
     ready: function ready() {},
+    events: function events() {
+        return {
+            'auction-bids-test': function auctionBidsTest(maxCustomerBid) {
+                this.test = maxCustomerBid;
+            }
+        };
+    },
 
     methods: {},
     watch: {}
