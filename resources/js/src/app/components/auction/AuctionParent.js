@@ -7,19 +7,27 @@
 
 Vue.component( "auction-parent", {
     props: [
-        "template",
-        "auction"
+        // "template",
+        // "auction"
     ],
+    el: 'addAuctionVue',
     data() {
-        return {}
+        return {
+            test: ""
+        }
     },
     created() {
-        this.$options.template = this.template;
-        this.auction = JSON.parse(this.auction);
+        // this.$options.template = this.template;
+        // this.auction = JSON.parse(this.auction);
     },
     compiled() {
     },
     ready() {
+    },
+    events: {
+        'auction-bids-test' function(test) {
+            this.test = test
+        }
     },
     methods: {},
     watch: {}
