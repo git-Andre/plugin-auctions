@@ -283,14 +283,16 @@ Vue.component("auction-parent", {
     // },
     data: function data() {
         return {
-            auction: auction
+            auction: {}
             // test: ""
         };
     },
     created: function created() {
         this.$options.template = this.template;
         this.auctionid = parseInt(this.auctionid);
+        console.log('this.auctionid: ' + this.auctionid);
         this.auction = this.getAuction(this.auctionid);
+        console.log('this.auction: ' + this.auction);
     },
     compiled: function compiled() {},
     ready: function ready() {},
@@ -306,7 +308,7 @@ Vue.component("auction-parent", {
         getAuction: function getAuction() {
             var _this = this;
 
-            ApiService.get("/api/auctions/" + this.auctionid).done(function (auction) {
+            ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
                 _this.auction = auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
