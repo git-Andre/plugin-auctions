@@ -28,7 +28,7 @@ Vue.component( "auction-bids", {
     compiled() {
         this.userdata   = JSON.parse( this.userdata );
         this.currentBid = {};
-        // this.auction    = {'hall': 'o'};
+        this.auction    =  this.$parent.auction
     },
     ready() {
         console.dir( this.$parent );
@@ -270,9 +270,9 @@ Vue.component( "auction-bids", {
     },
     computed: {
 
-        auction() {
-            return this.$parent.auction;
-        },
+        // auction() {
+        //     return this.$parent.auction;
+        // },
 
     },
     watch: {

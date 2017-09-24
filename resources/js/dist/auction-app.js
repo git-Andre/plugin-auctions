@@ -25,7 +25,7 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         this.currentBid = {};
-        // this.auction    = {'hall': 'o'};
+        this.auction = this.$parent.auction;
     },
     ready: function ready() {
         console.dir(this.$parent);
@@ -248,9 +248,11 @@ Vue.component("auction-bids", {
         getCurrentBidPrice: function getCurrentBidPrice() {}
     },
     computed: {
-        auction: function auction() {
-            return this.$parent.auction;
-        }
+
+        // auction() {
+        //     return this.$parent.auction;
+        // },
+
     },
     watch: {
 
@@ -314,7 +316,7 @@ Vue.component("auction-parent", {
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
                 _this.auction = auction;
-                // this.$children['AuctionBids'].auction = this.auction;
+                _this.$children['AuctionBids'].auction = _this.auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
             });
