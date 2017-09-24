@@ -15,7 +15,7 @@ Vue.component( "auction-parent", {
     // },
     data() {
         return {
-            auction
+            auction: {}
             // test: ""
         }
     },
@@ -39,7 +39,7 @@ Vue.component( "auction-parent", {
     // },
     methods: {
         getAuction() {
-            ApiService.get( "/api/auctions/" + this.auctionid )
+            ApiService.get( "/api/auction/" + this.auctionid )
                 .done( auction => {
                     this.auction = auction ;
                 } )
