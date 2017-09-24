@@ -1,4 +1,4 @@
-// const ApiService          = require( "services/ApiService" );
+const ApiService = require( "services/ApiService" );
 // const NotificationService = require( "services/NotificationService" );
 // const AuctionConstants    = require( "constants/AuctionConstants" );
 
@@ -8,20 +8,24 @@
 Vue.component( "auction-parent", {
     props: [
         "template",
-        "auction"
+        "auctionid"
     ],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data() {
         return {
+            auction
             // test: ""
         }
     },
     created() {
         this.$options.template = this.template;
-        this.auction = JSON.parse(this.auction);
-    },
+        this.auctionid         = parseInt( this.auctionid );
+        console.log( 'this.auctionid: ' + this.auctionid );
+        this.auction           = this.getAuction( this.auctionid );
+        console.log( 'this.auction: ' + this.auction );
+            },
     compiled() {
     },
     ready() {
@@ -33,6 +37,16 @@ Vue.component( "auction-parent", {
     //         }
     //     }
     // },
-    methods: {},
-    watch: {}
-} );
+    methods: {
+        getAuction() {
+            ApiService.get( "/api/auctions/" + this.auctionid )
+                .done( auction => {
+                    this.auction = auction ;
+                } )
+                .fail( () => {
+                           alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );
+                       }
+                )
+        }
+    }
+} )

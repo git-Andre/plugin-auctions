@@ -28,7 +28,9 @@ Vue.component( "auction-bids", {
         this.userdata   = JSON.parse( this.userdata );
         this.currentBid = {};
         // this.auction    = JSON.parse( this.auction );
-        this.auction    = parent.$refs.auction;
+        // this.auction    = parent.$refs.auction;
+        console.dir(this.auction);
+
         this.minbid     = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
