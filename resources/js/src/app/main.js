@@ -1,8 +1,13 @@
-// var ao = new Vue( {
-//                       el: '#addAuctionVue',
-//                       data: {
-//                           // messages: []
-//                       }
+// new Vue( {
+//              el: '#addAuctionVue',
+//              components: {
+//                  child:
+//                      {
+//                          props: ['msg'],
+//                          template: `{{ msg }}`
 //
-//                   } )
+//                      }
+//              }
 //
+//          } )
+
