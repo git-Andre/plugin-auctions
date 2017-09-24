@@ -42,6 +42,11 @@ Vue.component( "auction-bids", {
         }
     },
     methods: {
+        notify() {
+            if (this.maxCustomerBid.trim() ) {
+                this.$dispatch('auction-bids-test', this.maxCustomerBid)
+            }
+        },
         addBid() {
             ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                 .done( lastBidPrice => {
