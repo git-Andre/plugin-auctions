@@ -24,7 +24,10 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         this.currentBid = {};
-        this.auction = JSON.parse(this.auction);
+        // this.auction    = JSON.parse( this.auction );
+        // this.auction    = parent.$refs.auction;
+        console.dir(this.auction);
+
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
     ready: function ready() {
@@ -266,7 +269,7 @@ Vue.component("auction-bids", {
 },{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8}],2:[function(require,module,exports){
 "use strict";
 
-// const ApiService          = require( "services/ApiService" );
+var ApiService = require("services/ApiService");
 // const NotificationService = require( "services/NotificationService" );
 // const AuctionConstants    = require( "constants/AuctionConstants" );
 
@@ -274,18 +277,20 @@ Vue.component("auction-bids", {
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auction"],
+    props: ["template", "auctionid"],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data: function data() {
         return {
+            auction: auction
             // test: ""
         };
     },
     created: function created() {
         this.$options.template = this.template;
-        this.auction = JSON.parse(this.auction);
+        this.auctionid = parseInt(this.auctionid);
+        this.auction = this.getAuction(this.auctionid);
     },
     compiled: function compiled() {},
     ready: function ready() {},
@@ -297,11 +302,20 @@ Vue.component("auction-parent", {
     //         }
     //     }
     // },
-    methods: {},
-    watch: {}
+    methods: {
+        getAuction: function getAuction() {
+            var _this = this;
+
+            ApiService.get("/api/auctions/" + this.auctionid).done(function (auction) {
+                _this.auction = auction;
+            }).fail(function () {
+                alert('Upps - ein Fehler bei biddersFromServer ??!!');
+            });
+        }
+    }
 });
 
-},{}],3:[function(require,module,exports){
+},{"services/ApiService":7}],3:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");

@@ -1,12 +1,6 @@
 <script type="x/template" id="vue-auction-bids">
 
-    <div class="row container">
-        <auction-countdown
-                template="#vue-auction-countdown"
-                v-resource-push:deadline
-                resource="deadline"
-        >
-        </auction-countdown>
+    <div class="row container auction-bidform">
 
         <div class="col-lg-8 offset-lg-3" formGroup="maxBid">
             <input class="form-control form-control-lg text-muted"
