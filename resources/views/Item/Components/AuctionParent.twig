@@ -7,10 +7,10 @@
         <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
 
         <auction-countdown
-                template="#vue-auction-countdown"
-                deadline="1506287097"
-                {#v-resource-push:deadline#}
-                {#resource="deadline"#}
+                {#template="#vue-auction-countdown"#}
+                {#deadline="1506287097"#}
+                v-resource-push:deadline
+                resource="deadline"
         >
         </auction-countdown>
 

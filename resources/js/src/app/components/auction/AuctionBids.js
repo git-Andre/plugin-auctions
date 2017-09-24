@@ -33,7 +33,6 @@ Vue.component( "auction-bids", {
     ready() {
         console.dir( this.$parent );
         console.dir( this.$options );
-        this.auction = this.$parent.auction;
         console.log( 'this:' );
         console.dir( this );
 
@@ -269,7 +268,15 @@ Vue.component( "auction-bids", {
 
         },
     },
+    computed: {
+
+        auction() {
+            return this.$parent.auction;
+        },
+
+    },
     watch: {
+
         maxCustomerBid: function () {
             if ( this.maxCustomerBid >= this.minbid ) {
                 if ( this.userdata != null ) {

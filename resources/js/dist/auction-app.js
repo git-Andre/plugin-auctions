@@ -30,10 +30,9 @@ Vue.component("auction-bids", {
     ready: function ready() {
         console.dir(this.$parent);
         console.dir(this.$options);
-        this.auction = this.$options.$parent.auction;
+        this.auction = this.$parent.auction;
         console.log('this:');
         console.dir(this);
-        console.dir(this.auction);
 
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
 
@@ -282,14 +281,12 @@ var ApiService = require("services/ApiService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auctionid"],
+    props: ["template", "auctionid", "auction"],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data: function data() {
-        return {
-            auction: {}
-        };
+        return {};
     },
     created: function created() {
         this.$options.template = this.template;
@@ -880,13 +877,18 @@ module.exports = function ($) {
 },{}]},{},[1,2,3,4,5,6])
 
 
-// var ao = new Vue( {
-//                       el: '#addAuctionVue',
-//                       data: {
-//                           // messages: []
-//                       }
+// new Vue( {
+//              el: '#addAuctionVue',
+//              components: {
+//                  child:
+//                      {
+//                          props: ['msg'],
+//                          template: `{{ msg }}`
 //
-//                   } )
+//                      }
+//              }
 //
+//          } )
+
 
 //# sourceMappingURL=auction-app.js.map
