@@ -17,8 +17,9 @@ Vue.component( "auction-bids", {
     ],
     data() {
         return {
+            // auction: {},
             isInputValid: false,
-            maxCustomerBid: null,
+            maxCustomerBid: null
         }
     },
     created() {
@@ -27,13 +28,17 @@ Vue.component( "auction-bids", {
     compiled() {
         this.userdata   = JSON.parse( this.userdata );
         this.currentBid = {};
-        // this.auction    = JSON.parse( this.auction );
-        // this.auction    = parent.$refs.auction;
-        console.dir(this.auction);
-
-        this.minbid     = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        // this.auction    = {'hall': 'o'};
     },
     ready() {
+        console.dir( this.$parent );
+        console.dir( this.$parent.$children );
+        // this.auction = this.$parent.auction;
+        console.log( 'this:' );
+        console.dir( this );
+        console.dir( this.auction );
+
+        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
@@ -45,6 +50,7 @@ Vue.component( "auction-bids", {
         }
     },
     methods: {
+
         addBid() {
             ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                 .done( lastBidPrice => {

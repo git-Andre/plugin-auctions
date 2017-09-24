@@ -8,14 +8,16 @@
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                v-resource-push:deadline
-                resource="deadline"
+                :deadline="${auction.expiryDate}"
+                {#v-resource-push:deadline#}
+                {#resource="deadline"#}
         >
         </auction-countdown>
 
         <div class="row container m-t-0 m-b-2">
             <auction-bids
                     template="#vue-auction-bids"
+                    :auction="${auction}"
                     userdata="{{ services.customer.getContact() | json_encode() }}">
             </auction-bids>
         </div>

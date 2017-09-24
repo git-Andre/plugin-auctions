@@ -14,6 +14,7 @@ Vue.component("auction-bids", {
     props: ["template", "userdata", "auction", "minbid", "auctionEnd"],
     data: function data() {
         return {
+            // auction: {},
             isInputValid: false,
             maxCustomerBid: null
         };
@@ -24,13 +25,17 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         this.currentBid = {};
-        // this.auction    = JSON.parse( this.auction );
-        // this.auction    = parent.$refs.auction;
+        // this.auction    = {'hall': 'o'};
+    },
+    ready: function ready() {
+        console.dir(this.$parent);
+        console.dir(this.$parent.$children);
+        // this.auction = this.$parent.auction;
+        console.log('this:');
+        console.dir(this);
         console.dir(this.auction);
 
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
-    },
-    ready: function ready() {
 
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
@@ -284,15 +289,12 @@ Vue.component("auction-parent", {
     data: function data() {
         return {
             auction: {}
-            // test: ""
         };
     },
     created: function created() {
         this.$options.template = this.template;
         this.auctionid = parseInt(this.auctionid);
-        console.log('this.auctionid: ' + this.auctionid);
-        this.auction = this.getAuction(this.auctionid);
-        console.log('this.auction: ' + this.auction);
+        this.auction = this.getAuction();
     },
     compiled: function compiled() {},
     ready: function ready() {},
@@ -310,6 +312,7 @@ Vue.component("auction-parent", {
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
                 _this.auction = auction;
+                // this.$children['AuctionBids'].auction = this.auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
             });
