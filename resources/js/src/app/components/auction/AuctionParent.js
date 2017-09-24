@@ -7,8 +7,8 @@
 
 Vue.component( "auction-parent", {
     props: [
-        // "template",
-        // "auction"
+        "template",
+        "auction"
     ],
     // el() {
     //     return  '#addAuctionVue'
@@ -19,20 +19,20 @@ Vue.component( "auction-parent", {
         }
     },
     created() {
-        // this.$options.template = this.template;
-        // this.auction = JSON.parse(this.auction);
+        this.$options.template = this.template;
+        this.auction = JSON.parse(this.auction);
     },
     compiled() {
     },
     ready() {
     },
-    events() {
-        return {
-            // 'auction-bids-test': function (maxCustomerBid) {
-            //     this.test = maxCustomerBid
-            }
-        }
-    },
+    // events() {
+    //     return {
+    //         // 'auction-bids-test': function (maxCustomerBid) {
+    //         //     this.test = maxCustomerBid
+    //         }
+    //     }
+    // },
     methods: {},
     watch: {}
 } );

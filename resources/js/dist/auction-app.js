@@ -39,10 +39,6 @@ Vue.component("auction-bids", {
     },
 
     methods: {
-        notify: function notify() {
-            console.log('this.maxCustomerBid: ' + this.maxCustomerBid);
-            this.$dispatch('auction-bids-test', this.maxCustomerBid);
-        },
         addBid: function addBid() {
             var _this = this;
 
@@ -278,32 +274,29 @@ Vue.component("auction-bids", {
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: [
-        // "template",
-        // "auction"
-    ],
-    el: function el() {
-        return '#addAuctionVue';
-    },
+    props: ["template", "auction"],
+    // el() {
+    //     return  '#addAuctionVue'
+    // },
     data: function data() {
         return {
-            test: ""
+            // test: ""
         };
     },
     created: function created() {
-        // this.$options.template = this.template;
-        // this.auction = JSON.parse(this.auction);
+        this.$options.template = this.template;
+        this.auction = JSON.parse(this.auction);
     },
     compiled: function compiled() {},
     ready: function ready() {},
-    events: function events() {
-        return {
-            'auction-bids-test': function auctionBidsTest(maxCustomerBid) {
-                this.test = maxCustomerBid;
-            }
-        };
-    },
 
+    // events() {
+    //     return {
+    //         // 'auction-bids-test': function (maxCustomerBid) {
+    //         //     this.test = maxCustomerBid
+    //         }
+    //     }
+    // },
     methods: {},
     watch: {}
 });
