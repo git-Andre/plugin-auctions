@@ -450,14 +450,6 @@ Vue.component("notifications-plugin-auction", {
 "use strict";
 
 Vue.component("auction-countdown", {
-    ready: function ready() {
-        var _this = this;
-
-        this.timer = setInterval(function () {
-            _this.Timer();
-        }, 1000);
-    },
-
     props: ["template", "deadline", "timer"],
     data: function data() {
         return {
@@ -468,6 +460,13 @@ Vue.component("auction-countdown", {
     created: function created() {
         this.$options.template = this.template;
         this.deadline = 0;
+    },
+    ready: function ready() {
+        var _this = this;
+
+        this.timer = window.setInterval(function () {
+            _this.Timer();
+        }, 1000);
     },
 
     methods: {

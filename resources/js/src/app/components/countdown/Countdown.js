@@ -1,7 +1,4 @@
 Vue.component( "auction-countdown", {
-    ready() {
-        this.timer = setInterval( () => { this.Timer() }, 1000 );
-    },
     props: [
         "template",
         "deadline",
@@ -16,6 +13,9 @@ Vue.component( "auction-countdown", {
     created() {
         this.$options.template = this.template;
         this.deadline          = 0;
+    },
+    ready() {
+        this.timer = window.setInterval( () => { this.Timer() }, 1000 );
     },
     methods: {
         Timer() {
