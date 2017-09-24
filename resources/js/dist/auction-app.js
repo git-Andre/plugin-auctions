@@ -29,8 +29,8 @@ Vue.component("auction-bids", {
     },
     ready: function ready() {
         console.dir(this.$parent);
-        console.dir(this.$parent.$parent);
-        this.auction = this.$parent.auction;
+        console.dir(this.$options);
+        this.auction = this.$options.$parent.auction;
         console.log('this:');
         console.dir(this);
         console.dir(this.auction);

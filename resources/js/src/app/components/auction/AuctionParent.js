@@ -9,14 +9,13 @@ Vue.component( "auction-parent", {
     props: [
         "template",
         "auctionid",
-        // "auction"
+        "auction"
     ],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data() {
         return {
-            auction: {}
         }
     },
     created() {

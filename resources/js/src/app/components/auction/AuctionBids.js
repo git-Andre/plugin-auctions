@@ -32,11 +32,10 @@ Vue.component( "auction-bids", {
     },
     ready() {
         console.dir( this.$parent );
-        console.dir( this.$parent.$parent );
+        console.dir( this.$options );
         this.auction = this.$parent.auction;
         console.log( 'this:' );
         console.dir( this );
-        console.dir( this.auction );
 
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
