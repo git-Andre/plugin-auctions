@@ -25,14 +25,9 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         this.currentBid = {};
-        this.auction = this.$parent.auction;
     },
     ready: function ready() {
-        console.dir(this.$parent);
-        console.dir(this.$options);
-        console.log('this:');
-        console.dir(this);
-
+        this.auction = JSON.parse(this.auction);
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
 
         // tense "present" und Customer loggedIn ??
@@ -247,13 +242,6 @@ Vue.component("auction-bids", {
         },
         getCurrentBidPrice: function getCurrentBidPrice() {}
     },
-    computed: {
-
-        // auction() {
-        //     return this.$parent.auction;
-        // },
-
-    },
     watch: {
 
         maxCustomerBid: function maxCustomerBid() {
@@ -288,17 +276,21 @@ var ApiService = require("services/ApiService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auctionid", "auction"],
-    // el() {
-    //     return  '#addAuctionVue'
-    // },
+    props: [
+        // "template",
+        // "auctionid",
+        // "auction"
+    ],
+    el: function el() {
+        return '#addAuctionVue';
+    },
     data: function data() {
         return {};
     },
     created: function created() {
-        this.$options.template = this.template;
-        this.auctionid = parseInt(this.auctionid);
-        this.auction = this.getAuction();
+        // this.$options.template = this.template;
+        // this.auctionid         = parseInt( this.auctionid );
+        // this.auction           = this.getAuction();
     },
     compiled: function compiled() {},
     ready: function ready() {},
@@ -884,18 +876,18 @@ module.exports = function ($) {
 },{}]},{},[1,2,3,4,5,6])
 
 
-// new Vue( {
-//              el: '#addAuctionVue',
-//              components: {
-//                  child:
-//                      {
-//                          props: ['msg'],
-//                          template: `{{ msg }}`
-//
-//                      }
-//              }
-//
-//          } )
+new Vue( {
+             el: '#addAuctionVue',
+             // components: {
+             //     child:
+             //         {
+             //             props: ['msg'],
+             //             // template: `{{ msg }}`
+             //
+             //         }
+             // }
+
+         } )
 
 
 //# sourceMappingURL=auction-app.js.map

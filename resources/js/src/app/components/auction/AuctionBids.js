@@ -28,14 +28,9 @@ Vue.component( "auction-bids", {
     compiled() {
         this.userdata   = JSON.parse( this.userdata );
         this.currentBid = {};
-        this.auction    =  this.$parent.auction
     },
     ready() {
-        console.dir( this.$parent );
-        console.dir( this.$options );
-        console.log( 'this:' );
-        console.dir( this );
-
+        this.auction    =  JSON.parse( this.auction );
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
@@ -267,13 +262,6 @@ Vue.component( "auction-bids", {
         getCurrentBidPrice() {
 
         },
-    },
-    computed: {
-
-        // auction() {
-        //     return this.$parent.auction;
-        // },
-
     },
     watch: {
 
