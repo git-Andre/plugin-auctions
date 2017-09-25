@@ -8,12 +8,18 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
-<auction-parent
-        template="#vue-auction-parent"
-        auction="{{ auction | json_encode() }}"
->
+    <auction-parent
+            template="#vue-auction-parent"
+            auction="{{ auction | json_encode() }}"
+    >
+    </auction-parent>
+{% else %}
+    <h1>Standardkategorie Fehler:</h1>
 
-</auction-parent>
+    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktionen' gesetzt, aber es ist keine Auktion im Backend
+       definiert!!'</p>
+
+{% endif %}
 
 <style>
     .auctionList {
