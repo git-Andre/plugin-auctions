@@ -7,21 +7,21 @@ const ApiService = require( "services/ApiService" );
 
 Vue.component( "auction-parent", {
     props: [
-        "template",
-        "auctionid",
-        "auction"
+        // "template",
+        // "auctionid",
+        // "auction"
     ],
-    // el() {
-    //     return  '#addAuctionVue'
-    // },
+    el() {
+        return  '#addAuctionVue'
+    },
     data() {
         return {
         }
     },
     created() {
-        this.$options.template = this.template;
-        this.auctionid         = parseInt( this.auctionid );
-        this.auction           = this.getAuction();
+        // this.$options.template = this.template;
+        // this.auctionid         = parseInt( this.auctionid );
+        // this.auction           = this.getAuction();
             },
     compiled() {
     },
