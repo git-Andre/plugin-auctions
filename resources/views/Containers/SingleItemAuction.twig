@@ -7,12 +7,14 @@
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
+    <div id="add-auction-vue">
 
-    <auction-parent
-            template="#vue-auction-parent"
-            auction="{{ auction | json_encode() }}"
-    >
-    </auction-parent>
+        <auction-parent
+                template="#vue-auction-parent"
+                auction="{{ auction | json_encode() }}"
+        >
+        </auction-parent>
+    </div>
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
 
