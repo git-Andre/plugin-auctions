@@ -1,4 +1,4 @@
-// new Vue( {
+// var ao = new Vue( {
 //              el: '#addAuctionVue',
 //              // components: {
 //              //     child:
