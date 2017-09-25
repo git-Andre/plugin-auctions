@@ -174,15 +174,6 @@ Vue.component( "auction-bids", {
         },
 
         auctionend() {
-
-
-
-
-
-
-
-
-
             // var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             // startD      = startD - 24 * 60 * 60 + 7;
             // var Bidtest = {

@@ -24,7 +24,7 @@ Vue.component("auction-bids", {
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
-        this.currentBid = {};
+        // this.currentBid = {};
     },
     ready: function ready() {
         this.auction = JSON.parse(this.auction);
@@ -155,7 +155,6 @@ Vue.component("auction-bids", {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
         auctionend: function auctionend() {
-
             // var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             // startD      = startD - 24 * 60 * 60 + 7;
             // var Bidtest = {
