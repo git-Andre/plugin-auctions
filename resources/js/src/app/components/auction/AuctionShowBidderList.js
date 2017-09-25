@@ -54,19 +54,6 @@ Vue.component( "auction-show-bidderlist", {
                        }
                 )
         },
-        // getBidderList () {
-        //     // ApiService.get( "/api/bidderlist/" + this.auctionid, JSON.stringify( bidderList ),
-        //     //                                                       { contentType: "application/json" }
-        //     // )
-        //     //     .then( response => {
-        //     //                this.reload( 5 );
-        //     //            },
-        //     //            error => {
-        //     //                alert( 'error3: ' + error.toString() );
-        //     //            }
-        //     //     );
-        //     //
-        // }
     }
 } )
 ;
