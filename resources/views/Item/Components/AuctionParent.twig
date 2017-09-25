@@ -2,36 +2,36 @@
 
 <script type="x/template" id="vue-auction-parent">
 
-    <div id="addAuctionVue">
+    <div id="auction-parent-div">
 
 
         {#Zukunft#}
-        {% if (auction.tense == 'future') %}
-            <h2 class="m-b-2">Bald beginnende Auktion:</h2>
+        {#{% if (auction.tense == 'future') %}#}
+            {#<h2 class="m-b-2">Bald beginnende Auktion:</h2>#}
 
-            <dl class="auctionList">
-                <dt>Start Preis:</dt>
-                <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+            {#<dl class="auctionList">#}
+                {#<dt>Start Preis:</dt>#}
+                {#<dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>#}
 
-                <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-                <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-                <dt>Versand:</dt>
-                <dd>In Deutschland kostenlos.</dd>
-            </dl>
+                {#<dt>Start Datum:</dt>#}
+                {#<dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>#}
+                {#<dt>Dauer:</dt>#}
+                {#<dd>{{ auction.auctionDuration }} Tage</dd>#}
+                {#<dt>End Datum:</dt>#}
+                {#<dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>#}
+                {#<dt>Versand:</dt>#}
+                {#<dd>In Deutschland kostenlos.</dd>#}
+            {#</dl>#}
 
             {#Gegenwart#}
-        {% elseif (auction.tense == 'present') %}
+        {#{% elseif (auction.tense == 'present') %}#}
 
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    v-resource-push:deadline
-                    resource="deadline"
+                    deadline="auction.expiryDate"
+                    test="auction.expiry-date"
             >
             </auction-countdown>
 
@@ -95,44 +95,44 @@
             </div>
 
             {#Vergangenheit #}
-        {% elseif (auction.tense == 'past') %}
-            <h2 class="m-b-2">Beendete Auktion:</h2>
+        {#{% elseif (auction.tense == 'past') %}#}
+            {#<h2 class="m-b-2">Beendete Auktion:</h2>#}
 
-            <button class="btn btn-primary btn-lg btn-block"
-                    v-if="{{ auction.id == 46987 }}"
-                    @click="finish"
-            >auctionend
-            </button>
+            {#<button class="btn btn-primary btn-lg btn-block"#}
+                    {#v-if="{{ auction.id == 46987 }}"#}
+                    {#@click="finish"#}
+            {#>auctionend#}
+            {#</button>#}
 
-            <dl class="auctionList">
-                <dt>End Preis:</dt>
-                <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+            {#<dl class="auctionList">#}
+                {#<dt>End Preis:</dt>#}
+                {#<dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>#}
 
-                <dt>Start Preis:</dt>
-                <dd>{{ auction.startPrice | formatMonetary('EUR') }}
+                {#<dt>Start Preis:</dt>#}
+                {#<dd>{{ auction.startPrice | formatMonetary('EUR') }}#}
 
-                <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-                <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-                <dt>Versand:</dt>
-                <dd>In Deutschland kostenlos.</dd>
+                {#<dt>Start Datum:</dt>#}
+                {#<dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>#}
+                {#<dt>Dauer:</dt>#}
+                {#<dd>{{ auction.auctionDuration }} Tage</dd>#}
+                {#<dt>End Datum:</dt>#}
+                {#<dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>#}
+                {#<dt>Versand:</dt>#}
+                {#<dd>In Deutschland kostenlos.</dd>#}
 
-                {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }}
-                        <span>    <a data-toggle="modal"
-                                    href="#bidderlist">
-                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
-                                     </a>
-                        </span>
-                    </dd>
-                {% endif %}
-            </dl>
+                {#{% if bidderListLength != 1 %}#}
+                    {#<dt>Anzahl Gebote:</dt>#}
+                    {#<dd> {{ bidderListLength - 1 }}#}
+                        {#<span>    <a data-toggle="modal"#}
+                                    {#href="#bidderlist">#}
+                                 {#<i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen#}
+                                     {#</a>#}
+                        {#</span>#}
+                    {#</dd>#}
+                {#{% endif %}#}
+            {#</dl>#}
 
-        {% endif %}
+        {#{% endif %}#}
     </div>
 </script>
 
