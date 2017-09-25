@@ -1,13 +1,13 @@
-new Vue( {
-             el: '#addAuctionVue',
-             // components: {
-             //     child:
-             //         {
-             //             props: ['msg'],
-             //             // template: `{{ msg }}`
-             //
-             //         }
-             // }
-
-         } )
-
+// new Vue( {
+//              el: '#addAuctionVue',
+//              // components: {
+//              //     child:
+//              //         {
+//              //             props: ['msg'],
+//              //             // template: `{{ msg }}`
+//              //
+//              //         }
+//              // }
+//
+//          } )
+//

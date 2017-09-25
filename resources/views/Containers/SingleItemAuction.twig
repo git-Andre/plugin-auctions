@@ -42,12 +42,12 @@
             {#{% include category_template(shippingCat, lang, services.webstoreConfig.getWebstoreConfig().webstoreId) ignore missing %}#}
 
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
-            {#<auction-countdown#}
-                    {#template="#vue-auction-countdown"#}
-                    {#v-resource-push:deadline#}
-                    {#resource="deadline"#}
-            {#>#}
-            {#</auction-countdown>#}
+            <auction-countdown
+                    template="#vue-auction-countdown"
+                    v-resource-push:deadline
+                    resource="deadline"
+            >
+            </auction-countdown>
 
 
             <div class="row container m-t-0 m-b-2">
