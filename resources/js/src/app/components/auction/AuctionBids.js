@@ -26,7 +26,7 @@ Vue.component( "auction-bids", {
         this.$options.template = this.template;
     },
     compiled() {
-        // this.userdata   = JSON.parse( this.userdata );
+        this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
         this.minbid = this.toFloatTwoDecimal( this.minBid );
     },

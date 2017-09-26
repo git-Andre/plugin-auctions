@@ -32,10 +32,6 @@ Vue.component( "auction-parent", {
     },
     ready() {
         // ResourceService.bind( "auction", this );
-        setTimeout( () => {
-            console.dir( this.auction );
-        }, 3000 );
-
     },
     // events() {
     //     return {
