@@ -24,23 +24,23 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
+        this.auction    =  JSON.parse( this.auction );
     },
     compiled() {
         // this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
     },
     ready() {
-        // // this.auction    =  JSON.parse( this.auction );
-        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
-        //
-        // // tense "present" und Customer loggedIn ??
-        // if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
-        //     this.userdata != null ) {
-        //     // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-        //     if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
-        //         this.evaluateAndNotify();
-        //     }
-        // }
+        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+
+        // tense "present" und Customer loggedIn ??
+        if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
+            this.userdata != null ) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
+                this.evaluateAndNotify();
+            }
+        }
     },
     methods: {
 

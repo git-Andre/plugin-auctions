@@ -3,7 +3,7 @@
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set user = services.customer.getContact() | json_encode() %}
+{% set user2 = services.customer.getContact() | json_encode() %}
 
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
     {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
@@ -42,7 +42,7 @@
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                :deadline="deadline"
+                :deadline="auction.expiryDate"
         >
         </auction-countdown>
 
@@ -52,7 +52,7 @@
             <auction-bids
                     template="#vue-auction-bids"
                     :auction="auction"
-                    :userdata="user">
+                    :userdata="user2">
             </auction-bids>
 
         </div>
