@@ -25,17 +25,19 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         // this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
+        this.minbid = this.toFloatTwoDecimal(this.minBid);
     },
     ready: function ready() {
-        this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
-        if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
-            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT) {
-                this.evaluateAndNotify();
-            }
-        }
+        // if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
+        //     this.userdata != null ) {
+        //     // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+        //     if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
+        //         this.evaluateAndNotify();
+        //     }
+        // }
     },
 
     methods: {
@@ -242,13 +244,19 @@ Vue.component("auction-bids", {
         getCurrentBidPrice: function getCurrentBidPrice() {}
     },
     watch: {
-
+        // minbid() {
+        //     if ( this.auction ) {
+        //         this.minbid =
+        //             this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        //     }
+        // },
         maxCustomerBid: function maxCustomerBid() {
+
             if (this.maxCustomerBid >= this.minbid) {
                 if (this.userdata != null) {
                     this.isInputValid = true;
                 } else {
-                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(5000);
+                    NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(7000);
                     this.isInputValid = false;
                 }
             } else {
