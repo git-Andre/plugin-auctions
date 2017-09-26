@@ -8,7 +8,7 @@ const ResourceService = require( "services/ResourceService" );
 Vue.component( "auction-parent", {
     props: [
         "template",
-        "auctionid",
+        "auctionFromServer"
         // "deadline",
         // "auction"
     ],
@@ -23,8 +23,12 @@ Vue.component( "auction-parent", {
     },
     created() {
         this.$options.template = this.template;
-        this.auctionid         = parseInt( this.auctionid );
-        this.auction           = this.getAuction();
+        // this.auctionid         = parseInt( this.auctionid );
+
+        this.auction   = JSON.parse( this.auctionFromServer );
+
+
+        // this.auction           = this.getAuction();
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
