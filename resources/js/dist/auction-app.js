@@ -295,12 +295,11 @@ Vue.component("auction-parent", {
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
-    compiled: function compiled() {
-        ResourceService.bind("auction", this);
-    },
+    compiled: function compiled() {},
     ready: function ready() {
         var _this = this;
 
+        ResourceService.bind("auction", this);
         setTimeout(function () {
             console.dir(_this.auction);
         }, 3000);

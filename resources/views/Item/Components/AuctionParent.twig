@@ -4,6 +4,7 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set user = services.customer.getContact() | json_encode() %}
+
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
     {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
 
@@ -13,29 +14,29 @@
 
 <script type="x/template" id="vue-auction-parent">
 
-    <div id="auction-parent-div" >
+    <div id="auction-parent-div">
 
 
-  {#      Zukunft
-        {% if (auction.tense == 'future') %}
-        <h2 class="m-b-2">Bald beginnende Auktion:</h2>
+        {#      Zukunft
+              {% if (auction.tense == 'future') %}
+              <h2 class="m-b-2">Bald beginnende Auktion:</h2>
 
-        <dl class="auctionList">
-        <dt>Start Preis:</dt>
-        <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+              <dl class="auctionList">
+              <dt>Start Preis:</dt>
+              <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
-        <dt>Start Datum:</dt>
-        <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-        <dt>Dauer:</dt>
-        <dd>{{ auction.auctionDuration }} Tage</dd>
-        <dt>End Datum:</dt>
-        <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-        <dt>Versand:</dt>
-        <dd>In Deutschland kostenlos.</dd>
-        </dl>
+              <dt>Start Datum:</dt>
+              <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+              <dt>Dauer:</dt>
+              <dd>{{ auction.auctionDuration }} Tage</dd>
+              <dt>End Datum:</dt>
+              <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
+              <dt>Versand:</dt>
+              <dd>In Deutschland kostenlos.</dd>
+              </dl>
 
-        Gegenwart
-        {% elseif (auction.tense == 'present') %}#}
+              Gegenwart
+              {% elseif (auction.tense == 'present') %}#}
 
         <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
 

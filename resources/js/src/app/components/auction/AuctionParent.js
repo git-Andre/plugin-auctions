@@ -30,9 +30,9 @@ Vue.component( "auction-parent", {
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled() {
-        ResourceService.bind( "auction", this );
     },
     ready() {
+        ResourceService.bind( "auction", this );
         setTimeout( () => {
             console.dir( this.auction );
         }, 3000 );
