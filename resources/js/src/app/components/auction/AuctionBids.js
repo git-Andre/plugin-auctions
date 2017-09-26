@@ -30,7 +30,7 @@ Vue.component( "auction-bids", {
         // this.currentBid = {};
     },
     ready() {
-        this.auction    =  JSON.parse( this.auction );
+        // this.auction    =  JSON.parse( this.auction );
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
