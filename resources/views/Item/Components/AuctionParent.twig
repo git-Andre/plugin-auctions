@@ -42,7 +42,7 @@
 <h3>test: {{ auction.expiryDate }}</h3>
             <auction-countdown
                     template="#vue-auction-countdown"
-                    :deadline="{ auction.expiryDate }"
+                    deadline="{ auction.expiryDate }"
             >
             </auction-countdown>
 
@@ -52,7 +52,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         :auction="auction"
-                        userdata="${ services.customer.getContact() | json_encode() }">
+                        userdata="{ services.customer.getContact() | json_encode() }">
                 </auction-bids>
 
             </div>
