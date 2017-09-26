@@ -25,7 +25,6 @@ Vue.component( "auction-parent", {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
         // this.auction           = this.getAuction();
-
         // this.auction    =  JSON.parse( this.auction );
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
