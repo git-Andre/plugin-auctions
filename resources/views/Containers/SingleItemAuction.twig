@@ -3,15 +3,20 @@
 
 {% if ( auction ) %}
 
-    {#<resource name="auction" :data="{{ auction  | json_encode() }}"></resource>#}
+    {{ component( "PluginAuctions::Item.Components.AuctionParent" ) }}
+
+    <resource name="auction" route="/api/auction/" :data="{{ auction | json_encode() }}"></resource>
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
+
     <div id="add-auction-vue">
 
         <auction-parent
                 template="#vue-auction-parent"
-                auction="{{ auction | json_encode() }}"
+                v-resource-push:auction
+                resource="auction"
+                data-accessor="true"
         >
         </auction-parent>
     </div>
