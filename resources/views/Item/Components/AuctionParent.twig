@@ -6,6 +6,7 @@
 
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{% set user = services.customer.getContact() | json_encode() %}
 
 
 <p>{{ auction  | json_encode() }}</p>
@@ -42,7 +43,7 @@
 <h3>test: {{ auction.expiryDate }}</h3>
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="{ auction.expiryDate }"
+                    :deadline="deadline"
             >
             </auction-countdown>
 
@@ -52,7 +53,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         :auction="auction"
-                        userdata="{ services.customer.getContact() | json_encode() }">
+                        userdata="user">
                 </auction-bids>
 
             </div>
