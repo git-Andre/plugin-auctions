@@ -2,6 +2,15 @@
 {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
 
+
+
+{% set itemId = itemData.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+
+
+
+
+
 <script type="x/template" id="vue-auction-parent">
 
     <div id="auction-parent-div">
@@ -29,7 +38,7 @@
         {#{% elseif (auction.tense == 'present') %}#}
 
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
-<h3>{{ auctions.auction.expiryDate }}</h3>
+<h3>test: {{ auctions.auction.expiryDate }}</h3>
             <auction-countdown
                     template="#vue-auction-countdown"
                     deadline="{{ auctions.auction.expiryDate }}"
