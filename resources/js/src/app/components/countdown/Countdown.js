@@ -2,7 +2,7 @@ Vue.component( "auction-countdown", {
     props: [
         "template",
         "deadline",
-        "timer"
+        "timer",
     ],
     data() {
         return {
