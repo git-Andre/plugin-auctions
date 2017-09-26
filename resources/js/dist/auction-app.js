@@ -278,18 +278,23 @@ var ApiService = require("services/ApiService");
 Vue.component("auction-parent", {
     props: ["template",
     // "auctionid",
-    "auction"],
+    "deadline", "auction"],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data: function data() {
-        return {};
+        return {
+            // deadline: Number
+        };
     },
     created: function created() {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
         // this.auction           = this.getAuction();
         this.auction = JSON.parse(this.auction);
+        console.dir(this.auction);
+        this.deadline = 1500000000;
+        console.log('this.deadline: ' + this.deadline);
     },
     compiled: function compiled() {},
     ready: function ready() {},
