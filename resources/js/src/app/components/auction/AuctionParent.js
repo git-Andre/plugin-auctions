@@ -16,6 +16,7 @@ Vue.component( "auction-parent", {
     // },
     data() {
         return {
+            deadline: Number
         }
     },
     created() {
@@ -23,6 +24,7 @@ Vue.component( "auction-parent", {
         // this.auctionid         = parseInt( this.auctionid );
         // this.auction           = this.getAuction();
         this.auction    =  JSON.parse( this.auction );
+        this.deadline = this.auction.expiryDate;
     },
     compiled() {
     },
