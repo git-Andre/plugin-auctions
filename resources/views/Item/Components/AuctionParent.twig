@@ -42,7 +42,7 @@
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                :deadline="auction.expiryDate"
+                deadline="auction.expiryDate"
         >
         </auction-countdown>
 
@@ -51,8 +51,8 @@
 
             <auction-bids
                     template="#vue-auction-bids"
-                    :auction="auction"
-                    :userdata="user2">
+                    auction="auction"
+                    userdata="user2">
             </auction-bids>
 
         </div>

@@ -24,7 +24,6 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
-        this.auction    =  JSON.parse( this.auction );
     },
     compiled() {
         // this.userdata   = JSON.parse( this.userdata );

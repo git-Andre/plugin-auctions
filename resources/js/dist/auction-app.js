@@ -21,7 +21,6 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.auction = JSON.parse(this.auction);
     },
     compiled: function compiled() {
         // this.userdata   = JSON.parse( this.userdata );
@@ -290,10 +289,6 @@ Vue.component("auction-parent", {
         this.$options.template = this.template;
         this.auctionid = parseInt(this.auctionid);
         this.auction = this.getAuction();
-        console.dir(this.auction);
-        this.auction = JSON.parse(this.auction);
-        console.log('nach Parse');
-        console.dir(this.auction);
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
@@ -320,7 +315,6 @@ Vue.component("auction-parent", {
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
                 _this2.auction = auction;
-                // this.$children['AuctionBids'].auction = this.auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
             });
