@@ -8,12 +8,13 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 
-
+<p>{{ auction  | json_encode() }}</p>
 
 
 <script type="x/template" id="vue-auction-parent">
 
     <div id="auction-parent-div">
+        <h5>${ auction  | json_encode() }</h5>
 
 
         {#Zukunft#}
@@ -38,10 +39,10 @@
         {#{% elseif (auction.tense == 'present') %}#}
 
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
-<h3>test: {{ auctions.auction.expiryDate }}</h3>
+<h3>test: {{ auction.expiryDate }}</h3>
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="{{ auctions.auction.expiryDate }}"
+                    deadline="{{ auction.expiryDate }}"
             >
             </auction-countdown>
 
