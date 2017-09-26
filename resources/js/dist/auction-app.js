@@ -23,21 +23,20 @@ Vue.component("auction-bids", {
         this.$options.template = this.template;
     },
     compiled: function compiled() {
-        // this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
         this.minbid = this.toFloatTwoDecimal(this.minBid);
     },
     ready: function ready() {
+        this.userdata = JSON.parse(this.userdata);
         // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
-        // if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
-        //     this.userdata != null ) {
-        //     // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-        //     if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
-        //         this.evaluateAndNotify();
-        //     }
-        // }
+        if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT) {
+                this.evaluateAndNotify();
+            }
+        }
     },
 
     methods: {
@@ -244,12 +243,6 @@ Vue.component("auction-bids", {
         getCurrentBidPrice: function getCurrentBidPrice() {}
     },
     watch: {
-        // minbid() {
-        //     if ( this.auction ) {
-        //         this.minbid =
-        //             this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
-        //     }
-        // },
         maxCustomerBid: function maxCustomerBid() {
 
             if (this.maxCustomerBid >= this.minbid) {
@@ -283,7 +276,10 @@ var ResourceService = require("services/ResourceService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auctionid"],
+    props: ["template", "auctionFromServer"
+    // "deadline",
+    // "auction"
+    ],
     // el() {
     //     return  '#addAuctionVue'
     // },
@@ -295,19 +291,19 @@ Vue.component("auction-parent", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.auctionid = parseInt(this.auctionid);
-        this.auction = this.getAuction();
+        // this.auctionid         = parseInt( this.auctionid );
+
+        this.auction = this.auctionFromServer;
+        // this.auction   = JSON.parse( this.auctionFromServer );
+
+
+        // this.auction           = this.getAuction();
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled: function compiled() {},
     ready: function ready() {
-        var _this = this;
-
         // ResourceService.bind( "auction", this );
-        setTimeout(function () {
-            console.dir(_this.auction);
-        }, 3000);
     },
 
     // events() {
@@ -319,10 +315,10 @@ Vue.component("auction-parent", {
     // },
     methods: {
         getAuction: function getAuction() {
-            var _this2 = this;
+            var _this = this;
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
-                _this2.auction = auction;
+                _this.auction = auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
             });

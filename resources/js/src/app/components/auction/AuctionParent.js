@@ -25,7 +25,8 @@ Vue.component( "auction-parent", {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
 
-        this.auction   = JSON.parse( this.auctionFromServer );
+        this.auction   = this.auctionFromServer;
+        // this.auction   = JSON.parse( this.auctionFromServer );
 
 
         // this.auction           = this.getAuction();
