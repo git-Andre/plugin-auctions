@@ -12,6 +12,15 @@
 
 {% if auction %}
 
+    {#<resource name="user" :data="{ isLoggedIn: {{ frontend.Account.getIsAccountLoggedIn | json_encode() }} }" ></resource>#}
+    {#<resource name="basket" route="/rest/io/basket/" :data="{{ services.basket.getBasketForTemplate() | json_encode() }}" :events="['AfterBasketChanged!basket.totalVats']"></resource>#}
+    {#<resource name="itemSearch" :data="{}"></resource>#}
+    {#<resource name="basketItem" :data="{ currentBasketItem: { }, quantity: 1 }"></resource>#}
+    {#<resource name="localization" :data="{{ services.localization.getLocalizationData() | json_encode() }}" :events="['LocalizationChanged!localization']"></resource>#}
+    {#<resource-list name="basketItems" route="/rest/io/basket/items/" response-template="Ceres::Basket.Basket" data="{{ services.basket.getBasketItemsForTemplate('Ceres::Basket.Basket') | json_encode() }}"></resource-list>#}
+
+
+    <resource name="auction" route="/api/auction/" :data="{{ auction | json_encode() }}"></resource>
     {#<resource name="auction" :data="{{ auction | json_encode() }}"></resource>#}
     {#<resource name="deadline" :data="{{ auction.expiryDate }}"></resource>#}
 
@@ -20,6 +29,7 @@
         <!-- messages -->
         <notifications-plugin-auction
                 template="#vue-notifications-plugin-auction"
+                :initial-notifications="{{ services.notifications.getNotifications() | json_encode() }}"
         ></notifications-plugin-auction>
     </div>
 

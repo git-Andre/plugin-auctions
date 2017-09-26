@@ -1,5 +1,5 @@
 const ApiService = require( "services/ApiService" );
-// const NotificationService = require( "services/NotificationService" );
+const ResourceService = require( "services/ResourceService" );
 // const AuctionConstants    = require( "constants/AuctionConstants" );
 
 // const MINI_CRYPT  = 46987;
@@ -9,14 +9,15 @@ Vue.component( "auction-parent", {
     props: [
         "template",
         // "auctionid",
-        "deadline",
-        "auction"
+        // "deadline",
+        // "auction"
     ],
     // el() {
     //     return  '#addAuctionVue'
     // },
     data() {
         return {
+            auction: {}
             // deadline: Number
         }
     },
@@ -24,15 +25,17 @@ Vue.component( "auction-parent", {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
         // this.auction           = this.getAuction();
-        this.auction    =  JSON.parse( this.auction );
-        console.dir(this.auction);
-        this.deadline = this.auction.expiryDate;
-        console.log( 'this.deadline: ' + this.deadline );
 
+        // this.auction    =  JSON.parse( this.auction );
+        // this.deadline = this.auction.expiryDate;
+        // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled() {
     },
     ready() {
+        ResourceService.bind("auction", this);
+        console.dir(this.auction);
+
     },
     // events() {
     //     return {

@@ -23,7 +23,7 @@ Vue.component("auction-bids", {
         this.$options.template = this.template;
     },
     compiled: function compiled() {
-        this.userdata = JSON.parse(this.userdata);
+        // this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
     },
     ready: function ready() {
