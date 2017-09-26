@@ -1,4 +1,4 @@
-const ApiService = require( "services/ApiService" );
+const ApiService      = require( "services/ApiService" );
 const ResourceService = require( "services/ResourceService" );
 // const AuctionConstants    = require( "constants/AuctionConstants" );
 
@@ -30,10 +30,12 @@ Vue.component( "auction-parent", {
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled() {
+        ResourceService.bind( "auction", this );
     },
     ready() {
-        ResourceService.bind("auction", this);
-        console.dir(this.auction);
+        setTimeout( () => {
+            console.dir( this.auction );
+        }, 3000 );
 
     },
     // events() {
