@@ -21,23 +21,22 @@ Vue.component("auction-bids", {
     },
     created: function created() {
         this.$options.template = this.template;
+        this.auction = JSON.parse(this.auction);
     },
     compiled: function compiled() {
         // this.userdata   = JSON.parse( this.userdata );
         // this.currentBid = {};
     },
     ready: function ready() {
-        // // this.auction    =  JSON.parse( this.auction );
-        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
-        //
-        // // tense "present" und Customer loggedIn ??
-        // if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
-        //     this.userdata != null ) {
-        //     // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-        //     if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
-        //         this.evaluateAndNotify();
-        //     }
-        // }
+        this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+
+        // tense "present" und Customer loggedIn ??
+        if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT) {
+                this.evaluateAndNotify();
+            }
+        }
     },
 
     methods: {
@@ -277,7 +276,7 @@ var ResourceService = require("services/ResourceService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template"],
+    props: ["template", "auctionid"],
     // el() {
     //     return  '#addAuctionVue'
     // },
@@ -289,9 +288,12 @@ Vue.component("auction-parent", {
     },
     created: function created() {
         this.$options.template = this.template;
-        // this.auctionid         = parseInt( this.auctionid );
-        // this.auction           = this.getAuction();
-        // this.auction    =  JSON.parse( this.auction );
+        this.auctionid = parseInt(this.auctionid);
+        this.auction = this.getAuction();
+        console.dir(this.auction);
+        this.auction = JSON.parse(this.auction);
+        console.log('nach Parse');
+        console.dir(this.auction);
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
@@ -299,7 +301,7 @@ Vue.component("auction-parent", {
     ready: function ready() {
         var _this = this;
 
-        ResourceService.bind("auction", this);
+        // ResourceService.bind( "auction", this );
         setTimeout(function () {
             console.dir(_this.auction);
         }, 3000);
