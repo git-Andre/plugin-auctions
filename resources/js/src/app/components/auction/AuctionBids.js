@@ -30,7 +30,7 @@ Vue.component( "auction-bids", {
         // this.currentBid = {};
     },
     ready() {
-        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
@@ -273,6 +273,8 @@ Vue.component( "auction-bids", {
     watch: {
 
         maxCustomerBid: function () {
+            this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+
             if ( this.maxCustomerBid >= this.minbid ) {
                 if ( this.userdata != null ) {
                     this.isInputValid = true

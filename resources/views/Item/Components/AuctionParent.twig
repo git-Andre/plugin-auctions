@@ -1,9 +1,9 @@
 {#auction="{{ auction | json_encode() }}"#}
 
 
-{% set itemId = itemData.item.id %}
-{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set user2 = services.customer.getContact() | json_encode() %}
+{#{% set itemId = itemData.item.id %}#}
+{#{% set auction = auctions.auction.getAuctionForItemId(itemId) %}#}
+{#{% set user2 = services.customer.getContact() | json_encode() %}#}
 
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
     {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
@@ -42,7 +42,7 @@
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                deadline="auction.expiryDate"
+                :deadline="auction.expiryDate"
         >
         </auction-countdown>
 
@@ -51,8 +51,8 @@
 
             <auction-bids
                     template="#vue-auction-bids"
-                    auction="auction"
-                    userdata="user2">
+                    :auction="auction"
+                    :userdata="{{services.customer.getContact() | json_encode()}}">
             </auction-bids>
 
         </div>
