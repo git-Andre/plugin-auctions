@@ -295,10 +295,15 @@ Vue.component("auction-parent", {
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
-    compiled: function compiled() {},
-    ready: function ready() {
+    compiled: function compiled() {
         ResourceService.bind("auction", this);
-        console.dir(this.auction);
+    },
+    ready: function ready() {
+        var _this = this;
+
+        setTimeout(function () {
+            console.dir(_this.auction);
+        }, 3000);
     },
 
     // events() {
@@ -310,10 +315,10 @@ Vue.component("auction-parent", {
     // },
     methods: {
         getAuction: function getAuction() {
-            var _this = this;
+            var _this2 = this;
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
-                _this.auction = auction;
+                _this2.auction = auction;
                 // this.$children['AuctionBids'].auction = this.auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');

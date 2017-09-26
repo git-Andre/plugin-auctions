@@ -3,9 +3,7 @@
 
 {% if ( auction ) %}
 
-    {{ component( "PluginAuctions::Item.Components.AuctionParent" ) }}
 
-    <resource name="auction" route="/api/auction/" :data="{{ auction | json_encode() }}"></resource>
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
