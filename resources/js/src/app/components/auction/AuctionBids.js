@@ -34,13 +34,13 @@ Vue.component( "auction-bids", {
         // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
-        // if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
-        //     this.userdata != null ) {
-        //     // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-        //     if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
-        //         this.evaluateAndNotify();
-        //     }
-        // }
+        if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
+            this.userdata != null ) {
+            // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
+                this.evaluateAndNotify();
+            }
+        }
     },
     methods: {
 
@@ -272,12 +272,6 @@ Vue.component( "auction-bids", {
         },
     },
     watch: {
-        // minbid() {
-        //     if ( this.auction ) {
-        //         this.minbid =
-        //             this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
-        //     }
-        // },
         maxCustomerBid: function () {
 
             if ( this.maxCustomerBid >= this.minbid ) {
