@@ -4,8 +4,8 @@
 {#<resource name="auctionBidderlist" :data="{{ auction.bidderList | json_encode() }}"></resource>#}
 {#<resource name="user" :data="{ isLoggedIn: {{ frontend.Account.getIsAccountLoggedIn | json_encode() }} }" ></resource>#}
 
-{{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
-{{ component( "PluginAuctions::Item.Components.Countdown" ) }}
+{#{{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}#}
+{#{{ component( "PluginAuctions::Item.Components.Countdown" ) }}#}
 {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
 {{ component( "PluginAuctions::Item.Components.Notifications" ) }}
 {{ component( "PluginAuctions::Item.Components.AuctionParent" ) }}

@@ -1,4 +1,6 @@
 {#auction="{{ auction | json_encode() }}"#}
+{{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
+{{ component( "PluginAuctions::Item.Components.Countdown" ) }}
 
 <script type="x/template" id="vue-auction-parent">
 
@@ -30,8 +32,7 @@
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="auction.expiryDate"
-                    test="auction.expiry-date"
+                    :deadline="auction.expiryDate"
             >
             </auction-countdown>
 
@@ -40,7 +41,7 @@
 
                 <auction-bids
                         template="#vue-auction-bids"
-                        auction="{{ auction | json_encode() }}"
+                        :auction="auction"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
 
