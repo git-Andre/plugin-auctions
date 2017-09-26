@@ -29,10 +29,10 @@
         {#{% elseif (auction.tense == 'present') %}#}
 
             <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
-
+<h3>{{ auctions.auction.expiryDate }}</h3>
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="deadline"
+                    deadline="{{ auctions.auction.expiryDate }}"
             >
             </auction-countdown>
 
