@@ -12,9 +12,10 @@
 {#<p>{{ auction  | json_encode() }}</p>#}
 
 
-<script type="x/template" id="vue-auction-parent">
+<script type="x/template"
+        id="vue-auction-parent">
 
-    {#<div id="auction-parent-div">#}
+    <div class="auction-parent">
 
 
         {#      Zukunft
@@ -38,7 +39,11 @@
               Gegenwart
               {% elseif (auction.tense == 'present') %}#}
 
-        <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
+        <h2
+                class="m-b-1 alarm"
+                {#style="color: #c50000;"#}
+        >Laufende Auktion:
+        </h2>
 
         <auction-countdown
                 template="#vue-auction-countdown"
@@ -145,6 +150,6 @@
         {#</dl>#}
 
         {#{% endif %}#}
-    {#</div>#}
+    </div>
 </script>
 

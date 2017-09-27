@@ -12,7 +12,7 @@
 
         <auction-parent
                 template="#vue-auction-parent"
-                :auctionFromServer="{{ auctions | json_encode() }}"
+                :auctionFromServer="{{ auction | json_encode() }}"
                 {#v-resource-push:auction#}
                 {#resource="auction"#}
                 {#data-accessor="true"#}
