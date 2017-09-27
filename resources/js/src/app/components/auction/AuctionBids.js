@@ -42,6 +42,9 @@ Vue.component( "auction-bids", {
                 this.evaluateAndNotify();
             }
         }
+        console.log( 'auction-bids this:' );
+        console.dir(this);
+
     },
     methods: {
 

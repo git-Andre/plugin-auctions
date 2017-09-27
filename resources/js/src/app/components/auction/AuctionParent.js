@@ -38,6 +38,8 @@ Vue.component( "auction-parent", {
         this.auction.tense = this.data.tense;
     },
     ready() {
+        console.log( 'auction-parent this:' );
+        console.dir(this);
     },
     methods: {
         getAuction() {

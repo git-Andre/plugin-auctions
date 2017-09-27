@@ -5,8 +5,8 @@
 
 
 
-    {% set bidderListLast = auction.bidderList | last %}
-    {% set bidderListLength = auction.bidderList | length %}
+    {#{% set bidderListLast = auction.bidderList | last %}#}
+    {#{% set bidderListLength = auction.bidderList | length %}#}
 
     <div id="add-auction-vue">
 
@@ -16,9 +16,8 @@
                 {#auction-from-server="{{ auction | json_encode() }}"#}
                 v-resource-push:data
                 resource="auction"
-                {#data-accessor="true"#}
+                data-accessor="true"
         >
-            <p>${auction}</p>
         </auction-parent>
     </div>
 {% else %}

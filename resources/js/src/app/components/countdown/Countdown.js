@@ -16,6 +16,9 @@ Vue.component( "auction-countdown", {
     },
     ready() {
         this.timer = window.setInterval( () => { this.Timer() }, 1000 );
+        console.log( 'countdown this:' );
+        console.dir(this);
+
     },
     methods: {
         Timer() {
