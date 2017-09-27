@@ -1,8 +1,8 @@
 {#auction="{{ auction | json_encode() }}"#}
 
 
-{#{% set itemId = itemData.item.id %}#}
-{#{% set auction = auctions.auction.getAuctionForItemId(itemId) %}#}
+{% set itemId = itemData.item.id %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {#{% set user2 = services.customer.getContact() | json_encode() %}#}
 
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
@@ -46,7 +46,8 @@
         </h2>
 
         <p>1{{ auction | json_encode() }}</p>
-        <p>2: ${ auction.expiryDate }</p>
+        <p>2: ${ auction  | json_encode() }</p>
+        <p>3: ${ auction.expiryDate }</p>
 
         <auction-countdown
                 template="#vue-auction-countdown"
@@ -71,7 +72,7 @@
         <div class="row container m-t-0 m-b-1">
             <dl class="auctionList">
 
-                {% if (bidderListLength > 1) %}
+                {% if (bidderList.length > 1) %}
                     <dt>Aktuelles Gebot:</dt>
                     <dd class="price h1 m-b-2">
                         {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
