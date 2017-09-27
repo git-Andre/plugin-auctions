@@ -33,7 +33,7 @@
   "serviceProvider"  : "PluginAuctions\\Providers\\PluginAuctionsServiceProvider",
   "javaScriptFiles"  : [],
   "runOnBuild"       : [
-    "PluginAuctions\\Migrations\\AuctionTableMigration_0_9"
+    "PluginAuctions\\Migrations\\AuctionTableMigration_0_1"
   ],
   "dataProviders"    : [
     {

@@ -27,11 +27,11 @@ Vue.component( "auction-bids", {
     },
     compiled() {
         // this.currentBid = {};
-        this.minbid = this.toFloatTwoDecimal( this.minBid );
     },
     ready() {
         this.userdata   = JSON.parse( this.userdata );
-        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        // this.minbid = this.toFloatTwoDecimal( this.minBid );
 
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&

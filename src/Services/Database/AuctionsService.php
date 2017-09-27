@@ -137,14 +137,11 @@
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
                 $auction = (object) $auctionArray[0];
-
-                return $auction;
-
-//                if ($auction -> id)
-//                {
-//                    $auction = $this -> buildAuctionView($auction);
-//
-//                }
+                if ($auction -> id)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+                    return $auction;
+                }
             }
 
             return false;
@@ -158,14 +155,14 @@
         {
             if ($id > 0)
             {
-                $auction = $this -> getValue(Auction_7::class, $id);
+                return $this -> getValue(Auction_7::class, $id);
 
-                if ($auction instanceof Auction_7)
-                {
-                    $auction = $this -> buildAuctionView($auction);
-
-                    return $auction;
-                }
+//                if ($auction instanceof Auction_7)
+//                {
+//                    $auction = $this -> buildAuctionView($auction);
+//
+//                    return $auction;
+//                }
             }
 
             return 'falsche ID';
@@ -376,10 +373,8 @@
 
                     return "Fehler in updateBidderList";
                 }
-
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
-
             return $currentBid;
         }
 

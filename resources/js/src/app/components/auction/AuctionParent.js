@@ -16,7 +16,8 @@ Vue.component( "auction-parent", {
     // },
     data() {
         return {
-            auction: {}
+            auction: {},
+            bidderList: []
             // deadline: Number
         }
     },
@@ -33,6 +34,12 @@ Vue.component( "auction-parent", {
     },
     ready() {
         this.auction = this.data;
+        this.bidderList = this.auction.bidderList;
+
+        // this.auction = this.auction.remove("bidderList");
+
+        console.dir(this.auction);
+        console.dir(this.bidderList);
         // ResourceService.bind( "auction", this );
     },
     // events() {

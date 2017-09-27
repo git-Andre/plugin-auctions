@@ -284,7 +284,8 @@ Vue.component("auction-parent", {
     // },
     data: function data() {
         return {
-            auction: {}
+            auction: {},
+            bidderList: []
             // deadline: Number
         };
     },
@@ -300,9 +301,13 @@ Vue.component("auction-parent", {
     compiled: function compiled() {},
     ready: function ready() {
         this.auction = this.data;
-        console.dir(this.auction);
+        this.bidderList = this.auction.bidderList;
 
-        ResourceService.bind("auction", this);
+        // this.auction = this.auction.remove("bidderList");
+
+        console.dir(this.auction);
+        console.dir(this.bidderList);
+        // ResourceService.bind( "auction", this );
     },
 
     // events() {
@@ -317,6 +322,7 @@ Vue.component("auction-parent", {
             var _this = this;
 
             ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
+
                 _this.auction = auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
