@@ -31,7 +31,7 @@ Vue.component( "auction-bids", {
     },
     ready() {
         this.userdata   = JSON.parse( this.userdata );
-        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.minbid = this.toFloatTwoDecimal( ( ( this.bidderList[this.bidderList.length - 1].bidPrice ) ) + 1 );
         // this.minbid = this.toFloatTwoDecimal( this.minBid );
 
         // tense "present" und Customer loggedIn ??
@@ -92,8 +92,8 @@ Vue.component( "auction-bids", {
         evaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
-                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                if ( this.bidderList[this.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
+                    switch ((this.bidderList[this.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
                             NotificationService.info(
                                 // "<span><i class=\"fa fa-info-circle p-l-0 p-r-1\"></span>" +
@@ -117,7 +117,7 @@ Vue.component( "auction-bids", {
                 else {
                     // bidStatus von letzter bid ???
                     console.log( 'bidStatus von letzter bid' );
-                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                    switch ((this.bidderList[this.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
                             NotificationService.info(
                                 // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
@@ -154,8 +154,8 @@ Vue.component( "auction-bids", {
         },
         hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
-            for (var i = this.auction.bidderList.length; --i > 0;) {
-                if ( this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId ) {
+            for (var i = this.bidderList.length; --i > 0;) {
+                if ( this.userdata.id + MINI_CRYPT == this.bidderList[i].customerId ) {
                     return true;
                 }
             }
@@ -163,7 +163,7 @@ Vue.component( "auction-bids", {
         },
         hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT ) {
+            if ( this.bidderList[this.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT ) {
                 return true
             }
             else {

@@ -54,13 +54,13 @@
 
         <div class="row container m-t-0 m-b-2">
 
-            <auction-bids
-                    template="#vue-auction-bids"
-                    :auction="auction"
-                    :bidder-list="bidderList"
+            {#<auction-bids#}
+                    {#template="#vue-auction-bids"#}
+                    {#:auction="auction"#}
+                    {#:bidder-list="bidderList"#}
                     {#:minBid="auction.bidderList[auction.bidderList.length - 1].bidPrice"#}
-                    userdata="{{ services.customer.getContact() | json_encode() }}">
-            </auction-bids>
+                    {#userdata="{{ services.customer.getContact() | json_encode() }}">#}
+            {#</auction-bids>#}
 
         </div>
 
