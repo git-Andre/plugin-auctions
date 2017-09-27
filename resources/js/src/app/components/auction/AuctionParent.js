@@ -25,9 +25,6 @@ Vue.component( "auction-parent", {
         // this.auctionid         = parseInt( this.auctionid );
 
         // this.auction   = this.auctionFromServer;
-        this.auction   = JSON.parse( this.data );
-
-
         // this.auction           = this.getAuction();
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
@@ -35,6 +32,7 @@ Vue.component( "auction-parent", {
     compiled() {
     },
     ready() {
+        this.auction = this.data;
         // ResourceService.bind( "auction", this );
     },
     // events() {
@@ -48,6 +46,7 @@ Vue.component( "auction-parent", {
         getAuction() {
             ApiService.get( "/api/auction/" + this.auctionid )
                 .done( auction => {
+
                     this.auction = auction;
                 } )
                 .fail( () => {

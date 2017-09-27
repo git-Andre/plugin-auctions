@@ -276,7 +276,9 @@ var ResourceService = require("services/ResourceService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template"],
+    props: ["template",
+    // "auctionFromServer"
+    "data"],
     // el() {
     //     return  '#addAuctionVue'
     // },
@@ -291,16 +293,16 @@ Vue.component("auction-parent", {
         // this.auctionid         = parseInt( this.auctionid );
 
         // this.auction   = this.auctionFromServer;
-        // this.auction   = JSON.parse( this.auctionFromServer );
-
-
         // this.auction           = this.getAuction();
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled: function compiled() {},
     ready: function ready() {
-        // ResourceService.bind( "auction", this );
+        this.auction = this.data;
+        console.dir(this.auction);
+
+        ResourceService.bind("auction", this);
     },
 
     // events() {

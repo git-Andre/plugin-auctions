@@ -57,7 +57,7 @@
             <auction-bids
                     template="#vue-auction-bids"
                     :auction="auction"
-                    :minBid="auction.bidderList[auction.bidderList.length - 1].bidPrice"
+                    {#:minBid="auction.bidderList[auction.bidderList.length - 1].bidPrice"#}
                     userdata="{{ services.customer.getContact() | json_encode() }}">
             </auction-bids>
 
