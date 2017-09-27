@@ -276,10 +276,7 @@ var ResourceService = require("services/ResourceService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template", "auctionFromServer"
-    // "deadline",
-    // "auction"
-    ],
+    props: ["template"],
     // el() {
     //     return  '#addAuctionVue'
     // },
@@ -293,7 +290,7 @@ Vue.component("auction-parent", {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
 
-        this.auction = this.auctionFromServer;
+        // this.auction   = this.auctionFromServer;
         // this.auction   = JSON.parse( this.auctionFromServer );
 
 

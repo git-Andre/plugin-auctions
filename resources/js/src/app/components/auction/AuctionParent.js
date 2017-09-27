@@ -35,7 +35,7 @@ Vue.component( "auction-parent", {
     compiled() {
     },
     ready() {
-        ResourceService.bind( "auction", this );
+        // ResourceService.bind( "auction", this );
     },
     // events() {
     //     return {
