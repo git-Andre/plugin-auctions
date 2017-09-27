@@ -8,7 +8,7 @@ const ResourceService = require( "services/ResourceService" );
 Vue.component( "auction-parent", {
     props: [
         "template",
-        "auctionFromServer"
+        // "auctionFromServer"
         // "auction"
     ],
     // el() {
@@ -24,7 +24,7 @@ Vue.component( "auction-parent", {
         this.$options.template = this.template;
         // this.auctionid         = parseInt( this.auctionid );
 
-        this.auction   = this.auctionFromServer;
+        // this.auction   = this.auctionFromServer;
         // this.auction   = JSON.parse( this.auctionFromServer );
 
 
@@ -35,7 +35,7 @@ Vue.component( "auction-parent", {
     compiled() {
     },
     ready() {
-        // ResourceService.bind( "auction", this );
+        ResourceService.bind( "auction", this );
     },
     // events() {
     //     return {
