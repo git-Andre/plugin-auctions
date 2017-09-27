@@ -45,13 +45,13 @@
         >Laufende Auktion:
         </h2>
 
-        <p>1: ${ data.id }</p>
+        <p>1: ${ auctiondata.id }</p>
         <p>2: ${ bidderList }</p>
-        <p>3: ${ auction.id }</p>
+        <p>3: ${ auction }</p>
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                :deadline="{ auction.expiryDate}"
+                :deadline="auctiondata.expiryDate"
         >
         </auction-countdown>
 
@@ -73,17 +73,17 @@
             <dl class="auctionList">
 
                 {#{% if (bidderList.length > 1) %}#}
-                    <dt v-if="bidderList.length > 1">Aktuelles Gebot:</dt>
-                    <dd v-if="bidderList.length > 1" class="price h1 m-b-2">
-                        ${ bidderListLast.bidPrice {#| formatMonetary('EUR')#} }
-                    </dd>
+                <dt v-if="bidderList.length > 1">Aktuelles Gebot:</dt>
+                <dd v-if="bidderList.length > 1" class="price h1 m-b-2">
+                    ${ bidderListLast.bidPrice {#| formatMonetary('EUR')#} }
+                </dd>
 
-                    <dt v-if="bidderList.length > 1">Start Preis:</dt>
-                    <dd v-if="bidderList.length > 1">${ auction.startPrice{# | formatMonetary('EUR')#} }
-                    </dd>
+                <dt v-if="bidderList.length > 1">Start Preis:</dt>
+                <dd v-if="bidderList.length > 1">${ auction.startPrice{# | formatMonetary('EUR')#} }
+                </dd>
                 {#{% else %}#}
-                    <dt v-else="bidderList.length > 1">Start Preis:</dt>
-                    <dd v-else="bidderList.length > 1" class="price h1 m-b-2">${ auction.startPrice{# | formatMonetary('EUR')#} }</dd>
+                <dt v-else="bidderList.length > 1">Start Preis:</dt>
+                <dd v-else="bidderList.length > 1" class="price h1 m-b-2">${ auction.startPrice{# | formatMonetary('EUR')#} }</dd>
                 {#{% endif %}#}
 
 
@@ -98,10 +98,9 @@
                 <dd>In Deutschland kostenlos</dd>
 
 
-                {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
-                    <dd> ${ bidderList.length - 1 }
-                        <span>
+                <dt v-if="bidderList.length != 1">Anzahl Gebote:</dt>
+                <dd v-if="bidderList.length != 1"> ${ bidderList.length - 1 }
+                    <span>
                             <a
                                     data-toggle="modal"
                                     href="#bidderlist"
@@ -109,8 +108,7 @@
                             <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                             </a>
                             </span>
-                    </dd>
-                {% endif %}
+                </dd>
 
 
             </dl>
