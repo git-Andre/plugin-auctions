@@ -12,6 +12,7 @@ Vue.component( "auction-bids", {
         "template",
         "userdata",
         "auction",
+        "bidderList",
         "minbid",
         "auctionEnd"
     ],

@@ -176,7 +176,7 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $auction = $this -> buildAuctionView($auction);
+                    $auction = $this -> buildAuctionView($auction -> bidderList);
 
                     return $auction -> bidderList;
                 }
