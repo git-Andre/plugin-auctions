@@ -26,16 +26,16 @@ Vue.component( "auction-parent", {
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled() {
-        this.bidderList = this.data.bidderList;
+        this.bidderList = this.auctiondata.bidderList;
 
-        this.auction.id              = parseInt( this.data.id );
-        this.auction.startDate       = parseInt( this.data.startDate );
-        this.auction.auctionDuration = parseInt( this.data.auctionDuration );
-        this.auction.expiryDate      = parseInt( this.data.expiryDate );
+        this.auction.id              = parseInt( this.auctiondata.id );
+        this.auction.startDate       = parseInt( this.auctiondata.startDate );
+        this.auction.auctionDuration = parseInt( this.auctiondata.auctionDuration );
+        this.auction.expiryDate      = parseInt( this.auctiondata.expiryDate );
 
-        this.auction.startPrice = this.toFloatTwoDecimal( this.data.startPrice );
+        this.auction.startPrice = this.toFloatTwoDecimal( this.auctiondata.startPrice );
 
-        this.auction.tense = this.data.tense;
+        this.auction.tense = this.auctiondata.tense;
     },
     ready() {
         console.log( 'auction-parent this:' );
