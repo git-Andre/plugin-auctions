@@ -45,7 +45,7 @@
         {
             if ($id && $id > 0)
             {
-                return json_encode($this -> auctionsService -> getAuction($id));
+                return $this -> auctionsService -> getAuction($id);
             }
 
             return 'keine ID (oder 0)';
@@ -55,7 +55,7 @@
         {
             if ($id && $id > 0)
             {
-                return json_encode($this -> auctionsService -> getBidderList($id));
+                return $this -> auctionsService -> getBidderList($id);
             }
 
             return 'keine ID (oder 0)';
@@ -69,7 +69,7 @@
         {
             if ($id && $id > 0)
             {
-                return json_encode($this -> auctionsService -> getCurrentBidPrice($id));
+                return $this -> auctionsService -> getCurrentBidPrice($id);
             }
 
             return 'keine ID (oder 0)';
@@ -79,7 +79,7 @@
         {
             if ($itemId && $itemId > 0)
             {
-                return json_encode($this -> auctionsService -> getAuctionForItemId($itemId));
+                return $this -> auctionsService -> getAuctionForItemId($itemId);
             }
 
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
@@ -99,7 +99,7 @@
 
                 if ($result)
                 {
-                    return json_encode($result);
+                    return $result;
                 }
 
                 return false;
@@ -152,7 +152,7 @@
          */
         public function formatDate($time)
         {
-            return json_encode(date('d.m.Y H:i:s e', $time));
+            return date('d.m.Y H:i:s e', $time);
         }
 
         /**

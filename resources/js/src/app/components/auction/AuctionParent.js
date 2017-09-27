@@ -9,7 +9,7 @@ Vue.component( "auction-parent", {
     props: [
         "template",
         // "auctionFromServer"
-        // "auction"
+        "data"
     ],
     // el() {
     //     return  '#addAuctionVue'
@@ -25,7 +25,7 @@ Vue.component( "auction-parent", {
         // this.auctionid         = parseInt( this.auctionid );
 
         // this.auction   = this.auctionFromServer;
-        // this.auction   = JSON.parse( this.auctionFromServer );
+        this.auction   = JSON.parse( this.data );
 
 
         // this.auction           = this.getAuction();
