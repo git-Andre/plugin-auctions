@@ -28,29 +28,17 @@ Vue.component( "auction-parent", {
     compiled() {
     },
     ready() {
-        console.dir(this.data);
         this.bidderList = this.data.bidderList;
 
-        this.auction.id = this.toFloatTwoDecimal(this.data.id);
-        this.auction.startDate = this.toFloatTwoDecimal(this.data.startDate);
-        this.auction.auctionDuration = this.toFloatTwoDecimal(this.data.auctionDuration);
-        this.auction.expiryDate = this.toFloatTwoDecimal(this.data.expiryDate);
-        this.auction.startPrice = this.toFloatTwoDecimal(this.data.startPrice);
+        this.auction.id              = parseInt( this.data.id );
+        this.auction.startDate       = parseInt( this.data.startDate );
+        this.auction.auctionDuration = parseInt( this.data.auctionDuration );
+        this.auction.expiryDate      = parseInt( this.data.expiryDate );
+
+        this.auction.startPrice = this.toFloatTwoDecimal( this.data.startPrice );
 
         this.auction.tense = this.data.tense;
-
-
-        // this.auction = this.auction.remove("bidderList");
-
-        // ResourceService.bind( "auction", this );
     },
-    // events() {
-    //     return {
-    //         // 'auction-bids-test': function (maxCustomerBid) {
-    //         //     this.test = maxCustomerBid
-    //         }
-    //     }
-    // },
     methods: {
         getAuction() {
             ApiService.get( "/api/auction/" + this.auction.id )

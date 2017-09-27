@@ -27,7 +27,7 @@ Vue.component("auction-bids", {
     },
     ready: function ready() {
         this.userdata = JSON.parse(this.userdata);
-        this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+        this.minbid = this.toFloatTwoDecimal(this.bidderList[this.bidderList.length - 1].bidPrice + 1);
         // this.minbid = this.toFloatTwoDecimal( this.minBid );
 
         // tense "present" und Customer loggedIn ??
@@ -79,8 +79,8 @@ Vue.component("auction-bids", {
         evaluateAndNotify: function evaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
-                    switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                if (this.bidderList[this.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
+                    switch (this.bidderList[this.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
                                 NotificationService.info(
@@ -101,7 +101,7 @@ Vue.component("auction-bids", {
                 } else {
                     // bidStatus von letzter bid ???
                     console.log('bidStatus von letzter bid');
-                    switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
+                    switch (this.bidderList[this.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
                                 NotificationService.info(
@@ -136,8 +136,8 @@ Vue.component("auction-bids", {
         },
         hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
-            for (var i = this.auction.bidderList.length; --i > 0;) {
-                if (this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId) {
+            for (var i = this.bidderList.length; --i > 0;) {
+                if (this.userdata.id + MINI_CRYPT == this.bidderList[i].customerId) {
                     return true;
                 }
             }
@@ -145,7 +145,7 @@ Vue.component("auction-bids", {
         },
         hasLoggedInUserTheLastBid: function hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT) {
+            if (this.bidderList[this.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT) {
                 return true;
             } else {
                 return false;
@@ -292,31 +292,20 @@ Vue.component("auction-parent", {
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
-    compiled: function compiled() {},
-    ready: function ready() {
-        console.dir(this.data);
+    compiled: function compiled() {
         this.bidderList = this.data.bidderList;
 
-        this.auction.id = this.toFloatTwoDecimal(this.data.id);
-        this.auction.startDate = this.toFloatTwoDecimal(this.data.startDate);
-        this.auction.auctionDuration = this.toFloatTwoDecimal(this.data.auctionDuration);
-        this.auction.expiryDate = this.toFloatTwoDecimal(this.data.expiryDate);
+        this.auction.id = parseInt(this.data.id);
+        this.auction.startDate = parseInt(this.data.startDate);
+        this.auction.auctionDuration = parseInt(this.data.auctionDuration);
+        this.auction.expiryDate = parseInt(this.data.expiryDate);
+
         this.auction.startPrice = this.toFloatTwoDecimal(this.data.startPrice);
 
         this.auction.tense = this.data.tense;
-
-        // this.auction = this.auction.remove("bidderList");
-
-        // ResourceService.bind( "auction", this );
     },
+    ready: function ready() {},
 
-    // events() {
-    //     return {
-    //         // 'auction-bids-test': function (maxCustomerBid) {
-    //         //     this.test = maxCustomerBid
-    //         }
-    //     }
-    // },
     methods: {
         getAuction: function getAuction() {
             var _this = this;
