@@ -292,7 +292,8 @@ Vue.component("auction-parent", {
         // this.deadline = this.auction.expiryDate;
         // console.log( 'this.deadline: ' + this.deadline );
     },
-    compiled: function compiled() {
+    compiled: function compiled() {},
+    ready: function ready() {
         this.bidderList = this.data.bidderList;
 
         this.auction.id = parseInt(this.data.id);
@@ -304,7 +305,6 @@ Vue.component("auction-parent", {
 
         this.auction.tense = this.data.tense;
     },
-    ready: function ready() {},
 
     methods: {
         getAuction: function getAuction() {
