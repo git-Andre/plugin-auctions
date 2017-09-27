@@ -26,8 +26,6 @@ Vue.component( "auction-parent", {
         // console.log( 'this.deadline: ' + this.deadline );
     },
     compiled() {
-    },
-    ready() {
         this.bidderList = this.data.bidderList;
 
         this.auction.id              = parseInt( this.data.id );
@@ -38,6 +36,8 @@ Vue.component( "auction-parent", {
         this.auction.startPrice = this.toFloatTwoDecimal( this.data.startPrice );
 
         this.auction.tense = this.data.tense;
+    },
+    ready() {
     },
     methods: {
         getAuction() {

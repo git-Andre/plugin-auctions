@@ -1,8 +1,8 @@
 {#auction="{{ auction | json_encode() }}"#}
 
 
-{% set itemId = itemData.item.id %}
-{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{#{% set itemId = itemData.item.id %}#}
+{#{% set auction = auctions.auction.getAuctionForItemId(itemId) %}#}
 {#{% set user2 = services.customer.getContact() | json_encode() %}#}
 
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
@@ -45,13 +45,13 @@
         >Laufende Auktion:
         </h2>
 
-        <p>1{{ auction | json_encode() }}</p>
-        <p>2: ${ auction }</p>
-        <p>3: ${ auction.expiryDate }</p>
+        <p>1: ${ data.id }</p>
+        <p>2: ${ bidderList }</p>
+        <p>3: ${ auction.id }</p>
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                :deadline="{{auction.expiryDate}}"
+                :deadline="auction.expiryDate"
         >
         </auction-countdown>
 
