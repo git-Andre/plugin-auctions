@@ -8,7 +8,7 @@ const ResourceService = require( "services/ResourceService" );
 Vue.component( "auction-parent", {
     props: [
         "template",
-        "data"
+        "auctiondata"
     ],
     data() {
         return {

@@ -75,32 +75,32 @@
                 {#{% if (bidderList.length > 1) %}#}
                     <dt v-if="bidderList.length > 1">Aktuelles Gebot:</dt>
                     <dd v-if="bidderList.length > 1" class="price h1 m-b-2">
-                        ${ bidderListLast.bidPrice | formatMonetary('EUR') }
+                        ${ bidderListLast.bidPrice {#| formatMonetary('EUR')#} }
                     </dd>
 
                     <dt v-if="bidderList.length > 1">Start Preis:</dt>
-                    <dd v-if="bidderList.length > 1">${ auction.startPrice | formatMonetary('EUR') }
+                    <dd v-if="bidderList.length > 1">${ auction.startPrice{# | formatMonetary('EUR')#} }
                     </dd>
                 {#{% else %}#}
                     <dt v-else="bidderList.length > 1">Start Preis:</dt>
-                    <dd v-else="bidderList.length > 1" class="price h1 m-b-2">${ auction.startPrice | formatMonetary('EUR') }</dd>
+                    <dd v-else="bidderList.length > 1" class="price h1 m-b-2">${ auction.startPrice{# | formatMonetary('EUR')#} }</dd>
                 {#{% endif %}#}
 
 
                 {#Gegenwart  UND Vergangenheit #}
                 <dt>Start Datum:</dt>
-                <dd>${ auction.startDate | date('D d. M Y H:i') }</dd>
+                <dd>${ auction.startDate{# | date('D d. M Y H:i')#} }</dd>
                 <dt>Dauer:</dt>
                 <dd>${ auction.auctionDuration } Tage</dd>
                 <dt>End Datum:</dt>
-                <dd>${ auction.expiryDate | date('D d. M Y H:i:s e') }</dd>
+                <dd>${ auction.expiryDate {#| date('D d. M Y H:i:s e') #}}</dd>
                 <dt>Versand:</dt>
                 <dd>In Deutschland kostenlos</dd>
 
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
-                    <dd> ${ bidderListLength - 1 }
+                    <dd> ${ bidderList.length - 1 }
                         <span>
                             <a
                                     data-toggle="modal"
