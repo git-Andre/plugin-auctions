@@ -45,9 +45,12 @@
         >Laufende Auktion:
         </h2>
 
+        <p>1{{ auction | json_encode() }}</p>
+        <p>2: ${ auction.expiryDate }</p>
+
         <auction-countdown
                 template="#vue-auction-countdown"
-                deadline="auction.expiryDate"
+                :deadline="{{auction.expiryDate}}"
         >
         </auction-countdown>
 
