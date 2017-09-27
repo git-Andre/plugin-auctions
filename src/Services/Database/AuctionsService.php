@@ -140,6 +140,7 @@
                 if ($auction -> id)
                 {
                     $auction = $this -> buildAuctionView($auction);
+
                     return $auction;
                 }
             }
@@ -155,14 +156,14 @@
         {
             if ($id > 0)
             {
-                return $this -> getValue(Auction_7::class, $id);
+                $auction = $this -> getValue(Auction_7::class, $id);
 
-//                if ($auction instanceof Auction_7)
-//                {
-//                    $auction = $this -> buildAuctionView($auction);
-//
-//                    return $auction;
-//                }
+                if ($auction instanceof Auction_7)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+
+                    return $auction;
+                }
             }
 
             return 'falsche ID';
@@ -176,7 +177,7 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $auction = $this -> buildAuctionView($auction -> bidderList);
+                    $auction = $this -> buildAuctionView($auction);
 
                     return $auction -> bidderList;
                 }

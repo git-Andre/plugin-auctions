@@ -28,7 +28,7 @@ Vue.component( "auction-parent", {
     compiled() {
     },
     ready() {
-
+        console.dir(this.data);
         this.bidderList = this.data.bidderList;
 
         this.auction.id = this.toFloatTwoDecimal(this.data.id);

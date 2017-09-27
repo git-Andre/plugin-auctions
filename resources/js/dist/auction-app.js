@@ -11,7 +11,7 @@ var MINI_CRYPT = 46987;
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd"],
+    props: ["template", "userdata", "auction", "bidderList", "minbid", "auctionEnd"],
     data: function data() {
         return {
             // auction: {},
@@ -24,11 +24,11 @@ Vue.component("auction-bids", {
     },
     compiled: function compiled() {
         // this.currentBid = {};
-        this.minbid = this.toFloatTwoDecimal(this.minBid);
     },
     ready: function ready() {
         this.userdata = JSON.parse(this.userdata);
-        // this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+        // this.minbid = this.toFloatTwoDecimal( this.minBid );
 
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
@@ -276,17 +276,11 @@ var ResourceService = require("services/ResourceService");
 // const NOTIFY_TIME = 10000;
 
 Vue.component("auction-parent", {
-    props: ["template",
-    // "auctionFromServer"
-    "data"],
-    // el() {
-    //     return  '#addAuctionVue'
-    // },
+    props: ["template", "data"],
     data: function data() {
         return {
             auction: {},
             bidderList: []
-            // deadline: Number
         };
     },
     created: function created() {
@@ -300,13 +294,19 @@ Vue.component("auction-parent", {
     },
     compiled: function compiled() {},
     ready: function ready() {
-        this.auction = this.data;
-        this.bidderList = this.auction.bidderList;
+        console.dir(this.data);
+        this.bidderList = this.data.bidderList;
+
+        this.auction.id = this.toFloatTwoDecimal(this.data.id);
+        this.auction.startDate = this.toFloatTwoDecimal(this.data.startDate);
+        this.auction.auctionDuration = this.toFloatTwoDecimal(this.data.auctionDuration);
+        this.auction.expiryDate = this.toFloatTwoDecimal(this.data.expiryDate);
+        this.auction.startPrice = this.toFloatTwoDecimal(this.data.startPrice);
+
+        this.auction.tense = this.data.tense;
 
         // this.auction = this.auction.remove("bidderList");
 
-        console.dir(this.auction);
-        console.dir(this.bidderList);
         // ResourceService.bind( "auction", this );
     },
 
@@ -321,12 +321,15 @@ Vue.component("auction-parent", {
         getAuction: function getAuction() {
             var _this = this;
 
-            ApiService.get("/api/auction/" + this.auctionid).done(function (auction) {
+            ApiService.get("/api/auction/" + this.auction.id).done(function (auction) {
 
                 _this.auction = auction;
             }).fail(function () {
                 alert('Upps - ein Fehler bei biddersFromServer ??!!');
             });
+        },
+        toFloatTwoDecimal: function toFloatTwoDecimal(value) {
+            return Math.round(parseFloat(value) * 100) / 100.0;
         }
     }
 });
