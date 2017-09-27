@@ -51,7 +51,7 @@
 
         <auction-countdown
                 template="#vue-auction-countdown"
-                :deadline="${ data.expiryDate}"
+                :deadline="{ auction.expiryDate}"
         >
         </auction-countdown>
 
@@ -72,35 +72,35 @@
         <div class="row container m-t-0 m-b-1">
             <dl class="auctionList">
 
-                {% if (bidderList.length > 1) %}
-                    <dt>Aktuelles Gebot:</dt>
-                    <dd class="price h1 m-b-2">
-                        {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
+                {#{% if (bidderList.length > 1) %}#}
+                    <dt v-if="bidderList.length > 1">Aktuelles Gebot:</dt>
+                    <dd v-if="bidderList.length > 1" class="price h1 m-b-2">
+                        ${ bidderListLast.bidPrice | formatMonetary('EUR') }
                     </dd>
 
-                    <dt>Start Preis:</dt>
-                    <dd>{{ auction.startPrice | formatMonetary('EUR') }}
+                    <dt v-if="bidderList.length > 1">Start Preis:</dt>
+                    <dd v-if="bidderList.length > 1">${ auction.startPrice | formatMonetary('EUR') }
                     </dd>
-                {% else %}
-                    <dt>Start Preis:</dt>
-                    <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
-                {% endif %}
+                {#{% else %}#}
+                    <dt v-else="bidderList.length > 1">Start Preis:</dt>
+                    <dd v-else="bidderList.length > 1" class="price h1 m-b-2">${ auction.startPrice | formatMonetary('EUR') }</dd>
+                {#{% endif %}#}
 
 
                 {#Gegenwart  UND Vergangenheit #}
                 <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+                <dd>${ auction.startDate | date('D d. M Y H:i') }</dd>
                 <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
+                <dd>${ auction.auctionDuration } Tage</dd>
                 <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
+                <dd>${ auction.expiryDate | date('D d. M Y H:i:s e') }</dd>
                 <dt>Versand:</dt>
                 <dd>In Deutschland kostenlos</dd>
 
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
-                    <dd> {{ bidderListLength - 1 }}
+                    <dd> ${ bidderListLength - 1 }
                         <span>
                             <a
                                     data-toggle="modal"
