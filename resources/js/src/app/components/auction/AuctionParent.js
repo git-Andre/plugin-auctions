@@ -9,7 +9,6 @@ Vue.component( "auction-parent", {
     props: [
         "template",
         "auctionFromServer"
-        // "deadline",
         // "auction"
     ],
     // el() {
