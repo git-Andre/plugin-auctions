@@ -19,13 +19,13 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
-                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
+                {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <h2 class="m-b-1" style="color: #c50000;">Laufende Auktion:</h2>
+            <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
 
             <auction-countdown
                     template="#vue-auction-countdown"
@@ -61,7 +61,7 @@
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                     {% endif %}
 
-                    {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
+                    {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
@@ -95,7 +95,7 @@
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
 
-                {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
+                {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
