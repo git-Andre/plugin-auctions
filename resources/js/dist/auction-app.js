@@ -397,16 +397,15 @@ Vue.component("notifications-plugin-auction", {
 "use strict";
 
 Vue.component("auction-countdown", {
-    props: ["template", "deadline", "timer"],
+    props: ["template", "deadline", "timer", "now", "diff"],
     data: function data() {
-        return {
-            now: Math.trunc(new Date().getTime() / 1000),
-            diff: 0
-        };
+        return {};
     },
     created: function created() {
         this.$options.template = this.template;
         this.deadline = 0;
+        this.now = Math.trunc(new Date().getTime() / 1000);
+        this.diff = 0;
     },
     ready: function ready() {
         var _this = this;
@@ -837,5 +836,13 @@ module.exports = function ($) {
 //
 //          } )
 //
+
+// module.exports = (
+
+function aoCustomReload() {
+    location.reload()
+}
+// )
+
 
 //# sourceMappingURL=auction-app.js.map

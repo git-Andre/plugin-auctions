@@ -11,3 +11,9 @@
 //
 //          } )
 //
+
+// helper ohne Vue
+function aoCustomReload() {
+    location.reload()
+}
+

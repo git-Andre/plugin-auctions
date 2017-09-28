@@ -2,7 +2,8 @@
 
     <div class="row container" id="auction-bidform">
 
-        <div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">
+        <div v-if="{{ auction.tense == "present" }}"
+                class="col-lg-8 offset-lg-3" formGroup="maxBidForm">
             <input class="form-control form-control-lg text-muted"
                     v-model="maxCustomerBid" number
                     min="${ minbid }"
@@ -29,7 +30,16 @@
             </button>
 
         </div>
+        <div
+        <div v-if="{{ auction.tense == "past" }}"
+                class="auction-end">
+            <button class="btn btn-primary btn-lg btn-block"
+                    v-if="{{ auction.id == 46987 }}"
+                    @click="afterAuction"
+            >auctionend
+            </button>
 
+        </div>
     </div>
 
 </script>

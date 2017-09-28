@@ -174,26 +174,28 @@ Vue.component( "auction-bids", {
         },
 
         auctionend() {
-            // var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-            // startD      = startD - 24 * 60 * 60 + 7;
-            // var Bidtest = {
-            //     "startDate": startD,
-            //     "startHour": 16,
-            //     "startMinute": 45,
-            //     "auctionDuration": 1,
-            //     "startPrice": this.minbid - 2
-            // };
-            //
-            // ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
-            // )
-            //     .done( auction => {
-            //         // alert( "ok" );
-            //     } )
-            //     .fail( () => {
-            //         alert( 'Upps - ein Fehler beim auctionend ??!!' );
-            //     } );
+            var startD  = Math.trunc( (new Date()).getTime() / 1000 );
+            startD      = startD - 24 * 60 * 60 + 7;
+            var Bidtest = {
+                "startDate": startD,
+                "startHour": 16,
+                "startMinute": 45,
+                "auctionDuration": 1,
+                "startPrice": this.minbid - 2
+            };
+
+            ApiService.put( "/api/auction/2", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            )
+                .done( auction => {
+                    // alert( "ok" );
+                } )
+                .fail( () => {
+                    alert( 'Upps - ein Fehler beim auctionend ??!!' );
+                } );
         },
         afterAuction() {
+
+            alert('after Auction');
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {

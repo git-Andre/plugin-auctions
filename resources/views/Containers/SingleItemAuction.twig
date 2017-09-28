@@ -94,9 +94,9 @@
                             </a>
                             </span>
                             <span>
-                                    <button id="reload" class="btn btn-secondary btn-sm m-l-2"
+                                    <button id="reload" class="btn btn-secondary btn-sm m-l-3"
                                             onclick="aoCustomReload()"
-                                    ><i class="fa fa-refresh fa-2 m-r-1" aria-hidden="true"></i>reload
+                                    ><i class="fa fa-refresh fa-2 m-r-5" aria-hidden="true"></i>reload
                                     </button>
 
                             </span>
@@ -111,11 +111,9 @@
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
-            <button class="btn btn-primary btn-lg btn-block"
-                    v-if="{{ auction.id == 46987 }}"
-                    @click="finish"
-            >auctionend
-            </button>
+{#<auction-finished>#}
+    {##}
+{#</auction-finished>#}
 
             <dl class="auctionList">
                 <dt>End Preis:</dt>
