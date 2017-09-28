@@ -94,8 +94,8 @@
                             </a>
                             </span>
                             <span>
-                                    <button class="btn btn-secondary btn-sm m-l-2"
-                                            @click="window.location.reload()"
+                                    <button id="reload" class="btn btn-secondary btn-sm m-l-2"
+                                            onclick="aoCustomReload()"
                                     ><i class="fa fa-refresh fa-2 m-r-1" aria-hidden="true"></i>reload
                                     </button>
 
@@ -154,7 +154,13 @@
        definiert!!'</p>
 
 {% endif %}
+<script>
+    function aoCustomReload() {
+//        document.getElementById("reload").
+        location.reload()
+    }
 
+</script>
 <style>
     .auctionList {
         display: block;
