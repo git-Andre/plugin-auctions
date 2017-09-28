@@ -8,7 +8,7 @@
 {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
 {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
 {{ component( "PluginAuctions::Item.Components.Notifications" ) }}
-{{ component( "PluginAuctions::Item.Components.AuctionParent" ) }}
+{#{{ component( "PluginAuctions::Item.Components.AuctionParent" ) }}#}
 
 {% if auction %}
 
@@ -39,7 +39,7 @@
 
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
-                                auctionid="{{ auction.id }}"
+                                :auctionid="{{ auction.id }}"
                         >
                         </auction-show-bidderlist>
                     </div>
