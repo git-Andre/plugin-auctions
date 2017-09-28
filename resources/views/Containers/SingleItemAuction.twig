@@ -22,7 +22,7 @@
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
-            {#Gegenwart#}
+{#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
@@ -77,6 +77,7 @@
                         </dd>
                     {% endif %}
                 </dl>
+
             </div>
 
             {#Vergangenheit #}
@@ -109,7 +110,19 @@
                     </dd>
                 {% endif %}
             </dl>
+            {# component: variation (item) in basket des Winners legen - Ereignisaktion Email an Winner mit Kaufabwicklungslink... #}
+            {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
+            {% if bidderListLength != 1 %}
 
+                <div class="row container">
+                    <div class="col-lg-8 offset-lg-3">
+                        <button class="btn btn-primary btn-lg btn-block"
+                                @click="afterAuction"
+                        >auctionend
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% else %}
