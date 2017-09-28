@@ -16,7 +16,7 @@ Vue.component( "auction-show-bidderlist", {
 
     created() {
         this.$options.template = this.template;
-        // this.auctionid         = parseInt( this.auctionid );
+        this.auctionid         = parseInt( this.auctionid );
     },
     ready() {
         this.getBidderList();
