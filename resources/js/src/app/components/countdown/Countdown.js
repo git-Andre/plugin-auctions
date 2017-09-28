@@ -2,20 +2,24 @@ Vue.component( "auction-countdown", {
     props: [
         "template",
         "deadline",
-        "timer"
+        "timer",
+        "now",
+        "diff"
     ],
     data() {
-        return {
-            now: Math.trunc( (new Date()).getTime() / 1000 ),
-            diff: 0
-        }
+        return {}
     },
     created() {
         this.$options.template = this.template;
         this.deadline          = 0;
+        this.now               = Math.trunc( (new Date()).getTime() / 1000 );
+        this.diff              = 0;
+
     },
     ready() {
-        this.timer = window.setInterval( () => { this.Timer() }, 1000 );
+        this.timer = window.setInterval( () => {
+            this.Timer()
+        }, 1000 );
     },
     methods: {
         Timer() {
@@ -48,7 +52,7 @@ Vue.component( "auction-countdown", {
                 this.diff = this.deadline - this.now;
             }
             else {
-                this.diff = 0;
+                this.diff               = 0;
                 this.$parent.auctionEnd = true;
                 window.clearInterval( this.timer );
             }
