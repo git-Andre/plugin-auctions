@@ -19,7 +19,7 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
-                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
+                {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
             </dl>
 
             {#Gegenwart#}
@@ -61,21 +61,19 @@
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                     {% endif %}
 
-                    {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
+                    {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
 
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
                         <dd> {{ bidderListLength - 1 }}
                             <span>
-                            <a
-                                    data-toggle="modal"
-                                    href="#bidderlist"
-                            >
-                            <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                            <a data-toggle="modal" href="#bidderlist">
+                                <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                             </a>
                             </span>
                             <span>
-                                    <button id="reload" class="btn btn-secondary btn-sm m-l-3"
+                                    <button v-if="auction.tense == 'present'"
+                                            id="reload" class="btn btn-secondary btn-sm m-l-3"
                                             onclick="aoCustomReload()"
                                     ><i class="fa fa-refresh fa-2 m-r-5" aria-hidden="true"></i>reload
                                     </button>
@@ -90,10 +88,6 @@
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
-            {#<auction-finished>#}
-            {##}
-            {#</auction-finished>#}
-
             <dl class="auctionList">
                 <dt>End Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
@@ -101,13 +95,13 @@
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
 
-                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
+                {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
                     <dd> {{ bidderListLength - 1 }}
-                        <span>    <a data-toggle="modal"
-                                    href="#bidderlist">
+                        <span>
+                            <a data-toggle="modal" href="#bidderlist">
                                  <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                                      </a>
                         </span>
