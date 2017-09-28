@@ -155,26 +155,25 @@ Vue.component("auction-bids", {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
         auctionend: function auctionend() {
-            // var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-            // startD      = startD - 24 * 60 * 60 + 7;
-            // var Bidtest = {
-            //     "startDate": startD,
-            //     "startHour": 16,
-            //     "startMinute": 45,
-            //     "auctionDuration": 1,
-            //     "startPrice": this.minbid - 2
-            // };
-            //
-            // ApiService.put( "/api/auction/34", JSON.stringify( Bidtest ), { contentType: "application/json" }
-            // )
-            //     .done( auction => {
-            //         // alert( "ok" );
-            //     } )
-            //     .fail( () => {
-            //         alert( 'Upps - ein Fehler beim auctionend ??!!' );
-            //     } );
+            var startD = Math.trunc(new Date().getTime() / 1000);
+            startD = startD - 24 * 60 * 60 + 7;
+            var Bidtest = {
+                "startDate": startD,
+                "startHour": 16,
+                "startMinute": 45,
+                "auctionDuration": 1,
+                "startPrice": this.minbid - 2
+            };
+
+            ApiService.put("/api/auction/2", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
+                // alert( "ok" );
+            }).fail(function () {
+                alert('Upps - ein Fehler beim auctionend ??!!');
+            });
         },
         afterAuction: function afterAuction() {
+
+            alert('after Auction');
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {
@@ -837,12 +836,10 @@ module.exports = function ($) {
 //          } )
 //
 
-// module.exports = (
-
+// helper ohne Vue
 function aoCustomReload() {
     location.reload()
 }
-// )
 
 
 //# sourceMappingURL=auction-app.js.map

@@ -19,14 +19,7 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
-                <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-                <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-                <dt>Versand:</dt>
-                <dd>In Deutschland kostenlos.</dd>
+                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
             {#Gegenwart#}
@@ -43,13 +36,11 @@
 
 
             <div class="row container m-t-0 m-b-2">
-
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode() }}"
                         userdata="{{ services.customer.getContact() | json_encode() }}">
                 </auction-bids>
-
             </div>
 
 
@@ -70,17 +61,7 @@
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                     {% endif %}
 
-
-                    {#Gegenwart  UND Vergangenheit #}
-                    <dt>Start Datum:</dt>
-                    <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-                    <dt>Dauer:</dt>
-                    <dd>{{ auction.auctionDuration }} Tage</dd>
-                    <dt>End Datum:</dt>
-                    <dd>{{ auction.expiryDate | date('D d. M Y H:i:s e') }}</dd>
-                    <dt>Versand:</dt>
-                    <dd>In Deutschland kostenlos</dd>
-
+                    {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                     {% if bidderListLength != 1 %}
                         <dt>Anzahl Gebote:</dt>
@@ -102,8 +83,6 @@
                             </span>
                         </dd>
                     {% endif %}
-
-
                 </dl>
             </div>
 
@@ -112,7 +91,7 @@
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
             {#<auction-finished>#}
-                {##}
+            {##}
             {#</auction-finished>#}
 
             <dl class="auctionList">
@@ -120,16 +99,9 @@
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
                 <dt>Start Preis:</dt>
-                <dd>{{ auction.startPrice | formatMonetary('EUR') }}
+                <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
 
-                <dt>Start Datum:</dt>
-                <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-                <dt>Dauer:</dt>
-                <dd>{{ auction.auctionDuration }} Tage</dd>
-                <dt>End Datum:</dt>
-                <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-                <dt>Versand:</dt>
-                <dd>In Deutschland kostenlos.</dd>
+                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                 {% if bidderListLength != 1 %}
                     <dt>Anzahl Gebote:</dt>
@@ -152,13 +124,7 @@
        definiert!!'</p>
 
 {% endif %}
-{#<script>#}
-    {#function aoCustomReload() {#}
-{#//        document.getElementById("reload").#}
-        {#location.reload()#}
-    {#}#}
 
-{#</script>#}
 <style>
     .auctionList {
         display: block;

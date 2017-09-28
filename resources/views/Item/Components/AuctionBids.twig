@@ -31,10 +31,10 @@
             </button>
 
         </div>
-        <div v-if="${ auction.tense == 'past' }"
+        <div v-if="auction.tense == 'past'"
                 class="auction-end">
             <button class="btn btn-primary btn-lg btn-block"
-                    v-if="{{ auction.id == 7911 }}"
+                    v-if="{ auction.id == 7911 }"
                     @click="afterAuction"
             >auctionend
             </button>
