@@ -49,13 +49,9 @@
 
                     {% if (bidderListLength > 1) %}
                         <dt>Aktuelles Gebot:</dt>
-                        <dd class="price h1 m-b-2">
-                            {{ bidderListLast.bidPrice | formatMonetary('EUR') }}
-                        </dd>
-
+                        <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                         <dt>Start Preis:</dt>
-                        <dd>{{ auction.startPrice | formatMonetary('EUR') }}
-                        </dd>
+                        <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                     {% else %}
                         <dt>Start Preis:</dt>
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
@@ -72,8 +68,7 @@
                             </a>
                             </span>
                             <span>
-                                    <button v-if="auction.tense == 'present'"
-                                            id="reload" class="btn btn-secondary btn-sm m-l-3"
+                                    <button id="reload" class="btn btn-secondary btn-sm m-l-3"
                                             onclick="aoCustomReload()"
                                     ><i class="fa fa-refresh fa-2 m-r-5" aria-hidden="true"></i>reload
                                     </button>
@@ -89,8 +84,14 @@
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
             <dl class="auctionList">
-                <dt>End Preis:</dt>
-                <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+
+                {% if bidderListLength != 1 %}
+                    <dt>Höchstgebot:</dt>
+                    <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
+                {% else %}
+                    <dt>Ergebnis:</dt>
+                    <dd class="price h3 m-b-2">Keine Gebote.</dd>
+                {% endif %}
 
                 <dt>Start Preis:</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
@@ -114,7 +115,7 @@
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
 
-    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktionen' gesetzt, aber es ist keine Auktion im Backend
+    <p>Die Standardkategorie in diesem Artikel ist auf 'Auktion' gesetzt, aber es ist keine Auktion im Backend
        definiert!!'</p>
 
 {% endif %}
