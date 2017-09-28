@@ -19,7 +19,7 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
-                {#{% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}#}
+                {% include "CeresSchaffrath::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
             {#Gegenwart#}
