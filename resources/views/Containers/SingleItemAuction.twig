@@ -1,9 +1,9 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set deadline = auction.expiryDate | json_encode() %}
+{% set deadline = auction.expiryDate %}
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData.item', 'dumpData': itemData } %}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData', 'dumpData': itemData } %}
 
 {# ao Var-Dump #}
 {% include "CeresSchaffrath::VarDump" with { 'testDescription': 'deadline', 'dumpData': deadline } %}
