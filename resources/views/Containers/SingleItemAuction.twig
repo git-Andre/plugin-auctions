@@ -1,5 +1,14 @@
 {% set itemId = itemData.item.id %}
-{% set auction = auctions.auction.getAuctionForItemId(itemId) | json_encode() %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{% set auction2 = auctions.auction.getAuctionForItemId(itemId) | json_encode() %}
+
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction2', 'dumpData': auction2 } %}
+
 
 {% if ( auction ) %}
 
