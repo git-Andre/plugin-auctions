@@ -4,7 +4,7 @@ const ApiService = require( "services/ApiService" );
 
 Vue.component( "auction-end", {
     props: [
-        // "auction"
+        "item"
     ],
     data() {
         return {

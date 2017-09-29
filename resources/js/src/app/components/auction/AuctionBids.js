@@ -13,7 +13,8 @@ Vue.component( "auction-bids", {
         "userdata",
         "auction",
         "minbid",
-        "auctionEnd"
+        "auctionEnd",
+        "item"
     ],
     data() {
         return {
@@ -173,7 +174,7 @@ Vue.component( "auction-bids", {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
 
-        auctionend() {
+        afterAuction() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             startD      = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -193,9 +194,9 @@ Vue.component( "auction-bids", {
                     alert( 'Upps - ein Fehler beim auctionend ??!!' );
                 } );
         },
-        afterAuction() {
+        auctionend() {
 
-            alert('after Auction');
+            alert('auctionend');
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {

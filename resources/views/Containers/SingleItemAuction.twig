@@ -1,13 +1,8 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set deadline = auction.expiryDate %}
 
 {# ao Var-Dump #}
 {% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData', 'dumpData': itemData } %}
-
-{# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'deadline', 'dumpData': deadline } %}
-
 
 
 {% if ( auction ) %}
@@ -40,7 +35,7 @@
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="{{ deadline  }}"
+                    deadline="{{ auction.expiryDate }}"
 
                     {#v-resource-push:deadline#}
                     {#resource="deadline"#}
@@ -52,6 +47,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode()  }}"
+                        item="{{ itemData }}"
                         userdata="{{ userdata }}">
                 </auction-bids>
             </div>
@@ -125,9 +121,8 @@
             </dl>
             {# component: variation (item) in basket des Winners legen - Ereignisaktion Email an Winner mit Kaufabwicklungslink... #}
             {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
-            {% if bidderListLast.customerId == userdata.id %}
+            {% if bidderListLast.customerId - 46987 == userdata.id %}
                 <auction-end
-
                 >
                 </auction-end>
 

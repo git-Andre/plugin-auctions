@@ -154,7 +154,7 @@ Vue.component("auction-bids", {
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
-        auctionend: function auctionend() {
+        afterAuction: function afterAuction() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             startD = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -171,9 +171,9 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
-        afterAuction: function afterAuction() {
+        auctionend: function auctionend() {
 
-            alert('after Auction');
+            alert('auctionend');
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {
@@ -263,7 +263,40 @@ Vue.component("auction-bids", {
 
 });
 
-},{"constants/AuctionConstants":5,"services/ApiService":6,"services/NotificationService":7}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8}],2:[function(require,module,exports){
+"use strict";
+
+var ApiService = require("services/ApiService");
+// const NotificationService = require( "services/NotificationService" );
+// const AuctionConstants    = require( "constants/AuctionConstants" );
+
+Vue.component("auction-end", {
+    props: ["item"],
+    data: function data() {
+        return {};
+    },
+    created: function created() {},
+    compiled: function compiled() {},
+    ready: function ready() {},
+
+    methods: {
+        getTest: function getTest() {
+            alert('auctionEnd');
+
+            // ApiService.get( "/api/auction/" + this.auctionid )
+            //     .done( auction => {
+            //         this.auction = auction;
+            //         this.$children['AuctionBids'].auction = this.auction;
+            //     } )
+            //     .fail( () => {
+            //                alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );
+            //            }
+            //     )
+        }
+    }
+});
+
+},{"services/ApiService":7}],3:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -324,7 +357,7 @@ Vue.component("auction-show-bidderlist", {
     }
 });
 
-},{"services/ApiService":6}],3:[function(require,module,exports){
+},{"services/ApiService":7}],4:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
@@ -392,7 +425,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":7}],4:[function(require,module,exports){
+},{"services/NotificationService":8}],5:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -402,7 +435,7 @@ Vue.component("auction-countdown", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.deadline = 0;
+        this.deadline = parseInt(this.deadline);
         this.now = Math.trunc(new Date().getTime() / 1000);
         this.diff = 0;
     },
@@ -452,7 +485,7 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -483,7 +516,7 @@ var START = exports.START = "Auktion beginnt!";
 var PRESENT = exports.PRESENT = "present";
 var PAST = exports.PAST = "past";
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -619,7 +652,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":7,"services/WaitScreenService":8}],7:[function(require,module,exports){
+},{"services/NotificationService":8,"services/WaitScreenService":9}],8:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -776,7 +809,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -819,7 +852,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4,5])
+},{}]},{},[1,2,3,4,5,6])
 
 
 // var ao = new Vue( {
