@@ -1,9 +1,14 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-
+{% set deadline = auction.expiryDate | json_encode() %}
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData.item', 'dumpData': itemData.item } %}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData.item', 'dumpData': itemData } %}
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'deadline', 'dumpData': deadline } %}
+
+
 
 {% if ( auction ) %}
 
@@ -35,7 +40,7 @@
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="{{ auction.expiryDate | json_encode()  }}"
+                    deadline="{{ deadline  }}"
 
                     {#v-resource-push:deadline#}
                     {#resource="deadline"#}
