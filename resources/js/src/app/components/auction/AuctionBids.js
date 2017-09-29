@@ -117,7 +117,6 @@ Vue.component( "auction-bids", {
                 }
                 else {
                     // bidStatus von letzter bid ???
-                    console.log( 'bidStatus von letzter bid' );
                     switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
                             NotificationService.info(
@@ -199,20 +198,25 @@ Vue.component( "auction-bids", {
             console.dir( item );
             alert( 'auctionend' );
 
-            const plentyid   = this.item.defaultCategories.plentyId;
-            const statusid   = 2.5; // Status 2.5
-            const typeid     = 1; // Auftrag
-            const orderitems = [
+            // const plentyid     = this.item.defaultCategories[0].plentyId;
+            // const statusid     = 2.5; // Status 2.5
+            // const typeid       = 1; // Auftrag
+            const orderitems   = [
                 {
                     'typeId': 1,
+                    'referrerId': 1,
                     'itemVariationId': item.variation.id,
                     'quantity': 1,
                     'shippingProfileId': 1,
-                    'referrerId': 1,
                     'orderItemName': item.texts.name2
                 }
             ];
-
+            const orderBuilder = {
+                'typeid': 1,
+                'plentyid': this.item.defaultCategories[0].plentyId,
+                'statusid': 2.5,
+                'orderitems': orderitems
+            };
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {
