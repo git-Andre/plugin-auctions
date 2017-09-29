@@ -22,7 +22,7 @@
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
-{#Gegenwart#}
+            {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
@@ -114,18 +114,24 @@
             {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
             {% if bidderListLength != 1 %}
 
-                <div class="row container">
-                    <div class="col-lg-8 offset-lg-3">
-                        <button class="btn btn-primary btn-lg btn-block"
-                                @click="alert('hi André')"
-                        >Jetzt bezahlen!
-                        </button>
-                    </div>
-                </div>
-                <add-to-basket template="#vue-add-to-basket" v-resource-if:currentVariation="documents[0].data.filter.isSalable" v-resource-push:item data-accessor="true"
-                        resource="currentVariation" :show-quantity="false"></add-to-basket>
+                {#<div class="row container">#}
+                    {#<div class="col-lg-8 offset-lg-3">#}
+                        {#<button class="btn btn-primary btn-lg btn-block"#}
+                                {#@click="alert('hi André')"#}
+                        {#>Jetzt bezahlen!#}
+                        {#</button>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="row container">#}
 
+                    {#<add-to-basket template="#vue-add-to-basket"#}
+                            {#v-resource-if:currentVariation="documents[0].data.filter.isSalable"#}
+                            {#v-resource-push:item#}
+                            {#data-accessor="true"#}
+                            {#resource="currentVariation"#}
+                            {#:show-quantity="false"></add-to-basket>#}
 
+                {#</div>#}
 
 
             {% endif %}
