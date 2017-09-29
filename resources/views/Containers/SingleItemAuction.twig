@@ -47,7 +47,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode()  }}"
-                        item="{{ itemData }}"
+                        item="{{ itemData | json_encode() }}"
                         userdata="{{ userdata }}">
                 </auction-bids>
             </div>

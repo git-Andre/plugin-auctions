@@ -27,12 +27,13 @@ Vue.component( "auction-bids", {
         this.$options.template = this.template;
     },
     compiled() {
-        this.userdata   = JSON.parse( this.userdata );
+        this.userdata = JSON.parse( this.userdata );
+        this.item     = JSON.parse( this.item );
         // this.currentBid = {};
     },
     ready() {
-        this.auction    =  JSON.parse( this.auction );
-        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.auction = JSON.parse( this.auction );
+        this.minbid  = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
@@ -195,8 +196,23 @@ Vue.component( "auction-bids", {
                 } );
         },
         auctionend() {
+            console.dir( item );
+            alert( 'auctionend' );
 
-            alert('auctionend');
+            const plentyid   = this.item.defaultCategories.plentyId;
+            const statusid   = 2.5; // Status 2.5
+            const typeid     = 1; // Auftrag
+            const orderitems = [
+                {
+                    'typeId': 1,
+                    'itemVariationId': item.variation.id,
+                    'quantity': 1,
+                    'shippingProfileId': 1,
+                    'referrerId': 1,
+                    'orderItemName': item.texts.name2
+                }
+            ];
+
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {

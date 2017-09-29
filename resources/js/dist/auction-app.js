@@ -11,7 +11,7 @@ var MINI_CRYPT = 46987;
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item"],
     data: function data() {
         return {
             // auction: {},
@@ -24,6 +24,7 @@ Vue.component("auction-bids", {
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
+        this.item = JSON.parse(this.item);
         // this.currentBid = {};
     },
     ready: function ready() {
@@ -172,8 +173,21 @@ Vue.component("auction-bids", {
             });
         },
         auctionend: function auctionend() {
-
+            console.dir(item);
             alert('auctionend');
+
+            var plentyid = this.item.defaultCategories.plentyId;
+            var statusid = 2.5; // Status 2.5
+            var typeid = 1; // Auftrag
+            var orderitems = [{
+                'typeId': 1,
+                'itemVariationId': item.variation.id,
+                'quantity': 1,
+                'shippingProfileId': 1,
+                'referrerId': 1,
+                'orderItemName': item.texts.name2
+            }];
+
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {
