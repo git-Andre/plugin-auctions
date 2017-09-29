@@ -1,5 +1,5 @@
 {% set itemId = itemData.item.id %}
-{% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{% set auction = auctions.auction.getAuctionForItemId(itemId) | json_encode() %}
 
 {% if ( auction ) %}
 
@@ -42,7 +42,7 @@
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
-                        auction="{{ auction | json_encode() }}"
+                        auction="{{ auction }}"
                         userdata="{{ userdata }}">
                 </auction-bids>
             </div>
@@ -117,26 +117,10 @@
             {# component: variation (item) in basket des Winners legen - Ereignisaktion Email an Winner mit Kaufabwicklungslink... #}
             {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
             {% if bidderListLast.customerId == userdata.id %}
+                <auction-end
 
-                <div class="row container">
-                    <div class="col-lg-8 offset-lg-3">
-                        <button class="btn btn-primary btn-lg btn-block"
-                                @click="alert('hi André')"
-                        >Jetzt bezahlen!
-                        </button>
-                    </div>
-                </div>
-                {#<div class="row container">#}
-
-                    {#<add-to-basket template="#vue-add-to-basket"#}
-                            {#v-resource-if:currentVariation="documents[0].data.filter.isSalable"#}
-                            {#v-resource-push:item#}
-                            {#data-accessor="true"#}
-                            {#resource="currentVariation"#}
-                            {#:show-quantity="false"></add-to-basket>#}
-
-                {#</div>#}
-
+                >
+                </auction-end>
 
             {% endif %}
         {% endif %}
