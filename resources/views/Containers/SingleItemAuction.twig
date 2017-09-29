@@ -1,10 +1,10 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set auction2 = auctions.auction.getAuctionForItemId(itemId) | json_encode() %}
+{% set auction2 = auctions.auction.getAuctionForItemId(itemId) | json_decode() %}
 
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction', 'dumpData': auction } %}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData.item', 'dumpData': itemData.item } %}
 
 {# ao Var-Dump #}
 {% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auction2', 'dumpData': auction2 } %}
@@ -40,7 +40,7 @@
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    deadline="{{ auction.expiryDate }}"
+                    deadline="{{ auction.expiryDate | json_encode()  }}"
 
                     {#v-resource-push:deadline#}
                     {#resource="deadline"#}
@@ -51,7 +51,7 @@
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
-                        auction="{{ auction }}"
+                        auction="{{ auction | json_encode()  }}"
                         userdata="{{ userdata }}">
                 </auction-bids>
             </div>
