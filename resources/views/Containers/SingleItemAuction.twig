@@ -8,6 +8,8 @@
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 
+    {% set userdata = services.customer.getContact() | json_encode() %}
+
     <div id="addAuctionVue">
 
 
@@ -29,8 +31,10 @@
 
             <auction-countdown
                     template="#vue-auction-countdown"
-                    v-resource-push:deadline
-                    resource="deadline"
+                    deadline="{{ auction.expiryDate }}"
+
+                    {#v-resource-push:deadline#}
+                    {#resource="deadline"#}
             >
             </auction-countdown>
 
@@ -39,7 +43,7 @@
                 <auction-bids
                         template="#vue-auction-bids"
                         auction="{{ auction | json_encode() }}"
-                        userdata="{{ services.customer.getContact() | json_encode() }}">
+                        userdata="{{ userdata }}">
                 </auction-bids>
             </div>
 
@@ -112,16 +116,16 @@
             </dl>
             {# component: variation (item) in basket des Winners legen - Ereignisaktion Email an Winner mit Kaufabwicklungslink... #}
             {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
-            {% if bidderListLength != 1 %}
+            {% if bidderListLast.customerId == userdata.id %}
 
-                {#<div class="row container">#}
-                    {#<div class="col-lg-8 offset-lg-3">#}
-                        {#<button class="btn btn-primary btn-lg btn-block"#}
-                                {#@click="alert('hi André')"#}
-                        {#>Jetzt bezahlen!#}
-                        {#</button>#}
-                    {#</div>#}
-                {#</div>#}
+                <div class="row container">
+                    <div class="col-lg-8 offset-lg-3">
+                        <button class="btn btn-primary btn-lg btn-block"
+                                @click="alert('hi André')"
+                        >Jetzt bezahlen!
+                        </button>
+                    </div>
+                </div>
                 {#<div class="row container">#}
 
                     {#<add-to-basket template="#vue-add-to-basket"#}
