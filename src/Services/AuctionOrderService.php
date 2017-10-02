@@ -1,36 +1,28 @@
 <?php //strict
 
-namespace PluginAuctions\Services;
+    namespace PluginAuctions\Services;
 
-use IO\Constants\OrderPaymentStatus;
-use IO\Models\LocalizedOrder;
-use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
-use Plenty\Modules\Order\ContactWish\Contracts\ContactWishRepositoryContract;
-use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
-use Plenty\Modules\Order\Property\Contracts\OrderPropertyRepositoryContract;
-use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
-use IO\Builder\Order\OrderBuilder;
-use IO\Builder\Order\OrderType;
-use IO\Builder\Order\OrderOptionSubType;
-use IO\Builder\Order\AddressType;
-use Plenty\Repositories\Models\PaginatedResult;
-use IO\Constants\SessionStorageKeys;
-use Plenty\Plugin\Http\Response;
-
-use IO\Services\CustomerService;
+    use IO\Builder\Order\AddressType;
+    use IO\Builder\Order\OrderBuilder;
+    use IO\Builder\Order\OrderOptionSubType;
+    use IO\Builder\Order\OrderType;
+    use IO\Models\LocalizedOrder;
+    use IO\Services\CustomerService;
+    use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
+    use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
+    use Plenty\Modules\Order\Property\Models\OrderPropertyType;
 
 
-/**
- * Class OrderService
- * @package IO\Services
- */
-class AuctionOrderService
-{
-	/**
-	 * @var OrderRepositoryContract
-	 */
-	private $orderRepository;
+    /**
+     * Class OrderService
+     * @package IO\Services
+     */
+    class AuctionOrderService {
+
+        /**
+         * @var OrderRepositoryContract
+         */
+        private $orderRepository;
 //	/**
 //	 * @var BasketService
 //	 */
@@ -39,69 +31,84 @@ class AuctionOrderService
 //     * @var SessionStorageService
 //     */
 //    private $sessionStorage;
-    
-    /**
-     * @var FrontendPaymentMethodRepositoryContract
-     */
-    private $frontendPaymentMethodRepository;
-    
-    /**
-     * OrderService constructor.
-     * @param OrderRepositoryContract $orderRepository
-     * @param BasketService $basketService
-     * @param \IO\Services\SessionStorageService $sessionStorage
-     */
-	public function __construct(
-		OrderRepositoryContract $orderRepository,
+
+        /**
+         * @var FrontendPaymentMethodRepositoryContract
+         */
+        private $frontendPaymentMethodRepository;
+
+        /**
+         * OrderService constructor.
+         * @param OrderRepositoryContract $orderRepository
+         * @param BasketService $basketService
+         * @param \IO\Services\SessionStorageService $sessionStorage
+         */
+        public function __construct(
+            OrderRepositoryContract $orderRepository,
 //		BasketService $basketService,
 //        SessionStorageService $sessionStorage,
-        FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
-	)
-	{
-		$this->orderRepository = $orderRepository;
+            FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
+        )
+        {
+            $this -> orderRepository = $orderRepository;
 //		$this->basketService   = $basketService;
 //        $this->sessionStorage  = $sessionStorage;
-        $this->frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
-	}
+            $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
+        }
 
-    /**
-     * Place an order
-     * @return LocalizedOrder
-     */
-//	public function placeOrder():LocalizedOrder
-//	{
-////        $checkoutService = pluginApp(CheckoutService::class);
-//        $customerService = pluginApp(CustomerService::class);
+        /**
+         * Place an order
+         * @return LocalizedOrder
+         */
+        public function placeOrder() : LocalizedOrder
+        {
+//        $checkoutService = pluginApp(CheckoutService::class);
+            $customerService = pluginApp(CustomerService::class);
+
+//        $couponCode = null;
+//        if(strlen($this->basketService->getBasket()->couponCode))
+//        {
+//            $couponCode = $this->basketService->getBasket()->couponCode;
+//        }
+
+            $order = pluginApp(OrderBuilder::class)
+                -> prepare(OrderType::ORDER)
+
+                -> fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
+                -> withContactId(7076)
+                -> withAddressId(41656, AddressType::BILLING)
+                -> withAddressId(43688, AddressType::DELIVERY)
+//                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
+//                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
+                -> done()
+            ;
+
+//            $order = pluginApp(OrderBuilder::class)
+//                -> prepare(OrderType::ORDER)
 //
-////        $couponCode = null;
-////        if(strlen($this->basketService->getBasket()->couponCode))
-////        {
-////            $couponCode = $this->basketService->getBasket()->couponCode;
-////        }
+//                -> fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
+//                -> withContactId($customerService -> getContactId())
+//                -> withAddressId($checkoutService -> getBillingAddressId(), AddressType::BILLING)
+//                -> withAddressId($checkoutService -> getDeliveryAddressId(), AddressType::DELIVERY)
+//                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
+//                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
+//                -> done()
+//            ;
 //
-//		$order = pluginApp(OrderBuilder::class)->prepare(OrderType::ORDER)
-//		                            ->fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
-//		                            ->withContactId($customerService->getContactId())
-//		                            ->withAddressId($checkoutService->getBillingAddressId(), AddressType::BILLING)
-//		                            ->withAddressId($checkoutService->getDeliveryAddressId(), AddressType::DELIVERY)
-//		                            ->withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService->getMethodOfPaymentId())
-//                                    ->withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService->getShippingProfileId())
-//		                            ->done();
+//		$order = $this->orderRepository->createOrder($order, $couponCode);
+//		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //
-////		$order = $this->orderRepository->createOrder($order, $couponCode);
-////		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
-////
-////        if($customerService->getContactId() <= 0)
-////        {
-////            $this->sessionStorage->setSessionValue(SessionStorageKeys::LATEST_ORDER_ID, $order->id);
-////        }
-//
-////        // reset basket after order was created
-////        $this->basketService->resetBasket();
-//
-//        return LocalizedOrder::wrap( $order, "de" );
-//	}
-	
+//        if($customerService->getContactId() <= 0)
+//        {
+//            $this->sessionStorage->setSessionValue(SessionStorageKeys::LATEST_ORDER_ID, $order->id);
+//        }
+
+//        // reset basket after order was created
+//        $this->basketService->resetBasket();
+
+            return LocalizedOrder ::wrap($order, "de");
+        }
+
 //	private function saveOrderContactWish($orderId, $text = '')
 //    {
 //        if(!is_null($text) && strlen($text))
@@ -115,29 +122,30 @@ class AuctionOrderService
 //        }
 //    }
 
-    /**
-     * Execute the payment for a given order.
-     * @param int $orderId      The order id to execute payment for
-     * @param int $paymentId    The MoP-ID to execute
-     * @return array            An array containing a type ("succes"|"error") and a value.
-     */
+        /**
+         * Execute the payment for a given order.
+         * @param int $orderId The order id to execute payment for
+         * @param int $paymentId The MoP-ID to execute
+         * @return array            An array containing a type ("succes"|"error") and a value.
+         */
 //	public function executePayment( int $orderId, int $paymentId ):array
 //    {
 //        $paymentRepository = pluginApp( PaymentMethodRepositoryContract::class );
 //        return $paymentRepository->executePayment( $paymentId, $orderId );
 //    }
 
-    /**
-     * Find an order by ID
-     * @param int $orderId
-     * @return LocalizedOrder
-     */
-	public function findOrderById(int $orderId):LocalizedOrder
-	{
-        $order = $this->orderRepository->findOrderById($orderId);
-		return LocalizedOrder::wrap( $order, "de" );
-	}
-	
+        /**
+         * Find an order by ID
+         * @param int $orderId
+         * @return LocalizedOrder
+         */
+        public function findOrderById(int $orderId) : LocalizedOrder
+        {
+            $order = $this -> orderRepository -> findOrderById($orderId);
+
+            return LocalizedOrder ::wrap($order, "de");
+        }
+
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)
 //    {
 //        /**
@@ -334,4 +342,4 @@ class AuctionOrderService
 //
 //        return null;
 //    }
-}
+    }
