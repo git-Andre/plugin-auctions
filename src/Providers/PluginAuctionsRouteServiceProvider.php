@@ -63,5 +63,9 @@
             ;
             $router -> get('api/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
 
+
+            // Order...
+            $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionsPlaceOrderController@getOrderById')
+                    -> where('orderId', '\d+');
         }
     }

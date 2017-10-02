@@ -195,28 +195,42 @@ Vue.component( "auction-bids", {
                 } );
         },
         auctionend() {
-            console.dir( item );
             alert( 'auctionend' );
 
-            // const plentyid     = this.item.defaultCategories[0].plentyId;
-            // const statusid     = 2.5; // Status 2.5
-            // const typeid       = 1; // Auftrag
-            const orderitems   = [
-                {
-                    'typeId': 1,
-                    'referrerId': 1,
-                    'itemVariationId': item.variation.id,
-                    'quantity': 1,
-                    'shippingProfileId': 1,
-                    'orderItemName': item.texts.name2
-                }
-            ];
             const orderBuilder = {
-                'typeid': 1,
-                'plentyid': this.item.defaultCategories[0].plentyId,
-                'statusid': 2.5,
-                'orderitems': orderitems
+                'typeId': 1,
+                'plentyId': "this.item.defaultCategories[0].plentyId",
+                'statusId': 2.5,
+                'orderItems': [
+                    {
+                        'typeId': 1,
+                        'referrerId': 1,
+                        'itemVariationId': this.item.variation.id,
+                        'quantity': 1,
+                        'shippingProfileId': 34,
+                        'orderItemName': this.item.texts.name2,
+                        "amounts": [
+                            {
+                                "isSystemCurrency": true,
+                                "currency": "EUR",
+                                "exchangeRate": 1,
+                                "priceOriginalGross": this.maxCustomerBid
+                            }
+                        ]
+                    }
+                ]
             };
+            ApiService.get( "/place-order"
+                            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
+            )
+                .done( orderResponse => {
+                    alert( "ok - order" );
+                    // console.dir(orderResponse);
+                } )
+                .fail( () => {
+                    alert( 'Ooops - ein Fehler beim auctionend ??!!' );
+                } );
+
             //     // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             //     setTimeout( () => {
             //         if ( this.userdata ) {
