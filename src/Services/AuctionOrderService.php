@@ -63,7 +63,7 @@
         public function placeOrder() : LocalizedOrder
         {
 //        $checkoutService = pluginApp(CheckoutService::class);
-            $customerService = pluginApp(CustomerService::class);
+//            $customerService = pluginApp(CustomerService::class);
 
 //        $couponCode = null;
 //        if(strlen($this->basketService->getBasket()->couponCode))
@@ -78,8 +78,8 @@
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(43688, AddressType::DELIVERY)
-//                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
-//                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
+                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
+                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
                 -> done()
             ;
 
