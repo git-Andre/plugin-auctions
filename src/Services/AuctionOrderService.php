@@ -22,7 +22,7 @@ use Plenty\Plugin\Http\Response;
  * Class OrderService
  * @package IO\Services
  */
-class OrderService
+class AuctionOrderService
 {
 	/**
 	 * @var OrderRepositoryContract

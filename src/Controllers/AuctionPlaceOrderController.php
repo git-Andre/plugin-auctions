@@ -3,7 +3,7 @@
 
     use IO\Services\NotificationService;
     use PluginAuctions\Services\AuctionOrderService;
-
+    use IO\Controllers\LayoutController;
 //use Plenty\Plugin\Http\Response;
 //use Plenty\Plugin\Http\Request;
 
