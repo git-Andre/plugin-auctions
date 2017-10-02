@@ -65,7 +65,7 @@
 
 
             // Order...
-            $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionsPlaceOrderController@getOrderById')
+            $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
                     -> where('orderId', '\d+');
         }
     }
