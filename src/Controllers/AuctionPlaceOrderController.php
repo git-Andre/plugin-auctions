@@ -30,14 +30,14 @@
             {
                 $orderData = $orderService -> placeOrder();
 
-                return true; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
+                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
             }
             catch ( \Exception $exception )
             {
                 // TODO get better error text
                 $notificationService -> error($exception -> getMessage());
 
-                return false; // $response->redirectTo("checkout");
+                return "checkout"; // $response->redirectTo("checkout");
             }
         }
 
