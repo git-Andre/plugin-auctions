@@ -62,7 +62,7 @@
          */
         public function placeOrder() : LocalizedOrder
         {
-//        $checkoutService = pluginApp(CheckoutService::class);
+        $checkoutService = pluginApp(CheckoutService::class);
 //            $customerService = pluginApp(CustomerService::class);
 
 //        $couponCode = null;
@@ -78,8 +78,8 @@
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(43688, AddressType::DELIVERY)
-                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6000)
-                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
+                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
+                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
                 -> done()
             ;
 
@@ -95,7 +95,7 @@
 //                -> done()
 //            ;
 //
-//		$order = $this->orderRepository->createOrder($order, $couponCode);
+		$order = $this->orderRepository->createOrder($order);
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //
 //        if($customerService->getContactId() <= 0)
