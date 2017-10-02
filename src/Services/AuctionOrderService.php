@@ -78,7 +78,7 @@
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(43688, AddressType::DELIVERY)
-                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
+                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6000)
                 -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
                 -> done()
             ;
