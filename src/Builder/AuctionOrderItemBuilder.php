@@ -8,6 +8,7 @@ use Plenty\Modules\Basket\Models\BasketItem;
 use IO\Services\CheckoutService;
 use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
 use Plenty\Modules\Frontend\Services\VatService;
+use IO\Builder\Order\OrderType;
 
 /**
  * Class OrderItemBuilder
