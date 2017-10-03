@@ -3,7 +3,7 @@
     namespace PluginAuctions\Services;
 
     use IO\Builder\Order\AddressType;
-    use IO\Builder\Order\OrderBuilder;
+    use PluginAuctions\Builder\AuctionOrderBuilder;
     use IO\Builder\Order\OrderItemType;
     use IO\Builder\Order\OrderOptionSubType;
     use IO\Builder\Order\OrderType;
@@ -53,18 +53,12 @@
          */
         public function placeOrder() // : LocalizedOrder
         {
-//        $checkoutService = pluginApp(CheckoutService::class);
-//            $customerService = pluginApp(CustomerService::class);
+//          $checkoutService = pluginApp(CheckoutService::class);
+//          $customerService = pluginApp(CustomerService::class);
 
-//        $couponCode = null;
-//        if(strlen($this->basketService->getBasket()->couponCode))
-//        {
-//            $couponCode = $this->basketService->getBasket()->couponCode;
-//        }
-
-            $order = pluginApp(OrderBuilder::class)
+            $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
-                -> fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
+                -> fromAuction() //TODO: Add shipping costs & payment surcharge as OrderItem
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(43688, AddressType::DELIVERY)
@@ -76,10 +70,10 @@
             if (is_array($orderItems))
             {
                 $order["orderItems"] = $orderItems;
-                $order = $this -> orderRepository -> createOrder($order);
 
                 return 'test:' . $orderItems;
             }
+                $order = $this -> orderRepository -> createOrder($order);
 
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //
@@ -109,30 +103,30 @@
 //    }
 
 
-        private function getOrderItem() : array
-        {
-
-            return [
-                "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 1,
-                "itemVariationId"   => 38443,
-                "quantity"          => 1,
-                "orderItemName"     => "hier kommt Name2 rein!!",
-                "shippingProfileId" => 34,
-//			"countryVatId"      => $this->vatService->getCountryVatId(),
-//			"vatRate"           => $basketItem->vat,
-                //"vatField"			=> $basketItem->vatField,// TODO
-//            "orderProperties"   => $basketItemProperties,
-                "amounts"           => [
-                    [
-                        "currency"           => "EUR",
-                        "priceOriginalGross" => 74.56,
-                        "surcharge"          => 0,
-                        "isPercentage"       => 1
-                    ]
-                ]
-            ];
-        }
+//        private function getOrderItem() : array
+//        {
+//
+//            return [
+//                "typeId"            => OrderItemType::VARIATION,
+//                "referrerId"        => 1,
+//                "itemVariationId"   => 38443,
+//                "quantity"          => 1,
+//                "orderItemName"     => "hier kommt Name2 rein!!",
+//                "shippingProfileId" => 34,
+////			"countryVatId"      => $this->vatService->getCountryVatId(),
+////			"vatRate"           => $basketItem->vat,
+//                //"vatField"			=> $basketItem->vatField,// TODO
+////            "orderProperties"   => $basketItemProperties,
+//                "amounts"           => [
+//                    [
+//                        "currency"           => "EUR",
+//                        "priceOriginalGross" => 74.56,
+//                        "surcharge"          => 0,
+//                        "isPercentage"       => 1
+//                    ]
+//                ]
+//            ];
+//        }
 
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)
 //    {

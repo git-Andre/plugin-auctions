@@ -1,6 +1,6 @@
 <?php //strict
 
-namespace PluginAuctions\Builder\Order;
+namespace PluginAuctions\Builder;
 
 use IO\Services\SessionStorageService;
 use Plenty\Modules\Basket\Models\Basket;
@@ -107,7 +107,7 @@ class AuctionOrderItemBuilder
 //	 * @param string $basketItemName
 //	 * @return array
 //	 */
-	private function getOrderItem():array
+	public function getOrderItem():array
 	{
 
 		return [
@@ -117,7 +117,7 @@ class AuctionOrderItemBuilder
 			"quantity"          => 1,
 			"orderItemName"     => "hier kommt Name2 rein!!",
 			"shippingProfileId" => 34,
-//			"countryVatId"      => $this->vatService->getCountryVatId(),
+			"countryVatId"      => $this->vatService->getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
 			//"vatField"			=> $basketItem->vatField,// TODO
 //            "orderProperties"   => $basketItemProperties,
