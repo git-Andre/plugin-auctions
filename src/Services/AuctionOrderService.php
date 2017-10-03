@@ -12,6 +12,9 @@
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
 
+    use PluginAuctions\Builder\AuctionOrderItemBuilder;
+
+
 
     /**
      * Class OrderService
@@ -95,6 +98,9 @@
 //                -> done()
 //            ;
 //
+
+
+
 		$order = $this->orderRepository->createOrder($order);
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //

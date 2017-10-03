@@ -2,8 +2,9 @@
     namespace PluginAuctions\Controllers;
 
     use IO\Services\NotificationService;
-    use PluginAuctions\Services\AuctionOrderService;
     use IO\Controllers\LayoutController;
+
+    use PluginAuctions\Services\AuctionOrderService;
 //use Plenty\Plugin\Http\Response;
 //use Plenty\Plugin\Http\Request;
 
