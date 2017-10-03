@@ -26,13 +26,6 @@
          * @var OrderRepositoryContract
          */
         private $orderRepository;
-//	/**
-//	 * @var BasketService
-//	 */
-//    /**
-//     * @var SessionStorageService
-//     */
-//    private $sessionStorage;
 
         /**
          * @var FrontendPaymentMethodRepositoryContract
@@ -47,14 +40,10 @@
          */
         public function __construct(
             OrderRepositoryContract $orderRepository,
-//		BasketService $basketService,
-//        SessionStorageService $sessionStorage,
             FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
         )
         {
             $this -> orderRepository = $orderRepository;
-//		$this->basketService   = $basketService;
-//        $this->sessionStorage  = $sessionStorage;
             $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
         }
 
@@ -62,7 +51,7 @@
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder() : LocalizedOrder
+        public function placeOrder() // : LocalizedOrder
         {
 //        $checkoutService = pluginApp(CheckoutService::class);
 //            $customerService = pluginApp(CustomerService::class);
@@ -81,21 +70,8 @@
                 -> withAddressId(43688, AddressType::DELIVERY)
                 -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6000)
                 -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
-                -> done()
-            ;
+                -> done();
 
-//            $order = pluginApp(OrderBuilder::class)
-//                -> prepare(OrderType::ORDER)
-//
-//                -> fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
-//                -> withContactId($customerService -> getContactId())
-//                -> withAddressId($checkoutService -> getBillingAddressId(), AddressType::BILLING)
-//                -> withAddressId($checkoutService -> getDeliveryAddressId(), AddressType::DELIVERY)
-//                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getMethodOfPaymentId())
-//                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
-//                -> done()
-//            ;
-//getItemToOrderItem
             $orderItems = $this -> getOrderItem();
             if (is_array($orderItems))
             {
@@ -132,17 +108,6 @@
 //        }
 //    }
 
-        /**
-         * Execute the payment for a given order.
-         * @param int $orderId The order id to execute payment for
-         * @param int $paymentId The MoP-ID to execute
-         * @return array            An array containing a type ("succes"|"error") and a value.
-         */
-//	public function executePayment( int $orderId, int $paymentId ):array
-//    {
-//        $paymentRepository = pluginApp( PaymentMethodRepositoryContract::class );
-//        return $paymentRepository->executePayment( $paymentId, $orderId );
-//    }
 
         private function getOrderItem() : array
         {
