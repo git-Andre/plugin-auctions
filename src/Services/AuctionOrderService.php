@@ -4,16 +4,16 @@
 
     use IO\Builder\Order\AddressType;
     use IO\Builder\Order\OrderBuilder;
+    use IO\Builder\Order\OrderItemType;
     use IO\Builder\Order\OrderOptionSubType;
     use IO\Builder\Order\OrderType;
     use IO\Models\LocalizedOrder;
     use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-//    use PluginAuctions\Builder\AuctionOrderItemBuilder;
-//    use Plenty\Modules\Frontend\Services\VatService;
-    use IO\Builder\Order\OrderItemType;
 
+    //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
+//    use Plenty\Modules\Frontend\Services\VatService;
 
 
     /**
@@ -96,8 +96,11 @@
 //                -> done()
 //            ;
 //getItemToOrderItem
-
-            array_push($order, $this -> getOrderItem());
+            $orderItems = $this -> getOrderItem();
+            if (is_array($orderItems))
+            {
+                $order["orderItems"] = $orderItems;
+            }
 
             $order = $this -> orderRepository -> createOrder($order);
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
@@ -138,16 +141,29 @@
 //        return $paymentRepository->executePayment( $paymentId, $orderId );
 //    }
 
-        /**
-         * Find an order by ID
-         * @param int $orderId
-         * @return LocalizedOrder
-         */
-        public function findOrderById(int $orderId) : LocalizedOrder
+        private function getOrderItem() : array
         {
-            $order = $this -> orderRepository -> findOrderById($orderId);
 
-            return LocalizedOrder ::wrap($order, "de");
+            return [
+                "typeId"            => OrderItemType::VARIATION,
+                "referrerId"        => 1,
+                "itemVariationId"   => 38443,
+                "quantity"          => 1,
+                "orderItemName"     => "hier kommt Name2 rein!!",
+                "shippingProfileId" => 34,
+//			"countryVatId"      => $this->vatService->getCountryVatId(),
+//			"vatRate"           => $basketItem->vat,
+                //"vatField"			=> $basketItem->vatField,// TODO
+//            "orderProperties"   => $basketItemProperties,
+                "amounts"           => [
+                    [
+                        "currency"           => "EUR",
+                        "priceOriginalGross" => 74.56,
+                        "surcharge"          => 0,
+                        "isPercentage"       => 1
+                    ]
+                ]
+            ];
         }
 
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)
@@ -346,29 +362,17 @@
 //
 //        return null;
 //    }
-        private function getOrderItem():array
-        {
 
-            return [
-                "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 1,
-                "itemVariationId"   => 38443,
-                "quantity"          => 1,
-                "orderItemName"     => "hier kommt Name2 rein!!",
-                "shippingProfileId" => 34,
-//			"countryVatId"      => $this->vatService->getCountryVatId(),
-//			"vatRate"           => $basketItem->vat,
-                //"vatField"			=> $basketItem->vatField,// TODO
-//            "orderProperties"   => $basketItemProperties,
-                "amounts"           => [
-                    [
-                        "currency"           => "EUR",
-                        "priceOriginalGross" => 74.56,
-                        "surcharge" => 0,
-                        "isPercentage" => 1
-                    ]
-                ]
-            ];
+        /**
+         * Find an order by ID
+         * @param int $orderId
+         * @return LocalizedOrder
+         */
+        public function findOrderById(int $orderId) : LocalizedOrder
+        {
+            $order = $this -> orderRepository -> findOrderById($orderId);
+
+            return LocalizedOrder ::wrap($order, "de");
         }
 
     }
