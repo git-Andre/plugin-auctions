@@ -2,11 +2,11 @@
 
     namespace PluginAuctions\Builder;
 
-    use Plenty\Plugin\Application;
-    use PluginAuctions\Services\Database\AuctionsService;
     use IO\Builder\Order\ReferenceType;
     use IO\Builder\Order\RelationType;
-
+    use Plenty\Plugin\Application;
+    use PluginAuctions\Services\Database\AuctionsService;
+    use IO\Services\ItemService;
 
     /**
      * Class AuctionOrderBuilderQuery
@@ -29,16 +29,22 @@
          */
         private $auctionService;
 
+        /*
+         *
+         */
+        private $itemService;
+
         /**
          * AuctionOrderBuilderQuery constructor.
          * @param Application $app
          * @param int $type
          * @param int $plentyId
          */
-        public function __construct(Application $app, AuctionsService $auctionService, int $type, int $plentyId)
+        public function __construct(Application $app, AuctionsService $auctionService, ItemService $itemService, int $type, int $plentyId)
         {
             $this -> app = $app;
-
+            $this -> auctionService = $auctionService;
+            $this -> $itemService = $itemService;
             $this -> order = [];
             $this -> order["typeId"] = $type;
             $this -> order["plentyId"] = $plentyId;
@@ -61,10 +67,10 @@
          */
         public function fromAuction($auction = null) : AuctionOrderBuilderQuery
         {
-//            if ($auction === null)
-//            {
-//                $auction = $this -> auctionService -> getAuction(1);
-//            }
+            if ($auction === null)
+            {
+                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
+            }
 
             // Add basket items to order
             $orderItemBuilder = $this -> app -> make(AuctionOrderItemBuilder::class);
@@ -73,16 +79,14 @@
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
             }
 
-//		$items = $this->basketService->getBasketItems();
-//
-//		if(!is_array($items))
-//		{
-//			throw new \Exception("Error while reading item data from basket");
-//		}
+		$item = $this->itemService->getItem($auction -> itemId);
 
-            $this -> withOrderItems(
-                $orderItemBuilder -> getOrderItem()
-            );
+		if(!is_array($item))
+		{
+			throw new \Exception("Error while reading item data from basket");
+		}
+
+            $this -> withOrderItems($orderItemBuilder -> getOrderItem($item));
 
             return $this;
         }

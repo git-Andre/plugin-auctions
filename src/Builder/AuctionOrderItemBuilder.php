@@ -1,65 +1,55 @@
 <?php //strict
 
-namespace PluginAuctions\Builder;
+    namespace PluginAuctions\Builder;
 
-use IO\Services\SessionStorageService;
-use Plenty\Modules\Basket\Models\Basket;
-use Plenty\Modules\Basket\Models\BasketItem;
-use IO\Services\CheckoutService;
-use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
-use Plenty\Modules\Frontend\Services\VatService;
-use IO\Builder\Order\OrderItemType;
+    use IO\Builder\Order\OrderItemType;
+    use IO\Services\CheckoutService;
+    use Plenty\Modules\Basket\Models\Basket;
+    use Plenty\Modules\Basket\Models\BasketItem;
+    use Plenty\Modules\Frontend\Services\VatService;
 
-/**
- * Class OrderItemBuilder
- * @package IO\Builder\Order
- */
-class AuctionOrderItemBuilder
-{
+
+    /**
+     * Class OrderItemBuilder
+     * @package IO\Builder\Order
+     */
+    class AuctionOrderItemBuilder {
+
 //	/**
 //	 * @var CheckoutService
 //	 */
 //	private $checkoutService;
 //
-    /**
-     * @var VatService
-     */
-	private $vatService;
+        /**
+         * @var VatService
+         */
+        private $vatService;
 
-	/**
-	 * OrderItemBuilder constructor.
-	 * @param CheckoutService $checkoutService
-	 */
-	public function __construct(VatService $vatService)
-	{
-		$this->vatService = $vatService;
-	}
+        /**
+         * OrderItemBuilder constructor.
+         * @param CheckoutService $checkoutService
+         */
+        public function __construct(VatService $vatService)
+        {
+            $this -> vatService = $vatService;
+        }
 
-//	/**
-//	 * Add a basket item to the order
-//	 * @param Basket $basket
-//	 * @param array $items
-//	 * @return array
-//	 */
-//	public function fromBasket(Basket $basket, array $items):array
-//	{
+        /**
+         * Add a basket item to the order
+         * @param Basket $basket
+         * @param array $item
+         * @return array
+         */
+        public function getOrderItem(array $item) : array
+        {
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
-//		$orderItems      = [];
-//		foreach($basket->basketItems as $basketItem)
-//		{
-//			//$basketItemName = $items[$basketItem->variationId]->itemDescription->name1;
-//			$basketItemName = '';
-//			foreach($items as $item)
-//			{
-//				if($basketItem->variationId == $item['variationId'])
-//				{
-//                    $basketItemName = $item['variation']['data']['texts']['name1'];
-//				}
-//			}
-//
-//			array_push($orderItems, $this->basketItemToOrderItem($basketItem, (STRING)$basketItemName));
-//		}
-//
+            $orderItems = [];
+//			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
+            $auctionItemName = '';
+            $auctionItemName = $item['variation']['data']['texts']['name1'];
+
+            array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
+
 //
 //		// add shipping costs
 //        $shippingCosts = [
@@ -96,40 +86,40 @@ class AuctionOrderItemBuilder
 //			]
 //		];
 //		array_push($orderItems, $paymentSurcharge);
-//
-//
-//		return $orderItems;
-//	}
-//
+
+
+            return $orderItems;
+        }
+
 //	/**
 //	 * Add a basket item to the order
 //	 * @param BasketItem $basketItem
-//	 * @param string $basketItemName
+//	 * @param string $auctionItemName
 //	 * @return array
 //	 */
-	public function getOrderItem():array
-	{
+        private function buildOrderItem($item, string $auctionItemName) : array
+        {
 
-		return [
-			"typeId"            => OrderItemType::VARIATION,
-			"referrerId"        => 1,
-			"itemVariationId"   => 38443,
-			"quantity"          => 1,
-			"orderItemName"     => "hier kommt Name2 rein!!",
-			"shippingProfileId" => 34,
-			"countryVatId"      => $this->vatService->getCountryVatId(),
+            return [
+                "typeId"            => OrderItemType::VARIATION,
+                "referrerId"        => 1,
+                "itemVariationId"   => 38443, // $basketItem->variationId,
+                "quantity"          => 1,
+                "orderItemName"     => $auctionItemName,
+                "shippingProfileId" => 34,
+                "countryVatId"      => $this -> vatService -> getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
-			//"vatField"			=> $basketItem->vatField,// TODO
+                //"vatField"			=> $basketItem->vatField,// TODO
 //            "orderProperties"   => $basketItemProperties,
-			"amounts"           => [
-				[
-					"currency"           => "EUR",
-					"priceOriginalGross" => 74.56,
-                    "surcharge" => 0,
-					"isPercentage" => 1
-				]
-			]
-		];
-	}
+                "amounts"           => [
+                    [
+                        "currency"           => "EUR",
+                        "priceOriginalGross" => 74.56, // $basketItem->price
+                        "surcharge"          => 0,
+                        "isPercentage"       => 1
+                    ]
+                ]
+            ];
+        }
 
-}
+    }
