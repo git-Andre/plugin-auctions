@@ -100,9 +100,11 @@
             if (is_array($orderItems))
             {
                 $order["orderItems"] = $orderItems;
+                $order = $this -> orderRepository -> createOrder($order);
+
+                return 'test:' . $orderItems;
             }
 
-            $order = $this -> orderRepository -> createOrder($order);
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //
 //        if($customerService->getContactId() <= 0)
@@ -113,7 +115,8 @@
 //        // reset basket after order was created
 //        $this->basketService->resetBasket();
 
-            return LocalizedOrder ::wrap($order, "de");
+            return $order;
+//            return LocalizedOrder ::wrap($order, "de");
         }
 
 //	private function saveOrderContactWish($orderId, $text = '')
