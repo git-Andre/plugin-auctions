@@ -26,7 +26,6 @@
 //	/**
 //	 * @var BasketService
 //	 */
-//        private $auctionOrderItemBuilder;
 //    /**
 //     * @var SessionStorageService
 //     */
@@ -45,13 +44,10 @@
          */
         public function __construct(
 //            OrderRepositoryContract $auctionOrderItemBuilder,
-            AuctionOrderItemBuilder $basketService,
 //        SessionStorageService $sessionStorage,
             FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
         )
         {
-            $this -> orderRepository = $orderRepository;
-//            $this -> auctionOrderItemBuilder = $auctionOrderItemBuilder;
 //        $this->sessionStorage  = $sessionStorage;
             $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
         }
