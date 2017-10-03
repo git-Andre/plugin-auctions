@@ -11,6 +11,9 @@
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
 //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
+//    use Plenty\Modules\Frontend\Services\VatService;
+    use IO\Builder\Order\OrderItemType;
+
 
 
     /**
