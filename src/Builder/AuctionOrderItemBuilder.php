@@ -21,21 +21,20 @@ class AuctionOrderItemBuilder
 //	 */
 //	private $checkoutService;
 //
-//    /**
-//     * @var VatService
-//     */
-//	private $vatService;
-//
-//	/**
-//	 * OrderItemBuilder constructor.
-//	 * @param CheckoutService $checkoutService
-//	 */
-//	public function __construct(CheckoutService $checkoutService, VatService $vatService)
-//	{
-//		$this->checkoutService = $checkoutService;
-//		$this->vatService = $vatService;
-//	}
-//
+    /**
+     * @var VatService
+     */
+	private $vatService;
+
+	/**
+	 * OrderItemBuilder constructor.
+	 * @param CheckoutService $checkoutService
+	 */
+	public function __construct(VatService $vatService)
+	{
+		$this->vatService = $vatService;
+	}
+
 //	/**
 //	 * Add a basket item to the order
 //	 * @param Basket $basket
@@ -108,26 +107,25 @@ class AuctionOrderItemBuilder
 //	 * @param string $basketItemName
 //	 * @return array
 //	 */
-	private function basketItemToOrderItem(BasketItem $basketItem, string $basketItemName):array
+	private function getOrderItem():array
 	{
 
 		return [
 			"typeId"            => OrderItemType::VARIATION,
-			"referrerId"        => $basketItem->referrerId,
-			"itemVariationId"   => $basketItem->variationId,
-			"quantity"          => $basketItem->quantity,
-			"orderItemName"     => $basketItemName,
-			"shippingProfileId" => $basketItem->shippingProfileId,
-			"countryVatId"      => $this->vatService->getCountryVatId(),
-			"vatRate"           => $basketItem->vat,
+			"referrerId"        => 1,
+			"itemVariationId"   => 38443,
+			"quantity"          => 1,
+			"orderItemName"     => "hier kommt Name2 rein!!",
+			"shippingProfileId" => 34,
+//			"countryVatId"      => $this->vatService->getCountryVatId(),
+//			"vatRate"           => $basketItem->vat,
 			//"vatField"			=> $basketItem->vatField,// TODO
-            "orderProperties"   => $basketItemProperties,
+//            "orderProperties"   => $basketItemProperties,
 			"amounts"           => [
 				[
-					"currency"           => $this->checkoutService->getCurrency(),
-					"priceOriginalGross" => $priceOriginal,
-                    "surcharge" => $attributeTotalMarkup,
-					"rebate"	=> $rebate,
+					"currency"           => "EUR",
+					"priceOriginalGross" => 74.56,
+                    "surcharge" => 0,
 					"isPercentage" => 1
 				]
 			]

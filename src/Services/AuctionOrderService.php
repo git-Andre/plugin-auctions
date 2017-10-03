@@ -7,13 +7,10 @@
     use IO\Builder\Order\OrderOptionSubType;
     use IO\Builder\Order\OrderType;
     use IO\Models\LocalizedOrder;
-    use IO\Services\CustomerService;
     use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-
-    use PluginAuctions\Builder\AuctionOrderItemBuilder;
-
+//    use PluginAuctions\Builder\AuctionOrderItemBuilder;
 
 
     /**
@@ -29,7 +26,7 @@
 //	/**
 //	 * @var BasketService
 //	 */
-//	private $basketService;
+//        private $auctionOrderItemBuilder;
 //    /**
 //     * @var SessionStorageService
 //     */
@@ -47,14 +44,14 @@
          * @param \IO\Services\SessionStorageService $sessionStorage
          */
         public function __construct(
-            OrderRepositoryContract $orderRepository,
-//		BasketService $basketService,
+//            OrderRepositoryContract $auctionOrderItemBuilder,
+            AuctionOrderItemBuilder $basketService,
 //        SessionStorageService $sessionStorage,
             FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
         )
         {
             $this -> orderRepository = $orderRepository;
-//		$this->basketService   = $basketService;
+//            $this -> auctionOrderItemBuilder = $auctionOrderItemBuilder;
 //        $this->sessionStorage  = $sessionStorage;
             $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
         }
@@ -76,7 +73,6 @@
 
             $order = pluginApp(OrderBuilder::class)
                 -> prepare(OrderType::ORDER)
-
 //                -> fromBasket() //TODO: Add shipping costs & payment surcharge as OrderItem
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
@@ -97,11 +93,11 @@
 //                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $checkoutService -> getShippingProfileId())
 //                -> done()
 //            ;
-//
+//getItemToOrderItem
 
+            array_push($order, $this -> getOrderItem());
 
-
-		$order = $this->orderRepository->createOrder($order);
+            $order = $this -> orderRepository -> createOrder($order);
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
 //
 //        if($customerService->getContactId() <= 0)
@@ -348,4 +344,29 @@
 //
 //        return null;
 //    }
+        private function getOrderItem():array
+        {
+
+            return [
+                "typeId"            => OrderItemType::VARIATION,
+                "referrerId"        => 1,
+                "itemVariationId"   => 38443,
+                "quantity"          => 1,
+                "orderItemName"     => "hier kommt Name2 rein!!",
+                "shippingProfileId" => 34,
+//			"countryVatId"      => $this->vatService->getCountryVatId(),
+//			"vatRate"           => $basketItem->vat,
+                //"vatField"			=> $basketItem->vatField,// TODO
+//            "orderProperties"   => $basketItemProperties,
+                "amounts"           => [
+                    [
+                        "currency"           => "EUR",
+                        "priceOriginalGross" => 74.56,
+                        "surcharge" => 0,
+                        "isPercentage" => 1
+                    ]
+                ]
+            ];
+        }
+
     }
