@@ -1,6 +1,6 @@
 <?php //strict
 
-namespace IO\Builder\Order;
+namespace PluginAuctions\Builder\Order;
 
 use IO\Services\SessionStorageService;
 use Plenty\Modules\Basket\Models\Basket;
@@ -13,7 +13,7 @@ use Plenty\Modules\Frontend\Services\VatService;
  * Class OrderItemBuilder
  * @package IO\Builder\Order
  */
-class OrderItemBuilder
+class AuctionOrderItemBuilder
 {
 	/**
 	 * @var CheckoutService
