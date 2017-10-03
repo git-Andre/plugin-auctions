@@ -46,11 +46,14 @@
          * @param \IO\Services\SessionStorageService $sessionStorage
          */
         public function __construct(
-//            OrderRepositoryContract $auctionOrderItemBuilder,
+            OrderRepositoryContract $orderRepository,
+//		BasketService $basketService,
 //        SessionStorageService $sessionStorage,
             FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
         )
         {
+            $this -> orderRepository = $orderRepository;
+//		$this->basketService   = $basketService;
 //        $this->sessionStorage  = $sessionStorage;
             $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
         }
