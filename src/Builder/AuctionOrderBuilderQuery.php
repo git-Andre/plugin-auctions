@@ -61,10 +61,10 @@
          */
         public function fromAuction($auction = null) : AuctionOrderBuilderQuery
         {
-            if ($auction === null)
-            {
-                $auction = $this -> auctionService -> getAuction(1);
-            }
+//            if ($auction === null)
+//            {
+//                $auction = $this -> auctionService -> getAuction(1);
+//            }
 
             // Add basket items to order
             $orderItemBuilder = $this -> app -> make(AuctionOrderItemBuilder::class);
