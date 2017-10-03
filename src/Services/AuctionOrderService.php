@@ -66,13 +66,13 @@
                 -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
                 -> done();
 
-            $orderItems = $this -> getOrderItem();
-            if (is_array($orderItems))
-            {
-                $order["orderItems"] = $orderItems;
-
-                return 'test:' . $orderItems;
-            }
+//            $orderItems = $this -> getOrderItem();
+//            if (is_array($orderItems))
+//            {
+//                $order["orderItems"] = $orderItems;
+//
+//                return 'test:' . $orderItems;
+//            }
                 $order = $this -> orderRepository -> createOrder($order);
 
 //		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));

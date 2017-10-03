@@ -4,6 +4,8 @@
 
     use Plenty\Plugin\Application;
     use PluginAuctions\Services\Database\AuctionsService;
+    use IO\Builder\Order\ReferenceType;
+    use IO\Builder\Order\RelationType;
 
 
     /**
