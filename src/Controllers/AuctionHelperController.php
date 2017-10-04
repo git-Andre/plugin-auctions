@@ -54,4 +54,12 @@
             }
             return "kein Kunde...";
         }
+        public function auctionParamsBuilder(int $auctionId)
+        {
+            if ($auctionId > 0)
+            {
+                return $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+            }
+            return "keine Auktion...";
+        }
     }

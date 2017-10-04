@@ -36,25 +36,47 @@
         private $userSession = null;
 
         private $itemService;
+        private $auctionService;
 
         public function __construct(
+            AuctionsServiceService $auctionService,
             ItemService $itemService,
             ContactRepositoryContract $contactRepository,
             ContactAddressRepositoryContract $contactAddressRepository,
             AddressRepositoryContract $addressRepository
         )
         {
+            $this -> $auctionService = $auctionService;
             $this -> itemService = $itemService;
             $this -> contactRepository = $contactRepository;
             $this -> contactAddressRepository = $contactAddressRepository;
             $this -> addressRepository = $addressRepository;
         }
 
+        public function auctionParamsBuilder($auctonId)
+        {
+            $auction = $this -> auctionService -> getAuction($auctonId);
+            $lastBidder = end($auction -> bidderList);
+            $lastPrice = $lastBidder['bidPrice'];
+            $lastCustomerId = $lastBidder['customerId'];
+
+            $item = $this -> getItemById($auction -> itemId);
+
+            // variation id - services.item.getVariation(item.documents[0].data.variation.id)
+            // {% set itemVariationData = itemGetVariation.documents[0].data %}
+            //  <title>{{ item.documents[0].data.texts | itemName(configItemName) }}
+            // {{ item.documents[0].data.texts | itemName(2) }}
+
+            $customer = $this -> getCustomerById($lastCustomerId);
+            return $customer;
+        }
+
+
         public function getItemById(int $itemId)
         {
             $item = $this -> itemService -> getItem($itemId);
 
-            return $item['documents'];
+            return $item['documents'][0]['data'];
         }
 
         /**
@@ -69,8 +91,10 @@
             {
                 return $contact;
             }
+
             return "kein Kunde...";
         }
+
         public function getCustomerAddresses(int $contactId)
         {
             $contactAddresses = $this -> contactAddressRepository -> getAddresses($contactId);
@@ -79,6 +103,7 @@
             {
                 return $contactAddresses;
             }
+
             return "kein Kunde...";
         }
     }

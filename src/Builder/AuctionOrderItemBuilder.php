@@ -14,20 +14,6 @@
      */
     class AuctionOrderItemBuilder {
 
-//	/**
-//	 * @var CheckoutService
-//	 */
-//	private $checkoutService;
-//
-        /**
-         * @var VatService
-         */
-//        private $vatService;
-
-        /**
-         * OrderItemBuilder constructor.
-         * @param CheckoutService $checkoutService
-         */
         public function __construct(
 //            VatService $vatService
         )
@@ -35,11 +21,6 @@
 //            $this -> vatService = $vatService;
         }
 
-        /**
-         * Add auction item to the order
-         * @param array $item
-         * @return array
-         */
         public function getOrderItem(array $item) : array
         {
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
@@ -55,11 +36,6 @@
             return $orderItems;
         }
 
-        /**
-         * @param $item
-         * @param string $auctionItemName
-         * @return array
-         */
         private function buildOrderItem($item, string $auctionItemName) : array
         {
 
