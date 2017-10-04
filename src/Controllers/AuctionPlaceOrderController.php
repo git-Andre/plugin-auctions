@@ -1,7 +1,7 @@
 <?php //strict
     namespace PluginAuctions\Controllers;
 
-    use IO\Services\NotificationService;
+//    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
 
     use PluginAuctions\Services\AuctionOrderService;
@@ -21,8 +21,7 @@
          * @return \Symfony\Component\HttpFoundation\Response
          */
         public function placeOrder(
-            AuctionOrderService $orderService,
-            NotificationService $notificationService
+            AuctionOrderService $orderService
         )
         {
 
@@ -35,10 +34,7 @@
             }
             catch ( \Exception $exception )
             {
-                // TODO get better error text
-                $notificationService -> error($exception -> getMessage());
-
-                return "checkout"; // $response->redirectTo("checkout");
+                return $exception -> getMessage(); // $response->redirectTo("checkout");
             }
         }
 
