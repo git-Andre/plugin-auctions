@@ -81,5 +81,8 @@
             $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
                     -> where('customerId', '\d+')
             ;
+            $router -> get('api/testcustomeraddresses/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerAddresses')
+                    -> where('customerId', '\d+')
+            ;
         }
     }

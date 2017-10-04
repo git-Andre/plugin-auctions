@@ -50,11 +50,11 @@
             $this -> addressRepository = $addressRepository;
         }
 
-        public function getItemById($itemId)
+        public function getItemById(int $itemId)
         {
             $item = $this -> itemService -> getItem($itemId);
 
-            return $item;
+            return $item['documents'];
         }
 
         /**
@@ -68,6 +68,16 @@
             if ($contact)
             {
                 return $contact;
+            }
+            return "kein Kunde...";
+        }
+        public function getCustomerAddresses(int $contactId)
+        {
+            $contactAddresses = $this -> $contactAddressRepository -> getAddresses($contactId);
+
+            if ($contactAddresses)
+            {
+                return $contactAddresses;
             }
             return "kein Kunde...";
         }

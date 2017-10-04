@@ -46,4 +46,12 @@
 
             return "kein Kunde...";
         }
+        public function testCustomerAddresses(int $contactId)
+        {
+            if ($contactId > 0)
+            {
+                return $this -> auctionHelperService -> getCustomerAddresses($contactId);
+            }
+            return "kein Kunde...";
+        }
     }
