@@ -35,7 +35,6 @@
          */
         private $userSession = null;
 
-
         private $itemService;
 
         public function __construct(
@@ -55,7 +54,7 @@
         {
             $item = $this -> itemService -> getItem($itemId);
 
-            return $item -> documents -> data;
+            return $item;
         }
 
         /**
