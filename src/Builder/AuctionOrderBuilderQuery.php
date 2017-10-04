@@ -44,7 +44,7 @@
         {
             $this -> app = $app;
             $this -> auctionService = $auctionService;
-            $this -> $itemService = $itemService;
+            $this -> itemService = $itemService;
             $this -> order = [];
             $this -> order["typeId"] = $type;
             $this -> order["plentyId"] = $plentyId;
