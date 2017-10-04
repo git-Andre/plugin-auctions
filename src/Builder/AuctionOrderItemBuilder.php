@@ -47,8 +47,8 @@
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
 //			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
-            $auctionItemName = 'test';
-//            $auctionItemName = $item['variation']['data']['texts']['name1'];
+//            $auctionItemName = 'test';
+            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
 
             array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
 
@@ -105,7 +105,7 @@
             return [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 1,
-                "itemVariationId"   => 38443, // $basketItem->variationId,
+                "itemVariationId"   => $item['variationId'], // $basketItem->variationId,
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
                 "shippingProfileId" => 34,

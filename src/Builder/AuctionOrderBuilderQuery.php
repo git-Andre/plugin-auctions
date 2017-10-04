@@ -65,15 +65,18 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auction = null) : AuctionOrderBuilderQuery
+        public function fromAuction($auction) : AuctionOrderBuilderQuery
         {
             if ($auction === null)
             {
-                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
+//                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
+                throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionId: $auctionId");
+
             }
 
-            // Add basket items to order
+            // Add auction item to order
             $orderItemBuilder = $this -> app -> make(AuctionOrderItemBuilder::class);
+
             if ( ! $orderItemBuilder instanceof AuctionOrderItemBuilder)
             {
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
