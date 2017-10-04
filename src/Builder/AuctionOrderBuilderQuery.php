@@ -60,8 +60,7 @@
         }
 
         /**
-         * Build order from basket data
-         * @param null $basket
+         * @param $auctionId
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */

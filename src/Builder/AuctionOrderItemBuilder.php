@@ -5,7 +5,6 @@
     use IO\Builder\Order\OrderItemType;
     use IO\Services\CheckoutService;
     use Plenty\Modules\Basket\Models\Basket;
-    use Plenty\Modules\Basket\Models\BasketItem;
     use Plenty\Modules\Frontend\Services\VatService;
 
 
@@ -23,17 +22,17 @@
         /**
          * @var VatService
          */
-        private $vatService;
+//        private $vatService;
 
         /**
          * OrderItemBuilder constructor.
          * @param CheckoutService $checkoutService
          */
         public function __construct(
-            VatService $vatService
+//            VatService $vatService
         )
         {
-            $this -> vatService = $vatService;
+//            $this -> vatService = $vatService;
         }
 
         /**
@@ -48,7 +47,9 @@
             $orderItems = [];
 //			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
 //            $auctionItemName = 'test';
-            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
+//            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
+            $auctionItemName = $item['texts']['name1']; // $item['variation']['data']['texts']['name1'];
+
 
             array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
 
@@ -105,13 +106,13 @@
             return [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 1,
-                "itemVariationId"   => $item['variationId'], // $basketItem->variationId,
+                "itemVariationId"   => $item['variation']['id'], // 38443
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
                 "shippingProfileId" => 34,
-                "countryVatId"      => $this -> vatService -> getCountryVatId(),
+//                "countryVatId"      => $this -> vatService -> getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
-                //"vatField"			=> $basketItem->vatField,// TODO
+                // "vatField"			=> $basketItem->vatField,// TODO
 //            "orderProperties"   => $basketItemProperties,
                 "amounts"           => [
                     [
