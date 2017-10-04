@@ -73,7 +73,10 @@
             ;
 
             $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder')
-                    -> where('auctionId', '\d+')
+                    -> where('auctionId', '\d+');
+
+            $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionTestController@testItemService')
+                    -> where('itemId', '\d+')
             ;
         }
     }
