@@ -75,8 +75,11 @@
             $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder')
                     -> where('auctionId', '\d+');
 
-            $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionTestController@testItemService')
+            $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
                     -> where('itemId', '\d+')
+            ;
+            $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
+                    -> where('customerId', '\d+')
             ;
         }
     }

@@ -14,6 +14,7 @@
 
     //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
 //    use Plenty\Modules\Frontend\Services\VatService;
+    use PluginAuctions\Services\AuctionHelperService;
 
 
     /**
@@ -27,6 +28,11 @@
          */
         private $orderRepository;
 
+        /**
+         * @var
+         */
+        private $auctionHelperService;
+
 //        /**
 //         * @var FrontendPaymentMethodRepositoryContract
 //         */
@@ -39,12 +45,12 @@
          * @param \IO\Services\SessionStorageService $sessionStorage
          */
         public function __construct(
-            OrderRepositoryContract $orderRepository
-//            FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
+            OrderRepositoryContract $orderRepository,
+            AuctionHelperService $auctionHelperService
         )
         {
             $this -> orderRepository = $orderRepository;
-//            $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
+            $this -> auctionHelperService = $auctionHelperService;
         }
 
         /**
@@ -64,7 +70,7 @@
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(41656, AddressType::DELIVERY)
                 -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
-                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config...
+                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
                 -> done();
 
                 $order = $this -> orderRepository -> createOrder($order);
