@@ -27,10 +27,10 @@
          */
         private $orderRepository;
 
-        /**
-         * @var FrontendPaymentMethodRepositoryContract
-         */
-        private $frontendPaymentMethodRepository;
+//        /**
+//         * @var FrontendPaymentMethodRepositoryContract
+//         */
+//        private $frontendPaymentMethodRepository;
 
         /**
          * OrderService constructor.
@@ -39,19 +39,19 @@
          * @param \IO\Services\SessionStorageService $sessionStorage
          */
         public function __construct(
-            OrderRepositoryContract $orderRepository,
-            FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
+            OrderRepositoryContract $orderRepository
+//            FrontendPaymentMethodRepositoryContract $frontendPaymentMethodRepository
         )
         {
             $this -> orderRepository = $orderRepository;
-            $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
+//            $this -> frontendPaymentMethodRepository = $frontendPaymentMethodRepository;
         }
 
         /**
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder() // : LocalizedOrder
+        public function placeOrder() : LocalizedOrder
         {
 //          $checkoutService = pluginApp(CheckoutService::class);
 //          $customerService = pluginApp(CustomerService::class);
@@ -62,71 +62,15 @@
                 -> withContactId(7076)
                 -> withAddressId(41656, AddressType::BILLING)
                 -> withAddressId(41656, AddressType::DELIVERY)
-//                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6000)
-//                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34)
+                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
+                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config...
                 -> done();
 
-//            $orderItems = $this -> getOrderItem();
-//            if (is_array($orderItems))
-//            {
-//                $order["orderItems"] = $orderItems;
-//
-//                return 'test:' . $orderItems;
-//            }
                 $order = $this -> orderRepository -> createOrder($order);
 
-//		$this->saveOrderContactWish($order->id, $this->sessionStorage->getSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH));
-//
-//        if($customerService->getContactId() <= 0)
-//        {
-//            $this->sessionStorage->setSessionValue(SessionStorageKeys::LATEST_ORDER_ID, $order->id);
-//        }
-
-//        // reset basket after order was created
-//        $this->basketService->resetBasket();
-
-            return $order;
-//            return LocalizedOrder ::wrap($order, "de");
+//            return $order;
+            return LocalizedOrder ::wrap($order, "de");
         }
-
-//	private function saveOrderContactWish($orderId, $text = '')
-//    {
-//        if(!is_null($text) && strlen($text))
-//        {
-//            /**
-//             * @var ContactWishRepositoryContract $contactWishRepo
-//             */
-//            $contactWishRepo = pluginApp(ContactWishRepositoryContract::class);
-//            $contactWishRepo->createContactWish($orderId, nl2br($text));
-//            $this->sessionStorage->setSessionValue(SessionStorageKeys::ORDER_CONTACT_WISH, null);
-//        }
-//    }
-
-
-//        private function getOrderItem() : array
-//        {
-//
-//            return [
-//                "typeId"            => OrderItemType::VARIATION,
-//                "referrerId"        => 1,
-//                "itemVariationId"   => 38443,
-//                "quantity"          => 1,
-//                "orderItemName"     => "hier kommt Name2 rein!!",
-//                "shippingProfileId" => 34,
-////			"countryVatId"      => $this->vatService->getCountryVatId(),
-////			"vatRate"           => $basketItem->vat,
-//                //"vatField"			=> $basketItem->vatField,// TODO
-////            "orderProperties"   => $basketItemProperties,
-//                "amounts"           => [
-//                    [
-//                        "currency"           => "EUR",
-//                        "priceOriginalGross" => 74.56,
-//                        "surcharge"          => 0,
-//                        "isPercentage"       => 1
-//                    ]
-//                ]
-//            ];
-//        }
 
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)
 //    {
@@ -169,84 +113,7 @@
 //
 //        return LocalizedOrder::wrap($order, 'de');
 //    }
-//
-//    /**
-//     * Get a list of orders for a contact
-//     * @param int $contactId
-//     * @param int $page
-//     * @param int $items
-//     * @param array $filters
-//     * @return PaginatedResult
-//     */
-//    public function getOrdersForContact(int $contactId, int $page = 1, int $items = 50, array $filters = []):PaginatedResult
-//    {
-//        $this->orderRepository->setFilters($filters);
-//
-//        $orders = $this->orderRepository->allOrdersByContact(
-//            $contactId,
-//            $page,
-//            $items
-//        );
-//
-//        return LocalizedOrder::wrapPaginated( $orders, "de" );
-//    }
-//
-//    /**
-//     * Get the last order created by the current contact
-//     * @param int $contactId
-//     * @return LocalizedOrder
-//     */
-//    public function getLatestOrderForContact( int $contactId )
-//    {
-//        if($contactId > 0)
-//        {
-//            $order = $this->orderRepository->getLatestOrderByContactId( $contactId );
-//        }
-//        else
-//        {
-//            $order = $this->orderRepository->findOrderById($this->sessionStorage->getSessionValue(SessionStorageKeys::LATEST_ORDER_ID));
-//        }
-//
-//        if(!is_null($order))
-//        {
-//            return LocalizedOrder::wrap( $order, "de" );
-//        }
-//
-//        return null;
-//    }
-//
-//    /**
-//     * Return order status text by status id
-//     * @param $statusId
-//     * @return string
-//     */
-//	public function getOrderStatusText($statusId)
-//    {
-//	    //OrderStatusTexts::$orderStatusTexts[(string)$statusId];
-//        return '';
-//    }
-//
-//    public function getOrderPropertyByOrderId($orderId, $typeId)
-//    {
-//        /**
-//         * @var OrderPropertyRepositoryContract $orderPropertyRepo
-//         */
-//        $orderPropertyRepo = pluginApp(OrderPropertyRepositoryContract::class);
-//        return $orderPropertyRepo->findByOrderId($orderId, $typeId);
-//    }
-//
-//    /**
-//     * List all payment methods available for switch in MyAccount
-//     *
-//     * @param int $currentPaymentMethodId
-//     * @param null $orderId
-//     * @return \Illuminate\Support\Collection
-//     */
-//    public function getPaymentMethodListForSwitch($currentPaymentMethodId = 0, $orderId = null)
-//    {
-//        return $this->frontendPaymentMethodRepository->getCurrentPaymentMethodsListForSwitch($currentPaymentMethodId, $orderId, $this->sessionStorage->getLang());
-//    }
-//
+
 //    /**
 //     * @param $paymentMethodId
 //     * @param int $orderId
