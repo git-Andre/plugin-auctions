@@ -51,7 +51,7 @@
             $this -> addressRepository = $addressRepository;
         }
 
-        public function getItemById(int $itemId)
+        public function getItemById($itemId)
         {
             $item = $this -> itemService -> getItem($itemId);
 
