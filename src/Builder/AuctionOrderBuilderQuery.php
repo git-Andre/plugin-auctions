@@ -14,32 +14,14 @@
      */
     class AuctionOrderBuilderQuery {
 
-        /**
-         * @var array
-         */
         private $order;
 
-        /**
-         * @var Application
-         */
         private $app;
 
-        /**
-         * @var AuctionsService
-         */
         private $auctionService;
 
-        /*
-         *
-         */
         private $itemService;
 
-        /**
-         * AuctionOrderBuilderQuery constructor.
-         * @param Application $app
-         * @param int $type
-         * @param int $plentyId
-         */
         public function __construct(Application $app, AuctionsService $auctionService, ItemService $itemService, int $type, int $plentyId)
         {
             $this -> app = $app;

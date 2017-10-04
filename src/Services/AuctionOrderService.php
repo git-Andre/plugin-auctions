@@ -20,16 +20,10 @@
      */
     class AuctionOrderService {
 
-        /**
-         * @var
-         */
         private $orderRepository;
 
-        /**
-         * AuctionOrderService constructor.
-         * @param OrderRepositoryContract $orderRepository
-         * @param AuctionHelperService $auctionHelperService
-         */
+        private $auctionHelperService;
+
         public function __construct(
             OrderRepositoryContract $orderRepository,
             AuctionHelperService $auctionHelperService
