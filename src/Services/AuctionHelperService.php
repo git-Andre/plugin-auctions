@@ -73,7 +73,7 @@
         }
         public function getCustomerAddresses(int $contactId)
         {
-            $contactAddresses = $this -> $contactAddressRepository -> getAddresses($contactId);
+            $contactAddresses = $this -> contactAddressRepository -> getAddresses($contactId);
 
             if ($contactAddresses)
             {
