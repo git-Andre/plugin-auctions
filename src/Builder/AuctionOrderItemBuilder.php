@@ -47,7 +47,7 @@
 //			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
 //            $auctionItemName = 'test';
 //            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
-            $auctionItemName = $item['texts']['name1'];
+            $auctionItemName = "test name"; // $item['texts']['name1'];
 
 
             array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
