@@ -65,9 +65,9 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auction) : AuctionOrderBuilderQuery
+        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
         {
-            if ($auction === null)
+            if ($auctionId === null)
             {
 //                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionId: $auctionId");
