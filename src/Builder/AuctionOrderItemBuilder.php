@@ -36,8 +36,7 @@
         }
 
         /**
-         * Add a basket item to the order
-         * @param Basket $basket
+         * Add auction item to the order
          * @param array $item
          * @return array
          */
@@ -48,65 +47,26 @@
 //			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
 //            $auctionItemName = 'test';
 //            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
-            $auctionItemName = $item['texts']['name1']; // $item['variation']['data']['texts']['name1'];
+            $auctionItemName = $item['texts']['name1'];
 
 
             array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
 
-//
-//		// add shipping costs
-//        $shippingCosts = [
-//            "typeId"        => OrderItemType::SHIPPING_COSTS,
-//            "referrerId"    => $basket->basketItems->first()->referrerId,
-//            "quantity"      => 1,
-//            "orderItemName" => "shipping costs",
-//            "countryVatId"  => $this->vatService->getCountryVatId(),
-//            "vatRate"       => 0, // FIXME get vat rate for shipping costs
-//            "amounts"       => [
-//                [
-//                    "currency"              => $this->checkoutService->getCurrency(),
-//                    "priceOriginalGross"    => $basket->shippingAmount
-//                ]
-//            ]
-//        ];
-//        array_push($orderItems, $shippingCosts);
-//
-//		$paymentFee = pluginApp(FrontendPaymentMethodRepositoryContract::class)
-//			->getPaymentMethodFeeById($this->checkoutService->getMethodOfPaymentId());
-//
-//		$paymentSurcharge = [
-//			"typeId"        => OrderItemType::PAYMENT_SURCHARGE,
-//			"referrerId"    => $basket->basketItems->first()->referrerId,
-//			"quantity"      => 1,
-//			"orderItemName" => "payment surcharge",
-//			"countryVatId"  => $this->vatService->getCountryVatId(),
-//			"vatRate"       => 0, // FIXME get vat rate for shipping costs
-//			"amounts"       => [
-//				[
-//					"currency"           => $this->checkoutService->getCurrency(),
-//					"priceOriginalGross" => $paymentFee
-//				]
-//			]
-//		];
-//		array_push($orderItems, $paymentSurcharge);
-
-
             return $orderItems;
         }
 
-//	/**
-//	 * Add a basket item to the order
-//	 * @param BasketItem $basketItem
-//	 * @param string $auctionItemName
-//	 * @return array
-//	 */
+        /**
+         * @param $item
+         * @param string $auctionItemName
+         * @return array
+         */
         private function buildOrderItem($item, string $auctionItemName) : array
         {
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 1,
-                "itemVariationId"   => $item['variation']['id'], // 38443
+                "itemVariationId"   => 38443, // $item['variation']['id'], // 38443
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
                 "shippingProfileId" => 34,
