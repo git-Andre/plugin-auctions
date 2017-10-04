@@ -23,7 +23,7 @@
         /**
          * @var VatService
          */
-        private $vatService;
+//        private $vatService;
 
         /**
          * OrderItemBuilder constructor.
@@ -31,7 +31,7 @@
          */
         public function __construct(VatService $vatService)
         {
-            $this -> vatService = $vatService;
+//            $this -> vatService = $vatService;
         }
 
         /**
@@ -45,8 +45,8 @@
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
 //			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
-            $auctionItemName = '';
-            $auctionItemName = $item['variation']['data']['texts']['name1'];
+            $auctionItemName = 'test';
+//            $auctionItemName = $item['variation']['data']['texts']['name1'];
 
             array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
 
@@ -107,7 +107,7 @@
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
                 "shippingProfileId" => 34,
-                "countryVatId"      => $this -> vatService -> getCountryVatId(),
+//                "countryVatId"      => $this -> vatService -> getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
                 //"vatField"			=> $basketItem->vatField,// TODO
 //            "orderProperties"   => $basketItemProperties,
