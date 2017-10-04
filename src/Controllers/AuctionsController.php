@@ -5,6 +5,7 @@
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
     use PluginAuctions\Services\Database\AuctionsService;
+    // TODO Response ohne json_encode????
 
     class AuctionsController extends Controller {
 

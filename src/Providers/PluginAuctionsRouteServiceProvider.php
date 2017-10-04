@@ -36,13 +36,16 @@
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                    -> where('id', '\d+');
+                    -> where('id', '\d+')
+            ;
 
             $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList')
-                    -> where('id', '\d+');
+                    -> where('id', '\d+')
+            ;
 
             $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
-                    -> where('id', '\d+');
+                    -> where('id', '\d+')
+            ;
 
 
             $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
@@ -66,8 +69,11 @@
 
             // Order...
             $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
-                    -> where('orderId', '\d+');
+                    -> where('orderId', '\d+')
+            ;
 
-            $router -> get('api/placeorder', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder');
+            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder')
+                    -> where('auctionId', '\d+')
+            ;
         }
     }

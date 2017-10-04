@@ -51,10 +51,11 @@
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder() : LocalizedOrder
+        public function placeOrder($auctionId) : LocalizedOrder
         {
 //          $checkoutService = pluginApp(CheckoutService::class);
 //          $customerService = pluginApp(CustomerService::class);
+
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)

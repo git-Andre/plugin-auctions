@@ -14,21 +14,24 @@
      */
     class AuctionPlaceOrderController extends LayoutController {
 
-        /**
-         * @param OrderService $orderService
-         * @param NotificationService $notificationService
-         * @param Response $response
-         * @return \Symfony\Component\HttpFoundation\Response
-         */
-        public function placeOrder(
+        private $orderService;
+
+        public function __construct(
             AuctionOrderService $orderService
         )
         {
+            $this -> orderService = $orderService;
+        }
 
-
+        /**
+         * @param $auctionId
+         * @return \IO\Models\LocalizedOrder|string
+         */
+        public function placeOrder($auctionId)
+        {
             try
             {
-                $orderData = $orderService -> placeOrder();
+                $orderData = $this -> orderService -> placeOrder($auctionId); // helper für http-Trigger
 
 //                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
                 return $orderData;
@@ -41,7 +44,7 @@
 
         public function getOrderById(AuctionOrderService $orderService, int $orderId)
         {
-            $orderData = $orderService -> findOrderById($orderId);
+            $orderData = $this -> orderService -> findOrderById($orderId);
 
             return $orderData;
         }
