@@ -30,7 +30,8 @@
             {
                 $orderData = $orderService -> placeOrder();
 
-                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
+//                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
+                return $orderData;
             }
             catch ( \Exception $exception )
             {

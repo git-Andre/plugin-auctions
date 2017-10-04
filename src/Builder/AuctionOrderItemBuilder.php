@@ -23,15 +23,17 @@
         /**
          * @var VatService
          */
-//        private $vatService;
+        private $vatService;
 
         /**
          * OrderItemBuilder constructor.
          * @param CheckoutService $checkoutService
          */
-        public function __construct(VatService $vatService)
+        public function __construct(
+            VatService $vatService
+        )
         {
-//            $this -> vatService = $vatService;
+            $this -> vatService = $vatService;
         }
 
         /**
@@ -107,7 +109,7 @@
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
                 "shippingProfileId" => 34,
-//                "countryVatId"      => $this -> vatService -> getCountryVatId(),
+                "countryVatId"      => $this -> vatService -> getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
                 //"vatField"			=> $basketItem->vatField,// TODO
 //            "orderProperties"   => $basketItemProperties,
