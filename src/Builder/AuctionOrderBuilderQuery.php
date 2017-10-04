@@ -4,9 +4,9 @@
 
     use IO\Builder\Order\ReferenceType;
     use IO\Builder\Order\RelationType;
+    use IO\Services\ItemService;
     use Plenty\Plugin\Application;
     use PluginAuctions\Services\Database\AuctionsService;
-    use IO\Services\ItemService;
 
     /**
      * Class AuctionOrderBuilderQuery
@@ -82,12 +82,14 @@
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
             }
 
-		$item = $this->itemService->getItem($auction -> itemId);
+            $auction = $this -> auctionService -> getAuction($auctionId);
 
-		if(!is_array($item))
-		{
-			throw new \Exception("Error while reading item data from basket");
-		}
+            $item = $this -> itemService -> getItem($auction -> itemId);
+
+            if ( ! is_array($item))
+            {
+                throw new \Exception("Error while reading item data from basket");
+            }
 
             $this -> withOrderItems($orderItemBuilder -> getOrderItem($item));
 
