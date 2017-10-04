@@ -8,9 +8,7 @@
     use IO\Models\LocalizedOrder;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-
     use PluginAuctions\Builder\AuctionOrderBuilder;
-    use PluginAuctions\Services\AuctionHelperService;
 
     //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
 //    use Plenty\Modules\Frontend\Services\VatService;
@@ -25,20 +23,21 @@
         /**
          * @var
          */
-//        private $auctionHelperService;
+        private $orderRepository;
 
-//        /**
-//         * OrderService constructor.
-//         * @param OrderRepositoryContract $orderRepository
-//         * @param BasketService $basketService
-//         * @param \IO\Services\SessionStorageService $sessionStorage
-//         */
-//        public function __construct(
-//            AuctionHelperService $auctionHelperService
-//        )
-//        {
-//            $this -> auctionHelperService = $auctionHelperService;
-//        }
+        /**
+         * AuctionOrderService constructor.
+         * @param OrderRepositoryContract $orderRepository
+         * @param AuctionHelperService $auctionHelperService
+         */
+        public function __construct(
+            OrderRepositoryContract $orderRepository,
+            AuctionHelperService $auctionHelperService
+        )
+        {
+            $this -> orderRepository = $orderRepository;
+            $this -> auctionHelperService = $auctionHelperService;
+        }
 
         /**
          * Place an order
@@ -47,8 +46,6 @@
         public function placeOrder($auctionId) : LocalizedOrder
         {
             $auctionHelperService = pluginApp(AuctionHelperService::class);
-//          $customerService = pluginApp(CustomerService::class);
-
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)

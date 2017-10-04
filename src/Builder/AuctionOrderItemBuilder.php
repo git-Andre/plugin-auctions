@@ -69,7 +69,7 @@
                 "itemVariationId"   => 38443, // $item['variation']['id'], // 38443
                 "quantity"          => 1,
                 "orderItemName"     => $auctionItemName,
-                "shippingProfileId" => 34,
+                "shippingProfileId" => 34, // Todo config ???
 //                "countryVatId"      => $this -> vatService -> getCountryVatId(),
 //			"vatRate"           => $basketItem->vat,
                 // "vatField"			=> $basketItem->vatField,// TODO
