@@ -1,7 +1,6 @@
 <?php //strict
-    namespace PluginAuctions\Controllers;
+    namespace PluginAuctions\Services;
 
-//    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
     use IO\Services\ItemService;
     use Plenty\Modules\Account\Address\Contracts\AddressRepositoryContract;
@@ -32,10 +31,6 @@
          */
         private $addressRepository;
         /**
-         * @var SessionStorageService
-         */
-        private $sessionStorage;
-        /**
          * @var UserSession
          */
         private $userSession = null;
@@ -47,15 +42,13 @@
             ItemService $itemService,
             ContactRepositoryContract $contactRepository,
             ContactAddressRepositoryContract $contactAddressRepository,
-            AddressRepositoryContract $addressRepository,
-            SessionStorageService $sessionStorage
+            AddressRepositoryContract $addressRepository
         )
         {
             $this -> itemService = $itemService;
             $this -> contactRepository = $contactRepository;
             $this -> contactAddressRepository = $contactAddressRepository;
             $this -> addressRepository = $addressRepository;
-            $this -> sessionStorage = $sessionStorage;
         }
 
         public function getItemById(int $itemId)
@@ -66,14 +59,16 @@
         }
 
         /**
-         * Find the current contact by ID
-         * @return null|Contact
+         * @param int $contactId
+         * @return Contact|string
          */
         public function getCustomerById(int $contactId)
         {
-            if ($contactId > 0)
+            $contact = $this -> contactRepository -> findContactById($contactId);
+
+            if ($contact)
             {
-                return $this -> contactRepository -> findContactById($contactId);
+                return $contact;
             }
             return "kein Kunde...";
         }

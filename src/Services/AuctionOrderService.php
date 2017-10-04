@@ -3,18 +3,17 @@
     namespace PluginAuctions\Services;
 
     use IO\Builder\Order\AddressType;
-    use PluginAuctions\Builder\AuctionOrderBuilder;
-    use IO\Builder\Order\OrderItemType;
     use IO\Builder\Order\OrderOptionSubType;
     use IO\Builder\Order\OrderType;
     use IO\Models\LocalizedOrder;
-    use Plenty\Modules\Frontend\PaymentMethod\Contracts\FrontendPaymentMethodRepositoryContract;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
 
+    use PluginAuctions\Builder\AuctionOrderBuilder;
+    use PluginAuctions\Services\AuctionHelperService;
+
     //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
 //    use Plenty\Modules\Frontend\Services\VatService;
-    use PluginAuctions\Services\AuctionHelperService;
 
 
     /**
@@ -24,34 +23,22 @@
     class AuctionOrderService {
 
         /**
-         * @var OrderRepositoryContract
-         */
-        private $orderRepository;
-
-        /**
          * @var
          */
-        private $auctionHelperService;
+//        private $auctionHelperService;
 
 //        /**
-//         * @var FrontendPaymentMethodRepositoryContract
+//         * OrderService constructor.
+//         * @param OrderRepositoryContract $orderRepository
+//         * @param BasketService $basketService
+//         * @param \IO\Services\SessionStorageService $sessionStorage
 //         */
-//        private $frontendPaymentMethodRepository;
-
-        /**
-         * OrderService constructor.
-         * @param OrderRepositoryContract $orderRepository
-         * @param BasketService $basketService
-         * @param \IO\Services\SessionStorageService $sessionStorage
-         */
-        public function __construct(
-            OrderRepositoryContract $orderRepository,
-            AuctionHelperService $auctionHelperService
-        )
-        {
-            $this -> orderRepository = $orderRepository;
-            $this -> auctionHelperService = $auctionHelperService;
-        }
+//        public function __construct(
+//            AuctionHelperService $auctionHelperService
+//        )
+//        {
+//            $this -> auctionHelperService = $auctionHelperService;
+//        }
 
         /**
          * Place an order
@@ -59,7 +46,7 @@
          */
         public function placeOrder($auctionId) : LocalizedOrder
         {
-//          $checkoutService = pluginApp(CheckoutService::class);
+            $auctionHelperService = pluginApp(AuctionHelperService::class);
 //          $customerService = pluginApp(CustomerService::class);
 
 
@@ -71,9 +58,10 @@
                 -> withAddressId(41656, AddressType::DELIVERY)
                 -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
                 -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
-                -> done();
+                -> done()
+            ;
 
-                $order = $this -> orderRepository -> createOrder($order);
+            $order = $this -> orderRepository -> createOrder($order);
 
 //            return $order;
             return LocalizedOrder ::wrap($order, "de");
