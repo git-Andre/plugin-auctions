@@ -10,6 +10,7 @@
 
     //use Plenty\Plugin\Http\Response;
 //use Plenty\Plugin\Http\Request;
+    use PluginAuctions\Services\Database\AuctionsService;
 
 
     /**
@@ -46,7 +47,7 @@
             AddressRepositoryContract $addressRepository
         )
         {
-            $this -> $auctionService = $auctionService;
+            $this -> auctionService = $auctionService;
             $this -> itemService = $itemService;
             $this -> contactRepository = $contactRepository;
             $this -> contactAddressRepository = $contactAddressRepository;
@@ -56,7 +57,7 @@
         public function auctionParamsBuilder($auctonId)
         {
             $auction = $this -> auctionService -> getAuction($auctonId);
-            $lastBidder = end($auction -> bidderList);
+            $lastBidder = array_slice($auction -> bidderList, -1)[0];
             $lastPrice = $lastBidder['bidPrice'];
             $lastCustomerId = $lastBidder['customerId'];
 
