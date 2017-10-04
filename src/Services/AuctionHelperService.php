@@ -40,7 +40,7 @@
         private $auctionService;
 
         public function __construct(
-            AuctionsServiceService $auctionService,
+            AuctionsService $auctionService,
             ItemService $itemService,
             ContactRepositoryContract $contactRepository,
             ContactAddressRepositoryContract $contactAddressRepository,
