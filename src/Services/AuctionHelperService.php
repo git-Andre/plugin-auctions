@@ -68,7 +68,8 @@
 
             $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::BILLING, true);
             $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::DELIVERY, true);
-            if ( ! $customerDeliveryAddress)
+
+            if ( ! $customerDeliveryAddress['id'] > 0 )
             {
                 $customerDeliveryAddress = $customerBillingAddress;
             }
