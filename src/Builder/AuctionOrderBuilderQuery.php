@@ -4,7 +4,12 @@
 
     use IO\Builder\Order\ReferenceType;
     use IO\Builder\Order\RelationType;
+
     use Plenty\Plugin\Application;
+
+    use PluginAuctions\Builder\AuctionOrderBuilder;
+    use PluginAuctions\Services\AuctionHelperService;
+
 
     /**
      * Class AuctionOrderBuilderQuery
@@ -16,15 +21,14 @@
 
         private $app;
 
-//        private $auctionService;
+        private $auctionHelperService;
 //
 //        private $itemService;
 
-        public function __construct(Application $app, int $type, int $plentyId)
+        public function __construct(Application $app, AuctionHelperService $auctionHelperService, int $type, int $plentyId)
         {
             $this -> app = $app;
-//            $this -> auctionService = $auctionService;
-//            $this -> itemService = $itemService;
+            $this -> auctionHelperService = $auctionHelperService;
             $this -> order = [];
             $this -> order["typeId"] = $type;
             $this -> order["plentyId"] = $plentyId;
@@ -44,13 +48,13 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auctionParams) : AuctionOrderBuilderQuery
+        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
         {
+            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+
             if ($auctionParams === null)
             {
-//                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionParams: $auctionParams");
-
             }
 
             // Add auction item to order
@@ -61,7 +65,10 @@
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
             }
 
+
             $this -> withOrderItems($orderItemBuilder -> getOrderItem($auctionParams));
+
+//            $this -> withOrderItems($orderItemBuilder -> fromBasket($basket, $items));
 
             return $this;
         }
