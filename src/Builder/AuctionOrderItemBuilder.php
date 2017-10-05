@@ -24,14 +24,14 @@
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
 
-            $auctionItemName = $auctionParams['orderItemName']; // $item['variation']['data']['texts']['name1'];
+//            $auctionItemName = $auctionParams['orderItemName']; // $item['variation']['data']['texts']['name1'];
 
-            array_push($orderItems, $this -> buildOrderItem($auctionParams, (STRING) $auctionItemName));
+            array_push($orderItems, $this -> buildOrderItem($auctionParams));
 
             return $orderItems;
         }
 
-        private function buildOrderItem($auctionParams, string $auctionItemName) : array
+        private function buildOrderItem($auctionParams) : array
         {
 
             return [
@@ -39,7 +39,7 @@
                 "referrerId"        => 1, // Mandant Shop ???
                 "itemVariationId"   => $auctionParams['variationId'], // $item['variation']['id'], // 38443
                 "quantity"          => 1, // bei Auktionen immer nur 1
-                "orderItemName"     => $auctionItemName,
+                "orderItemName"     => $auctionParams['orderItemName'],
                 "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
                 // "countryVatId"      => $this -> vatService -> getCountryVatId(),
                 // "vatRate"           => $basketItem->vat,
