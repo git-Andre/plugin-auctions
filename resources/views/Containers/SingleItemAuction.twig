@@ -1,12 +1,7 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-{#{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemData', 'dumpData': itemData } %}#}
-
-
 {% if ( auction ) %}
-
-    {#<resource name="auction" :data="{{ auction  | json_encode() }}"></resource>#}
 
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
@@ -27,7 +22,7 @@
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
-            {#Gegenwart#}
+        {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
@@ -35,9 +30,6 @@
             <auction-countdown
                     template="#vue-auction-countdown"
                     deadline="{{ auction.expiryDate }}"
-
-                    {#v-resource-push:deadline#}
-                    {#resource="deadline"#}
             >
             </auction-countdown>
 
@@ -88,7 +80,7 @@
 
             </div>
 
-            {#Vergangenheit #}
+        {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
@@ -118,8 +110,7 @@
                     </dd>
                 {% endif %}
             </dl>
-            {# component: variation (item) in basket des Winners legen - Ereignisaktion Email an Winner mit Kaufabwicklungslink... #}
-            {#  loggedInUser == WINNER -> Button jetzt bezahlen... #}
+
             {% if bidderListLast.customerId - 46987 == userdata.id %}
                 <auction-end
                 >

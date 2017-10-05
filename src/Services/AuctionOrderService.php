@@ -12,9 +12,6 @@
     use PluginAuctions\Builder\AuctionOrderBuilder;
     use PluginAuctions\Services\AuctionHelperService;
 
-    //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
-//    use Plenty\Modules\Frontend\Services\VatService;
-
 
     /**
      * Class OrderService

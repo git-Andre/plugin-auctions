@@ -22,8 +22,6 @@
         private $app;
 
         private $auctionHelperService;
-//
-//        private $itemService;
 
         public function __construct(Application $app, AuctionHelperService $auctionHelperService, int $type, int $plentyId)
         {
@@ -44,14 +42,12 @@
         }
 
         /**
-         * @param $auctionId
+         * @param $auctionParams
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
         public function fromAuction($auctionParams) : AuctionOrderBuilderQuery
         {
-//            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
-
             if ($auctionParams === null)
             {
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionParams: $auctionParams");
@@ -67,8 +63,6 @@
 
 
             $this -> withOrderItems($orderItemBuilder -> getOrderItem($auctionParams));
-
-//            $this -> withOrderItems($orderItemBuilder -> fromBasket($basket, $items));
 
             return $this;
         }

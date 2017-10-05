@@ -12,13 +12,6 @@
      */
     class AuctionOrderItemBuilder {
 
-        public function __construct(
-//            VatService $vatService
-        )
-        {
-//            $this -> vatService = $vatService;
-        }
-
         public function getOrderItem($auctionParams) : array
         {
             $orderItems = [];
@@ -40,10 +33,6 @@
                 "quantity"          => 1, // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionParams['orderItemName'],
                 "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
-                // "countryVatId"      => $this -> vatService -> getCountryVatId(),
-                // "vatRate"           => $basketItem->vat,
-                // "vatField"			=> $basketItem->vatField,// TODO
-                // "orderProperties"   => $basketItemProperties,
                 "amounts"           => [
                     [
                         "currency"           => "EUR",
