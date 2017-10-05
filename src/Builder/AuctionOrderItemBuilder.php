@@ -3,7 +3,6 @@
     namespace PluginAuctions\Builder;
 
     use IO\Builder\Order\OrderItemType;
-    use function PHPSTORM_META\type;
     use Plenty\Modules\Frontend\Services\VatService;
 
 
@@ -32,16 +31,17 @@
 
             array_push($orderItems, $this -> buildOrderItem($auctionParams));
 //
-//            if ($orderItems)
-//            {
-//                return $auctionParams;
-//            }
 
             return $orderItems;
         }
 
         private function buildOrderItem($auctionParams) : array
         {
+            if ($auctionParams)
+            {
+                return $auctionParams;
+            }
+
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
