@@ -65,8 +65,8 @@
             $itemVariationId = $item['item']['mainVariationId'];
             $itemNameForOrder = $item['texts'][0]['name1'];
 
-            $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, 1);
-            $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, 2);
+            $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, 1, true);
+            $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, 2, true);
 
             $auctionOrderParams = [
                 "lastPrice"               => $lastPrice,
@@ -86,9 +86,9 @@
             return $item['documents'][0]['data'];
         }
 
-        public function getCustomerAddresses(int $contactId)
+        public function getCustomerAddresses(int $contactId, int $typeId, $last)
         {
-            $contactAddresses = $this -> contactAddressRepository -> getAddresses($contactId);
+            $contactAddresses = $this -> contactAddressRepository -> findContactAddressByTypeId($contactId, $typeId, $last);
 
             if ($contactAddresses)
             {
