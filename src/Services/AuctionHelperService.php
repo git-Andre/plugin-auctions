@@ -69,9 +69,12 @@
             $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::BILLING, true);
             $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::DELIVERY, true);
 
-            if ( ! $customerDeliveryAddress['id'] > 0 )
+            $customerBillingAddressId = $customerBillingAddress['id'];
+            $customerDeliveryAddressId = $customerDeliveryAddress['id'];
+
+            if ( $customerDeliveryAddressId <= 0 )
             {
-                $customerDeliveryAddress = $customerBillingAddress;
+                $customerDeliveryAddressId = $customerBillingAddressId;
             }
 
             $auctionOrderParams = [
@@ -80,8 +83,8 @@
                 "itemVariationId"           => $itemVariationId,
                 "itemId"                    => $auction -> itemId,
                 "orderItemName"             => $itemNameForOrder,
-                "customerBillingAddressId"  => $customerBillingAddress['id'],
-                "customerDeliveryAddressId" => $customerDeliveryAddress['id']
+                "customerBillingAddressId"  => $customerBillingAddressId,
+                "customerDeliveryAddressId" => $customerDeliveryAddressId
             ];
 
             return (array) $auctionOrderParams;

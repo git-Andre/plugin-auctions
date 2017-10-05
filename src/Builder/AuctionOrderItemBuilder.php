@@ -21,16 +21,9 @@
 
         public function getOrderItem($auctionParams) : array
         {
-
-
-
-//		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
 
-//            $auctionItemName = $auctionParams['orderItemName']; // $item['variation']['data']['texts']['name1'];
-
             array_push($orderItems, $this -> buildOrderItem($auctionParams));
-//
 
             return $orderItems;
         }
