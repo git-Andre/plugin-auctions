@@ -8,7 +8,9 @@
     use IO\Models\LocalizedOrder;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
+
     use PluginAuctions\Builder\AuctionOrderBuilder;
+    use PluginAuctions\Services\AuctionHelperService;
 
     //    use PluginAuctions\Builder\AuctionOrderItemBuilder;
 //    use Plenty\Modules\Frontend\Services\VatService;
@@ -22,30 +24,35 @@
 
         private $orderRepository;
 
-//        private $auctionHelperService;
+        private $auctionHelperService;
 
         public function __construct(
-            OrderRepositoryContract $orderRepository
-//            AuctionHelperService $auctionHelperService
+            OrderRepositoryContract $orderRepository,
+            AuctionHelperService $auctionHelperService
         )
         {
             $this -> orderRepository = $orderRepository;
-//            $this -> auctionHelperService = $auctionHelperService;
+            $this -> auctionHelperService = $auctionHelperService;
         }
 
         /**
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder($auctionId) // : LocalizedOrder
+        public function placeOrder($auctionId) //: LocalizedOrder
         {
-            $auctionHelperService = pluginApp(AuctionHelperService::class);
+//            $auctionHelperService = pluginApp(AuctionHelperService::class);
 
-            $auctionParams = $auctionHelperService -> auctionParamsBuilder($auctionId);
+            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+
+            if ($auctionParams)
+            {
+                return $auctionParams['contactId'];
+            }
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
-                -> fromAuction($auctionId) //TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
+                -> fromAuction($auctionId) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
                 -> withContactId($auctionParams['contactId'])
                 -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
                 -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
