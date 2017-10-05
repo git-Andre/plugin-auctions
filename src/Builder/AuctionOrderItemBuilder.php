@@ -25,7 +25,7 @@
 
             if ($auctionParams)
             {
-                return gettype($orderItemBuilder);
+                return gettype($auctionParams);
             }
 
 
