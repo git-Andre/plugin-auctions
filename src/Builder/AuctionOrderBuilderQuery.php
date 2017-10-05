@@ -25,8 +25,8 @@
         public function __construct(Application $app, AuctionsService $auctionService, ItemService $itemService, int $type, int $plentyId)
         {
             $this -> app = $app;
-            $this -> auctionService = $auctionService;
-            $this -> itemService = $itemService;
+//            $this -> auctionService = $auctionService;
+//            $this -> itemService = $itemService;
             $this -> order = [];
             $this -> order["typeId"] = $type;
             $this -> order["plentyId"] = $plentyId;
@@ -46,12 +46,12 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
+        public function fromAuction($auctionParams) : AuctionOrderBuilderQuery
         {
-            if ($auctionId === null)
+            if ($auctionParams === null)
             {
 //                $auction = $this -> auctionService -> getAuction(1); // von Cronjob holen
-                throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionId: $auctionId");
+                throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionParams: $auctionParams");
 
             }
 
@@ -63,16 +63,16 @@
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
             }
 
-            $auction = $this -> auctionService -> getAuction($auctionId);
+//            $auction = $this -> auctionService -> getAuction($auctionId);
 
-            $item = $this -> itemService -> getItem($auction -> itemId);
+//            $item = $this -> itemService -> getItem($auctionParams ['itemId']);
+//
+//            if ( ! is_array($item))
+//            {
+//                throw new \Exception("Error while reading item data from basket");
+//            }
 
-            if ( ! is_array($item))
-            {
-                throw new \Exception("Error while reading item data from basket");
-            }
-
-            $this -> withOrderItems($orderItemBuilder -> getOrderItem($item));
+            $this -> withOrderItems($orderItemBuilder -> getOrderItem($auctionParams));
 
             return $this;
         }

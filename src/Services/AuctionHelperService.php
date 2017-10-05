@@ -1,9 +1,9 @@
 <?php //strict
     namespace PluginAuctions\Services;
 
+    use IO\Builder\Order\AddressType;
     use IO\Controllers\LayoutController;
     use IO\Services\ItemService;
-    use IO\Builder\Order\AddressType;
     use Plenty\Modules\Account\Address\Contracts\AddressRepositoryContract;
     use Plenty\Modules\Account\Contact\Contracts\ContactAddressRepositoryContract;
     use Plenty\Modules\Account\Contact\Contracts\ContactRepositoryContract;
@@ -68,18 +68,21 @@
 
             $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::BILLING, true);
             $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::DELIVERY, true);
-            if (!$customerDeliveryAddress)
+            if ( ! $customerDeliveryAddress)
             {
                 $customerDeliveryAddress = $customerBillingAddress;
             }
 
             $auctionOrderParams = [
-                "lastPrice"               => $lastPrice,
-                "itemVariationId"         => $itemVariationId,
-                "orderItemName"           => $itemNameForOrder,
+                "contactId"                 => $lastCustomerId,
+                "lastPrice"                 => $lastPrice,
+                "itemVariationId"           => $itemVariationId,
+                "itemId"                    => $auction -> itemId,
+                "orderItemName"             => $itemNameForOrder,
                 "customerBillingAddressId"  => $customerBillingAddress['id'],
-                "customerDeliveryAddressId" => $customerDeliveryAddress['id'],
+                "customerDeliveryAddressId" => $customerDeliveryAddress['id']
             ];
+
             return $auctionOrderParams;
         }
 

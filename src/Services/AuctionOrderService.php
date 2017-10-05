@@ -22,15 +22,15 @@
 
         private $orderRepository;
 
-        private $auctionHelperService;
+//        private $auctionHelperService;
 
         public function __construct(
-            OrderRepositoryContract $orderRepository,
-            AuctionHelperService $auctionHelperService
+            OrderRepositoryContract $orderRepository
+//            AuctionHelperService $auctionHelperService
         )
         {
             $this -> orderRepository = $orderRepository;
-            $this -> auctionHelperService = $auctionHelperService;
+//            $this -> auctionHelperService = $auctionHelperService;
         }
 
         /**
@@ -40,13 +40,15 @@
         public function placeOrder($auctionId) : LocalizedOrder
         {
             $auctionHelperService = pluginApp(AuctionHelperService::class);
+            $auctionParams = $auctionHelperService -> auctionParamsBuilder($auctionId);
+
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
-                -> fromAuction($auctionId) //TODO: Add shipping costs & payment surcharge as OrderItem
-                -> withContactId(7076)
-                -> withAddressId(41656, AddressType::BILLING)
-                -> withAddressId(41656, AddressType::DELIVERY)
+                -> fromAuction($auctionParams) //TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
+                -> withContactId($auctionParams['contactId'])
+                -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
+                -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
                 -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
                 -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
                 -> done()

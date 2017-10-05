@@ -3,8 +3,6 @@
     namespace PluginAuctions\Builder;
 
     use IO\Builder\Order\OrderItemType;
-    use IO\Services\CheckoutService;
-    use Plenty\Modules\Basket\Models\Basket;
     use Plenty\Modules\Frontend\Services\VatService;
 
 
@@ -21,39 +19,36 @@
 //            $this -> vatService = $vatService;
         }
 
-        public function getOrderItem(array $item) : array
+        public function getOrderItem($auctionParams) : array
         {
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
-//			$basketItemName = $item[$basketItem->variationId]->itemDescription->name1;
-//            $auctionItemName = 'test';
-//            $auctionItemName = $item['variationId']; // $item['variation']['data']['texts']['name1'];
-            $auctionItemName = "test name"; // $item['texts']['name1'];
 
+            $auctionItemName = $auctionParams['orderItemName']; // $item['variation']['data']['texts']['name1'];
 
-            array_push($orderItems, $this -> buildOrderItem($item, (STRING) $auctionItemName));
+            array_push($orderItems, $this -> buildOrderItem($auctionParams, (STRING) $auctionItemName));
 
             return $orderItems;
         }
 
-        private function buildOrderItem($item, string $auctionItemName) : array
+        private function buildOrderItem($auctionParams, string $auctionItemName) : array
         {
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 1,
-                "itemVariationId"   => 38443, // $item['variation']['id'], // 38443
-                "quantity"          => 1,
+                "referrerId"        => 1, // Mandant Shop ???
+                "itemVariationId"   => $auctionParams['variationId'], // $item['variation']['id'], // 38443
+                "quantity"          => 1, // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionItemName,
-                "shippingProfileId" => 34, // Todo config ???
-//                "countryVatId"      => $this -> vatService -> getCountryVatId(),
-//			"vatRate"           => $basketItem->vat,
+                "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
+                // "countryVatId"      => $this -> vatService -> getCountryVatId(),
+                // "vatRate"           => $basketItem->vat,
                 // "vatField"			=> $basketItem->vatField,// TODO
-//            "orderProperties"   => $basketItemProperties,
+                // "orderProperties"   => $basketItemProperties,
                 "amounts"           => [
                     [
                         "currency"           => "EUR",
-                        "priceOriginalGross" => 74.56, // $basketItem->price
+                        "priceOriginalGross" => $auctionParams['lastPrice'],
                         "surcharge"          => 0,
                         "isPercentage"       => 1
                     ]

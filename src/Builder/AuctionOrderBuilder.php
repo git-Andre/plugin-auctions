@@ -3,7 +3,7 @@
     namespace PluginAuctions\Builder;
 
     use Plenty\Plugin\Application;
-    use PluginAuctions\Services\Database\AuctionsService;
+//    use PluginAuctions\Services\Database\AuctionsService;
 
 
     /**
@@ -17,13 +17,13 @@
          */
         private $app;
 
-        private $auctionService;
+//        private $auctionService;
 
 
         public function __construct(Application $app, AuctionsService $auctionService)
         {
             $this -> app = $app;
-            $this -> auctionService = $auctionService;
+//            $this -> auctionService = $auctionService;
         }
 
         public function prepare(int $type, int $plentyId = 0) : AuctionOrderBuilderQuery
@@ -37,7 +37,7 @@
                 AuctionOrderBuilderQuery::class,
                 [
                     "app"            => $this -> app,
-                    "auctionService" => $this -> auctionService,
+//                    "auctionService" => $this -> auctionService,
                     "type"           => (int) $type,
                     "plentyId"       => $plentyId
                 ]
