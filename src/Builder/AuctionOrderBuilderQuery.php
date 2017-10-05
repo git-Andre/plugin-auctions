@@ -48,9 +48,9 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
+        public function fromAuction($auctionParams) : AuctionOrderBuilderQuery
         {
-            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+//            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
 
             if ($auctionParams === null)
             {
