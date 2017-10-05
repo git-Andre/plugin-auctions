@@ -48,14 +48,9 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
+        public function fromAuction($auctionId) // : AuctionOrderBuilderQuery
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
-
-            if ($auctionParams)
-            {
-                return $auctionParams;
-            }
 
 //            if ($auctionParams === null)
 //            {
@@ -68,6 +63,11 @@
             if ( ! $orderItemBuilder instanceof AuctionOrderItemBuilder)
             {
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
+            }
+
+            if ($orderItemBuilder)
+            {
+                return $orderItemBuilder;
             }
 
 
