@@ -20,7 +20,7 @@
 //        private $auctionService;
 
 
-        public function __construct(Application $app, AuctionsService $auctionService)
+        public function __construct(Application $app)
         {
             $this -> app = $app;
 //            $this -> auctionService = $auctionService;
