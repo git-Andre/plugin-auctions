@@ -67,6 +67,10 @@
 
             $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, 1, true);
             $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, 2, true);
+            if (!$customerDeliveryAddress)
+            {
+                $customerDeliveryAddress = $customerBillingAddress;
+            }
 
             $auctionOrderParams = [
                 "lastPrice"               => $lastPrice,

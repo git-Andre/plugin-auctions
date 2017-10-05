@@ -50,7 +50,7 @@
         {
             if ($contactId > 0)
             {
-                return $this -> auctionHelperService -> getCustomerAddresses($contactId);
+                return $this -> auctionHelperService -> getCustomerAddresses($contactId, $typeId, $last);
             }
             return "kein Kunde...";
         }

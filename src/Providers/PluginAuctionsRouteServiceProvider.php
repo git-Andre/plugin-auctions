@@ -84,7 +84,7 @@
             $router -> get('api/testcustomeraddresses/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerAddresses')
                     -> where('customerId', '\d+')
             ;
-            $router -> get('api/testparamsbuilder/{auctionId}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
+            $router -> get('api/testparamsbuilder/{auctionId}/{typeId}/{last}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
                     -> where('auctionId', '\d+')
             ;
         }
