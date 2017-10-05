@@ -55,7 +55,7 @@
             $this -> addressRepository = $addressRepository;
         }
 
-        public function auctionParamsBuilder($auctonId)
+        public function auctionParamsBuilder($auctonId) : array
         {
             $auction = $this -> auctionService -> getAuction($auctonId);
             $lastBidder = array_slice($auction -> bidderList, - 1)[0];
