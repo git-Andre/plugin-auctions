@@ -46,7 +46,7 @@
 
             return "kein Kunde...";
         }
-        public function testCustomerAddresses(int $contactId)
+        public function testCustomerAddresses(int $contactId, $typeId, $last)
         {
             if ($contactId > 0)
             {
