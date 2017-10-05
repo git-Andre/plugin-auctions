@@ -43,9 +43,9 @@
             return [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 1, // Mandant Shop ???
-                "itemVariationId"   => 38443, //$auctionParams['variationId'], // $item['variation']['id'], // 38443
+                "itemVariationId"   => $auctionParams['variationId'], // $item['variation']['id'], // 38443
                 "quantity"          => 1, // bei Auktionen immer nur 1
-                "orderItemName"     =>  $auctionParams['orderItemName'],
+                "orderItemName"     => $auctionParams['orderItemName'],
                 "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
                 // "countryVatId"      => $this -> vatService -> getCountryVatId(),
                 // "vatRate"           => $basketItem->vat,
