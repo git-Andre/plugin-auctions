@@ -3,6 +3,7 @@
     namespace PluginAuctions\Builder;
 
     use IO\Builder\Order\OrderItemType;
+    use function PHPSTORM_META\type;
     use Plenty\Modules\Frontend\Services\VatService;
 
 
@@ -19,8 +20,15 @@
 //            $this -> vatService = $vatService;
         }
 
-        public function getOrderItem($auctionParams) : array
+        public function getOrderItem($auctionParams) //: array
         {
+
+            if ($auctionParams)
+            {
+                return gettype($orderItemBuilder);
+            }
+
+
 //		$currentLanguage = pluginApp(SessionStorageService::class)->getLang();
             $orderItems = [];
 

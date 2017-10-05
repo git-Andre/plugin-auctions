@@ -52,10 +52,10 @@
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
 
-//            if ($auctionParams === null)
-//            {
-//                throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionParams: $auctionParams");
-//            }
+            if ($auctionParams === null)
+            {
+                throw new \Exception("Error while instantiating AuctionOrderItemBuilder - NO auctionParams: $auctionParams");
+            }
 
             // Add auction item to order
             $orderItemBuilder = $this -> app -> make(AuctionOrderItemBuilder::class);
@@ -63,11 +63,6 @@
             if ( ! $orderItemBuilder instanceof AuctionOrderItemBuilder)
             {
                 throw new \Exception("Error while instantiating AuctionOrderItemBuilder.");
-            }
-
-            if ($orderItemBuilder)
-            {
-                return $orderItemBuilder;
             }
 
 
