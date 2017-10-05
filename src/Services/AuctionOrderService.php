@@ -39,16 +39,16 @@
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder($auctionId) //: LocalizedOrder
+        public function placeOrder($auctionId) : LocalizedOrder
         {
 //            $auctionHelperService = pluginApp(AuctionHelperService::class);
 
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
 
-            if ($auctionParams)
-            {
-                return $auctionParams['contactId'];
-            }
+//            if ($auctionParams)
+//            {
+//                return $auctionParams['contactId'];
+//            }
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
