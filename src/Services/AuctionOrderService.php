@@ -37,7 +37,7 @@
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder($auctionId) : LocalizedOrder
+        public function placeOrder($auctionId) // : LocalizedOrder
         {
             $auctionHelperService = pluginApp(AuctionHelperService::class);
 
