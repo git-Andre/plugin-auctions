@@ -3,6 +3,7 @@
 
     use IO\Controllers\LayoutController;
     use IO\Services\ItemService;
+    use IO\Builder\Order\AddressType;
     use Plenty\Modules\Account\Address\Contracts\AddressRepositoryContract;
     use Plenty\Modules\Account\Contact\Contracts\ContactAddressRepositoryContract;
     use Plenty\Modules\Account\Contact\Contracts\ContactRepositoryContract;
@@ -65,8 +66,8 @@
             $itemVariationId = $item['item']['mainVariationId'];
             $itemNameForOrder = $item['texts'][0]['name1'];
 
-            $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, 1, true);
-            $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, 2, true);
+            $customerBillingAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::BILLING, true);
+            $customerDeliveryAddress = $this -> getCustomerAddresses($lastCustomerId, AddressType::DELIVERY, true);
             if (!$customerDeliveryAddress)
             {
                 $customerDeliveryAddress = $customerBillingAddress;
@@ -76,8 +77,8 @@
                 "lastPrice"               => $lastPrice,
                 "itemVariationId"         => $itemVariationId,
                 "orderItemName"           => $itemNameForOrder,
-                "customerBillingAddress"  => $customerBillingAddress,
-                "customerDeliveryAddress" => $customerDeliveryAddress,
+                "customerBillingAddressId"  => $customerBillingAddress['id'],
+                "customerDeliveryAddressId" => $customerDeliveryAddress['id'],
             ];
             return $auctionOrderParams;
         }
@@ -90,7 +91,7 @@
             return $item['documents'][0]['data'];
         }
 
-        public function getCustomerAddresses(int $contactId, int $typeId, $last)
+        public function getCustomerAddresses(int $contactId, int $typeId, bool $last)
         {
             $contactAddresses = $this -> contactAddressRepository -> findContactAddressByTypeId($contactId, $typeId, $last);
 
