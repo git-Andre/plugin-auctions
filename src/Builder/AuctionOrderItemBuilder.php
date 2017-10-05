@@ -35,7 +35,7 @@
             return $orderItems;
         }
 
-        private function buildOrderItem($auctionParams) : array
+        private function buildOrderItem($auctionParams) // : array
         {
             if ($auctionParams)
             {
