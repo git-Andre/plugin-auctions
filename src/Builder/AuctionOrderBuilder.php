@@ -36,10 +36,10 @@
             $instance = $this -> app -> make(
                 AuctionOrderBuilderQuery::class,
                 [
-                    "app"            => $this -> app,
+                    "app"                  => $this -> app,
                     "auctionHelperService" => $this -> auctionHelperService,
-                    "type"           => (int) $type,
-                    "plentyId"       => $plentyId
+                    "type"                 => (int) $type,
+                    "plentyId"             => $plentyId
                 ]
             );
 

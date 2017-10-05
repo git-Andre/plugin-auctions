@@ -40,9 +40,13 @@
         public function placeOrder($auctionId) : LocalizedOrder
         {
             $auctionHelperService = pluginApp(AuctionHelperService::class);
+
             $auctionParams = $auctionHelperService -> auctionParamsBuilder($auctionId);
 
-
+            if ($auctionParams)
+            {
+                return $auctionParams;
+            }
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
                 -> fromAuction($auctionId) //TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
