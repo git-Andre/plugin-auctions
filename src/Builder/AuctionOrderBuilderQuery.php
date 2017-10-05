@@ -48,7 +48,7 @@
          * @return AuctionOrderBuilderQuery
          * @throws \Exception
          */
-        public function fromAuction($auctionId) // : AuctionOrderBuilderQuery
+        public function fromAuction($auctionId) : AuctionOrderBuilderQuery
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
 

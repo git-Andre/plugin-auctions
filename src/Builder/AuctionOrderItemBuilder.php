@@ -19,7 +19,7 @@
 //            $this -> vatService = $vatService;
         }
 
-        public function getOrderItem($auctionParams) //: array
+        public function getOrderItem($auctionParams) : array
         {
 
 
@@ -35,13 +35,8 @@
             return $orderItems;
         }
 
-        private function buildOrderItem($auctionParams) // : array
+        private function buildOrderItem($auctionParams) : array
         {
-            if ($auctionParams)
-            {
-                return $auctionParams;
-            }
-
 
             return [
                 "typeId"            => OrderItemType::VARIATION,

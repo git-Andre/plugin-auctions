@@ -83,7 +83,7 @@
                 "customerDeliveryAddressId" => $customerDeliveryAddress['id']
             ];
 
-            return $auctionOrderParams;
+            return (array) $auctionOrderParams;
         }
 
 
