@@ -4,7 +4,6 @@ const AuctionConstants    = require( "constants/AuctionConstants" );
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
-const MINI_CRYPT  = 46987;
 const NOTIFY_TIME = 10000;
 
 Vue.component( "auction-bids", {
@@ -39,7 +38,7 @@ Vue.component( "auction-bids", {
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
             this.userdata != null ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id + MINI_CRYPT ) {
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.evaluateAndNotify();
             }
         }
@@ -63,7 +62,7 @@ Vue.component( "auction-bids", {
                         };
 
                         // super Time Tunnel
-                        sessionStorage.setItem( "currentBidder", this.userdata.id + MINI_CRYPT );
+                        sessionStorage.setItem( "currentBidder", this.userdata.id );
 
                         ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
                                                                               { contentType: "application/json" }
@@ -93,7 +92,7 @@ Vue.component( "auction-bids", {
         evaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT ) {
+                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id ) {
                     switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
                             NotificationService.info(
@@ -155,7 +154,7 @@ Vue.component( "auction-bids", {
         hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
-                if ( this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId ) {
+                if ( this.userdata.id == this.auction.bidderList[i].customerId ) {
                     return true;
                 }
             }
@@ -163,7 +162,7 @@ Vue.component( "auction-bids", {
         },
         hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT ) {
+            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id ) {
                 return true
             }
             else {

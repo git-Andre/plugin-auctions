@@ -60,7 +60,7 @@
             $auction = $this -> auctionService -> getAuction($auctonId);
             $lastBidder = array_slice($auction -> bidderList, - 1)[0];
             $lastPrice = $lastBidder['bidPrice'];
-            $lastCustomerId = $lastBidder['customerId'] - 46987; // Todo siehe krypt...
+            $lastCustomerId = $lastBidder['customerId']; // Todo siehe krypt...
 
             $item = $this -> getItemById($auction -> itemId);
             $itemVariationId = $item['item']['mainVariationId'];
