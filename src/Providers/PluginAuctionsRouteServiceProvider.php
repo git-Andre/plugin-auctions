@@ -38,8 +38,8 @@
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 
-            $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                    -> where('id', '\d+');
+//            $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
+//                    -> where('id', '\d+');
 
             $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList')
                     -> where('id', '\d+');
