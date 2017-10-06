@@ -18,74 +18,65 @@
          */
         public function map(Router $router, ApiRouter $api)
         {
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'], function ($api) {
+            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'oauth'],
+                function ($api) {
 
-//                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
+                    //                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
+                    $api -> get('api/auction/{id}', 'AuctionsController@getAuction')
+                            -> where('id', '\d+');
 
-//                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
-//                    $api -> get('api/auction/{id}', ['uses' => '\AuctionsController@getAuction']);
-//                    $api -> post('api/auction', ['uses' => '\AuctionsController@createAuction']);
-//                    $api -> put('api/auction/{id}', ['uses' => '\AuctionsController@updateAuction']);
-//                    $api -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction');
-            });
+
+                    //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
+                    //                    $api -> post('api/auction', ['uses' => '\AuctionsController@createAuction']);
+                    //                    $api -> put('api/auction/{id}', ['uses' => '\AuctionsController@updateAuction']);
+                    //                    $api -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction');
+                });
 
             $router -> get('api/auctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId')
-                    -> where('itemId', '\d+')
-            ;
+                    -> where('itemId', '\d+');
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
+
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
             $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
             $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
 
             $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
             $router -> put('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
             $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction')
-                    -> where('id', '\d+')
-            ;
+                    -> where('id', '\d+');
 
             $router -> get('api/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate')
-                    -> where('time', '\d+')
-            ;
+                    -> where('time', '\d+');
             $router -> get('api/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
 
 
             // Order...
             $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
-                    -> where('orderId', '\d+')
-            ;
+                    -> where('orderId', '\d+');
 
             $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder')
                     -> where('auctionId', '\d+');
 
             $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
-                    -> where('itemId', '\d+')
-            ;
+                    -> where('itemId', '\d+');
             $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
-                    -> where('customerId', '\d+')
-            ;
+                    -> where('customerId', '\d+');
             $router -> get('api/testcustomeraddresses/{customerId}/{typeId}/{last}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerAddresses')
-                    -> where('customerId', '\d+')
-            ;
+                    -> where('customerId', '\d+');
             $router -> get('api/testparamsbuilder/{auctionId}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
-                    -> where('auctionId', '\d+')
-            ;
+                    -> where('auctionId', '\d+');
         }
     }

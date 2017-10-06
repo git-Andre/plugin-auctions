@@ -7,7 +7,6 @@ var AuctionConstants = require("constants/AuctionConstants");
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
-var MINI_CRYPT = 46987;
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
@@ -34,7 +33,7 @@ Vue.component("auction-bids", {
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id + MINI_CRYPT) {
+            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.evaluateAndNotify();
             }
         }
@@ -58,7 +57,7 @@ Vue.component("auction-bids", {
                     };
 
                     // super Time Tunnel
-                    sessionStorage.setItem("currentBidder", _this.userdata.id + MINI_CRYPT);
+                    sessionStorage.setItem("currentBidder", _this.userdata.id);
 
                     ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
                         _this.reload(5);
@@ -80,7 +79,7 @@ Vue.component("auction-bids", {
         evaluateAndNotify: function evaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id + MINI_CRYPT) {
+                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id) {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
@@ -137,7 +136,7 @@ Vue.component("auction-bids", {
         hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
-                if (this.userdata.id + MINI_CRYPT == this.auction.bidderList[i].customerId) {
+                if (this.userdata.id == this.auction.bidderList[i].customerId) {
                     return true;
                 }
             }
@@ -145,7 +144,7 @@ Vue.component("auction-bids", {
         },
         hasLoggedInUserTheLastBid: function hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id + MINI_CRYPT) {
+            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id) {
                 return true;
             } else {
                 return false;
@@ -154,7 +153,7 @@ Vue.component("auction-bids", {
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
-        afterAuction: function afterAuction() {
+        help: function help() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             startD = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -172,11 +171,9 @@ Vue.component("auction-bids", {
             });
         },
         auctionend: function auctionend() {
-            alert('auctionend');
-
             var orderBuilder = {
                 'typeId': 1,
-                'plentyId': "this.item.defaultCategories[0].plentyId",
+                'plentyId': this.item.defaultCategories[0].plentyId,
                 'statusId': 2.5,
                 'orderItems': [{
                     'typeId': 1,
@@ -184,7 +181,7 @@ Vue.component("auction-bids", {
                     'itemVariationId': this.item.variation.id,
                     'quantity': 1,
                     'shippingProfileId': 34,
-                    'orderItemName': this.item.texts.name2,
+                    'orderItemName': this.item.texts.name1,
                     "amounts": [{
                         "isSystemCurrency": true,
                         "currency": "EUR",
@@ -197,7 +194,30 @@ Vue.component("auction-bids", {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
             ).done(function (orderResponse) {
                 alert("ok - order");
-                console.dir(orderResponse);
+                // console.dir(orderResponse);
+            }).fail(function () {
+                alert('Ooops - ein Fehler beim auctionend ??!!');
+            });
+
+            // ApiService.get( "/api/placeorder/2"
+            // )
+            //     .done( auction => {
+            //         alert( "ok" );
+            //     } )
+            //     .fail( () => {
+            //         alert( 'Upps - AUTH (mist) ??!!' );
+            //     } );
+        },
+        afterAuction: function afterAuction() {
+            // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?
+            // dann Notify 'Glückwunsch' und trigger Order...
+
+
+            ApiService.get("/place-order"
+            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
+            ).done(function (orderResponse) {
+                alert("ok - order");
+                // console.dir(orderResponse);
             }).fail(function () {
                 alert('Ooops - ein Fehler beim auctionend ??!!');
             });

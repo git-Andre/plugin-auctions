@@ -173,7 +173,7 @@ Vue.component( "auction-bids", {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
 
-        afterAuction() {
+        help() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             startD      = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -194,31 +194,21 @@ Vue.component( "auction-bids", {
                 } );
         },
         auctionend() {
-            alert( 'auctionend' );
 
-            const orderBuilder = {
-                'typeId': 1,
-                'plentyId': "this.item.defaultCategories[0].plentyId",
-                'statusId': 2.5,
-                'orderItems': [
-                    {
-                        'typeId': 1,
-                        'referrerId': 1,
-                        'itemVariationId': this.item.variation.id,
-                        'quantity': 1,
-                        'shippingProfileId': 34,
-                        'orderItemName': this.item.texts.name2,
-                        "amounts": [
-                            {
-                                "isSystemCurrency": true,
-                                "currency": "EUR",
-                                "exchangeRate": 1,
-                                "priceOriginalGross": this.maxCustomerBid
-                            }
-                        ]
-                    }
-                ]
-            };
+            ApiService.get( "/api/getorder/19420"
+            )
+                .done( auction => {
+                    alert( "ok" );
+                } )
+                .fail( () => {
+                    alert( 'Upps - AUTH (mist) ??!!' );
+                } );
+        },
+        afterAuction() {
+            // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?
+                // dann Notify 'Glückwunsch' und trigger Order...
+
+
             ApiService.get( "/place-order"
                             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
             )

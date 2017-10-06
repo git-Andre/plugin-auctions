@@ -160,12 +160,9 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $auction = $this -> buildAuctionView($auction);
-
-                    return $auction;
+                    return $this -> buildAuctionView($auction);
                 }
             }
-
             return 'falsche ID';
         }
 
