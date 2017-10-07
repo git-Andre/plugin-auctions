@@ -38,9 +38,10 @@
             $page = (int) $this -> request -> get("page", 1);
             $items = (int) $this -> request -> get("items", 10);
 
-            $data = pluginApp(CustomerService::class) -> getOrders($page, $items);
+//            $data = pluginApp(CustomerService::class) -> getOrders($page, $items);
 
-            return $this -> response -> create($data, ResponseCode::OK);
+            return $this -> response -> create("tester", ResponseCode::OK);
+//            return $this -> response -> create($data, ResponseCode::OK);
         }
 
         /**
@@ -49,7 +50,7 @@
          */
         public function store() : Response
         {
-            $auctionId = (int) $this -> request -> get("auctionId", 0);
+            $auctionId = (int) $this -> request -> get("auctionid", 0);
 
             if ($auctionId > 0)
             {
