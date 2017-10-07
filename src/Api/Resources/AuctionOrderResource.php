@@ -8,6 +8,7 @@
     use IO\Services\CustomerService;
     use Plenty\Plugin\Http\Request;
     use Plenty\Plugin\Http\Response;
+
     use PluginAuctions\Services\AuctionOrderService;
 
     /**
@@ -50,17 +51,17 @@
          */
         public function store() : Response
         {
-            $auctionId = (int) $this -> request -> get("auctionid", 0);
-
-            if ($auctionId > 0)
-            {
-//                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+//            $auctionId = (int) $this -> request -> get("auctionid", 0);
 //
-//                return $this -> response -> create($order, ResponseCode::OK);
-                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-            }
-
-            return $this -> response -> create("Fehler in store", ResponseCode::NOT_ACCEPTABLE);
+//            if ($auctionId > 0)
+//            {
+////                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+////
+////                return $this -> response -> create($order, ResponseCode::OK);
+//                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
+//            }
+//
+            return $this -> response -> create($auctionId, ResponseCode::NOT_ACCEPTABLE);
 
         }
     }
