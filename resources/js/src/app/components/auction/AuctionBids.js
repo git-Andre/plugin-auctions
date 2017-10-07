@@ -42,6 +42,11 @@ Vue.component( "auction-bids", {
                 this.evaluateAndNotify();
             }
         }
+        else {
+            if ( (this.auction.tense == AuctionConstants.PAST) && this.userdata != null ) {
+
+            }
+        }
     },
     methods: {
 
@@ -196,7 +201,7 @@ Vue.component( "auction-bids", {
         auctionend() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 
-            ApiService.post( "/api/placeorder", { "auctionId": this.auction.id }, { contentType: "application/json" }
+            ApiService.post( "/api/placeorder", { auctionId: this.auction.id }, { contentType: "application/json" }
             )
                 .done( auction => {
                     console.dir( auction );
