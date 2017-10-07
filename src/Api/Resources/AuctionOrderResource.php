@@ -1,54 +1,64 @@
 <?php //strict
 
-namespace IO\Api\Resources;
+    namespace PluginAuctions\Api\Resources;
 
-use Plenty\Plugin\Http\Request;
-use Plenty\Plugin\Http\Response;
-use IO\Api\ApiResource;
-use IO\Api\ApiResponse;
-use IO\Api\ResponseCode;
-use IO\Services\OrderService;
-use PluginAuctions\Services\AuctionOrderService;
-use IO\Services\CustomerService;
-
-/**
- * Class OrderResource
- * @package IO\Api\Resources
- */
-class AuctionOrderResource extends ApiResource
-{
-    /**
-     * OrderResource constructor.
-     * @param Request $request
-     * @param ApiResponse $response
-     */
-	public function __construct(
-		Request $request,
-		ApiResponse $response)
-	{
-		parent::__construct($request, $response);
-	}
+    use IO\Api\ApiResource;
+    use IO\Api\ApiResponse;
+    use IO\Api\ResponseCode;
+    use IO\Services\CustomerService;
+    use Plenty\Plugin\Http\Request;
+    use Plenty\Plugin\Http\Response;
+    use PluginAuctions\Services\AuctionOrderService;
 
     /**
-     * List the orders of the customer
-     * @return Response
+     * Class OrderResource
+     * @package IO\Api\Resources
      */
-	public function index():Response
-	{
-		$page  = (int)$this->request->get("page", 1);
-		$items = (int)$this->request->get("items", 10);
+    class AuctionOrderResource extends ApiResource {
 
-		$data = pluginApp(CustomerService::class)->getOrders($page, $items);
-		return $this->response->create($data, ResponseCode::OK);
-	}
+        /**
+         * OrderResource constructor.
+         * @param Request $request
+         * @param ApiResponse $response
+         */
+        public function __construct(
+            Request $request,
+            ApiResponse $response
+        )
+        {
+            parent ::__construct($request, $response);
+        }
 
-    /**
-     * Create an order
-     * @return Response
-     */
-	public function store($auctionId):Response
-	{
-		$order = pluginApp(AuctionOrderService::class)->placeOrder($auctionId);
-		return $this->response->create($order, ResponseCode::OK);
-	}
-}
+        /**
+         * List the orders of the customer
+         * @return Response
+         */
+        public function index() : Response
+        {
+            $page = (int) $this -> request -> get("page", 1);
+            $items = (int) $this -> request -> get("items", 10);
+
+            $data = pluginApp(CustomerService::class) -> getOrders($page, $items);
+
+            return $this -> response -> create($data, ResponseCode::OK);
+        }
+
+        /**
+         * Create an order
+         * @return Response
+         */
+        public function store() : Response
+        {
+            $auctionId = (int) $this -> request -> get("auctionId", 0);
+
+            if ($auctionId > 0)
+            {
+                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+
+                return $this -> response -> create($order, ResponseCode::OK);
+            }
+
+            return $this -> response -> create("Fehler in store", ResponseCode::EXPECTATION_FAILED);
+
+        }
+    }

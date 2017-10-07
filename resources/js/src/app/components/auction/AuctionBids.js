@@ -194,11 +194,12 @@ Vue.component( "auction-bids", {
                 } );
         },
         auctionend() {
+            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 
-            ApiService.get( "/api/placeorder/" + this.auction.id
+            ApiService.post( "/rest/orders", { "auctionId": this.auction.id }, { contentType: "application/json" }
             )
                 .done( auction => {
-                    console.dir(auction);
+                    console.dir( auction );
                     alert( "ok" );
                 } )
                 .fail( () => {
@@ -207,8 +208,7 @@ Vue.component( "auction-bids", {
         },
         afterAuction() {
             // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?
-                // dann Notify 'Glückwunsch' und trigger Order...
-
+            // dann Notify 'Glückwunsch' und trigger Order...
 
             ApiService.get( "/place-order"
                             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
