@@ -171,8 +171,9 @@ Vue.component("auction-bids", {
             });
         },
         auctionend: function auctionend() {
+            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 
-            ApiService.get("/api/placeorder/" + this.auction.id).done(function (auction) {
+            ApiService.post("/api/placeorder", { "auctionId": this.auction.id }, { contentType: "application/json" }).done(function (auction) {
                 console.dir(auction);
                 alert("ok");
             }).fail(function () {
@@ -182,7 +183,6 @@ Vue.component("auction-bids", {
         afterAuction: function afterAuction() {
             // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?
             // dann Notify 'Glückwunsch' und trigger Order...
-
 
             ApiService.get("/place-order"
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }

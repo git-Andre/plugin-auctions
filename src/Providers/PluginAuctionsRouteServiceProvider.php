@@ -18,7 +18,8 @@
          */
         public function map(Router $router, ApiRouter $api)
         {
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
+//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
+            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources'],
                 function ($api) {
 
                     //                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
@@ -27,7 +28,7 @@
 
                     // Order...
 
-                    $api -> post('api/placeorder/{auctionId}', 'AuctionOrderResource@placeOrder') -> where('auctionId', '\d+');
+                    $api -> post('api/placeorder', 'AuctionOrderResource@placeOrder');
 
 
                     //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);

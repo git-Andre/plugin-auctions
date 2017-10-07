@@ -58,7 +58,7 @@
                 return $this -> response -> create($order, ResponseCode::OK);
             }
 
-            return $this -> response -> create("Fehler in store", ResponseCode::EXPECTATION_FAILED);
+            return $this -> response -> create("Fehler in store", ResponseCode::NOT_ACCEPTABLE);
 
         }
     }
