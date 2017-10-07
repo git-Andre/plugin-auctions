@@ -28,7 +28,8 @@
 
                     // Order...
 
-                    $api -> post('api/placeorder', 'AuctionOrderResource@placeOrder');
+                    $api -> post('api/placeorder', 'AuctionOrderResource@store');
+                    $api -> get('api/placeorder', 'AuctionOrderResource@index');
 
 
                     //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
