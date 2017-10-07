@@ -53,10 +53,9 @@
 
             if ($auctionId > 0)
             {
-                return $auctionId;
 //                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
 //
-//                return $this -> response -> create($order, ResponseCode::OK);
+                return $this -> response -> create($auctionId, ResponseCode::OK);
             }
 
             return $this -> response -> create("Fehler in store", ResponseCode::NOT_ACCEPTABLE);

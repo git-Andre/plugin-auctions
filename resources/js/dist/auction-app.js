@@ -36,6 +36,8 @@ Vue.component("auction-bids", {
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.evaluateAndNotify();
             }
+        } else {
+            if (this.auction.tense == AuctionConstants.PAST && this.userdata != null) {}
         }
     },
 
@@ -173,7 +175,7 @@ Vue.component("auction-bids", {
         auctionend: function auctionend() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 
-            ApiService.post("/api/placeorder", { "auctionId": this.auction.id }, { contentType: "application/json" }).done(function (auction) {
+            ApiService.post("/api/placeorder", { auctionId: this.auction.id }, { contentType: "application/json" }).done(function (auction) {
                 console.dir(auction);
                 alert("ok");
             }).fail(function () {
