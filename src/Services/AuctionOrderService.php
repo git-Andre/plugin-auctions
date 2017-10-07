@@ -38,14 +38,7 @@
          */
         public function placeOrder($auctionId) : LocalizedOrder
         {
-//            $auctionHelperService = pluginApp(AuctionHelperService::class);
-
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
-
-//            if ($auctionParams)
-//            {
-//                return $auctionParams['contactId'];
-//            }
 
             $order = pluginApp(AuctionOrderBuilder::class)
                 -> prepare(OrderType::ORDER)
@@ -60,7 +53,6 @@
 
             $order = $this -> orderRepository -> createOrder($order);
 
-//            return $order;
             return LocalizedOrder ::wrap($order, "de");
         }
 

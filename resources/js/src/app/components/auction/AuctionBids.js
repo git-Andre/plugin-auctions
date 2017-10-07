@@ -195,9 +195,10 @@ Vue.component( "auction-bids", {
         },
         auctionend() {
 
-            ApiService.get( "/api/getorder/19420"
+            ApiService.get( "/api/placeorder/" + this.auction.id
             )
                 .done( auction => {
+                    console.dir(auction);
                     alert( "ok" );
                 } )
                 .fail( () => {

@@ -171,42 +171,13 @@ Vue.component("auction-bids", {
             });
         },
         auctionend: function auctionend() {
-            var orderBuilder = {
-                'typeId': 1,
-                'plentyId': this.item.defaultCategories[0].plentyId,
-                'statusId': 2.5,
-                'orderItems': [{
-                    'typeId': 1,
-                    'referrerId': 1,
-                    'itemVariationId': this.item.variation.id,
-                    'quantity': 1,
-                    'shippingProfileId': 34,
-                    'orderItemName': this.item.texts.name1,
-                    "amounts": [{
-                        "isSystemCurrency": true,
-                        "currency": "EUR",
-                        "exchangeRate": 1,
-                        "priceOriginalGross": this.maxCustomerBid
-                    }]
-                }]
-            };
-            ApiService.get("/place-order"
-            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
-            ).done(function (orderResponse) {
-                alert("ok - order");
-                // console.dir(orderResponse);
-            }).fail(function () {
-                alert('Ooops - ein Fehler beim auctionend ??!!');
-            });
 
-            // ApiService.get( "/api/placeorder/2"
-            // )
-            //     .done( auction => {
-            //         alert( "ok" );
-            //     } )
-            //     .fail( () => {
-            //         alert( 'Upps - AUTH (mist) ??!!' );
-            //     } );
+            ApiService.get("/api/placeorder/" + this.auction.id).done(function (auction) {
+                console.dir(auction);
+                alert("ok");
+            }).fail(function () {
+                alert('Upps - AUTH (mist) ??!!');
+            });
         },
         afterAuction: function afterAuction() {
             // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?

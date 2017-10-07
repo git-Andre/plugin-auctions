@@ -4,8 +4,8 @@
 
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
-    use Plenty\Plugin\Http\Response;
     use PluginAuctions\Services\Database\AuctionsService;
+
     // TODO Response ohne json_encode????
 
     class AuctionsController extends Controller {
@@ -31,6 +31,7 @@
         {
             return $this -> auctionsService -> getAuctions();
         }
+
         /**
          * @return array|bool
          */
@@ -43,12 +44,13 @@
          * @param $id
          * @return string
          */
-        public function getAuction($id)
+        public function getAuction($id = 0)
         {
             if ($id && $id > 0)
             {
                 return $this -> auctionsService -> getAuction($id);
             }
+
             return 'keine ID (oder 0)';
         }
 
@@ -129,6 +131,7 @@
         public function updateBidderlist(int $id, Request $request)
         {
             $sendedBid = $request -> all();
+
             return $this -> auctionsService -> updateBidderList($id, $sendedBid);
         }
 
@@ -161,6 +164,6 @@
          */
         public function calculateTense($start, $end) : string
         {
-            return $this -> auctionsService ->calculateTense($start, $end);
+            return $this -> auctionsService -> calculateTense($start, $end);
         }
     }
