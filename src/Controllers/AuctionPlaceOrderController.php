@@ -29,7 +29,7 @@
             try
             {
                 $result = $this -> placeOrder($auctionId);
-                return "Yes";
+                return $result;
             }
             catch (\Exception $exception )
             {
