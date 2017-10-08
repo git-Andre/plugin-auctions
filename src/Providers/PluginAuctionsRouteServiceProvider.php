@@ -28,7 +28,7 @@
 //                    $api -> get('api/auction/{id}', 'AuctionsController@getAuction') -> where('id', '\d+');
 
                     // Order...
-                    $api -> post('api/auction', 'AuctionsController@createAuction');
+//                    $api -> post('api/auction', 'AuctionsController@createAuction');
 
 //                    $api -> post('api/placeorder', 'AuctionOrderResource@store');
 //
@@ -57,7 +57,7 @@
                     -> where('id', '\d+');
 
 
-//            $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
+            $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
 
             $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction')
                     -> where('id', '\d+');
@@ -77,7 +77,7 @@
             $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
                     -> where('orderId', '\d+');
 
-//            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder') -> where('auctionId', '\d+');
+            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder') -> where('auctionId', '\d+');
 
             $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
                     -> where('itemId', '\d+');
