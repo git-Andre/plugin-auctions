@@ -175,7 +175,7 @@ Vue.component("auction-bids", {
         auctionend: function auctionend() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
             //api/placeorder/{auctionId}
-            ApiService.get("/api/placeorder/" + this.auction.id).done(function (auction) {
+            ApiService.post("/api/placeorder", { "auctionid": this.auction.id }, { contentType: "application/json" }).done(function (auction) {
                 console.dir(auction);
                 alert("ok");
             }).fail(function () {

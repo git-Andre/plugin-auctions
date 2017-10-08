@@ -3,10 +3,9 @@
 
 //    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
+    use Plenty\Plugin\Http\Request;
+    use Plenty\Plugin\Http\Response;
     use PluginAuctions\Services\AuctionOrderService;
-
-    //use Plenty\Plugin\Http\Response;
-//use Plenty\Plugin\Http\Request;
 
     /**
      * Class AuctionPlaceOrderController
@@ -63,8 +62,8 @@
 //            }
 //        }
 
-//        public function createOrder(Request $request, Response $response) //: Response
-//        {
+        public function createOrder(Request $request, Response $response) //: Response
+        {
 //            $auctionId = $request -> get("auctionid");
 //
 //            if ($auctionId > 0)
@@ -75,20 +74,19 @@
 ////                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
 //                return $response -> json($request);
 //            }
-//
-//            return $response -> json($auctionId);
-//
-//
-//        }
-//        public function index(Request $request, Response $response) //: Response
-//        {
-//            $auctionId = (int) $this -> request -> get("auctionid");
+
+            return $response -> json($auctionId);
+        }
+
+        public function index(Request $request, Response $response) //: Response
+        {
+//            $auctionId = (int) $request -> get("auctionid");
 //
 //            if ($auctionId > 0)
 //            {
 //                return $response -> json($request);
 //            }
-//            return $response -> make($auctionId);
-//        }
-//
+            return $response -> make($request);
+        }
+
     }
