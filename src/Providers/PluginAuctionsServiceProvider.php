@@ -7,7 +7,7 @@
     use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
     use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
-    use PluginAuctions\Services\AuctionOrderService;
+//    use PluginAuctions\Services\AuctionOrderService;
 
 
 
@@ -34,9 +34,9 @@
         {
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
 
-            //Register the PayUponPickup Plugin
-            $payContainer -> register('plenty::CASH', PayUponPickupPaymentMethod::class,
-                [AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class]);
+//            //Register the PayUponPickup Plugin
+//            $payContainer -> register('plenty::CASH', PayUponPickupPaymentMethod::class,
+//                [AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class]);
 
         }
     }
