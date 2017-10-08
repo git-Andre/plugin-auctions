@@ -20,7 +20,7 @@
         public function map(Router $router, ApiRouter $api)
         {
 //            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'],
+            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources'],
                 function ($api) {
 
                     //                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
@@ -30,9 +30,9 @@
                     // Order...
 //                    $api -> post('api/auction', 'AuctionsController@createAuction');
 
-//                    $api -> post('api/placeorder', 'AuctionOrderResource@store');
-//
-//                    $api -> get('api/placeorder', 'AuctionOrderResource@index');
+                    $api -> post('api/placeorder', 'AuctionOrderResource@store');
+
+                    $api -> get('api/placeorder', 'AuctionOrderResource@index');
 
 
                     //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
@@ -77,7 +77,7 @@
             $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
                     -> where('orderId', '\d+');
 
-            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder') -> where('auctionId', '\d+');
+//            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@placeOrder') -> where('auctionId', '\d+');
 
             $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
                     -> where('itemId', '\d+');
