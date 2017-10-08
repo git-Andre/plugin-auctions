@@ -3,9 +3,10 @@
 
 //    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
-    use Plenty\Plugin\Http\Request;
-    use Plenty\Plugin\Http\Response;
     use PluginAuctions\Services\AuctionOrderService;
+
+    //use Plenty\Plugin\Http\Response;
+//use Plenty\Plugin\Http\Request;
 
     /**
      * Class AuctionPlaceOrderController
@@ -14,18 +15,12 @@
     class AuctionPlaceOrderController extends LayoutController {
 
         private $orderService;
-        private $request;
-        private $response;
 
         public function __construct(
-            AuctionOrderService $orderService,
-            Request $request,
-            Response $response
+            AuctionOrderService $orderService
         )
         {
             $this -> orderService = $orderService;
-            $this -> request = $request;
-            $this -> response = $response;
         }
 
 //        public function
@@ -68,9 +63,9 @@
 //            }
 //        }
 
-        public function createOrder() //: Response
+        public function createOrder(Request $request, Response $response) //: Response
         {
-            $auctionId = (int) $this -> request -> get("auctionid");
+            $auctionId = $request -> get("auctionid");
 
             if ($auctionId > 0)
             {
@@ -78,24 +73,22 @@
 //
 //                return $this -> response -> create($order, ResponseCode::OK);
 //                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-                return $this -> response -> json($this -> request);
+                return $response -> json($request);
             }
 
-            return $this -> response -> json($auctionId);
+            return $response -> json($auctionId);
 
 
         }
-
-        public function index() //: Response
-        {
-            $auctionId = (int) $this -> request -> get("auctionid");
-
-            if ($auctionId > 0)
-            {
-                return $this -> response -> json($this -> request);
-            }
-
-            return $this -> response -> make($auctionId);
-        }
-
+//        public function index(Request $request, Response $response) //: Response
+//        {
+//            $auctionId = (int) $this -> request -> get("auctionid");
+//
+//            if ($auctionId > 0)
+//            {
+//                return $response -> json($request);
+//            }
+//            return $response -> make($auctionId);
+//        }
+//
     }
