@@ -26,7 +26,7 @@
 
 //            $this -> addGlobalMiddleware(Middleware::class);
 
-            $this -> getApplication() -> singleton(AuctionOrderService::class);
+//            $this -> getApplication() -> singleton(AuctionOrderService::class);
 
         }
 
