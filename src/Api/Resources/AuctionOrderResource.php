@@ -27,7 +27,10 @@
             Response $response
         )
         {
-            parent ::__construct($request, $response);
+//            parent ::__construct($request, $response);
+            $this->response = $response;
+            $this->request  = $request;
+
         }
 
         /**
