@@ -64,16 +64,16 @@
 
         public function createOrder(Request $request, Response $response) //: Response
         {
-//            $auctionId = $request -> get("auctionid");
+            $auctionId = $request -> get("auctionid");
+
+            if ($auctionId > 0)
+            {
+                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
 //
-//            if ($auctionId > 0)
-//            {
-////                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
-////
-////                return $this -> response -> create($order, ResponseCode::OK);
-////                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-//                return $response -> json($request);
-//            }
+//                return $this -> response -> create($order, ResponseCode::OK);
+//                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
+                return $response -> make($order);
+            }
 
             return $response -> json($auctionId);
         }
