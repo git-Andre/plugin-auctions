@@ -7,8 +7,7 @@
     use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
     use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
-//    use PluginAuctions\Services\AuctionOrderService;
-
+    use PluginAuctions\Services\AuctionOrderService;
 
 
     /**
@@ -24,9 +23,10 @@
         {
             $this -> getApplication() -> register(PluginAuctionsRouteServiceProvider::class);
 //        $this->getApplication()->bind(AuctionsRepositoryContract::class, AuctionRepository::class);
-            $this -> addGlobalMiddleware(Middleware::class);
 
-            $this->getApplication()->singleton('PluginAuctions\Services\AuctionOrderService');
+//            $this -> addGlobalMiddleware(Middleware::class);
+
+            $this -> getApplication() -> singleton(AuctionOrderService::class);
 
         }
 
