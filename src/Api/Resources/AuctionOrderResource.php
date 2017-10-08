@@ -2,8 +2,8 @@
 
     namespace PluginAuctions\Api\Resources;
 
-    use IO\Api\ApiResource;
-    use IO\Api\ApiResponse;
+//    use IO\Api\ApiResource;
+//    use IO\Api\ApiResponse;
     use IO\Api\ResponseCode;
     use IO\Services\CustomerService;
     use Plenty\Plugin\Http\Request;
@@ -22,16 +22,16 @@
          * @param Request $request
          * @param ApiResponse $response
          */
-        public function __construct(
-            Request $request,
-            Response $response
-        )
-        {
-//            parent ::__construct($request, $response);
-            $this->response = $response;
-            $this->request  = $request;
-
-        }
+//        public function __construct(
+//            Request $request,
+//            Response $response
+//        )
+//        {
+////            parent ::__construct($request, $response);
+//            $this->response = $response;
+//            $this->request  = $request;
+//
+//        }
 
         /**
          * List the orders of the customer
@@ -39,32 +39,40 @@
          */
         public function index() : Response
         {
-            $page = (int) $this -> request -> get("page", 1);
-            $items = (int) $this -> request -> get("items", 10);
-
+//            $page = (int) $this -> request -> get("page", 1);
+//            $items = (int) $this -> request -> get("items", 10);
+//
 //            $data = pluginApp(CustomerService::class) -> getOrders($page, $items);
-
-            return $this -> response -> create("tester", ResponseCode::OK);
+//
 //            return $this -> response -> create($data, ResponseCode::OK);
         }
+
+
+        public function saveSettings(Request $request, Response $response, SettingsService $service)
+        {
+            return $response->json($service->saveSettings($request->except(['plentyMarkets'])));
+        }
+
 
         /**
          * Create an order
          * @return Response
          */
-        public function store() : Response
+        public function createOrder(Request $request, Response $response, AuctionOrderService $auctionOrderService) : Response
         {
-            $auctionId = (int) $this -> request -> get("auctionid", 0);
+            $auctionId = (int) $this -> request -> get("auctionid");
+
+            if ($auctionId > 0)
+            {
+//                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
 //
-//            if ($auctionId > 0)
-//            {
-////                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
-////
-////                return $this -> response -> create($order, ResponseCode::OK);
+//                return $this -> response -> create($order, ResponseCode::OK);
 //                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-//            }
-//
-            return $this -> response -> create($auctionId, ResponseCode::NOT_ACCEPTABLE);
+                return $response -> json($request);
+            }
+
+            return $response -> json($auctionId);
+
 
         }
     }
