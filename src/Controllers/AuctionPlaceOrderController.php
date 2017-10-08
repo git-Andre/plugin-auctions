@@ -1,18 +1,18 @@
 <?php //strict
     namespace PluginAuctions\Controllers;
 
-    use Plenty\Plugin\Controller;
-    use Plenty\Plugin\Http\Request;
-    use Plenty\Plugin\Http\Response;
+//    use IO\Services\NotificationService;
+    use IO\Controllers\LayoutController;
     use PluginAuctions\Services\AuctionOrderService;
 
-//    use IO\Services\NotificationService;
+    //use Plenty\Plugin\Http\Response;
+//use Plenty\Plugin\Http\Request;
 
     /**
      * Class AuctionPlaceOrderController
      * @package IO\Controllers
      */
-    class AuctionPlaceOrderController extends Controller {
+    class AuctionPlaceOrderController extends LayoutController {
 
         private $orderService;
 
@@ -23,74 +23,43 @@
             $this -> orderService = $orderService;
         }
 
-//        public function triggerPlaceOrder($auctionId)
-//        {
-//            try
-//            {
-//                $result = $this -> placeOrder($auctionId);
-//
-//                return $result;
-//            }
-//            catch ( \Exception $exception )
-//            {
-//                return $exception -> getMessage(); // $response->redirectTo("checkout");
-//            }
-//        }
-//
-//        private function placeOrder($auctionId)
-//        {
-//            try
-//            {
-//                $orderData = $this -> orderService -> placeOrder($auctionId); // helper für http-Trigger
-//
-////                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
-//                return $orderData;
-//            }
-//            catch ( \Exception $exception )
-//            {
-//                return $exception -> getMessage(); // $response->redirectTo("checkout");
-//            }
-//        }
-//
-//        public function getOrderById(AuctionOrderService $orderService, int $orderId)
-//        {
-//            $orderData = $this -> orderService -> findOrderById($orderId);
-//
-//            return $orderData;
-//        }
-//
-
-        /**
-         * Create an order
-         * @return Response
-         */
-        public function createOrder(Request $request, Response $response) //: Response
+        public function
+        triggerPlaceOrder($auctionId)
         {
-            $auctionId = (int) $this -> request -> get("auctionid");
-
-            if ($auctionId > 0)
+            try
             {
-//                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
-//
-//                return $this -> response -> create($order, ResponseCode::OK);
-//                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-                return $response -> json($request);
+                $result = $this -> placeOrder($auctionId);
+                return $result;
             }
-
-            return $response -> json($auctionId);
-
-
+            catch (\Exception $exception )
+            {
+                return $exception -> getMessage(); // $response->redirectTo("checkout");
+            }
         }
 
-        public function index(Request $request, Response $response) //: Response
+        public function getOrderById(AuctionOrderService $orderService, int $orderId)
         {
-            $auctionId = (int) $this -> request -> get("auctionid");
+            $orderData = $this -> orderService -> findOrderById($orderId);
 
-            if ($auctionId > 0)
+            return $orderData;
+        }
+
+        /**
+         * @param $auctionId
+         * @return \IO\Models\LocalizedOrder|string
+         */
+        private function placeOrder($auctionId)
+        {
+            try
             {
-                return $response -> json($request);
-            }
+                $orderData = $this -> orderService -> placeOrder($auctionId); // helper für http-Trigger
 
-            return $response -> make($auctionId);
+//                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
+                return $orderData;
+            }
+            catch ( \Exception $exception )
+            {
+                return $exception -> getMessage(); // $response->redirectTo("checkout");
+            }
         }
     }
