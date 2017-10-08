@@ -37,7 +37,7 @@
          * List the orders of the customer
          * @return Response
          */
-        public function index() : Response
+        public function index() //: Response
         {
 //            $page = (int) $this -> request -> get("page", 1);
 //            $items = (int) $this -> request -> get("items", 10);
@@ -48,31 +48,31 @@
         }
 
 
-        public function saveSettings(Request $request, Response $response, SettingsService $service)
-        {
-            return $response->json($service->saveSettings($request->except(['plentyMarkets'])));
-        }
+//        public function saveSettings(Request $request, Response $response, SettingsService $service)
+//        {
+//            return $response->json($service->saveSettings($request->except(['plentyMarkets'])));
+//        }
 
 
         /**
          * Create an order
          * @return Response
          */
-        public function createOrder(Request $request, Response $response, AuctionOrderService $auctionOrderService) : Response
-        {
-            $auctionId = (int) $this -> request -> get("auctionid");
-
-            if ($auctionId > 0)
-            {
-//                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+//        public function createOrder(Request $request, Response $response, AuctionOrderService $auctionOrderService) : Response
+//        {
+//            $auctionId = (int) $this -> request -> get("auctionid");
 //
-//                return $this -> response -> create($order, ResponseCode::OK);
-//                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
-                return $response -> json($request);
-            }
-
-            return $response -> json($auctionId);
-
-
-        }
+//            if ($auctionId > 0)
+//            {
+////                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+////
+////                return $this -> response -> create($order, ResponseCode::OK);
+////                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
+//                return $response -> json($request);
+//            }
+//
+//            return $response -> json($auctionId);
+//
+//
+//        }
     }
