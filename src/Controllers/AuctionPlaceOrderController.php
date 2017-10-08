@@ -3,9 +3,9 @@
 
 //    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
-
     use PluginAuctions\Services\AuctionOrderService;
-//use Plenty\Plugin\Http\Response;
+
+    //use Plenty\Plugin\Http\Response;
 //use Plenty\Plugin\Http\Request;
 
     /**
@@ -23,11 +23,32 @@
             $this -> orderService = $orderService;
         }
 
+        public function
+        triggerPlaceOrder($auctionId)
+        {
+            try
+            {
+                $result = $this -> placeOrder($auctionId);
+                return "Yes";
+            }
+            catch (\Exception $exception )
+            {
+                return $exception -> getMessage(); // $response->redirectTo("checkout");
+            }
+        }
+
+        public function getOrderById(AuctionOrderService $orderService, int $orderId)
+        {
+            $orderData = $this -> orderService -> findOrderById($orderId);
+
+            return $orderData;
+        }
+
         /**
          * @param $auctionId
          * @return \IO\Models\LocalizedOrder|string
          */
-        public function placeOrder($auctionId)
+        private function placeOrder($auctionId)
         {
             try
             {
@@ -40,12 +61,5 @@
             {
                 return $exception -> getMessage(); // $response->redirectTo("checkout");
             }
-        }
-
-        public function getOrderById(AuctionOrderService $orderService, int $orderId)
-        {
-            $orderData = $this -> orderService -> findOrderById($orderId);
-
-            return $orderData;
         }
     }

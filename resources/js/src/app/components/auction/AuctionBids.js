@@ -201,7 +201,7 @@ Vue.component( "auction-bids", {
         auctionend() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 //api/placeorder/{auctionId}
-            ApiService.get( "/api/placeorder/" + this.auction.Id
+            ApiService.get( "/api/placeorder/" + this.auction.id
             )
                 .done( auction => {
                     console.dir( auction );
@@ -212,70 +212,42 @@ Vue.component( "auction-bids", {
                 } );
         },
         afterAuction() {
-            // gibt es Gebote, wenn ja ist loggedInUser der Gewinner?
-            // dann Notify 'Glückwunsch' und trigger Order...
-
-            // ApiService.get( "/place-order"
-            //                 // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
-            // )
-            //     .done( orderResponse => {
-            //         alert( "ok - order" );
-            //         // console.dir(orderResponse);
-            //     } )
-            //     .fail( () => {
-            //         alert( 'Ooops - ein Fehler beim auctionend ??!!' );
-            //     } );
+            // gibt es Gebote UND loggedInUser der Gewinner?
+            // dann place Order...
 
                 // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
                 setTimeout( () => {
                     if ( this.userdata ) {
                         const currentUserId = this.userdata.id;
-                        const lastEntry     = false;
+                        const lastEntry     = true;
 
                         AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
                             response => {
 
-                                const bidderList          = response;
-                                const bidderListLastEntry = bidderList[bidderList.length - 1];
+                                const bidderListLastEntry = response;
 
-                                const lastUserId = bidderListLastEntry.customerId;
+                                // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
+                                if ( currentUserId == bidderListLastEntry.customerId && this.auction.startPrice != bidderListLastEntry.bidPrice ) {
+                                    ApiService.get( "/api/placeorder/" + this.auction.Id
+                                    )
+                                        .done( auction => {
+                                            console.dir( auction );
+                                            alert( "ok" );
+                                            // this.reload( 10 );
 
-                                // Gewinner eingeloggt ??
-                                if ( currentUserId == lastUserId ) {
-                                    NotificationService.success(
-                                        "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-                                        .close;
-                                    alert( "  // item -> Basket\n" + "// Url -> Checkout" )
-                                    // item -> Basket
-                                    // Url -> Checkout
+                                        } )
+                                        .fail( () => {
+                                            alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
+                                        } );
+
                                 }
                                 // Gewinner nicht eingeloggt !!
                                 else {
-                                    var isUserInBidderList = false;
-
-                                    for (var i = bidderList.length; --i > 0;) {
-                                        const userId = bidderList[i].customerId;
-
-                                        if ( currentUserId == userId ) {
-                                            isUserInBidderList = true;
-                                            break
-                                        }
-                                    }
-                                    // ist der eingeloggte User in BidderList
-                                    if ( isUserInBidderList ) {
-                                        NotificationService.error(
-                                            "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
-                                        this.reload( 3000 );
-                                    }
-                                    // nein
-                                    else {
-                                        NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgeboten." ).close;
-                                        this.reload( 3000 );
-                                    }
+                                    this.reload( 10 );
                                 }
                             },
                             error => {
-                                alert( 'error5: ' + error.toString() );
+                                alert( 'error6: ' + error.toString() );
                             }
                         );
                     }
@@ -284,6 +256,44 @@ Vue.component( "auction-bids", {
                         this.reload( 3000 );
                     }
                 }, 1500 );
+        },
+        help2(){
+            // geparkt für evaluate & notify
+
+            // Gewinner eingeloggt ??
+            if ( currentUserId == lastUserId ) {
+                NotificationService.success(
+                    "Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
+                    .close;
+                alert( "  // item -> Basket\n" + "// Url -> Checkout" )
+                // item -> Basket
+                // Url -> Checkout
+            }
+            // Gewinner nicht eingeloggt !!
+            else {
+                var isUserInBidderList = false;
+
+                for (var i = bidderList.length; --i > 0;) {
+                    const userId = bidderList[i].customerId;
+
+                    if ( currentUserId == userId ) {
+                        isUserInBidderList = true;
+                        break
+                    }
+                }
+                // ist der eingeloggte User in BidderList
+                if ( isUserInBidderList ) {
+                    NotificationService.error(
+                        "Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." ).close;
+                    this.reload( 3000 );
+                }
+                // nein
+                else {
+                    NotificationService.info( "Bei dieser Auktion haben Sie nicht mitgeboten." ).close;
+                    this.reload( 3000 );
+                }
+            }
+
         },
         reload(timeout) {
             setTimeout( () => {
