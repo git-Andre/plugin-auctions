@@ -30,7 +30,7 @@
                     // Order...
 //                    $api -> post('api/auction', 'AuctionsController@createAuction');
 
-                    $api -> post('api/placeorder', 'AuctionPlaceOrderController@store');
+                    $api -> post('api/placeorder', 'AuctionPlaceOrderController@createOrder');
 
                     $api -> get('api/placeorder', 'AuctionPlaceOrderController@index');
 

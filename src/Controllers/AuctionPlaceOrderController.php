@@ -62,4 +62,33 @@
                 return $exception -> getMessage(); // $response->redirectTo("checkout");
             }
         }
+
+        public function createOrder(Request $request, Response $response) //: Response
+        {
+            $auctionId = (int) $this -> request -> get("auctionid");
+
+            if ($auctionId > 0)
+            {
+//                $order = pluginApp(AuctionOrderService::class) -> placeOrder($auctionId);
+//
+//                return $this -> response -> create($order, ResponseCode::OK);
+//                return $this -> response -> create($auctionId, ResponseCode::EXPECTATION_FAILED);
+                return $response -> json($request);
+            }
+
+            return $response -> json($auctionId);
+
+
+        }
+        public function index(Request $request, Response $response) //: Response
+        {
+            $auctionId = (int) $this -> request -> get("auctionid");
+
+            if ($auctionId > 0)
+            {
+                return $response -> json($request);
+            }
+            return $response -> make($auctionId);
+        }
+
     }
