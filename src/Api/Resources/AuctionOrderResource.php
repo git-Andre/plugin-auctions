@@ -24,7 +24,7 @@
          */
         public function __construct(
             Request $request,
-            ApiResponse $response
+            Response $response
         )
         {
             parent ::__construct($request, $response);
@@ -51,7 +51,7 @@
          */
         public function store() : Response
         {
-//            $auctionId = (int) $this -> request -> get("auctionid", 0);
+            $auctionId = (int) $this -> request -> get("auctionid", 0);
 //
 //            if ($auctionId > 0)
 //            {
