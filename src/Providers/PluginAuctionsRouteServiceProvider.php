@@ -31,9 +31,9 @@
                     // Order...
 //                    $api -> post('api/auction', 'AuctionsController@createAuction');
 
-                    $api -> post('api/placeorder', 'AuctionPlaceOrderController@createOrder');
-
-                    $api -> get('api/placeorder', 'AuctionPlaceOrderController@index');
+//                    $api -> post('api/placeorder', 'AuctionPlaceOrderController@createOrder');
+//
+//                    $api -> get('api/placeorder', 'AuctionPlaceOrderController@index');
 
 
                     //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
