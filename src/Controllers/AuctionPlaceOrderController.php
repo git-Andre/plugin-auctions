@@ -1,6 +1,8 @@
 <?php //strict
     namespace PluginAuctions\Controllers;
 
+    use Plenty\Plugin\Controller;
+
 //    use IO\Services\NotificationService;
     use Plenty\Plugin\Http\Request;
     use Plenty\Plugin\Http\Response;
@@ -21,42 +23,42 @@
             $this -> orderService = $orderService;
         }
 
-        public function triggerPlaceOrder($auctionId)
-        {
-            try
-            {
-                $result = $this -> placeOrder($auctionId);
-
-                return $result;
-            }
-            catch ( \Exception $exception )
-            {
-                return $exception -> getMessage(); // $response->redirectTo("checkout");
-            }
-        }
-
-        private function placeOrder($auctionId)
-        {
-            try
-            {
-                $orderData = $this -> orderService -> placeOrder($auctionId); // helper für http-Trigger
-
-//                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
-                return $orderData;
-            }
-            catch ( \Exception $exception )
-            {
-                return $exception -> getMessage(); // $response->redirectTo("checkout");
-            }
-        }
-
-        public function getOrderById(AuctionOrderService $orderService, int $orderId)
-        {
-            $orderData = $this -> orderService -> findOrderById($orderId);
-
-            return $orderData;
-        }
-
+//        public function triggerPlaceOrder($auctionId)
+//        {
+//            try
+//            {
+//                $result = $this -> placeOrder($auctionId);
+//
+//                return $result;
+//            }
+//            catch ( \Exception $exception )
+//            {
+//                return $exception -> getMessage(); // $response->redirectTo("checkout");
+//            }
+//        }
+//
+//        private function placeOrder($auctionId)
+//        {
+//            try
+//            {
+//                $orderData = $this -> orderService -> placeOrder($auctionId); // helper für http-Trigger
+//
+////                return "redirectTo("; // $response->redirectTo( "execute-payment/" . $orderData->order->id . (strlen($redirectParam) ? "/?redirectParam=" . $redirectParam : '') );
+//                return $orderData;
+//            }
+//            catch ( \Exception $exception )
+//            {
+//                return $exception -> getMessage(); // $response->redirectTo("checkout");
+//            }
+//        }
+//
+//        public function getOrderById(AuctionOrderService $orderService, int $orderId)
+//        {
+//            $orderData = $this -> orderService -> findOrderById($orderId);
+//
+//            return $orderData;
+//        }
+//
 
         /**
          * Create an order

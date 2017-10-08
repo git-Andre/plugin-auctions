@@ -19,7 +19,8 @@
 
         public function map(Router $router, ApiRouter $api)
         {
-            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'oauth'],
+            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'],
+//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middelware' => 'oauth'],
 //            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources'],
                 function ($api) {
 
