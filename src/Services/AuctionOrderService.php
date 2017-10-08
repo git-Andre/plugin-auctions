@@ -184,11 +184,11 @@
          * @param int $orderId
          * @return LocalizedOrder
          */
-        public function findOrderById(int $orderId) : LocalizedOrder
-        {
-            $order = $this -> orderRepository -> findOrderById($orderId);
-
-            return LocalizedOrder ::wrap($order, "de");
-        }
+//        public function findOrderById(int $orderId) : LocalizedOrder
+//        {
+//            $order = $this -> orderRepository -> findOrderById($orderId);
+//
+//            return LocalizedOrder ::wrap($order, "de");
+//        }
 
     }

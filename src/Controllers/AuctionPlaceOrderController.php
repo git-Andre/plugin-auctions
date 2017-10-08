@@ -89,6 +89,6 @@
             {
                 return $response -> json($request);
             }
-            return $response -> json($auctionId);
+            return $response -> make($auctionId);
         }
     }
