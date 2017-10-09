@@ -27,7 +27,7 @@
         {
             try
             {
-                $result = $this -> placeOrder($auctionId);
+                $result = $this -> $orderService -> placeOrder($auctionId);
                 return $result;
             }
             catch (\Exception $exception )
@@ -82,7 +82,7 @@
 //            {
 //                return $response -> json($request);
 //            }
-            return $response -> make($request);
+            return $response -> json($request);
         }
 
     }
