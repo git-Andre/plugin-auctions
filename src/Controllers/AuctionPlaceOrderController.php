@@ -27,7 +27,7 @@
         {
             try
             {
-                $result = $this -> $orderService -> placeOrder($auctionId);
+                $result = $this -> orderService -> placeOrder($auctionId);
                 return $result;
             }
             catch (\Exception $exception )
