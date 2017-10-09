@@ -64,7 +64,7 @@
 
         public function createOrder(Request $request, Response $response) //: Response
         {
-//            $auctionId = $request -> get("auctionid");
+            $auctionId = $request -> get("auctionid");
 //
 //            if ($auctionId > 0)
 //            {
@@ -75,7 +75,7 @@
 //                return $response -> make($order);
 //            }
 //
-            return $response -> json($auctionId);
+            return $response -> json($auctionid);
         }
 
 //        public function index(Request $request, Response $response) //: Response
