@@ -11,7 +11,7 @@
      * Class AuctionPlaceOrderController
      * @package IO\Controllers
      */
-    class AuctionHelperController extends LayoutController {
+    class AuctionTestController extends LayoutController {
 
         public function __construct()
         {
