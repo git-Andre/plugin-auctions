@@ -22,31 +22,27 @@
             $this -> orderService = $orderService;
         }
 
-//        public function
-//        triggerPlaceOrder($auctionId)
-//        {
-//            try
-//            {
-//                $result = $this -> placeOrder($auctionId);
-//                return $result;
-//            }
-//            catch (\Exception $exception )
-//            {
-//                return $exception -> getMessage(); // $response->redirectTo("checkout");
-//            }
-//        }
+        public function
+        triggerPlaceOrder($auctionId)
+        {
+            try
+            {
+                $result = $this -> placeOrder($auctionId);
+                return $result;
+            }
+            catch (\Exception $exception )
+            {
+                return $exception -> getMessage(); // $response->redirectTo("checkout");
+            }
+        }
+
+        public function getOrderById(int $orderId)
+        {
+            $orderData = $this -> orderService -> findOrderById($orderId);
+
+            return $orderData;
+        }
 //
-//        public function getOrderById(AuctionOrderService $orderService, int $orderId)
-//        {
-//            $orderData = $this -> orderService -> findOrderById($orderId);
-//
-//            return $orderData;
-//        }
-//
-//        /**
-//         * @param $auctionId
-//         * @return \IO\Models\LocalizedOrder|string
-//         */
 //        private function placeOrder($auctionId)
 //        {
 //            try
@@ -78,15 +74,15 @@
             return $response -> json($auctionId);
         }
 
-//        public function index(Request $request, Response $response) //: Response
-//        {
-////            $auctionId = (int) $request -> get("auctionid");
-////
-////            if ($auctionId > 0)
-////            {
-////                return $response -> json($request);
-////            }
-//            return $response -> make($request);
-//        }
+        public function index(Request $request, Response $response) //: Response
+        {
+//            $auctionId = (int) $request -> get("auctionid");
+//
+//            if ($auctionId > 0)
+//            {
+//                return $response -> json($request);
+//            }
+            return $response -> make($request);
+        }
 
     }
