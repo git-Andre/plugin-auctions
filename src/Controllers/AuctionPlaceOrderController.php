@@ -74,15 +74,5 @@
             return $response -> json($auctionId);
         }
 
-        public function index(Request $request, Response $response) //: Response
-        {
-//            $auctionId = (int) $request -> get("auctionid");
-//
-//            if ($auctionId > 0)
-//            {
-//                return $response -> json($request);
-//            }
-            return $response -> json($request);
-        }
 
     }

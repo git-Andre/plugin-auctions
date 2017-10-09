@@ -23,7 +23,7 @@
                 function ($routerApi)
                 {
                     /** @var ApiRouter $routerApi */
-                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@index']);
+                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
                     $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
                 });
 
@@ -76,6 +76,7 @@
             $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction')
                     -> where('id', '\d+');
 
+            // helper
             $router -> get('api/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate')
                     -> where('time', '\d+');
             $router -> get('api/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
@@ -88,6 +89,7 @@
             $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@triggerPlaceOrder')
                     -> where('auctionId', '\d+');
 
+            // test
             $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
                     -> where('itemId', '\d+');
             $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
