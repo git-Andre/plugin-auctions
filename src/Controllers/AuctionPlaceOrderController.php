@@ -75,7 +75,7 @@
 //                return $response -> make($order);
 //            }
 //
-            return $response -> json($auctionid);
+            return $response -> json($auctionId);
         }
 
 //        public function index(Request $request, Response $response) //: Response
