@@ -23,8 +23,9 @@
                 function ($routerApi)
                 {
                     /** @var ApiRouter $routerApi */
-                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
-                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
+//                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
+                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
+//                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
                 });
 
 ////            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
