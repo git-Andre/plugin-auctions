@@ -189,7 +189,7 @@ Vue.component( "auction-bids", {
                 "startPrice": this.minbid - 2
             };
 
-            ApiService.put( "/api/auction/2", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            ApiService.put( "/api/auction/11", JSON.stringify( Bidtest ), { contentType: "application/json" }
             )
                 .done( auction => {
                     // alert( "ok" );
@@ -236,6 +236,8 @@ Vue.component( "auction-bids", {
         afterAuction() {
             // gibt es Gebote UND loggedInUser der Gewinner?
             // dann place Order...
+
+            console.dir(this.userdata);
 
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout( () => {

@@ -166,7 +166,7 @@ Vue.component("auction-bids", {
                 "startPrice": this.minbid - 2
             };
 
-            ApiService.put("/api/auction/2", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
+            ApiService.put("/api/auction/11", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
                 alert('Upps - ein Fehler beim auctionend ??!!');
@@ -209,6 +209,8 @@ Vue.component("auction-bids", {
 
             // gibt es Gebote UND loggedInUser der Gewinner?
             // dann place Order...
+
+            console.dir(this.userdata);
 
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {

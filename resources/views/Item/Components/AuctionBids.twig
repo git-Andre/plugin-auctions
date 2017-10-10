@@ -1,5 +1,12 @@
 <script type="x/template" id="vue-auction-bids">
 
+    <auction-countdown
+            template="#vue-auction-countdown"
+            deadline="${ auction.expiryDate }"
+    >
+    </auction-countdown>
+
+
     <div class="row container" id="auction-bidform">
 
         <div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">
