@@ -1,6 +1,6 @@
-const ApiService          = require( "services/ApiService" );
-const NotificationService = require( "services/NotificationService" );
-const AuctionConstants    = require( "constants/AuctionConstants" );
+const ApiService           = require( "services/ApiService" );
+const NotificationService  = require( "services/NotificationService" );
+const AuctionConstants     = require( "constants/AuctionConstants" );
 const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
@@ -178,7 +178,7 @@ Vue.component( "auction-bids", {
             return Math.round( parseFloat( value ) * 100 ) / 100.0
         },
 
-        help() {
+        auctionend() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
             startD      = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -198,66 +198,84 @@ Vue.component( "auction-bids", {
                     alert( 'Upps - ein Fehler beim auctionend ??!!' );
                 } );
         },
-        auctionend() {
+        help() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
 //api/placeorder/{auctionId}
-            ApiService.post( "/api/placeorder", {"auctionid": this.auction.id}, { contentType: "application/json" }
-            )
-                .done( auction => {
-                    console.dir( auction );
-                    alert( "ok" );
-                } )
-                .fail( () => {
-                    alert( 'Upps - AUTH (mist) ??!!' );
-                } );
+//             ApiService.post( "/api/placeorder", { "auctionid": this.auction.id }, { contentType: "application/json" }
+//             )
+//                 .done( auction => {
+//                     console.dir( auction );
+//                     alert( "ok" );
+//                 } )
+//                 .fail( () => {
+//                     alert( 'Upps - AUTH (mist) ??!!' );
+//                 } );
+//
+//             ApiService.get( "/api/placeorder/" + this.auction.Id
+//             )
+//                 .done( auction => {
+//                     console.dir( auction );
+//                     alert( "ok" );
+//                     // this.reload( 10 );
+//
+//                 } )
+//                 .fail( () => {
+//                     alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
+//                 } );
+//
+
         },
+
+        addAuctionItemToBasket(url) {
+            var Httpreq = new XMLHttpRequest();
+            Httpreq.open( "POST", url, false );
+            Httpreq.send( null );
+
+        },
+
         afterAuction() {
             // gibt es Gebote UND loggedInUser der Gewinner?
             // dann place Order...
 
-                // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
-                setTimeout( () => {
-                    if ( this.userdata ) {
-                        const currentUserId = this.userdata.id;
-                        const lastEntry     = true;
+            // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
+            setTimeout( () => {
+                if ( this.userdata ) {
+                    const currentUserId = this.userdata.id;
+                    const lastEntry     = true;
 
-                        AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-                            response => {
+                    AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
+                        response => {
 
-                                const bidderListLastEntry = response;
+                            const bidderListLastEntry = response;
 
-                                // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
-                                if ( currentUserId == bidderListLastEntry.customerId && this.auction.startPrice != bidderListLastEntry.bidPrice ) {
-                                    ApiService.get( "/api/placeorder/" + this.auction.Id
-                                    )
-                                        .done( auction => {
-                                            console.dir( auction );
-                                            alert( "ok" );
-                                            // this.reload( 10 );
+                            // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
+                            if ( currentUserId == bidderListLastEntry.customerId &&
+                                this.auction.startPrice != bidderListLastEntry.bidPrice ) {
+                                const url = '/auction_to_basket?number=' + this.auction.itemId + '&quantity=1'
+                                console.log( 'url: ' + url );
 
-                                        } )
-                                        .fail( () => {
-                                            alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
-                                        } );
+                                this.addAuctionItemToBasket( url );
 
-                                }
-                                // Gewinner nicht eingeloggt !!
-                                else {
-                                    this.reload( 10 );
-                                }
-                            },
-                            error => {
-                                alert( 'error6: ' + error.toString() );
+                                this.reload( 10000);
+
                             }
-                        );
-                    }
-                    else {
-                        NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
-                        this.reload( 3000 );
-                    }
-                }, 1500 );
+                            // Gewinner nicht eingeloggt !!
+                            else {
+                                this.reload( 10 );
+                            }
+                        },
+                        error => {
+                            alert( 'error6: ' + error.toString() );
+                        }
+                    );
+                }
+                else {
+                    NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
+                    this.reload( 3000 );
+                }
+            }, 1500 );
         },
-        help2(){
+        help2() {
             // geparkt für evaluate & notify
 
             // Gewinner eingeloggt ??

@@ -1,6 +1,6 @@
 <?php
 
-namespace NumberToBasket\Controllers;
+namespace PluginAuctions\Controllers;
 
 use Plenty\Plugin\Controller;
 use Plenty\Plugin\Http\Request;
@@ -17,7 +17,7 @@ use Plenty\Modules\Item\Search\Filter\SearchFilter;
 use Plenty\Modules\Item\Search\Filter\VariationBaseFilter;
 use Plenty\Plugin\Application;
 
-class NumberToBasketController extends Controller
+class AuctionToBasketController extends Controller
 {
     public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
     {
