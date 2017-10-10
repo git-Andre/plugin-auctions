@@ -28,6 +28,9 @@ Vue.component("auction-bids", {
     },
     ready: function ready() {
         this.auction = JSON.parse(this.auction);
+        this.auction.expiryDate = parseInt(this.auction.expiryDate);
+        console.log('this.auction.expiryDate: ' + this.auction.expiryDate);
+
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
 
         // tense "present" und Customer loggedIn ??
@@ -133,6 +136,7 @@ Vue.component("auction-bids", {
                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
                 "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").closeAfter(NOTIFY_TIME);
             }
+            /**/
             sessionStorage.removeItem("currentBidder");
         },
         hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
@@ -210,39 +214,43 @@ Vue.component("auction-bids", {
             // gibt es Gebote UND loggedInUser der Gewinner?
             // dann place Order...
 
-            console.dir(this.userdata);
-
+            console.log('this.userdata.id: ' + this.userdata.id);
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {
                 if (_this2.userdata) {
                     var _currentUserId = _this2.userdata.id;
                     var lastEntry = true;
 
-                    AuctionBidderService.getBidderList(_this2.auctionid, lastEntry).then(function (response) {
+                    ApiService.get("/api/auction_last_entry/" + _this2.auction.id).done(function (response) {
 
                         var bidderListLastEntry = response;
+
+                        console.dir(bidderListLastEntry);
 
                         // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
                         if (_currentUserId == bidderListLastEntry.customerId && _this2.auction.startPrice != bidderListLastEntry.bidPrice) {
                             var url = '/auction_to_basket?number=' + _this2.auction.itemId + '&quantity=1';
                             console.log('url: ' + url);
 
-                            _this2.addAuctionItemToBasket(url);
-
-                            _this2.reload(10000);
+                            ApiService.post(url).done(function (response) {
+                                console.dir(response);
+                                // this.reload( 10000 );
+                            }).fail(function () {
+                                alert('Upps - ein Fehler bei Auction After 2 ??!!');
+                            });
                         }
                         // Gewinner nicht eingeloggt !!
                         else {
                                 _this2.reload(10);
                             }
-                    }, function (error) {
-                        alert('error6: ' + error.toString());
+                    }).fail(function () {
+                        alert('Upps - ein Fehler bei Auction After ??!!');
                     });
                 } else {
                     NotificationService.warn("Nicht angemeldet... -> reload").close;
                     _this2.reload(3000);
                 }
-            }, 1500);
+            }, 100);
         },
         help2: function help2() {
             // geparkt für evaluate & notify

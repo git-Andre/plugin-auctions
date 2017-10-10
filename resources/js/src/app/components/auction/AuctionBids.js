@@ -31,8 +31,11 @@ Vue.component( "auction-bids", {
         // this.currentBid = {};
     },
     ready() {
-        this.auction = JSON.parse( this.auction );
-        this.minbid  = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.auction            = JSON.parse( this.auction );
+        this.auction.expiryDate = parseInt( this.auction.expiryDate );
+        console.log( 'this.auction.expiryDate: ' + this.auction.expiryDate );
+
+        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
         // tense "present" und Customer loggedIn ??
         if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
@@ -154,6 +157,7 @@ Vue.component( "auction-bids", {
                     "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
                     .closeAfter( NOTIFY_TIME );
             }
+            /**/
             sessionStorage.removeItem( "currentBidder" );
         },
         hasLoggedInUserBiddenYet() {
@@ -237,45 +241,56 @@ Vue.component( "auction-bids", {
             // gibt es Gebote UND loggedInUser der Gewinner?
             // dann place Order...
 
-            console.dir(this.userdata);
-
+            console.log( 'this.userdata.id: ' + this.userdata.id );
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout( () => {
                 if ( this.userdata ) {
                     const currentUserId = this.userdata.id;
                     const lastEntry     = true;
 
-                    AuctionBidderService.getBidderList( this.auctionid, lastEntry ).then(
-                        response => {
+                    ApiService.get( "/api/auction_last_entry/" + this.auction.id )
+                        .done( response => {
 
                             const bidderListLastEntry = response;
+
+                            console.dir( this.$item );
+
+                            $variationId = this.item['mainVariationId'];
+                            // $variationId = this.item['documents'][0]['data']['variation']['id'];
+                            console.log( '$variationId: ' + $variationId );
 
                             // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
                             if ( currentUserId == bidderListLastEntry.customerId &&
                                 this.auction.startPrice != bidderListLastEntry.bidPrice ) {
-                                const url = '/auction_to_basket?number=' + this.auction.itemId + '&quantity=1'
+                                const url = ('/auction_to_basket?number=' + $variationId)
                                 console.log( 'url: ' + url );
 
-                                this.addAuctionItemToBasket( url );
-
-                                this.reload( 10000);
+                                ApiService.post( url )
+                                    .done( response => {
+                                        console.dir( response );
+                                        // this.reload( 10000 );
+                                    } )
+                                    .fail( () => {
+                                               alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );
+                                           }
+                                    )
 
                             }
                             // Gewinner nicht eingeloggt !!
                             else {
                                 this.reload( 10 );
                             }
-                        },
-                        error => {
-                            alert( 'error6: ' + error.toString() );
-                        }
-                    );
+                        } )
+                        .fail( () => {
+                                   alert( 'Upps - ein Fehler bei Auction After ??!!' );
+                               }
+                        )
                 }
                 else {
                     NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
                     this.reload( 3000 );
                 }
-            }, 1500 );
+            }, 100 );
         },
         help2() {
             // geparkt für evaluate & notify

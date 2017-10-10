@@ -21,8 +21,8 @@ class AuctionToBasketController extends Controller
 {
     public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
     {
-        $data['variationId'] = $this->findItemByNumber($request->get('number', ''));;
-        $data['quantity'] = $request->get('quantity', 1);
+        $data['variationId'] = $request->get('number', '');
+        $data['quantity'] = 1;
         
         $basketItem = $basketItemRepository->findExistingOneByData($data);
         if($basketItem instanceof BasketItem)
@@ -36,7 +36,8 @@ class AuctionToBasketController extends Controller
             $basketItemRepository->addBasketItem($data);
         }
         
-        return '';
+        return json_encode($data);
+//        return '';
     }
     
     public function findItemByNumber($number)
