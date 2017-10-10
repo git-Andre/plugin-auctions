@@ -65,6 +65,9 @@
             $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
                     -> where('id', '\d+');
 
+            $router -> get('api/auction_last_entry/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderListLastEntry')
+                    -> where('id', '\d+');
+
 
             $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
 

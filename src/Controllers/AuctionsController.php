@@ -64,6 +64,15 @@
             return 'keine ID (oder 0)';
         }
 
+        public function getBidderListLastEntry($id)
+        {
+            if ($id && $id > 0)
+            {
+                return json_encode($this -> auctionsService -> getBidderListLastEntry($id));
+            }
+            return 'keine ID (oder 0)';
+        }
+
         /**
          * @param $id
          * @return string
@@ -74,7 +83,6 @@
             {
                 return json_encode($this -> auctionsService -> getCurrentBidPrice($id));
             }
-
             return 'keine ID (oder 0)';
         }
 

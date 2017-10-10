@@ -202,9 +202,29 @@
 
                     $bidderListLastEntry = (object) array_pop(array_slice($auction -> bidderList, - 1));
 
-                    return json_encode($bidderListLastEntry -> bidPrice);
+                    return $bidderListLastEntry -> bidPrice;
                 }
 
+                return 'Fehler: keine gültige auction';
+            }
+
+            return 'Fehler: keine gültige ID';
+        }
+
+        public function getBidderListLastEntry($id)
+        {
+            if ($id > 0)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $bidderListLastEntry = (object) array_pop(array_slice($auction -> bidderList, - 1));
+
+                    unset($bidderListLastEntry['customerMaxBid']);
+
+                    return $bidderListLastEntry;
+                }
                 return 'Fehler: keine gültige auction';
             }
 
