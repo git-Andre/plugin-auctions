@@ -219,7 +219,7 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $bidderListLastEntry = (object) array_pop(array_slice($auction -> bidderList, - 1));
+                    $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
 
                     unset($bidderListLastEntry['customerMaxBid']);
 
