@@ -4,7 +4,7 @@
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionConstants = require("constants/AuctionConstants");
-var AuctionBidderService = require("services/AuctionBidderService");
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
 var NOTIFY_TIME = 10000;
@@ -24,6 +24,7 @@ Vue.component("auction-bids", {
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
         this.item = JSON.parse(this.item);
+
         // this.currentBid = {};
     },
     ready: function ready() {
@@ -211,10 +212,6 @@ Vue.component("auction-bids", {
         afterAuction: function afterAuction() {
             var _this2 = this;
 
-            // gibt es Gebote UND loggedInUser der Gewinner?
-            // dann place Order...
-
-            console.log('this.userdata.id: ' + this.userdata.id);
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {
                 if (_this2.userdata) {
@@ -225,16 +222,15 @@ Vue.component("auction-bids", {
 
                         var bidderListLastEntry = response;
 
-                        console.dir(bidderListLastEntry);
+                        var variationId = _this2.item['variation']['id'];
 
                         // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
                         if (_currentUserId == bidderListLastEntry.customerId && _this2.auction.startPrice != bidderListLastEntry.bidPrice) {
-                            var url = '/auction_to_basket?number=' + _this2.auction.itemId + '&quantity=1';
-                            console.log('url: ' + url);
+                            var url = '/auction_to_basket?number=' + variationId;
 
                             ApiService.post(url).done(function (response) {
                                 console.dir(response);
-                                // this.reload( 10000 );
+                                // this.reload( 10 );
                             }).fail(function () {
                                 alert('Upps - ein Fehler bei Auction After 2 ??!!');
                             });
@@ -250,7 +246,7 @@ Vue.component("auction-bids", {
                     NotificationService.warn("Nicht angemeldet... -> reload").close;
                     _this2.reload(3000);
                 }
-            }, 100);
+            }, 1000);
         },
         help2: function help2() {
             // geparkt für evaluate & notify
@@ -316,7 +312,7 @@ Vue.component("auction-bids", {
 
 });
 
-},{"constants/AuctionConstants":6,"services/ApiService":7,"services/AuctionBidderService":8,"services/NotificationService":9}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8}],2:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -478,7 +474,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":9}],5:[function(require,module,exports){
+},{"services/NotificationService":8}],5:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -705,85 +701,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":9,"services/WaitScreenService":10}],8:[function(require,module,exports){
-"use strict";
-
-var ApiService = require("services/ApiService");
-var NotificationService = require("services/NotificationService");
-
-module.exports = function ($) {
-
-    var bidderListLastEntry;
-    var getPromise;
-
-    return {
-        // getBidderList: getBidderList,
-        // getExpiryDate: getExpiryDate,
-        getCurrentBidPrice: getCurrentBidPrice
-    };
-
-    function getBidderList(auctionId) {
-        var lastEntry = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-        return new Promise(function (resolve, reject) {
-            if (auctionId) {
-                ApiService.get("/api/auction/" + auctionId).then(function (auction) {
-                    // setTimeout( () =>
-                    //     resolve( auction.bidderList[auction.bidderList.length - 1] ), 1000 );
-                    if (lastEntry) {
-                        resolve(auction.bidderList[auction.bidderList.length - 1]);
-                    } else {
-                        auction.bidderList[0].bidPrice = auction.startPrice;
-                        auction.bidderList[0].bidTimeStamp = auction.startDate;
-
-                        resolve(auction.bidderList);
-                    }
-                }, function (error) {
-                    reject(error);
-                });
-            } else {
-                alert('Fehler in id:: ' + auctionId);
-            }
-        });
-    }
-
-    function getCurrentBidPrice(auctionId) {
-        return new Promise(function (resolve, reject) {
-            if (auctionId) {
-
-                ApiService.get("/api/auctionbidprice/" + auctionId).then(function (currentBidPrice) {
-                    resolve(currentBidPrice);
-                }, function (error) {
-                    reject(error);
-                });
-            } else {
-                alert('Fehler in id: ' + auctionId);
-            }
-        });
-    }
-
-    // function getExpiryDate(auctionId) {
-    //     return new Promise( (resolve, reject) => {
-    //                             if ( auctionId ) {
-    //
-    //                                 ApiService.get( "/api/auction/" + auctionId )
-    //                                     .then( auction => {
-    //                                                resolve( auction.expiryDate );
-    //                                            },
-    //                                            error => {
-    //                                                reject( error );
-    //                                            }
-    //                                     )
-    //                             }
-    //                             else {
-    //                                 alert( 'Fehler in id (Date):: ' + auctionId );
-    //                             }
-    //                         }
-    //     )
-    // }
-}(jQuery);
-
-},{"services/ApiService":7,"services/NotificationService":9}],9:[function(require,module,exports){
+},{"services/NotificationService":8,"services/WaitScreenService":9}],8:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -940,7 +858,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {

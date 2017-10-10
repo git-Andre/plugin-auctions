@@ -22,7 +22,7 @@
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
             </dl>
 
-        {#Gegenwart#}
+            {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
             <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
@@ -31,7 +31,7 @@
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
-                        auction="{{ auction | json_encode()  }}"
+                        auction="{{ auction | json_encode() }}"
                         item="{{ itemData | json_encode() }}"
                         userdata="{{ userdata }}">
                 </auction-bids>
@@ -74,7 +74,7 @@
 
             </div>
 
-        {#Vergangenheit #}
+            {#Vergangenheit #}
         {% elseif (auction.tense == 'past') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
@@ -105,11 +105,16 @@
                 {% endif %}
             </dl>
 
-            {% if bidderListLast.customerId == userdata.id %}
+            {% if (auction.tense != 'past-perfect')d %}
+                {#v-if="{{ bidderListLast.customerId == userdata.id AND bidderListLength > 1 }}"#}
                 <auction-end
+                        v-if="{{ bidderListLast.customerId == userdata.id }}"
+                        template="#vue-auction-bids"
+                        {#auction="{{ auction | json_encode() }}"#}
+                        {#item="{{ itemData | json_encode() }}"#}
+                        {#userdata="{{ userdata }}">#}
                 >
                 </auction-end>
-
             {% endif %}
         {% endif %}
     </div>

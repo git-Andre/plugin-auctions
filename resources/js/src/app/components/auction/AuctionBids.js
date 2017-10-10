@@ -1,7 +1,7 @@
 const ApiService           = require( "services/ApiService" );
 const NotificationService  = require( "services/NotificationService" );
 const AuctionConstants     = require( "constants/AuctionConstants" );
-const AuctionBidderService = require( "services/AuctionBidderService" );
+// const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
 const NOTIFY_TIME = 10000;
@@ -28,6 +28,7 @@ Vue.component( "auction-bids", {
     compiled() {
         this.userdata = JSON.parse( this.userdata );
         this.item     = JSON.parse( this.item );
+
         // this.currentBid = {};
     },
     ready() {
@@ -238,10 +239,7 @@ Vue.component( "auction-bids", {
         },
 
         afterAuction() {
-            // gibt es Gebote UND loggedInUser der Gewinner?
-            // dann place Order...
 
-            console.log( 'this.userdata.id: ' + this.userdata.id );
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout( () => {
                 if ( this.userdata ) {
@@ -253,22 +251,18 @@ Vue.component( "auction-bids", {
 
                             const bidderListLastEntry = response;
 
-                            console.dir( this.$item );
-
-                            $variationId = this.item['mainVariationId'];
-                            // $variationId = this.item['documents'][0]['data']['variation']['id'];
-                            console.log( '$variationId: ' + $variationId );
+                            const variationId = this.item['variation']['id'];
 
                             // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
                             if ( currentUserId == bidderListLastEntry.customerId &&
                                 this.auction.startPrice != bidderListLastEntry.bidPrice ) {
-                                const url = ('/auction_to_basket?number=' + $variationId)
-                                console.log( 'url: ' + url );
+                                const url = ('/auction_to_basket?number=' + variationId)
 
                                 ApiService.post( url )
                                     .done( response => {
                                         console.dir( response );
-                                        // this.reload( 10000 );
+
+                                        // this.reload( 10 );
                                     } )
                                     .fail( () => {
                                                alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );
@@ -290,7 +284,7 @@ Vue.component( "auction-bids", {
                     NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
                     this.reload( 3000 );
                 }
-            }, 100 );
+            }, 1000 );
         },
         help2() {
             // geparkt für evaluate & notify
