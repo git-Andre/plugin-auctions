@@ -155,7 +155,7 @@ Vue.component("auction-bids", {
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
-        help: function help() {
+        auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
             startD = startD - 24 * 60 * 60 + 7;
             var Bidtest = {
@@ -172,15 +172,37 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
-        auctionend: function auctionend() {
+        help: function help() {
             // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
             //api/placeorder/{auctionId}
-            ApiService.post("/api/placeorder", { "auctionid": this.auction.id }, { contentType: "application/json" }).done(function (auction) {
-                console.dir(auction);
-                alert("ok");
-            }).fail(function () {
-                alert('Upps - AUTH (mist) ??!!');
-            });
+            //             ApiService.post( "/api/placeorder", { "auctionid": this.auction.id }, { contentType: "application/json" }
+            //             )
+            //                 .done( auction => {
+            //                     console.dir( auction );
+            //                     alert( "ok" );
+            //                 } )
+            //                 .fail( () => {
+            //                     alert( 'Upps - AUTH (mist) ??!!' );
+            //                 } );
+            //
+            //             ApiService.get( "/api/placeorder/" + this.auction.Id
+            //             )
+            //                 .done( auction => {
+            //                     console.dir( auction );
+            //                     alert( "ok" );
+            //                     // this.reload( 10 );
+            //
+            //                 } )
+            //                 .fail( () => {
+            //                     alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
+            //                 } );
+            //
+
+        },
+        addAuctionItemToBasket: function addAuctionItemToBasket(url) {
+            var Httpreq = new XMLHttpRequest();
+            Httpreq.open("POST", url, false);
+            Httpreq.send(null);
         },
         afterAuction: function afterAuction() {
             var _this2 = this;
@@ -200,13 +222,12 @@ Vue.component("auction-bids", {
 
                         // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
                         if (_currentUserId == bidderListLastEntry.customerId && _this2.auction.startPrice != bidderListLastEntry.bidPrice) {
-                            ApiService.get("/api/placeorder/" + _this2.auction.Id).done(function (auction) {
-                                console.dir(auction);
-                                alert("ok");
-                                // this.reload( 10 );
-                            }).fail(function () {
-                                alert('Upps - Gewinner eingeloggt - aber... ???!!');
-                            });
+                            var url = '/auction_to_basket?number=' + _this2.auction.itemId + '&quantity=1';
+                            console.log('url: ' + url);
+
+                            _this2.addAuctionItemToBasket(url);
+
+                            _this2.reload(10000);
                         }
                         // Gewinner nicht eingeloggt !!
                         else {

@@ -74,7 +74,7 @@
 //                unset($bid['customerId']);
 
                 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto)
-                $bid['customerId'] = $bid['customerId'];
+//                $bid['customerId'] = $bid['customerId'];
                 unset($bid['customerMaxBid']);
 
                 array_push($viewBids, $bid);
