@@ -13,9 +13,10 @@
     <div
     >
         <a href="/checkout"
-                :class="{ 'disabled': basketItems.length <= 0 }" class="btn btn-primary btn-block checkOutBtn"
+                class="btn btn-primary btn-block checkOutBtn"
                 title="{{ trans("Ceres::Template.orderCheckout") }}">
-            {{ trans("Ceres::Template.orderCheckout") }} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            {{ trans("Ceres::Template.orderCheckout") }}
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
     </div>
 

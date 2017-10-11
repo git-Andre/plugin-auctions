@@ -10,7 +10,7 @@ var AuctionConstants = require("constants/AuctionConstants");
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item", "deadline"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item"],
     data: function data() {
         return {
             isInputValid: false,
@@ -25,7 +25,7 @@ Vue.component("auction-bids", {
         this.item = JSON.parse(this.item);
 
         this.auction = JSON.parse(this.auction);
-        this.deadline = parseInt(this.auction.expiryDate);
+        this.auction.expiryDate = parseInt(this.auction.expiryDate);
 
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
@@ -35,7 +35,7 @@ Vue.component("auction-bids", {
         if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
-                this.evaluateAndNotify();
+                this.liveEvaluateAndNotify();
             }
         } else {
             // tense = past UND
@@ -80,7 +80,8 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler bei auctionbidprice ??!!');
             });
         },
-        evaluateAndNotify: function evaluateAndNotify() {
+        evaluateAndNotifyAfterAuction: function evaluateAndNotifyAfterAuction() {},
+        liveEvaluateAndNotify: function liveEvaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                 if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id) {
@@ -557,6 +558,7 @@ var START = exports.START = "Auktion beginnt!";
 // tense
 var PRESENT = exports.PRESENT = "present";
 var PAST = exports.PAST = "past";
+var PAST_PERFECT = exports.PAST_PERFECT = "past-perfect";
 
 },{}],7:[function(require,module,exports){
 "use strict";

@@ -13,8 +13,7 @@ Vue.component( "auction-bids", {
         "auction",
         "minbid",
         "auctionEnd",
-        "item",
-        // "deadline"
+        "item"
     ],
     data() {
         return {
@@ -257,7 +256,7 @@ Vue.component( "auction-bids", {
                                 ApiService.post( url )
                                     .done( response => {
 
-                                        this.reload( 1000 );
+                                        this.reload( 10 );
                                     } )
                                     .fail( () => {
                                                alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );
@@ -267,7 +266,7 @@ Vue.component( "auction-bids", {
                             }
                             // Gewinner nicht eingeloggt !!
                             else {
-                                this.reload( 1500 );
+                                this.reload( 10 );
                             }
                         } )
                         .fail( () => {
@@ -276,8 +275,8 @@ Vue.component( "auction-bids", {
                         )
                 }
                 else {
-                    NotificationService.warn( "Nicht angemeldet... -> reload" ).close;
-                    this.reload( 3000 );
+                    // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
+                    this.reload( 30 );
                 }
             }, 1000 );
         },

@@ -61,13 +61,15 @@
                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
                             </a>
                             </span>
-                            <span>
+                            {% if (auction.tense == 'present') %}
+                                <span>
                                     <button id="reload" class="btn btn-secondary btn-sm m-l-3"
                                             onclick="aoCustomReload()"
                                     ><i class="fa fa-refresh fa-2 m-r-5" aria-hidden="true"></i>reload
                                     </button>
 
-                            </span>
+                                </span>
+                            {% endif %}
                         </dd>
                     {% endif %}
                 </dl>
@@ -75,7 +77,7 @@
             </div>
 
             {#Vergangenheit #}
-        {% elseif (auction.tense == 'past') %}
+        {% elseif (auction.tense == 'past' || auction.tense == 'past-perfect') %}
             <h2 class="m-b-2">Beendete Auktion:</h2>
 
             <dl class="auctionList">
@@ -105,7 +107,7 @@
                 {% endif %}
             </dl>
 
-            {% if (auction.tense != 'past-perfect') %}
+            {% if (auction.tense == 'past') %}
                 <auction-end
                         v-if="{{ bidderListLast.customerId == userdata.id }}"
                         template="#vue-auction-bids"
