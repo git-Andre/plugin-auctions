@@ -19,26 +19,14 @@ class AuctionToOrderCron extends Cron
 {
 	use Loggable;
 
-//	/**
-//	 * @var SettingsHelper
-//	 */
-//	private $auctionOrderService;
-//
-//	/**
-//	 * @param SettingsHelper $settingsHelper
-//	 */
-//	public function __construct(AuctionOrderService $auctionOrderService)
-//	{
-//		$this->auctionOrderService = $auctionOrderService;
-//	}
+	private $auctionOrderService;
 
-	/**
-	 * Run the item export process.
-	 *
-	 * @param ItemExportService $service
-	 * @param AccountHelper     $accountHelper
-	 */
-	public function handle(AuctionOrderService $auctionOrderService)
+	public function __construct(AuctionOrderService $auctionOrderService)
+	{
+		$this->auctionOrderService = $auctionOrderService;
+	}
+
+	public function handle()
 	{
 		try
 		{

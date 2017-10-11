@@ -30,7 +30,7 @@
 
 //            $this -> addGlobalMiddleware(Middleware::class);
 
-            $this -> getApplication() -> singleton(AuctionOrderService::class);
+            $this -> getApplication() -> register(AuctionOrderService::class);
 
         }
 
