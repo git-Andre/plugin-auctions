@@ -20,22 +20,22 @@
 //                $data['id'] = $basketItem -> id;
 //                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
 //                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-                return 'schon vorhanden?';
+                return json_encode($data);
             }
             else
             {
                 try
                 {
                     $basketItemRepository -> addBasketItem($data);
-                    return '';
+                    return json_encode('ok');
                 }
                 catch ( \Exception $exc )
                 {
-                    return "Fehler ao: $exc";
+                    return json_encode($exc);
                 }
             }
 
-        return '';
+        return json_encode('nicht ok');
         }
 
 //    public function findItemByNumber($number)

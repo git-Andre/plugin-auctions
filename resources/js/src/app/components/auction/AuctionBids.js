@@ -46,6 +46,7 @@ Vue.component( "auction-bids", {
         else {
             // tense "past" und Customer loggedIn ??
             if ( this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0 ) {
+                console.log( 'tense "past" und Customer loggedIn' );
                 this.evaluateAndNotifyAfterAuction();
             }
         }
@@ -100,6 +101,7 @@ Vue.component( "auction-bids", {
         evaluateAndNotifyAfterAuction() {
             // Gewinner eingeloggt ??
             if ( this.hasLoggedInUserTheLastBid() ) {
+                console.log( 'Gewinner eingeloggt' );
                 NotificationService.success(
                     "<h3>Herzlichen Glückwunsch!</h3><hr>" +
                     "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
@@ -109,6 +111,7 @@ Vue.component( "auction-bids", {
             else {
                 // ist der eingeloggte User in BidderList
                 if ( hasLoggedInUserBiddenYet ) {
+                    console.log( 'ist der eingeloggte User in BidderList' );
                     NotificationService.error(
                         "<h3>STATUS:</h3><hr>Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." )
                         .closeAfter( NOTIFY_TIME );
