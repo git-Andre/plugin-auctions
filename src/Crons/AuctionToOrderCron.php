@@ -30,7 +30,7 @@ class AuctionToOrderCron extends Cron
 	{
 		try
 		{
-            $auctionOrderService ->placeOrder(11);
+            $this->auctionOrderService ->placeOrder(11);
 		}
 		catch(\Exception $ex)
 		{
