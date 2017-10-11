@@ -1,9 +1,7 @@
 const ApiService          = require( "services/ApiService" );
 const NotificationService = require( "services/NotificationService" );
 const AuctionConstants    = require( "constants/AuctionConstants" );
-// const AuctionBidderService = require( "services/AuctionBidderService" );
 
-// (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
 const NOTIFY_TIME = 10000;
 
 Vue.component( "auction-bids", {
@@ -35,19 +33,11 @@ Vue.component( "auction-bids", {
         this.minbid   = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
-
         // tense "present" und Customer loggedIn ??
         if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0 ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.liveEvaluateAndNotify();
-            }
-        }
-        else {
-            // tense "past" und Customer loggedIn ??
-            if ( this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0 ) {
-                console.log( 'tense "past" und Customer loggedIn' );
-                this.evaluateAndNotifyAfterAuction();
             }
         }
     },
@@ -96,33 +86,6 @@ Vue.component( "auction-bids", {
                            alert( 'Upps - ein Fehler bei auctionbidprice ??!!' );
                        }
                 )
-        },
-
-        evaluateAndNotifyAfterAuction() {
-            // Gewinner eingeloggt ??
-            if ( this.hasLoggedInUserTheLastBid() ) {
-                console.log( 'Gewinner eingeloggt' );
-                NotificationService.success(
-                    "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                    "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-                    .closeAfter( NOTIFY_TIME );
-            }
-            // Anderer User eingeloggt
-            else {
-                // ist der eingeloggte User in BidderList
-                if ( hasLoggedInUserBiddenYet ) {
-                    console.log( 'ist der eingeloggte User in BidderList' );
-                    NotificationService.error(
-                        "<h3>STATUS:</h3><hr>Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion." )
-                        .closeAfter( NOTIFY_TIME );
-                }
-                // nein
-                else {
-                    NotificationService.info( "<h3>STATUS:</h3><hr>Bei dieser Auktion haben Sie nicht mitgeboten." )
-                        .closeAfter( NOTIFY_TIME );
-                }
-            }
-
         },
 
         liveEvaluateAndNotify() {
@@ -232,7 +195,6 @@ Vue.component( "auction-bids", {
         },
 
         afterAuction() {
-
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout( () => {
                 if ( this.userdata ) {
@@ -253,28 +215,30 @@ Vue.component( "auction-bids", {
 
                                 ApiService.post( url )
                                     .done( response => {
-                                        console.dir( response );
-                                        // this.reload( 10 );
+                                        console.dir(response);
+                                        // this.reload( 1000 );
                                     } )
                                     .fail( () => {
-                                               alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );
+                                               alert( 'Oops - Fehler bei Auction Auswertung 2 ??!!' );
                                            }
                                     )
 
                             }
                             // Gewinner nicht eingeloggt !!
                             else {
-                                this.reload( 10 );
+                                console.log( 'After Auction - Gewinner nicht eingeloggt' );
+                                // this.reload( 1000 );
                             }
                         } )
                         .fail( () => {
-                                   alert( 'Upps - ein Fehler bei Auction After ??!!' );
+                                   alert( 'Fehler bei After Auction 1 ??!!' );
                                }
                         )
                 }
                 else {
                     // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
-                    this.reload( 30 );
+                    console.log( 'Sie sind nicht angemeldet...' );
+                    // this.reload( 30 );
                 }
             }, 1000 );
         },

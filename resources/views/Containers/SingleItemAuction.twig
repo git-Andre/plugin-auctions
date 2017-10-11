@@ -106,17 +106,18 @@
                     </dd>
                 {% endif %}
             </dl>
+            <div class="row container m-t-0 m-b-2">
 
-            {% if (auction.tense == 'past') %}
                 <auction-end
-                        v-if="{{ bidderListLast.customerId == userdata.id }}"
-                        template="#vue-auction-bids"
-                        {#auction="{{ auction | json_encode() }}"#}
-                        item="{{ itemData | json_encode() }}"
-                        {#userdata="{{ userdata }}">#}
+                        {#v-if="{{ bidderListLast.customerId == userdata.id }}"#}
+                        template="#vue-auction-end"
+                        auction="{{ auction | json_encode() }}"
+                        userdata="{{ userdata }}"
+                        {#item="{{ itemData | json_encode() }}"#}
                 >
                 </auction-end>
-            {% endif %}
+            </div>
+
         {% endif %}
     </div>
 {% else %}
