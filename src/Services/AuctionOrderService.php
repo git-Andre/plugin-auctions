@@ -31,10 +31,6 @@
             $this -> orderRepository = $orderRepository;
             $this -> auctionHelperService = $auctionHelperService;
         }
-
-
-
-
         /**
          * Place an order
          * @return LocalizedOrder

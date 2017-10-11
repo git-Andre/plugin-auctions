@@ -29,8 +29,7 @@
 //        $this->getApplication()->bind(AuctionsRepositoryContract::class, AuctionRepository::class);
 
 //            $this -> addGlobalMiddleware(Middleware::class);
-
-            $this -> getApplication() -> register(AuctionOrderService::class);
+//            $this -> getApplication() -> register(AuctionOrderService::class);
 
         }
 
@@ -38,7 +37,6 @@
         {
             // register crons
             $container->add(CronContainer::EVERY_FIFTEEN_MINUTES, AuctionToOrderCron::class);
-
 
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
 
