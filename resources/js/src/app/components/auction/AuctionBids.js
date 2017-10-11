@@ -27,12 +27,12 @@ Vue.component( "auction-bids", {
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
-        this.item     = JSON.parse( this.item );
 
-        this.auction            = JSON.parse( this.auction );
+        this.item = JSON.parse( this.item );
+
+        this.auction  = JSON.parse( this.auction );
         this.deadline = parseInt( this.auction.expiryDate );
-
-        this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+        this.minbid   = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
     ready() {
 
@@ -44,9 +44,9 @@ Vue.component( "auction-bids", {
             }
         }
         else {
-            // tense = past UND
+            // tense "past" und Customer loggedIn ??
             if ( this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0 ) {
-
+                this.evaluateAndNotifyAfterAuction();
             }
         }
     },
@@ -105,7 +105,7 @@ Vue.component( "auction-bids", {
                     "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
                     .closeAfter( NOTIFY_TIME );
             }
-            // NichtGewinner aber eingeloggt
+            // Anderer User eingeloggt
             else {
                 // ist der eingeloggte User in BidderList
                 if ( hasLoggedInUserBiddenYet ) {

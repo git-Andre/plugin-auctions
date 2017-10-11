@@ -10,7 +10,7 @@ var AuctionConstants = require("constants/AuctionConstants");
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item", "deadline"],
     data: function data() {
         return {
             isInputValid: false,
@@ -22,11 +22,11 @@ Vue.component("auction-bids", {
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
+
         this.item = JSON.parse(this.item);
 
         this.auction = JSON.parse(this.auction);
-        this.auction.expiryDate = parseInt(this.auction.expiryDate);
-
+        this.deadline = parseInt(this.auction.expiryDate);
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
     ready: function ready() {
@@ -38,8 +38,10 @@ Vue.component("auction-bids", {
                 this.liveEvaluateAndNotify();
             }
         } else {
-            // tense = past UND
-            if (this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0) {}
+            // tense "past" und Customer loggedIn ??
+            if (this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0) {
+                this.evaluateAndNotifyAfterAuction();
+            }
         }
     },
 
@@ -80,7 +82,23 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler bei auctionbidprice ??!!');
             });
         },
-        evaluateAndNotifyAfterAuction: function evaluateAndNotifyAfterAuction() {},
+        evaluateAndNotifyAfterAuction: function evaluateAndNotifyAfterAuction() {
+            // Gewinner eingeloggt ??
+            if (this.hasLoggedInUserTheLastBid()) {
+                NotificationService.success("<h3>Herzlichen Glückwunsch!</h3><hr>" + "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen.").closeAfter(NOTIFY_TIME);
+            }
+            // Anderer User eingeloggt
+            else {
+                    // ist der eingeloggte User in BidderList
+                    if (hasLoggedInUserBiddenYet) {
+                        NotificationService.error("<h3>STATUS:</h3><hr>Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").closeAfter(NOTIFY_TIME);
+                    }
+                    // nein
+                    else {
+                            NotificationService.info("<h3>STATUS:</h3><hr>Bei dieser Auktion haben Sie nicht mitgeboten.").closeAfter(NOTIFY_TIME);
+                        }
+                }
+        },
         liveEvaluateAndNotify: function liveEvaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
@@ -176,40 +194,13 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
-        help: function help() {
-            // ApiService.post( "/rest/orders", JSON.stringify( orderBuilder ), { contentType: "application/json" }
-            //api/placeorder/{auctionId}
-            //             ApiService.post( "/api/placeorder", { "auctionid": this.auction.id }, { contentType: "application/json" }
-            //             )
-            //                 .done( auction => {
-            //                     console.dir( auction );
-            //                     alert( "ok" );
-            //                 } )
-            //                 .fail( () => {
-            //                     alert( 'Upps - AUTH (mist) ??!!' );
-            //                 } );
-            //
-            //             ApiService.get( "/api/placeorder/" + this.auction.Id
-            //             )
-            //                 .done( auction => {
-            //                     console.dir( auction );
-            //                     alert( "ok" );
-            //                     // this.reload( 10 );
-            //
-            //                 } )
-            //                 .fail( () => {
-            //                     alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
-            //                 } );
-            //
-
-        },
         afterAuction: function afterAuction() {
             var _this2 = this;
 
             // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
             setTimeout(function () {
                 if (_this2.userdata) {
-                    var _currentUserId = _this2.userdata.id;
+                    var currentUserId = _this2.userdata.id;
                     var lastEntry = true;
 
                     ApiService.get("/api/auction_last_entry/" + _this2.auction.id).done(function (response) {
@@ -219,72 +210,36 @@ Vue.component("auction-bids", {
                         var variationId = _this2.item['variation']['id'];
 
                         // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
-                        if (_currentUserId == bidderListLastEntry.customerId && _this2.auction.startPrice != bidderListLastEntry.bidPrice) {
+                        if (currentUserId == bidderListLastEntry.customerId && _this2.auction.startPrice != bidderListLastEntry.bidPrice) {
                             var url = '/auction_to_basket?number=' + variationId;
 
                             ApiService.post(url).done(function (response) {
 
-                                _this2.reload(1000);
+                                _this2.reload(10);
                             }).fail(function () {
                                 alert('Upps - ein Fehler bei Auction After 2 ??!!');
                             });
                         }
                         // Gewinner nicht eingeloggt !!
                         else {
-                                _this2.reload(1500);
+                                _this2.reload(10);
                             }
                     }).fail(function () {
                         alert('Upps - ein Fehler bei Auction After ??!!');
                     });
                 } else {
-                    NotificationService.warn("Nicht angemeldet... -> reload").close;
-                    _this2.reload(3000);
+                    // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
+                    _this2.reload(30);
                 }
             }, 1000);
-        },
-        help2: function help2() {
-            // geparkt für evaluate & notify
-
-            // Gewinner eingeloggt ??
-            if (currentUserId == lastUserId) {
-                NotificationService.success("Herzlichen Glückwunsch!<br>Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen.").close;
-                alert("  // item -> Basket\n" + "// Url -> Checkout");
-                // item -> Basket
-                // Url -> Checkout
-            }
-            // Gewinner nicht eingeloggt !!
-            else {
-                    var isUserInBidderList = false;
-
-                    for (var i = bidderList.length; --i > 0;) {
-                        var userId = bidderList[i].customerId;
-
-                        if (currentUserId == userId) {
-                            isUserInBidderList = true;
-                            break;
-                        }
-                    }
-                    // ist der eingeloggte User in BidderList
-                    if (isUserInBidderList) {
-                        NotificationService.error("Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").close;
-                        this.reload(3000);
-                    }
-                    // nein
-                    else {
-                            NotificationService.info("Bei dieser Auktion haben Sie nicht mitgeboten.").close;
-                            this.reload(3000);
-                        }
-                }
         },
         reload: function reload(timeout) {
             setTimeout(function () {
                 location.reload();
             }, timeout);
-        },
-        getCurrentBidPrice: function getCurrentBidPrice() {}
+        }
     },
     watch: {
-
         maxCustomerBid: function maxCustomerBid() {
             if (this.maxCustomerBid >= this.minbid) {
                 if (this.userdata != null) {
