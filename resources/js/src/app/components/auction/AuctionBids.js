@@ -1,6 +1,6 @@
-const ApiService           = require( "services/ApiService" );
-const NotificationService  = require( "services/NotificationService" );
-const AuctionConstants     = require( "constants/AuctionConstants" );
+const ApiService          = require( "services/ApiService" );
+const NotificationService = require( "services/NotificationService" );
+const AuctionConstants    = require( "constants/AuctionConstants" );
 // const AuctionBidderService = require( "services/AuctionBidderService" );
 
 // (mini encrypt() ToDo: richtig verschlüsseln - evtl. auch die MaxBids für späteren Gebrauch (KundenKonto) s. server- php
@@ -29,24 +29,23 @@ Vue.component( "auction-bids", {
         this.userdata = JSON.parse( this.userdata );
         this.item     = JSON.parse( this.item );
 
-        // this.currentBid = {};
-    },
-    ready() {
         this.auction            = JSON.parse( this.auction );
         this.auction.expiryDate = parseInt( this.auction.expiryDate );
 
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
+    },
+    ready() {
 
         // tense "present" und Customer loggedIn ??
-        if ( (this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) &&
-            this.userdata != null ) {
+        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0 ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.evaluateAndNotify();
             }
         }
         else {
-            if ( (this.auction.tense == AuctionConstants.PAST) && this.userdata != null ) {
+            // tense = past UND
+            if ( this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0 ) {
 
             }
         }
@@ -252,9 +251,8 @@ Vue.component( "auction-bids", {
 
                                 ApiService.post( url )
                                     .done( response => {
-                                        console.dir( response );
 
-                                        // this.reload( 10 );
+                                        this.reload( 1000 );
                                     } )
                                     .fail( () => {
                                                alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );
@@ -264,7 +262,7 @@ Vue.component( "auction-bids", {
                             }
                             // Gewinner nicht eingeloggt !!
                             else {
-                                this.reload( 10 );
+                                this.reload( 1500 );
                             }
                         } )
                         .fail( () => {

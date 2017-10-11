@@ -106,7 +106,6 @@
             </dl>
 
             {% if (auction.tense != 'past-perfect') %}
-                {#v-if="{{ bidderListLast.customerId == userdata.id AND bidderListLength > 1 }}"#}
                 <auction-end
                         v-if="{{ bidderListLast.customerId == userdata.id }}"
                         template="#vue-auction-bids"

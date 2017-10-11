@@ -25,14 +25,12 @@ Vue.component("auction-bids", {
         this.userdata = JSON.parse(this.userdata);
         this.item = JSON.parse(this.item);
 
-        // this.currentBid = {};
-    },
-    ready: function ready() {
         this.auction = JSON.parse(this.auction);
         this.auction.expiryDate = parseInt(this.auction.expiryDate);
-        console.log('this.auction.expiryDate: ' + this.auction.expiryDate);
 
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
+    },
+    ready: function ready() {
 
         // tense "present" und Customer loggedIn ??
         if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
@@ -41,6 +39,7 @@ Vue.component("auction-bids", {
                 this.evaluateAndNotify();
             }
         } else {
+            // tense = past UND
             if (this.auction.tense == AuctionConstants.PAST && this.userdata != null) {}
         }
     },
@@ -204,11 +203,6 @@ Vue.component("auction-bids", {
             //
 
         },
-        addAuctionItemToBasket: function addAuctionItemToBasket(url) {
-            var Httpreq = new XMLHttpRequest();
-            Httpreq.open("POST", url, false);
-            Httpreq.send(null);
-        },
         afterAuction: function afterAuction() {
             var _this2 = this;
 
@@ -229,15 +223,15 @@ Vue.component("auction-bids", {
                             var url = '/auction_to_basket?number=' + variationId;
 
                             ApiService.post(url).done(function (response) {
-                                console.dir(response);
-                                // this.reload( 10 );
+
+                                _this2.reload(1000);
                             }).fail(function () {
                                 alert('Upps - ein Fehler bei Auction After 2 ??!!');
                             });
                         }
                         // Gewinner nicht eingeloggt !!
                         else {
-                                _this2.reload(10);
+                                _this2.reload(1500);
                             }
                     }).fail(function () {
                         alert('Upps - ein Fehler bei Auction After ??!!');

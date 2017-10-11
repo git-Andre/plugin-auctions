@@ -1,9 +1,9 @@
 <script type="x/template" id="vue-auction-bids">
 
-    <h3>${ auction.expiryDate }</h3>
+    {#<h3>${ auction.expiryDate }</h3>#}
     <auction-countdown
             template="#vue-auction-countdown"
-            deadline="auction.expiryDate"
+            deadline="{{ auction.expiryDate }}"
     >
     </auction-countdown>
 
@@ -37,7 +37,7 @@
             >auctionend
             </button>
 
-{#ToDo: agb abfrage...#}
+            {#ToDo: agb abfrage...#}
         </div>
     </div>
 
