@@ -18,7 +18,7 @@
 
         use Loggable;
 
-        private $auctionOrderService;
+        public $auctionOrderService;
 
         public function __construct(AuctionOrderService $auctionOrderService)
         {
@@ -27,16 +27,9 @@
 
         public function handle()
         {
-            $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::item.itemExportError', "test");
-            try
-            {
+               $test = $this -> auctionOrderService -> placeOrder(11);
+            $this->getLogger(__FUNCTION__)->error('Etsy::order.orderImportError', $test);
 
-                $this -> auctionOrderService -> placeOrder(11);
-            }
-            catch ( \Exception $ex )
-            {
-                $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::item.stockUpdateError', $ex -> getMessage());
-            }
         }
 
         /**
