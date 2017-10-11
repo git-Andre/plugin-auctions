@@ -7,7 +7,9 @@ Vue.component( "auction-end", {
     props: [
         "template",
         "userdata",
-        "auction"
+        "auctionid",
+        "isWinnerLoggedIn",
+        "bidderList"
     ],
     data() {
         return {}
@@ -17,23 +19,37 @@ Vue.component( "auction-end", {
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
-        this.auction  = JSON.parse( this.auction );
+        this.auctionid  = parseInt( this.auctionid );
+        this.getBidderList();
     },
     ready() {
 
         console.log( 'this.auction.tense: ' + this.auction.tense );
-        console.log( 'this.userdata.id: ' + this.userdata.id );
+        console.log( 'this.auctionid: ' + this.auctionid );
 
-        // tense "past" und Customer loggedIn ??
-        if ( this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0 ) {
-            console.log( 'tense "past" und Customer loggedIn' );
+        // Customer loggedIn ??
+        if ( this.userdata != null ) {
+            console.log( 'Customer loggedIn' );
             this.evaluateAndNotifyAfterAuction();
         }
     },
     methods: {
+        getBidderList() {
+            ApiService.get( "/api/bidderlist/" + this.auctionid )
+                .done( response => {
+
+                    this.bidderList = response;
+                    console.dir( this.bidderList );
+                } )
+                .fail( () => {
+                           alert( 'Oops - Fehler bei get last bid ??!!' );
+                       }
+                )
+
+        },
         evaluateAndNotifyAfterAuction() {
             // Gewinner eingeloggt ??
-            if ( this.hasLoggedInUserTheLastBid() ) {
+            if ( this.isWinnerLoggedIn ) {
                 console.log( 'Gewinner eingeloggt' );
                 NotificationService.success(
                     "<h3>Herzlichen Glückwunsch!</h3><hr>" +
@@ -57,23 +73,34 @@ Vue.component( "auction-end", {
             }
 
         },
+
         hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
-            for (var i = this.auction.bidderList.length; --i > 0;) {
-                if ( this.userdata.id == this.auction.bidderList[i].customerId ) {
+            for (var i = this.bidderList.length; --i > 0;) {
+                if ( this.userdata.id == this.bidderList[i].customerId ) {
                     return true;
                 }
             }
             return false;
         },
-        hasLoggedInUserTheLastBid() {
-            // return true if lastBid.CustomerId == loggedInCustomerID
-            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id ) {
-                return true
+        // hasLoggedInUserTheLastBid() {
+        //     // return true if lastBid.CustomerId == loggedInCustomerID
+        //     if ( this.bidderList[this.bidderList.length - 1].customerId == this.userdata.id ) {
+        //         return true
+        //     }
+        //     else {
+        //         return false
+        //     }
+        // },
+    },
+    watch: {
+        isWinnerLoggedIn: function () {
+            if ( this.bidderList[this.bidderList.length - 1].customerId == this.userdata.id ) {
+                    this.isWinnerLoggedIn = true
             }
             else {
-                return false
+                this.isWinnerLoggedIn = false;
             }
         },
-    }
+    },
 } )

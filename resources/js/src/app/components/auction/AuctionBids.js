@@ -34,7 +34,7 @@ Vue.component( "auction-bids", {
     },
     ready() {
         // tense "present" und Customer loggedIn ??
-        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0 ) {
+        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata != null ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.liveEvaluateAndNotify();
@@ -215,7 +215,7 @@ Vue.component( "auction-bids", {
 
                                 ApiService.post( url )
                                     .done( response => {
-                                        console.dir(response);
+                                        console.dir( response );
                                         // this.reload( 1000 );
                                     } )
                                     .fail( () => {
@@ -270,6 +270,5 @@ Vue.component( "auction-bids", {
                 this.afterAuction();
             }
         }
-    }
-    ,
+    },
 } );

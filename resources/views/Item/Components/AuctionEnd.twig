@@ -1,25 +1,18 @@
 <script type="x/template" id="vue-auction-end">
 
     {#<div class="row container">#}
-        {#<div class="col-lg-8 offset-lg-3">#}
-            {#<button class="btn btn-primary btn-lg btn-block"#}
-                    {#@click="getTest"#}
-            {#>Jetzt bezahlen!#}
-            {#</button>#}
-        {#</div>#}
+        <div class="col-lg-8 offset-lg-3"
+        v-if="isWinnerLoggedIn"
+        >
+            <a href="/checkout"
+                    class="btn btn-primary btn-lrg btn-block checkOutBtn"
+                    title="{{ trans("Ceres::Template.orderCheckout") }}">
+                {{ trans("Ceres::Template.orderCheckout") }}
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+
+        </div>
     {#</div>#}
-
-
-    <div
-    >
-        <a href="/checkout"
-                class="btn btn-primary btn-block checkOutBtn"
-                title="{{ trans("Ceres::Template.orderCheckout") }}">
-            {{ trans("Ceres::Template.orderCheckout") }}
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </a>
-    </div>
-
 
 </script>
 <style>
