@@ -27,7 +27,7 @@
 
         public function handle()
         {
-            $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::item.itemExportError', $ex -> getMessage());
+            $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::item.itemExportError', "test");
             try
             {
 
