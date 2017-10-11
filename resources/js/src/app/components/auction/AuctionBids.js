@@ -14,7 +14,7 @@ Vue.component( "auction-bids", {
         "minbid",
         "auctionEnd",
         "item",
-        "deadline"
+        // "deadline"
     ],
     data() {
         return {
@@ -30,7 +30,7 @@ Vue.component( "auction-bids", {
         this.item     = JSON.parse( this.item );
 
         this.auction            = JSON.parse( this.auction );
-        this.deadline = parseInt( this.auction.expiryDate );
+        this.auction.expiryDate = parseInt( this.auction.expiryDate );
 
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
@@ -40,7 +40,7 @@ Vue.component( "auction-bids", {
         if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0 ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
-                this.evaluateAndNotify();
+                this.liveEvaluateAndNotify();
             }
         }
         else {
@@ -96,7 +96,12 @@ Vue.component( "auction-bids", {
                        }
                 )
         },
-        evaluateAndNotify() {
+
+        evaluateAndNotifyAfterAuction() {
+
+        },
+
+        liveEvaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
                 if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id ) {
