@@ -3,11 +3,15 @@
     namespace PluginAuctions\Providers;
 
     use IO\Middlewares\Middleware;
+
     use Plenty\Plugin\ServiceProvider;
     use Plenty\Plugin\Templates\Twig;
+    use Plenty\Modules\Cron\Services\CronContainer;
+
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
     use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
     use PluginAuctions\Services\AuctionOrderService;
+    use PluginAuctions\Crons\AuctionToOrderCron;
 
 
     /**
@@ -30,8 +34,12 @@
 
         }
 
-        public function boot(Twig $twig)
+        public function boot(Twig $twig, CronContainer $container)
         {
+            // register crons
+            $container->add(CronContainer::EVERY_FIFTEEN_MINUTES, AuctionToOrderCron::class);
+
+
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
 
 //            //Register the PayUponPickup Plugin

@@ -175,7 +175,7 @@ Vue.component( "auction-bids", {
 
         auctionend() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-            startD      = startD - 24 * 60 * 60 + 7;
+            startD      = startD - 24 * 60 * 60 + 30;
             var Bidtest = {
                 "startDate": startD,
                 "startHour": 16,
@@ -195,11 +195,7 @@ Vue.component( "auction-bids", {
         },
 
         afterAuction() {
-            // um Probleme mit letzten Geboten bei geringen Zeitunterschieden zu umgehen
-            setTimeout( () => {
-                if ( this.userdata ) {
-                    const currentUserId = this.userdata.id;
-                    const lastEntry     = true;
+                if ( this.userdata != null ) {
 
                     ApiService.get( "/api/auction_last_entry/" + this.auction.id )
                         .done( response => {
@@ -208,26 +204,24 @@ Vue.component( "auction-bids", {
 
                             const variationId = this.item['variation']['id'];
 
-                            // Gewinner eingeloggt (UND es gab Gebote - ToDo: kann weg)??
-                            if ( currentUserId == bidderListLastEntry.customerId &&
-                                this.auction.startPrice != bidderListLastEntry.bidPrice ) {
+                            // Gewinner eingeloggt
+                            if ( this.userdata.id == bidderListLastEntry.customerId ) {
                                 const url = ('/auction_to_basket?number=' + variationId)
 
                                 ApiService.post( url )
                                     .done( response => {
                                         console.dir( response );
-                                        // this.reload( 1000 );
+                                        this.reload( 2000 );
                                     } )
                                     .fail( () => {
                                                alert( 'Oops - Fehler bei Auction Auswertung 2 ??!!' );
                                            }
                                     )
-
                             }
                             // Gewinner nicht eingeloggt !!
                             else {
                                 console.log( 'After Auction - Gewinner nicht eingeloggt' );
-                                // this.reload( 1000 );
+                                this.reload( 2000 );
                             }
                         } )
                         .fail( () => {
@@ -238,9 +232,8 @@ Vue.component( "auction-bids", {
                 else {
                     // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
                     console.log( 'Sie sind nicht angemeldet...' );
-                    // this.reload( 30 );
+                    this.reload( 30 );
                 }
-            }, 1000 );
         },
         reload(timeout) {
             setTimeout( () => {
