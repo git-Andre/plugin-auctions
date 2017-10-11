@@ -10,10 +10,9 @@ var AuctionConstants = require("constants/AuctionConstants");
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item", "deadline"],
     data: function data() {
         return {
-            // auction: {},
             isInputValid: false,
             maxCustomerBid: null
         };
@@ -26,21 +25,21 @@ Vue.component("auction-bids", {
         this.item = JSON.parse(this.item);
 
         this.auction = JSON.parse(this.auction);
-        this.auction.expiryDate = parseInt(this.auction.expiryDate);
+        this.deadline = parseInt(this.auction.expiryDate);
 
         this.minbid = this.toFloatTwoDecimal(this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice + 1);
     },
     ready: function ready() {
 
         // tense "present" und Customer loggedIn ??
-        if ((this.auction.tense == AuctionConstants.PRESENT || this.auction.tense == AuctionConstants.PAST) && this.userdata != null) {
+        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata.id > 0) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.evaluateAndNotify();
             }
         } else {
             // tense = past UND
-            if (this.auction.tense == AuctionConstants.PAST && this.userdata != null) {}
+            if (this.auction.tense == AuctionConstants.PAST && this.userdata.id > 0) {}
         }
     },
 
@@ -478,7 +477,7 @@ Vue.component("auction-countdown", {
     },
     created: function created() {
         this.$options.template = this.template;
-        this.deadline = parseInt(this.deadline);
+        // this.deadline          = parseInt(this.deadline);
         this.now = Math.trunc(new Date().getTime() / 1000);
         this.diff = 0;
     },

@@ -11,7 +11,7 @@ Vue.component( "auction-countdown", {
     },
     created() {
         this.$options.template = this.template;
-        this.deadline          = parseInt(this.deadline);
+        // this.deadline          = parseInt(this.deadline);
         this.now               = Math.trunc( (new Date()).getTime() / 1000 );
         this.diff              = 0;
 

@@ -13,14 +13,13 @@ Vue.component( "auction-bids", {
         "auction",
         "minbid",
         "auctionEnd",
-        "item"
+        "item",
+        "deadline"
     ],
     data() {
         return {
-            // auction: {},
             isInputValid: false,
             maxCustomerBid: null,
-            deadline: 0
         }
     },
     created() {
