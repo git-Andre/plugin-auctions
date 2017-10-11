@@ -1,79 +1,77 @@
 <?php
 
-namespace PluginAuctions\Controllers;
+    namespace PluginAuctions\Controllers;
 
-use Plenty\Plugin\Controller;
-use Plenty\Plugin\Http\Request;
-use Plenty\Modules\Basket\Models\BasketItem;
-use Plenty\Modules\Basket\Contracts\BasketItemRepositoryContract;
+    use Plenty\Modules\Basket\Contracts\BasketItemRepositoryContract;
+    use Plenty\Modules\Basket\Models\BasketItem;
+    use Plenty\Plugin\Controller;
+    use Plenty\Plugin\Http\Request;
 
-use Plenty\Modules\Cloud\ElasticSearch\Lib\ElasticSearch;
-use Plenty\Modules\Cloud\ElasticSearch\Lib\Processor\DocumentProcessor;
-use Plenty\Modules\Cloud\ElasticSearch\Lib\Search\Document\DocumentSearch;
-use Plenty\Modules\Cloud\ElasticSearch\Lib\Source\IncludeSource;
-use Plenty\Modules\Item\Search\Contracts\VariationElasticSearchSearchRepositoryContract;
-use Plenty\Modules\Item\Search\Filter\ClientFilter;
-use Plenty\Modules\Item\Search\Filter\SearchFilter;
-use Plenty\Modules\Item\Search\Filter\VariationBaseFilter;
-use Plenty\Plugin\Application;
+    class AuctionToBasketController extends Controller {
 
-class AuctionToBasketController extends Controller
-{
-    public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
-    {
-        $data['variationId'] = $request->get('number', '');
-        $data['quantity'] = 1;
-        
-        $basketItem = $basketItemRepository->findExistingOneByData($data);
-        if($basketItem instanceof BasketItem)
+        public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
         {
-            $data['id']       = $basketItem->id;
-            $data['quantity'] = (int)$data['quantity'] + $basketItem->quantity;
-            $basketItemRepository->updateBasketItem($basketItem->id, $data);
-        }
-        else
-        {
-            $basketItemRepository->addBasketItem($data);
-        }
-        
-        return json_encode($data);
-//        return '';
-    }
-    
-    public function findItemByNumber($number)
-    {
-        $variationId = $number;
-        
-        if(strlen($number))
-        {
-            $app = pluginApp(Application::class);
-            
-            $documentProcessor = pluginApp(DocumentProcessor::class);
-            $documentSearch = pluginApp(DocumentSearch::class, [$documentProcessor]);
-        
-            $elasticSearchRepo = pluginApp(VariationElasticSearchSearchRepositoryContract::class);
-            $elasticSearchRepo->addSearch($documentSearch);
-        
-            $clientFilter = pluginApp(ClientFilter::class);
-            $clientFilter->isVisibleForClient($app->getPlentyId());
-        
-            $variationFilter = pluginApp(VariationBaseFilter::class);
-            $variationFilter->isActive();
-            $variationFilter->hasNumber($number, ElasticSearch::SEARCH_TYPE_EXACT);
-        
-            $documentSearch
-                ->addFilter($clientFilter)
-                ->addFilter($variationFilter);
-        
-            $result = $elasticSearchRepo->execute();
-            
-            if(count($result['documents']))
+            $data['variationId'] = $request -> get('number', '');
+            $data['quantity'] = 1;
+            try
             {
-                $variationId = $result['documents'][0]['data']['variation']['id'];
+                $basketItemRepository -> addBasketItem($data);
+                return 'ok';
             }
+            catch ( \Exception $exc )
+            {
+                return "Fehler: $exc";
+            }
+//
+//            $basketItem = $basketItemRepository -> findExistingOneByData($data);
+//            if ($basketItem instanceof BasketItem)
+//            {
+//                $data['id'] = $basketItem -> id;
+//                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
+//                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
+//            }
+//            else
+//            {
+//                $basketItemRepository -> addBasketItem($data);
+//            }
+//
+//        return '';
         }
-        
-        return $variationId;
+
+//    public function findItemByNumber($number)
+//    {
+//        $variationId = $number;
+//
+//        if(strlen($number))
+//        {
+//            $app = pluginApp(Application::class);
+//
+//            $documentProcessor = pluginApp(DocumentProcessor::class);
+//            $documentSearch = pluginApp(DocumentSearch::class, [$documentProcessor]);
+//
+//            $elasticSearchRepo = pluginApp(VariationElasticSearchSearchRepositoryContract::class);
+//            $elasticSearchRepo->addSearch($documentSearch);
+//
+//            $clientFilter = pluginApp(ClientFilter::class);
+//            $clientFilter->isVisibleForClient($app->getPlentyId());
+//
+//            $variationFilter = pluginApp(VariationBaseFilter::class);
+//            $variationFilter->isActive();
+//            $variationFilter->hasNumber($number, ElasticSearch::SEARCH_TYPE_EXACT);
+//
+//            $documentSearch
+//                ->addFilter($clientFilter)
+//                ->addFilter($variationFilter);
+//
+//            $result = $elasticSearchRepo->execute();
+//
+//            if(count($result['documents']))
+//            {
+//                $variationId = $result['documents'][0]['data']['variation']['id'];
+//            }
+//        }
+//
+//        return $variationId;
+//    }
+
     }
-    
-}

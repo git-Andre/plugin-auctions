@@ -34,7 +34,6 @@ Vue.component( "auction-bids", {
     ready() {
         this.auction            = JSON.parse( this.auction );
         this.auction.expiryDate = parseInt( this.auction.expiryDate );
-        console.log( 'this.auction.expiryDate: ' + this.auction.expiryDate );
 
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
 
@@ -228,13 +227,6 @@ Vue.component( "auction-bids", {
 //                     alert( 'Upps - Gewinner eingeloggt - aber... ???!!' );
 //                 } );
 //
-
-        },
-
-        addAuctionItemToBasket(url) {
-            var Httpreq = new XMLHttpRequest();
-            Httpreq.open( "POST", url, false );
-            Httpreq.send( null );
 
         },
 
