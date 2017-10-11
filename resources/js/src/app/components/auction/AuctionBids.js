@@ -250,8 +250,8 @@ Vue.component( "auction-bids", {
 
                                 ApiService.post( url )
                                     .done( response => {
-
-                                        this.reload( 10 );
+                                        console.dir( response );
+                                        // this.reload( 10 );
                                     } )
                                     .fail( () => {
                                                alert( 'Upps - ein Fehler bei Auction After 2 ??!!' );

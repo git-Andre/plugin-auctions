@@ -13,29 +13,29 @@
         {
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
-            try
+
+            $basketItem = $basketItemRepository -> findExistingOneByData($data);
+            if ($basketItem instanceof BasketItem)
             {
-                $basketItemRepository -> addBasketItem($data);
-                return 'ok';
-            }
-            catch ( \Exception $exc )
-            {
-                return "Fehler: $exc";
-            }
-//
-//            $basketItem = $basketItemRepository -> findExistingOneByData($data);
-//            if ($basketItem instanceof BasketItem)
-//            {
 //                $data['id'] = $basketItem -> id;
 //                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
 //                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-//            }
-//            else
-//            {
-//                $basketItemRepository -> addBasketItem($data);
-//            }
-//
-//        return '';
+                return 'schon vorhanden?';
+            }
+            else
+            {
+                try
+                {
+                    $basketItemRepository -> addBasketItem($data);
+                    return '';
+                }
+                catch ( \Exception $exc )
+                {
+                    return "Fehler ao: $exc";
+                }
+            }
+
+        return '';
         }
 
 //    public function findItemByNumber($number)
