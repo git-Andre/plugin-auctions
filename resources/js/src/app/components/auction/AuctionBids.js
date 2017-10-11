@@ -19,7 +19,8 @@ Vue.component( "auction-bids", {
         return {
             // auction: {},
             isInputValid: false,
-            maxCustomerBid: null
+            maxCustomerBid: null,
+            deadline: 0
         }
     },
     created() {
@@ -30,7 +31,7 @@ Vue.component( "auction-bids", {
         this.item     = JSON.parse( this.item );
 
         this.auction            = JSON.parse( this.auction );
-        this.auction.expiryDate = parseInt( this.auction.expiryDate );
+        this.deadline = parseInt( this.auction.expiryDate );
 
         this.minbid = this.toFloatTwoDecimal( ( ( this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice ) ) + 1 );
     },
