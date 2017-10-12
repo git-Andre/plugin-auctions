@@ -22,16 +22,16 @@
 //            }
 //            else
 //            {
-//            try
-//            {
-//                $basketItemRepository -> addBasketItem($data);
-//
-//                return '';
-//            }
-//            catch ( \Exception $exc )
-//            {
-//                return json_encode($request);
-//            }
+            try
+            {
+                $basketItemRepository -> addBasketItem($data);
+
+                return json_encode($data['variationId']);
+            }
+            catch ( \Exception $exc )
+            {
+                return json_encode($request);
+            }
 
 //            }
 
