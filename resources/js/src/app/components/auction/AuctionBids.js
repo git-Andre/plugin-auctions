@@ -222,7 +222,7 @@ Vue.component( "auction-bids", {
 
                             const bidderListLastEntry = lastEntry;
 
-                            // Gewinner eingeloggt
+                            // Gewinner eingeloggt?
                             if ( this.userdata.id == bidderListLastEntry.customerId ) {
                                 // Artikel in den Warenkorb
                                 const url = ('/auction_to_basket?number=' + this.item['variation']['id'])
