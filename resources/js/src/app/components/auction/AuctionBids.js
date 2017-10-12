@@ -40,19 +40,17 @@ Vue.component( "auction-bids", {
                 this.liveEvaluateAndNotify();
             }
         }
+        // if ( sessionStorage.getItem( "auctionEnd" ) ) {
+        //     sessionStorage.removeItem( "auctionEnd" );
+        // }
     },
     methods: {
 
         addBid() {
-            var tense = "";
             ApiService.get( "/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate )
                 .done( response => {
-
-                    console.log( 'response: ' + response );
-                    tense = response;
-                    console.log( 'tense: ' + tense );
-
-                    if ( tense == "present" ) {
+                    // Absicherung mit Server Time, dass Auktion noch 'present' ist
+                    if ( response == "present" ) {
                         ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                             .done( lastBidPrice => {
                                 // ist es ein gültiges Gebot (höher als letztes Gebot) ?
@@ -97,7 +95,7 @@ Vue.component( "auction-bids", {
                             )
                     }
                     else {
-                        this.printClockWarn();
+                        this.afterAuction();
                     }
                 } )
                 .fail( () => {
@@ -193,7 +191,7 @@ Vue.component( "auction-bids", {
 
         auctionend() {
             var startD  = Math.trunc( (new Date()).getTime() / 1000 );
-            startD      = startD - 24 * 60 * 60 + 30;
+            startD      = startD - 24 * 60 * 60 + 10;
             var Bidtest = {
                 "startDate": startD,
                 "startHour": 16,
@@ -213,51 +211,57 @@ Vue.component( "auction-bids", {
         },
 
         afterAuction() {
-            if ( sessionStorage.getItem( "auctionEnd" ) == true ) {
+            if ( sessionStorage.getItem( "auctionEnd" ) ) {
                 this.printClockWarn();
+                this.reload( 30 )
             }
             else {
-
                 if ( this.userdata != null ) {
                     ApiService.get( "/api/auction_last_entry/" + this.auction.id )
-                        .done( response => {
+                        .done( lastEntry => {
 
-                            const bidderListLastEntry = response;
-
-                            const variationId = this.item['variation']['id'];
+                            const bidderListLastEntry = lastEntry;
 
                             // Gewinner eingeloggt
                             if ( this.userdata.id == bidderListLastEntry.customerId ) {
-                                const url = ('/auction_to_basket?number=' + variationId)
-
+                                // Artikel in den Warenkorb
+                                const url = ('/auction_to_basket?number=' + this.item['variation']['id'])
                                 ApiService.post( url )
                                     .done( response => {
-                                        console.dir( response );
-                                        this.reload( 2000 );
+                                        console.log( 'response: ' + response );
+
+                                        if ( response == "ok" ) {
+                                            sessionStorage.setItem( "auctionEnd", true );
+                                            alert( 'test' );
+                                            // this.reload( 10 );
+                                        }
+
+                                        // this.reload( 2000 );
                                     } )
                                     .fail( () => {
                                                alert( 'Oops - Fehler bei Auction Auswertung 2 ??!!' );
                                            }
                                     )
                             }
-                            // Gewinner nicht eingeloggt !!
-                            else {
-                                console.log( 'After Auction - Gewinner nicht eingeloggt' );
-                                this.reload( 2000 );
-                            }
+                            // // Gewinner nicht eingeloggt !!
+                            // else {
+                            //     this.reload( 2000 );
+                            // }
                         } )
                         .fail( () => {
                                    alert( 'Fehler bei After Auction 1 ??!!' );
                                }
                         )
                 }
-                else {
-                    // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
-                    console.log( 'Sie sind nicht angemeldet...' );
-                    this.reload( 30 );
-                }
+                // else {
+                //     // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
+                //     this.reload( 30 );
+                // }
                 // flag für Uhrzeit Differenz
-                sessionStorage.setItem( "auctionEnd", true );
+                // sessionStorage.setItem( "auctionEnd", true );
+                // alert( 'test22' );
+
+                // this.reload( 3000 );
             }
         },
         reload(timeout) {
@@ -267,7 +271,7 @@ Vue.component( "auction-bids", {
         },
         printClockWarn() {
             alert(
-                'Bitte überprüfen Sie die <b>Uhrzeit</b> Ihres Computers!<br>(Diese sollte in den Einstellungen automatisch über das Internet festgelegt werden)' )
+                'Bitte überprüfen Sie die Uhrzeit Ihres Computers!\n(Diese sollte in den System-Einstellungen automatisch über das Internet festgelegt werden)' )
         }
     },
     watch: {

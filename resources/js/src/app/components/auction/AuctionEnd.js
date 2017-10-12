@@ -26,7 +26,7 @@ Vue.component( "auction-end", {
         if ( this.userdata != null ) {
             this.evaluateAndNotifyAfterAuction();
         }
-        if ( sessionStorage.getItem( "auctionEnd" ) == true ) {
+        if ( sessionStorage.getItem( "auctionEnd" ) ) {
             sessionStorage.removeItem( "auctionEnd" );
         }
     },

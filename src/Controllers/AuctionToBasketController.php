@@ -20,7 +20,7 @@
 //                $data['id'] = $basketItem -> id;
 //                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
 //                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-                return json_encode($data);
+                return json_encode('data');
             }
             else
             {
