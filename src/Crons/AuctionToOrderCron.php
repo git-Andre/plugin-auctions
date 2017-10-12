@@ -27,9 +27,9 @@
 
         public function handle()
         {
-            echo 'schaeisse';
-               $test = $this -> auctionOrderService -> placeOrder(11);
-            $this->getLogger(__FUNCTION__)->error('Etsy::order.orderImportError', $test);
+            $auctionId = 11;
+//               $test = $this -> auctionOrderService -> placeOrder($auctionId);
+            $this->getLogger(__FUNCTION__)->error('Schaffrath::Auction to Order', $auctionId);
 
         }
 
