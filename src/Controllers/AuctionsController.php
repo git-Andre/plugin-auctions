@@ -172,6 +172,6 @@
          */
         public function calculateTense($start, $end) : string
         {
-            return $this -> auctionsService -> calculateTense($start, $end);
+            return json_encode($this -> auctionsService -> calculateTense($start, $end));
         }
     }

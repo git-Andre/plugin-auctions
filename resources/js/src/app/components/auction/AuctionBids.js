@@ -44,50 +44,68 @@ Vue.component( "auction-bids", {
     methods: {
 
         addBid() {
-            ApiService.get( "/api/auctionbidprice/" + this.auction.id )
-                .done( lastBidPrice => {
-                    // ist es ein gültiges Gebot (höher als letztes Gebot) ?
-                    if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
+            var tense = "";
+            ApiService.get( "/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate )
+                .done( response => {
 
-                        const pos           = this.userdata.email.indexOf( "@" );
-                        const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
-                            this.userdata.email.slice( pos - 2, pos );
+                    console.log( 'response: ' + response );
+                    tense = response;
+                    console.log( 'tense: ' + tense );
 
-                        var currentBid = {
-                            'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
-                            'bidderName': newBidderName,
-                            'customerId': parseInt( this.userdata.id ),
-                        };
+                    if ( tense == "present" ) {
+                        ApiService.get( "/api/auctionbidprice/" + this.auction.id )
+                            .done( lastBidPrice => {
+                                // ist es ein gültiges Gebot (höher als letztes Gebot) ?
+                                if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
 
-                        // super Time Tunnel
-                        sessionStorage.setItem( "currentBidder", this.userdata.id );
+                                    const pos           = this.userdata.email.indexOf( "@" );
+                                    const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
+                                        this.userdata.email.slice( pos - 2, pos );
 
-                        ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
-                                                                              { contentType: "application/json" }
-                        )
-                            .then( response => {
-                                       this.reload( 5 );
-                                   },
-                                   error => {
-                                       alert( 'error3: ' + error.toString() );
+                                    var currentBid = {
+                                        'customerMaxBid': this.toFloatTwoDecimal( this.maxCustomerBid ),
+                                        'bidderName': newBidderName,
+                                        'customerId': parseInt( this.userdata.id ),
+                                    };
+
+                                    // super Time Tunnel
+                                    sessionStorage.setItem( "currentBidder", this.userdata.id );
+
+                                    ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
+                                                                                          { contentType: "application/json" }
+                                    )
+                                        .then( response => {
+                                                   this.reload( 5 );
+                                               },
+                                               error => {
+                                                   alert( 'error3: ' + error.toString() );
+                                               }
+                                        );
+                                }
+                                // es gibt inzwischen schon ein höheres Gebot
+                                else {
+                                    NotificationService.warn(
+                                        // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                        "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
+                                        .close;
+                                    this.reload( 2600 ); // :)
+                                }
+                            } )
+                            .fail( () => {
+                                       alert( 'Upps - ein Fehler bei auctionbidprice ??!!' );
                                    }
-                            );
+                            )
                     }
-                    // es gibt inzwischen schon ein höheres Gebot
                     else {
-                        NotificationService.warn(
-                            // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                            "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben..." )
-                            .close;
-                        this.reload( 2600 ); // :)
+                        this.printClockWarn();
                     }
                 } )
                 .fail( () => {
-                           alert( 'Upps - ein Fehler bei auctionbidprice ??!!' );
+                           alert( 'Upps - ein Fehler bei der Zeitabfrage ??!!' );
                        }
                 )
-        },
 
+        },
         liveEvaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
@@ -195,8 +213,12 @@ Vue.component( "auction-bids", {
         },
 
         afterAuction() {
-                if ( this.userdata != null ) {
+            if ( sessionStorage.getItem( "auctionEnd" ) == true ) {
+                this.printClockWarn();
+            }
+            else {
 
+                if ( this.userdata != null ) {
                     ApiService.get( "/api/auction_last_entry/" + this.auction.id )
                         .done( response => {
 
@@ -234,25 +256,30 @@ Vue.component( "auction-bids", {
                     console.log( 'Sie sind nicht angemeldet...' );
                     this.reload( 30 );
                 }
+                // flag für Uhrzeit Differenz
+                sessionStorage.setItem( "auctionEnd", true );
+            }
         },
         reload(timeout) {
             setTimeout( () => {
                 location.reload();
             }, timeout );
         },
+        printClockWarn() {
+            alert(
+                'Bitte überprüfen Sie die <b>Uhrzeit</b> Ihres Computers!<br>(Diese sollte in den Einstellungen automatisch über das Internet festgelegt werden)' )
+        }
     },
     watch: {
         maxCustomerBid: function () {
-            if ( this.maxCustomerBid >= this.minbid ) {
-                if ( this.userdata != null ) {
-                    this.isInputValid = true
-                }
-                else {
-                    NotificationService.error(
-                        { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                        .closeAfter( 5000 );
-                    this.isInputValid = false;
-                }
+            if ( this.maxCustomerBid > 0 && this.userdata == null ) {
+                NotificationService.error(
+                    { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                    .closeAfter( 5000 );
+                this.isInputValid = false;
+            }
+            if ( this.maxCustomerBid >= this.minbid && this.userdata != null ) {
+                this.isInputValid = true
             }
             else {
                 this.isInputValid = false;
