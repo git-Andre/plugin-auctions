@@ -14,28 +14,28 @@
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
 
-            $basketItem = $basketItemRepository -> findExistingOneByData($data);
-            if ($basketItem instanceof BasketItem)
-            {
-//                $data['id'] = $basketItem -> id;
-//                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
-//                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-                return json_encode('data');
-            }
-            else
-            {
-                try
-                {
+//            $basketItem = $basketItemRepository -> findExistingOneByData($data);
+//            if ($basketItem instanceof BasketItem)
+//            {
+////                $data['id'] = $basketItem -> id;
+////                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
+////                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
+//                return json_encode('data');
+//            }
+//            else
+//            {
+//                try
+//                {
                     $basketItemRepository -> addBasketItem($data);
                     return json_encode('ok');
-                }
-                catch ( \Exception $exc )
-                {
-                    return json_encode($exc);
-                }
-            }
-
-        return json_encode('nicht ok');
+//                }
+//                catch ( \Exception $exc )
+//                {
+//                    return json_encode($exc);
+//                }
+//            }
+//
+//        return json_encode('nicht ok');
         }
 
 //    public function findItemByNumber($number)
