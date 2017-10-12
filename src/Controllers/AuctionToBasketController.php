@@ -22,20 +22,20 @@
 //            }
 //            else
 //            {
-            try
-            {
-                $basketItemRepository -> addBasketItem($data);
-
-                return '';
-            }
-            catch ( \Exception $exc )
-            {
-                return json_encode($request);
-            }
+//            try
+//            {
+//                $basketItemRepository -> addBasketItem($data);
+//
+//                return '';
+//            }
+//            catch ( \Exception $exc )
+//            {
+//                return json_encode($request);
+//            }
 
 //            }
 
-            return json_encode($data);
+            return json_encode($request);
         }
 
 //    public function findItemByNumber($number)

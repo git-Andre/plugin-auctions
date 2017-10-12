@@ -200,9 +200,6 @@ Vue.component("auction-bids", {
                             var url = '/auction_to_basket?number=' + _this2.item['variation']['id'];
                             ApiService.post(url).done(function (response) {
 
-                                // console.dir( response );
-                                _this2.addToBasket();
-
                                 var $result = JSON.parse(response);
                                 console.dir($result);
 
@@ -234,27 +231,6 @@ Vue.component("auction-bids", {
                 // alert( 'test22' );
 
                 // this.reload( 3000 );
-            }
-        },
-
-        /**
-         * add an item to basket-resource
-         */
-        addToBasket: function addToBasket() {
-            if (item['variation']['id']) {
-                // if ( this.item.filter.isSalable ) {
-                var basketObject = {
-                    variationId: this.item['variation']['id'],
-                    quantity: 1
-                    // basketItemOrderParams: this.item.properties
-                };
-
-                ResourceService.getResource("basketItems").push(basketObject).done(function () {
-
-                    // this.openAddToBasketOverlay();
-                }.bind(this)).fail(function (response) {
-                    NotificationService.error(Translations.Template[ExceptionMap.get(response.data.exceptionCode.toString())]).closeAfter(5000);
-                });
             }
         },
         reload: function reload(timeout) {
