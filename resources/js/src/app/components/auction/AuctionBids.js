@@ -228,7 +228,12 @@ Vue.component( "auction-bids", {
                                 const url = ('/auction_to_basket?number=' + this.item['variation']['id'])
                                 ApiService.post( url )
                                     .done( response => {
+
                                         console.dir( response );
+
+                                        var $result = JSON.parse(response);
+                                        console.dir($result);
+
                                         if ( response == "ok" ) {
                                             sessionStorage.setItem( "auctionEnd", true );
                                             alert( 'test' );

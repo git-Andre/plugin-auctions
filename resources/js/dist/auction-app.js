@@ -193,12 +193,16 @@ Vue.component("auction-bids", {
 
                         var bidderListLastEntry = lastEntry;
 
-                        // Gewinner eingeloggt
+                        // Gewinner eingeloggt?
                         if (_this2.userdata.id == bidderListLastEntry.customerId) {
                             // Artikel in den Warenkorb
                             var url = '/auction_to_basket?number=' + _this2.item['variation']['id'];
                             ApiService.post(url).done(function (response) {
-                                console.log('response: ' + response);
+
+                                console.dir(response);
+
+                                var $result = JSON.parse(response);
+                                console.dir($result);
 
                                 if (response == "ok") {
                                     sessionStorage.setItem("auctionEnd", true);

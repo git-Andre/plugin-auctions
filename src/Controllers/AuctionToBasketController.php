@@ -20,22 +20,22 @@
                 $data['id'] = $basketItem -> id;
 //                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
                 $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-                return json_encode($basketItem);
+                return $basketItem;
             }
             else
             {
                 try
                 {
                     $basketItemRepository -> addBasketItem($data);
-                    return json_encode($basketItemRepository);
+                    return 'ok';
                 }
                 catch ( \Exception $exc )
                 {
-                    return json_encode($exc);
+                    return $exc;
                 }
             }
 
-        return json_encode($data);
+        return $data;
         }
 
 //    public function findItemByNumber($number)
