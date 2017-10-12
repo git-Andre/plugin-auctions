@@ -29,7 +29,7 @@
                     $basketItemRepository -> addBasketItem($data);
                     return 'ok';
                 }
-                catch ( \Exception $exc )
+                catch ( \Exception $request )
                 {
                     return $exc;
                 }
