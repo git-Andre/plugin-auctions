@@ -3,7 +3,6 @@
     namespace PluginAuctions\Controllers;
 
     use Plenty\Modules\Basket\Contracts\BasketItemRepositoryContract;
-    use Plenty\Modules\Basket\Models\BasketItem;
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
 
@@ -13,29 +12,30 @@
         {
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
-
-            $basketItem = $basketItemRepository -> findExistingOneByData($data);
-            if ($basketItem instanceof BasketItem)
+//            $basketItem = $basketItemRepository -> findExistingOneByData($data);
+//            if ($basketItem instanceof BasketItem)
+//            {
+//                $data['id'] = $basketItem -> id;
+////                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
+//                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
+//                return $basketItem;
+//            }
+//            else
+//            {
+            try
             {
-                $data['id'] = $basketItem -> id;
-//                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
-                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-                return $basketItem;
+                $basketItemRepository -> addBasketItem($data);
+
+                return '';
             }
-            else
+            catch ( \Exception $exc )
             {
-                try
-                {
-                    $basketItemRepository -> addBasketItem($data);
-                    return 'ok';
-                }
-                catch ( \Exception $exc )
-                {
-                    return $request;
-                }
+                return json_encode($request);
             }
 
-        return $data;
+//            }
+
+            return json_encode($data);
         }
 
 //    public function findItemByNumber($number)

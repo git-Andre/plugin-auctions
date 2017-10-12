@@ -29,7 +29,8 @@
         {
             $auctionId = 11;
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-            $this->getLogger(__FUNCTION__)->error('Schaffrath::Auction to Order', $auctionId);
+            $this->getLogger(__FUNCTION__)->info('Schaffrath::Auction to Order', 'test: ' . $auctionId);
+            $this->getLogger(__FUNCTION__)->error('Schaffrath::Auction to Order TEST', $auctionId);
 
         }
 
