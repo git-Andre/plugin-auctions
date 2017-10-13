@@ -147,13 +147,16 @@
 
             return false;
         }
+
         public function getAuctionsForTense($tense)
         {
-            if (gettype($tense) == string)
+            if (strlen($tense) > 3)
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+
                 return $auctionArray;
             }
+
             return false;
         }
 
@@ -330,8 +333,10 @@
 
                     return $this -> setValue($auction);
                 }
+
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
+
             return false;
         }
 
