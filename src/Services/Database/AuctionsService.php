@@ -90,7 +90,7 @@
         {
             $now = time();
 
-            if ($startDate < $now && $endDate < $now)
+            if ($startDate < $now && $endDate <= $now)
             {
                 return 'past';
             }

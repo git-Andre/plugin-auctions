@@ -12,30 +12,31 @@
         {
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
-//            $basketItem = $basketItemRepository -> findExistingOneByData($data);
-//            if ($basketItem instanceof BasketItem)
-//            {
+
+            $basketItem = $basketItemRepository -> findExistingOneByData($data);
+
+            if ($basketItem instanceof BasketItem)
+            {
 //                $data['id'] = $basketItem -> id;
 ////                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
 //                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
-//                return $basketItem;
-//            }
-//            else
-//            {
-            try
-            {
-                $basketItemRepository -> addBasketItem($data);
-
-                return json_encode($data['variationId']);
+//
+                return json_encode($basketItem);
             }
-            catch ( \Exception $exc )
+            else
             {
-                return json_encode($request);
+                try
+                {
+                    $basketItemRepository -> addBasketItem($data);
+
+                    return json_encode($data['variationId']);
+                }
+                catch ( \Exception $exc )
+                {
+                    return json_encode($request);
+                }
+
             }
-
-//            }
-
-            return json_encode($request);
         }
 
 //    public function findItemByNumber($number)

@@ -36,18 +36,16 @@ Vue.component("auction-bids", {
                 this.liveEvaluateAndNotify();
             }
         }
-        // if ( sessionStorage.getItem( "auctionEnd" ) ) {
-        //     sessionStorage.removeItem( "auctionEnd" );
-        // }
     },
 
     methods: {
         addBid: function addBid() {
             var _this = this;
 
-            ApiService.get("/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate).done(function (response) {
+            ApiService.get("/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate).done(function (tenseFromServer) {
+                var tense = tenseFromServer;
                 // Absicherung mit Server Time, dass Auktion noch 'present' ist
-                if (response == "present") {
+                if (tense == AuctionConstants.PRESENT) {
                     ApiService.get("/api/auctionbidprice/" + _this.auction.id).done(function (lastBidPrice) {
                         // ist es ein gültiges Gebot (höher als letztes Gebot) ?
                         if (_this.maxCustomerBid > _this.toFloatTwoDecimal(lastBidPrice)) {
@@ -81,7 +79,9 @@ Vue.component("auction-bids", {
                         alert('Upps - ein Fehler bei auctionbidprice ??!!');
                     });
                 } else {
-                    _this.afterAuction();
+                    // ToDO Modal mit Time 5sec
+                    _this.printClockWarn();
+                    _this.afterAuctionWithServerTensePast();
                 }
             }).fail(function () {
                 alert('Upps - ein Fehler bei der Zeitabfrage ??!!');
@@ -182,56 +182,82 @@ Vue.component("auction-bids", {
                 alert('Upps - ein Fehler beim auctionend ??!!');
             });
         },
-        afterAuction: function afterAuction() {
+        afterAuctionWithFrontendTime: function afterAuctionWithFrontendTime(counter, tense) {
             var _this2 = this;
 
-            if (sessionStorage.getItem("auctionEnd")) {
+            if (counter == 5) {
+                // ToDO Modal mit Time 5sec
                 this.printClockWarn();
-                this.reload(30);
+                // Todo: Wiederholung unterbinden !!
+                this.reload(1);
             } else {
-                if (this.userdata != null) {
-                    ApiService.get("/api/auction_last_entry/" + this.auction.id).done(function (lastEntry) {
+                console.log('im Frontend-Browser abgelaufen');
 
-                        var bidderListLastEntry = lastEntry;
+                // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
+                ApiService.get("/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate).done(function (tensefromServer) {
+                    tense = tensefromServer;
+                    console.log('ix tense: ' + counter + '.x ' + tense);
 
-                        // Gewinner eingeloggt?
-                        if (_this2.userdata.id == bidderListLastEntry.customerId) {
-                            // Artikel in den Warenkorb
-                            var url = '/auction_to_basket?number=' + _this2.item['variation']['id'];
-                            ApiService.post(url).done(function (response) {
-
-                                var $result = JSON.parse(response);
-                                console.dir($result);
-
-                                if (response == "ok") {
-                                    sessionStorage.setItem("auctionEnd", true);
-                                    alert('test');
-                                    // this.reload( 10 );
-                                }
-
-                                // this.reload( 2000 );
-                            }).fail(function () {
-                                alert('Oops - Fehler bei Auction Auswertung 2 ??!!');
-                            });
+                    if (tense == AuctionConstants.PAST) {
+                        _this2.afterAuctionWithServerTensePast();
+                    } else {
+                        counter++;
+                        if (counter > 1) {
+                            NotificationService.warn("<h3>STATUS:</h3><hr>Abgleich Auktions-Serverzeit mit aktueller Computerzeit...").closeAfter(3000);
                         }
-                        // // Gewinner nicht eingeloggt !!
-                        // else {
-                        //     this.reload( 2000 );
-                        // }
-                    }).fail(function () {
-                        alert('Fehler bei After Auction 1 ??!!');
-                    });
-                }
-                // else {
-                //     // NotificationService.warn( "Sie sind nicht angemeldet... -> reload" ).close;
-                //     this.reload( 30 );
-                // }
-                // flag für Uhrzeit Differenz
-                // sessionStorage.setItem( "auctionEnd", true );
-                // alert( 'test22' );
-
-                // this.reload( 3000 );
+                        setTimeout(function () {
+                            _this2.afterAuctionWithFrontendTime(counter, tense);
+                        }, counter * 1000 + 1000);
+                    }
+                }).fail(function () {
+                    alert('Ein Fehler in afterAuctionWithFrontendTime  ??!!');
+                });
+                console.log('UNTEN ix tense: ' + counter + '.x ' + tense);
             }
+        },
+        afterAuctionWithServerTensePast: function afterAuctionWithServerTensePast() {
+            var _this3 = this;
+
+            console.log('afterAuctionWithServerTensePast');
+            if (this.userdata != null) {
+                ApiService.get("/api/auction_last_entry/" + this.auction.id).done(function (lastEntry) {
+
+                    var bidderListLastEntry = lastEntry;
+                    console.dir(bidderListLastEntry);
+
+                    // Gewinner eingeloggt?
+                    if (_this3.userdata.id == bidderListLastEntry.customerId) {
+                        // Artikel in den Warenkorb
+                        var url = '/auction_to_basket?number=' + _this3.item['variation']['id'];
+                        ApiService.post(url).done(function (response) {
+
+                            var result = JSON.parse(response);
+                            console.log('result: ' + result);
+
+                            if (result == _this3.item['variation']['id']) {
+                                // flag für Uhrzeit Differenz
+                                console.log('flag für Uhrzeit Differenz');
+                                // this.reload( 1 );
+                            } else {
+                                alert('Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)');
+                            }
+                        }).fail(function () {
+                            alert('Oops - Fehler bei Auction Auswertung 2 ??!!');
+                        });
+                    }
+                    // Nichtgewinner angemeldet...
+                    else {
+                            _this3.reload(10);
+                        }
+                }).fail(function () {
+                    alert('Fehler bei After Auction 1 ??!!');
+                });
+            }
+            // niemand angemeldet...
+            else {
+                    this.reload(10);
+                }
+            // }
         },
         reload: function reload(timeout) {
             setTimeout(function () {
@@ -239,7 +265,7 @@ Vue.component("auction-bids", {
             }, timeout);
         },
         printClockWarn: function printClockWarn() {
-            alert('Bitte überprüfen Sie die Uhrzeit Ihres Computers!\n(Diese sollte in den System-Einstellungen automatisch über das Internet festgelegt werden)');
+            alert('Diese Auktion ist laut unserer Server-Zeit noch nicht beendet!\n' + 'Bitte überprüfen Sie die Uhrzeit Ihres Computers!\n' + 'Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden');
         }
     },
     watch: {
@@ -256,7 +282,9 @@ Vue.component("auction-bids", {
         },
         auctionEnd: function auctionEnd() {
             if (this.auctionEnd) {
-                this.afterAuction();
+                var tense = AuctionConstants.PRESENT;
+                var counter = 0;
+                this.afterAuctionWithFrontendTime(counter, tense);
             }
         }
     }
