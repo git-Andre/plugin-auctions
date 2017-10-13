@@ -3,6 +3,7 @@
     namespace PluginAuctions\Controllers;
 
     use Plenty\Modules\Basket\Contracts\BasketItemRepositoryContract;
+    use Plenty\Modules\Basket\Models\BasketItem;
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
 
