@@ -8,6 +8,7 @@
     use Plenty\Modules\Account\Contact\Contracts\ContactAddressRepositoryContract;
     use Plenty\Modules\Account\Contact\Contracts\ContactRepositoryContract;
     use Plenty\Modules\Account\Contact\Models\Contact;
+
     use PluginAuctions\Services\Database\AuctionsService;
 
     //use Plenty\Plugin\Http\Response;

@@ -81,7 +81,10 @@
             }
             $auction -> bidderList = $viewBids;
 
-            $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+            if ($auction -> tense != "past-perfect")
+            {
+                $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+            }
 
             return $auction;
         }
@@ -108,12 +111,6 @@
             }
         }
 
-//        /**
-//         * @param $startDate
-//         * @param $endDate
-//         * @return string
-//         */
-
         public function getAuctionsHelper()
         {
             $auctions = $this -> getValues(Auction_7::class);
@@ -121,7 +118,10 @@
             {
                 foreach ($auctions as $auction)
                 {
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    if ($auction -> tense != "past-perfect")
+                    {
+                        $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    }
                 }
                 unset($auction);
 
@@ -147,6 +147,15 @@
 
             return false;
         }
+        public function getAuctionsForTense($tense)
+        {
+            if (gettype($tense) == string)
+            {
+                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+                return $auctionArray;
+            }
+            return false;
+        }
 
         /**
          * @param $auctionId
@@ -163,6 +172,7 @@
                     return $this -> buildAuctionView($auction);
                 }
             }
+
             return 'falsche ID';
         }
 
@@ -225,6 +235,7 @@
 
                     return $bidderListLastEntry;
                 }
+
                 return 'Fehler: keine gültige auction';
             }
 
@@ -289,7 +300,10 @@
 
                     $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    if ($auction -> tense != "past-perfect")
+                    {
+                        $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    }
 
                     $auction -> updatedAt = time();
 
@@ -299,6 +313,25 @@
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
 
+            return false;
+        }
+
+        public function updateAuctionAfterPlaceOrder($id)
+        {
+            if ($id)
+            {
+                $auction = $this -> getValue(Auction_7::class, $id);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $auction -> tense = "past-perfect";
+
+                    $auction -> updatedAt = time();
+
+                    return $this -> setValue($auction);
+                }
+                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+            }
             return false;
         }
 
@@ -391,8 +424,10 @@
 
                     return "Fehler in updateBidderList";
                 }
+
                 return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
             }
+
             return $currentBid;
         }
 

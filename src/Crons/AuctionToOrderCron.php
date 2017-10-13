@@ -5,6 +5,7 @@
     use Plenty\Modules\Cron\Contracts\CronHandler as Cron;
     use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Services\AuctionOrderService;
+    use PluginAuctions\Services\Database\AuctionsService;
 
 //use Etsy\Services\Batch\Item\ItemExportService;
 //use Etsy\Helper\AccountHelper;
@@ -19,20 +20,24 @@
         use Loggable;
 
         public $auctionOrderService;
+        public $auctionsService;
 
-        public function __construct(AuctionOrderService $auctionOrderService)
+        public function __construct(AuctionOrderService $auctionOrderService, AuctionsService $auctionsService)
         {
             $this -> auctionOrderService = $auctionOrderService;
+            $this -> auctionsService = $auctionsService;
         }
 
         public function handle()
         {
             $auctionId = 11;
+            $endedAuctions = [];
 
+            $endedAuctions = $this -> auctionsService -> getAuctionsForTense("past");
             try
             {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> info('Schaffrath::Auction to Order', 'test: ' . $auctionId);
+                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> debug('Schaffrath::Auction to Order', 'test: ' . $endedAuctions);
             }
             catch ( \Exception $exception )
             {
