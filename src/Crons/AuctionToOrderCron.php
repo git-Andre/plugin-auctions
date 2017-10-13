@@ -28,9 +28,17 @@
         public function handle()
         {
             $auctionId = 11;
+
+            try
+            {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-            $this->getLogger(__FUNCTION__)->info('Schaffrath::Auction to Order', 'test: ' . $auctionId);
-            $this->getLogger(__FUNCTION__)->error('Schaffrath::Auction to Order TEST', $auctionId);
+                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> info('Schaffrath::Auction to Order', 'test: ' . $auctionId);
+            }
+            catch ( \Exception $exception )
+            {
+                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler', $exception);
+            }
+
 
         }
 

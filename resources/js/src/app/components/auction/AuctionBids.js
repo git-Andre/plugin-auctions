@@ -218,44 +218,38 @@ Vue.component( "auction-bids", {
                 this.reload( 1 );
             }
             else {
-                console.log( 'im Frontend-Browser abgelaufen' );
-
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
                 ApiService.get( "/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate )
                     .done( tensefromServer => {
                         tense = tensefromServer;
-                        console.log( 'ix tense: ' + counter + '.x ' + tense );
 
                         if ( tense == AuctionConstants.PAST ) {
                             this.afterAuctionWithServerTensePast();
                         }
                         else {
                             counter++;
-                            if ( counter > 1 ) {
+                            if ( counter > 2 ) {
                                 NotificationService.warn(
                                     "<h3>STATUS:</h3><hr>Abgleich Auktions-Serverzeit mit aktueller Computerzeit..." )
                                     .closeAfter( 3000 );
                             }
                             setTimeout( () => {
                                 this.afterAuctionWithFrontendTime( counter, tense );
-                            }, (counter * 1000 + 1000) );
+                            }, (counter * 1000 + 2000) );
                         }
                     } )
                     .fail( () => {
                                alert( 'Ein Fehler in afterAuctionWithFrontendTime  ??!!' );
                            }
                     )
-                console.log( 'UNTEN ix tense: ' + counter + '.x ' + tense );
             }
         },
         afterAuctionWithServerTensePast() {
-            console.log( 'afterAuctionWithServerTensePast' );
             if ( this.userdata != null ) {
                 ApiService.get( "/api/auction_last_entry/" + this.auction.id )
                     .done( lastEntry => {
 
                         const bidderListLastEntry = lastEntry;
-                        console.dir(bidderListLastEntry);
 
                         // Gewinner eingeloggt?
                         if ( this.userdata.id == bidderListLastEntry.customerId ) {
@@ -265,12 +259,10 @@ Vue.component( "auction-bids", {
                                 .done( response => {
 
                                     const result = JSON.parse( response );
-                                    console.log( 'result: ' + result );
 
                                     if ( result == this.item['variation']['id'] ) {
-                                        // flag für Uhrzeit Differenz
-                                        console.log( 'flag für Uhrzeit Differenz' );
-                                        // this.reload( 1 );
+                                        // flag für Uhrzeit Differenz ???
+                                        this.reload( 10 );
                                     }
                                     else {
                                         alert(
@@ -305,9 +297,9 @@ Vue.component( "auction-bids", {
         },
         printClockWarn() {
             alert(
-                'Diese Auktion ist laut unserer Server-Zeit noch nicht beendet!\n' +
                 'Bitte überprüfen Sie die Uhrzeit Ihres Computers!\n' +
-                'Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden' )
+                '(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n' +
+                'Die Serverzeit für diese Auktion unterscheidet sich signifikant von der dieses Computers!')
         }
     },
     watch: {
