@@ -111,7 +111,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('tense')
                       -> setReferenceValue($tense)
-                      -> debug('PluginAuctions::auction.debug', ['request' => $request]);
+                      -> debug('PluginAuctions::auctions.debug', ['request' => $request]);
 
                 return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }

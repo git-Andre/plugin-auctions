@@ -159,7 +159,7 @@
         public function getAuctionsForTense($tense)
         {
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auction.debug', ['tenseTest' => $tense]);
+                  -> debug('PluginAuctions::auctions.debug', ['tenseTest' => $tense]);
 
             if ($tense)
             {
