@@ -159,7 +159,7 @@
 
             if ($tense)
             {
-                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], ['past']);
 
                 return $auctionArray;
             }

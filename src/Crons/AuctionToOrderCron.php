@@ -36,7 +36,7 @@
             $endedAuctions = $this -> auctionsService -> getAuctionsForTense("past");
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::order.debug', ['test' => $endedAuctions]);
+                  -> debug('PluginAuctions::auction.debug', ['test' => $endedAuctions]);
 
             try
 
