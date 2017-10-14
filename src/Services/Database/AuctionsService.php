@@ -128,29 +128,25 @@
 
             return $auction;
         }
-//        /**
-//         * @param $tense
-//         * @return array|bool
-//         */
-//        public function getAuctionsForTense($tense)
-//        {
-//            if ($tense != 'past')
-//            {
-//                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
-//
-//                return $auctionArray;
-//            }
-//            return ['Fehler' => $tense];
-//        }
+
+        public function getAuctionsForTense($tense)
+        {
+            if ($tense != 'past')
+            {
+                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+
+                return $auctionArray;
+            }
+            return ['Fehler' => $tense];
+        }
 
         public function getAuctionsInPast()
         {
-            if (strlen($tense) > 3)
+            $now = time();
+            $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now], ['<']);
+
+            if ($auctions)
             {
-                $now = time();
-
-                $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now], ['<']);
-
                 $auctionIdsPastArray = [];
 
                 foreach ($auctions as $auction)
@@ -353,7 +349,11 @@
         public function updateAuctionWithTense($auctionId, $tense)
         {
             // defined not allowed by plenty... ??!!?
-            if ($auctionId > 0 && ($tense == AuctionStatus::PAST || $tense == AuctionStatus::PAST_PERFECT || $tense == AuctionStatus::FUTURE || $tense == AuctionStatus::PRESENT ))
+            if ($auctionId > 0 &&
+                ($tense == AuctionStatus::PAST ||
+                    $tense == AuctionStatus::PAST_PERFECT ||
+                    $tense == AuctionStatus::FUTURE ||
+                    $tense == AuctionStatus::PRESENT))
             {
                 $auction = $this -> getValue(Auction_7::class, $auctionId);
 

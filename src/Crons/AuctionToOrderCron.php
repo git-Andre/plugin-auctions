@@ -45,7 +45,7 @@
                 {
                     $test = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
-                    $this -> auctionOrderService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
+                    $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
                 }
                 catch ( \Exception $exception )
                 {
