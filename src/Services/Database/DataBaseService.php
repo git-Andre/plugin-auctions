@@ -95,7 +95,7 @@
                 {
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('tense')
-                          -> setReferenceValue($field)
+                          -> setReferenceValue($operator)
                           -> debug('PluginAuctions::auctions.debug', ['values[ $key ]' => $values[ $key ]]);
 
                     $this -> getLogger(__METHOD__)
