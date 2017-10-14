@@ -100,7 +100,8 @@
         {
             if (strlen($tense) > 3)
             {
-                return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
+                return $tense;
+//                return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }
             return 'keine ID (oder 0) - getAuctionsForTense';
         }
