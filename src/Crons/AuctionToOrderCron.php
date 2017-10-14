@@ -37,7 +37,7 @@
             try
             {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> debug('Schaffrath::Auction to Order', 'test: ' . $endedAuctions);
+                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> debug('Schaffrath::Auction to Order', $endedAuctions);
             }
             catch ( \Exception $exception )
             {
