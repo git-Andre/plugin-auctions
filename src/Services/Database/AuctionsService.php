@@ -7,7 +7,6 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
-
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
@@ -49,21 +48,61 @@
 //            $this -> sessionStorage = $sessionStorage;
 //        }
 //
-        /**
-         * @return bool|string
-         */
-        public function getAuctions()
+
+        public function getAuctionsHelper()
         {
             $auctions = $this -> getValues(Auction_7::class);
             if ($auctions)
             {
                 foreach ($auctions as $auction)
                 {
-                    $auction = $this -> buildAuctionView($auction);
+                    if ($auction -> tense != "past-perfect")
+                    {
+                        $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    }
                 }
                 unset($auction);
 
                 return json_encode($auctions);
+            }
+
+            return false;
+        }
+
+        public function calculateTense($startDate, $endDate) : string
+        {
+            $now = time();
+
+            if ($startDate < $now && $endDate <= $now)
+            {
+                return 'past';
+            }
+            elseif ($startDate < $now && $endDate > $now)
+            {
+                return 'present';
+            }
+            elseif ($startDate > $now && $endDate > $now)
+            {
+                return 'future';
+            }
+            else
+            {
+                return 'Fehler - startDate: ' . $startDate . ' - endDate: ' . $endDate . ' - now: ' . $now;
+            }
+        }
+
+        public function getAuctionForItemId($itemId)
+        {
+            if ($itemId > 0)
+            {
+                $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
+                $auction = (object) $auctionArray[0];
+                if ($auction -> id)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+
+                    return $auction;
+                }
             }
 
             return false;
@@ -93,81 +132,59 @@
             return $auction;
         }
 
-        public function calculateTense($startDate, $endDate) : string
-        {
-            $now = time();
-
-            if ($startDate < $now && $endDate <= $now)
-            {
-                return 'past';
-            }
-            elseif ($startDate < $now && $endDate > $now)
-            {
-                return 'present';
-            }
-            elseif ($startDate > $now && $endDate > $now)
-            {
-                return 'future';
-            }
-            else
-            {
-                return 'Fehler - startDate: ' . $startDate . ' - endDate: ' . $endDate . ' - now: ' . $now;
-            }
-        }
-
-        public function getAuctionsHelper()
-        {
-            $auctions = $this -> getValues(Auction_7::class);
-            if ($auctions)
-            {
-                foreach ($auctions as $auction)
-                {
-                    if ($auction -> tense != "past-perfect")
-                    {
-                        $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-                    }
-                }
-                unset($auction);
-
-                return json_encode($auctions);
-            }
-
-            return false;
-        }
-
-        public function getAuctionForItemId($itemId)
-        {
-            if ($itemId > 0)
-            {
-                $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemId]);
-                $auction = (object) $auctionArray[0];
-                if ($auction -> id)
-                {
-                    $auction = $this -> buildAuctionView($auction);
-
-                    return $auction;
-                }
-            }
-
-            return false;
-        }
-
         /**
          * @param $tense
          * @return array|bool
          */
         public function getAuctionsForTense($tense)
         {
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['tenseTest' => $tense]);
-
-            if ($tense)
+            if (strlen($tense) > 3)
             {
-                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+                $now = time();
 
-                return $auctionArray;
+                $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now],['<']);
+
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::auctions.debug', ['$auctions' => $auctions]);
+
+                $auctionIdsPastArray = [];
+
+                foreach ($auctions as $auction)
+                {
+                    if ($auction -> tense != "past-perfect")
+                    {
+                        array_push($auctionIdsPastArray, $auction -> id);
+                    }
+                }
+                unset($auction);
+
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::auctions.debug', ['$auctionIdsPastArray' => $auctionIdsPastArray]);
+
+                return $auctionIdsPastArray;
             }
+
             return ['Fehler' => $tense];
+        }
+
+        /**
+         * @return bool|string
+         */
+        public function getAuctions()
+        {
+            $auctions = $this -> getValues(Auction_7::class);
+            if ($auctions)
+            {
+                foreach ($auctions as $auction)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+                }
+                unset($auction);
+
+                return $auctions;
+            }
+
+            return false;
         }
 
         /**

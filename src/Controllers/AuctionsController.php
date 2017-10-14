@@ -33,7 +33,7 @@
          */
         public function getAuctions()
         {
-            return $this -> auctionsService -> getAuctions();
+            return json_encode($this -> auctionsService -> getAuctions());
         }
 
         /**
@@ -105,18 +105,11 @@
         public function getAuctionsForTense(Request $request)
         {
             $tense = (string) $request -> get('tense');
-            if (strlen($tense) > 3)
+            if ($tense)
             {
-//                return $tense;
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('tense')
-                      -> setReferenceValue($tense)
-                      -> debug('PluginAuctions::auctions.debug', ['request' => $tense]);
-
                 return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }
-
-            return 'keine ID (oder 0) - getAuctionsForTense';
+            return 'keine tense angegeben - getAuctionsForTense';
         }
 
         /**
