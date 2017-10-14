@@ -105,6 +105,8 @@
                     -> where('auctionId', '\d+');
             $router -> get('api/test-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
 
+            $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
+
 
 
             // auctionend - add to basket

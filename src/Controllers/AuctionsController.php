@@ -112,6 +112,11 @@
             return 'keine tense angegeben - getAuctionsForTense';
         }
 
+        public function getAuctionsInPast()
+        {
+                return json_encode($this -> auctionsService -> getAuctionsInPast());
+        }
+
         /**
          * @param Request $request
          * @return bool|string
