@@ -7,6 +7,8 @@
     use Plenty\Plugin\ServiceProvider;
     use Plenty\Plugin\Templates\Twig;
     use Plenty\Modules\Cron\Services\CronContainer;
+    use Plenty\Log\Services\ReferenceContainer;
+    use Plenty\Log\Exceptions\ReferenceTypeException;
 
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
     use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
@@ -33,11 +35,15 @@
 
         }
 
-        public function boot(Twig $twig, CronContainer $container)
+        public function boot(Twig $twig, CronContainer $container, ReferenceContainer $referenceContainer)
         {
             // register crons
             $container->add(CronContainer::EVERY_FIFTEEN_MINUTES, AuctionToOrderCron::class);
 
+            // register reference types for logs
+            $referenceContainer -> add(['auctionId' => 'auctionId', 'orderId' => 'orderId']);
+
+            // twig service auction
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
 
 //            //Register the PayUponPickup Plugin

@@ -98,10 +98,11 @@
 
         public function getAuctionsForTense($tense)
         {
+            $tense = (string) $tense;
             if (strlen($tense) > 3)
             {
-                return $tense;
-//                return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
+//                return $tense;
+                return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }
             return 'keine ID (oder 0) - getAuctionsForTense';
         }

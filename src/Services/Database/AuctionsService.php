@@ -148,7 +148,7 @@
             return false;
         }
 
-        public function getAuctionsForTense($tense)
+        public function getAuctionsForTense($tense) : array
         {
             if ($tense)
             {
@@ -156,7 +156,7 @@
 
                 return $auctionArray;
             }
-            return false;
+            return ['Fehler' => $tense];
         }
 
         /**
