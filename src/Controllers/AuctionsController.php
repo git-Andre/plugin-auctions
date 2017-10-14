@@ -96,6 +96,15 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
+        public function getAuctionsForTense($tense)
+        {
+            if (strlen($tense) > 3)
+            {
+                return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
+            }
+            return 'keine ID (oder 0) - getAuctionsForTense';
+        }
+
         /**
          * @param Request $request
          * @return bool|string

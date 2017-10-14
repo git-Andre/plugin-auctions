@@ -38,7 +38,10 @@
             try
             {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-                $this -> getLogger('Crons/AuctionToOrderCron::handle') -> debug('Schaffrath::Auction to Order', $endedAuctions);
+                $this -> getLogger(__FUNCTION__)
+                      -> info('Schaffrath::Auction to Order', $endedAuctions);
+                $this -> getLogger(__FUNCTION__) -> debug('Schaffrath::Auction to Order', $endedAuctions);
+                $this -> getLogger(__METHOD__) -> alert('Schaffrath::Auction to Order', $endedAuctions);
                 $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler 2', $endedAuctions);
             }
             catch ( \Exception $exception )

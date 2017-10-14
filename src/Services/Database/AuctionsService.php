@@ -150,13 +150,12 @@
 
         public function getAuctionsForTense($tense)
         {
-            if (strlen($tense) > 3)
+            if ($tense)
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
 
                 return $auctionArray;
             }
-
             return false;
         }
 

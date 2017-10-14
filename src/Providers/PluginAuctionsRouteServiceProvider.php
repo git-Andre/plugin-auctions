@@ -102,6 +102,7 @@
                     -> where('customerId', '\d+');
             $router -> get('api/testparamsbuilder/{auctionId}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
                     -> where('auctionId', '\d+');
+            $router -> get('api/test-tense/{tense}', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
 
             // auctionend - add to basket
             $router->post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');
