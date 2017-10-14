@@ -5,6 +5,7 @@
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
     use Plenty\Plugin\Log\Loggable;
+
     use PluginAuctions\Services\Database\AuctionsService;
 
     // TODO Response ohne json_encode????
@@ -110,7 +111,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('tense')
                       -> setReferenceValue($tense)
-                      -> info('PluginAuctions::auction.info', ['request' => $request]);
+                      -> debug('PluginAuctions::auction.debug', ['request' => $request]);
 
                 return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }

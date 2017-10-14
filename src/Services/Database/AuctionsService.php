@@ -6,6 +6,8 @@
 //    use IO\Services\SessionStorageService;
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+    use Plenty\Plugin\Log\Loggable;
+
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
@@ -16,6 +18,8 @@
 
 
     class AuctionsService extends DataBaseService {
+
+        use Loggable;
 
         protected $tableName = 'auctions';
 //        /**
@@ -150,6 +154,9 @@
 
         public function getAuctionsForTense($tense)
         {
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::order.debug', ['tenseTest' => $tense]);
+
             if ($tense)
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);

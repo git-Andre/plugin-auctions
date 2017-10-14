@@ -35,18 +35,24 @@
 
             $endedAuctions = $this -> auctionsService -> getAuctionsForTense("past");
 
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('')
+                  -> setReferenceValue()
+                  -> debug('PluginAuctions::order.debug', ['test' => $endedAuctions]);
+
             try
+
             {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-                $this -> getLogger(__FUNCTION__)
-                      -> info('PluginAuctions::auction.info', ['' => $endedAuctions]);
-                $this -> getLogger(__FUNCTION__) -> debug('PluginAuctions::auction.debug', $endedAuctions);
-                $this -> getLogger(__METHOD__) -> alert('PluginAuctions::auction.alert', $endedAuctions);
-                $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auction.error', $endedAuctions);
+//                $this -> getLogger(__FUNCTION__)
+//                      -> info('PluginAuctions::auction.info', ['' => $endedAuctions]);
+//                $this -> getLogger(__FUNCTION__) -> debug('PluginAuctions::auction.debug', $endedAuctions);
+//                $this -> getLogger(__METHOD__) -> alert('PluginAuctions::auction.alert', $endedAuctions);
+//                $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auction.error', $endedAuctions);
             }
             catch ( \Exception $exception )
             {
-                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler 3', $exception);
+                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order CRON', $exception);
             }
 
 
