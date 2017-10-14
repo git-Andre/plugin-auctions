@@ -98,7 +98,7 @@
 
         public function getAuctionsForTense($tense)
         {
-            $tense = (string) $tense;
+//            $tense = (string) $tense;
             if (strlen($tense) > 3)
             {
 //                return $tense;

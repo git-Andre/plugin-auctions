@@ -2,18 +2,14 @@
 
     namespace PluginAuctions\Providers;
 
-    use IO\Middlewares\Middleware;
-
+    use Plenty\Log\Exceptions\ReferenceTypeException;
+    use Plenty\Log\Services\ReferenceContainer;
+    use Plenty\Modules\Cron\Services\CronContainer;
     use Plenty\Plugin\ServiceProvider;
     use Plenty\Plugin\Templates\Twig;
-    use Plenty\Modules\Cron\Services\CronContainer;
-    use Plenty\Log\Services\ReferenceContainer;
-    use Plenty\Log\Exceptions\ReferenceTypeException;
-
+    use PluginAuctions\Crons\AuctionToOrderCron;
     use PluginAuctions\Extensions\TwigAuctionsServiceProvider;
     use PluginAuctions\Extensions\TwigLiveAuctionServiceProvider;
-    use PluginAuctions\Services\AuctionOrderService;
-    use PluginAuctions\Crons\AuctionToOrderCron;
 
 
     /**
@@ -38,10 +34,16 @@
         public function boot(Twig $twig, CronContainer $container, ReferenceContainer $referenceContainer)
         {
             // register crons
-            $container->add(CronContainer::EVERY_FIFTEEN_MINUTES, AuctionToOrderCron::class);
+            $container -> add(CronContainer::EVERY_FIFTEEN_MINUTES, AuctionToOrderCron::class);
 
             // register reference types for logs
-            $referenceContainer -> add(['auctionId' => 'auctionId', 'orderId' => 'orderId']);
+            try
+            {
+                $referenceContainer -> add(['auctionId' => 'auctionId']);
+            }
+            catch ( ReferenceTypeException $ex )
+            {
+            }
 
             // twig service auction
             $twig -> addExtension(TwigAuctionsServiceProvider::class);
