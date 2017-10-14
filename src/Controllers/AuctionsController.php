@@ -147,6 +147,13 @@
             return $this -> auctionsService -> updateAuction($id, $auctionData);
         }
 
+        public function updateAuctionWithTense(int $auctionId, Request $request)
+        {
+            $tense = $request -> get('tense');
+
+            return $this -> auctionsService -> updateAuctionWithTense($auctionId, $tense);
+        }
+
         /**
          * @param int $id
          * @param Request $request

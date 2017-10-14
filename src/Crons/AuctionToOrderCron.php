@@ -4,6 +4,8 @@
 
     use Plenty\Modules\Cron\Contracts\CronHandler as Cron;
     use Plenty\Plugin\Log\Loggable;
+
+    use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Services\AuctionOrderService;
     use PluginAuctions\Services\Database\AuctionsService;
 
@@ -30,30 +32,26 @@
 
         public function handle()
         {
-            $auctionId = 11;
-            $endedAuctions = [];
+            $endedAuctionIds = [];
 
-            $endedAuctions = $this -> auctionsService -> getAuctionsForTense("past");
+            $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auction.debug', ['test' => $endedAuctions]);
+                  -> debug('PluginAuctions::auction.debug', ['endedAuctions' => $endedAuctionIds]);
 
-            try
-
+            foreach ($endedAuctionIds as $endedAuctionId)
             {
-//               $test = $this -> auctionOrderService -> placeOrder($auctionId);
-//                $this -> getLogger(__FUNCTION__)
-//                      -> info('PluginAuctions::auction.info', ['' => $endedAuctions]);
-//                $this -> getLogger(__FUNCTION__) -> debug('PluginAuctions::auction.debug', $endedAuctions);
-//                $this -> getLogger(__METHOD__) -> alert('PluginAuctions::auction.alert', $endedAuctions);
-//                $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auction.error', $endedAuctions);
-            }
-            catch ( \Exception $exception )
-            {
-                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order CRON', $exception);
-            }
+                try
+                {
+                    $test = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
-
+                    $this -> auctionOrderService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
+                }
+                catch ( \Exception $exception )
+                {
+                    $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order CRON', $exception);
+                }
+            }
         }
 
         /**

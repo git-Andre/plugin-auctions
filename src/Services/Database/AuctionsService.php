@@ -7,13 +7,10 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
+    use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
-
-
-    //    use Illuminate\Support\Facades\App;
-//    use Plenty\Modules\Plugin\DynamoDb\Contracts\DynamoDbRepositoryContract;
 
 
     class AuctionsService extends DataBaseService {
@@ -56,7 +53,7 @@
             {
                 foreach ($auctions as $auction)
                 {
-                    if ($auction -> tense != "past-perfect")
+                    if ($auction -> tense != AuctionStatus::PAST_PERFECT)
                     {
                         $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
                     }
@@ -75,15 +72,15 @@
 
             if ($startDate < $now && $endDate <= $now)
             {
-                return 'past';
+                return AuctionStatus::PAST;
             }
             elseif ($startDate < $now && $endDate > $now)
             {
-                return 'present';
+                return AuctionStatus::PRESENT;
             }
             elseif ($startDate > $now && $endDate > $now)
             {
-                return 'future';
+                return AuctionStatus::FUTURE;
             }
             else
             {
@@ -124,36 +121,43 @@
             }
             $auction -> bidderList = $viewBids;
 
-            if ($auction -> tense != "past-perfect")
+            if ($auction -> tense != AuctionStatus::PAST_PERFECT)
             {
                 $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
             }
 
             return $auction;
         }
+//        /**
+//         * @param $tense
+//         * @return array|bool
+//         */
+//        public function getAuctionsForTense($tense)
+//        {
+//            if ($tense != 'past')
+//            {
+//                $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
+//
+//                return $auctionArray;
+//            }
+//            return ['Fehler' => $tense];
+//        }
 
-        /**
-         * @param $tense
-         * @return array|bool
-         */
-        public function getAuctionsForTense($tense)
+        public function getAuctionsInPast()
         {
             if (strlen($tense) > 3)
             {
                 $now = time();
 
-                $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now],['<']);
-
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debug', ['$auctions' => $auctions]);
+                $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now], ['<']);
 
                 $auctionIdsPastArray = [];
 
                 foreach ($auctions as $auction)
                 {
-                    if ($auction -> tense != "past-perfect")
+                    if ($auction -> tense != AuctionStatus::PAST_PERFECT)
                     {
-                        array_push($auctionIdsPastArray, $auction -> id);
+                        array_push($auctionIdsPastArray, (int) $auction -> id);
                     }
                 }
                 unset($auction);
@@ -330,7 +334,7 @@
 
                     $auction -> expiryDate = $auction -> startDate + ($auction -> auctionDuration * 24 * 60 * 60);
 
-                    if ($auction -> tense != "past-perfect")
+                    if ($auction -> tense != AuctionStatus::PAST_PERFECT)
                     {
                         $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
                     }
@@ -346,22 +350,23 @@
             return false;
         }
 
-        public function updateAuctionAfterPlaceOrder($id)
+        public function updateAuctionWithTense($auctionId, $tense)
         {
-            if ($id)
+            // defined not allowed by plenty... ??!!?
+            if ($auctionId > 0 && ($tense == AuctionStatus::PAST || $tense == AuctionStatus::PAST_PERFECT || $tense == AuctionStatus::FUTURE || $tense == AuctionStatus::PRESENT ))
             {
-                $auction = $this -> getValue(Auction_7::class, $id);
+                $auction = $this -> getValue(Auction_7::class, $auctionId);
 
                 if ($auction instanceof Auction_7)
                 {
-                    $auction -> tense = "past-perfect";
+                    $auction -> tense = $tense;
 
                     $auction -> updatedAt = time();
 
                     return $this -> setValue($auction);
                 }
 
-                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+                return 'Diese ID: ' + $auctionId + ' ist uns nicht bekannt';
             }
 
             return false;

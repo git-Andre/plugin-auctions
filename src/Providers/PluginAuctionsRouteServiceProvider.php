@@ -19,12 +19,11 @@
 
         public function map(Router $router, ApiRouter $apiRouter)
         {
-            $apiRouter->version(['v1'], ['middleware' => ['oauth']],
-                function ($routerApi)
-                {
+            $apiRouter -> version(['v1'], ['middleware' => ['oauth']],
+                function ($routerApi) {
                     /** @var ApiRouter $routerApi */
 //                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
-                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
+                    $routerApi -> post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
 //                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
                 });
 
@@ -104,8 +103,12 @@
                     -> where('auctionId', '\d+');
             $router -> get('api/test-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
 
+            $router -> put('api/set-tense/{auctionId}', 'PluginAuctions\Controllers\AuctionsController@updateAuctionWithTense')
+                    -> where('auctionId', '\d+');
+
+
             // auctionend - add to basket
-            $router->post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');
+            $router -> post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');
 
         }
     }
