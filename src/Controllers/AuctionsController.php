@@ -101,16 +101,16 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
-        public function getAuctionsForTense($tense)
+        public function getAuctionsForTense(Request $request)
         {
-//            $tense = (string) $tense;
+            $tense = (string) $request -> get('tense');
             if (strlen($tense) > 3)
             {
 //                return $tense;
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('tense')
                       -> setReferenceValue($tense)
-                      -> info('PluginAuctions::order.info', ['tense' => $tense]);
+                      -> info('PluginAuctions::auction.info', ['request' => $request]);
 
                 return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }
@@ -161,11 +161,6 @@
         public function updateBidderlist(int $id, Request $request)
         {
             $sendedBid = $request -> all();
-
-            $this -> getLogger(__METHOD__)
-                  -> setReferenceType('auctionId')
-                  -> setReferenceValue($id)
-                  -> debug('PluginAuctions::order.debug', ['req' => $request]);
 
             return $this -> auctionsService -> updateBidderList($id, $sendedBid);
         }
