@@ -4,11 +4,14 @@
 
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
+    use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Services\Database\AuctionsService;
 
     // TODO Response ohne json_encode????
 
     class AuctionsController extends Controller {
+
+        use Loggable;
 
         /**
          * @var AuctionsService
@@ -70,6 +73,7 @@
             {
                 return json_encode($this -> auctionsService -> getBidderListLastEntry($id));
             }
+
             return 'keine ID (oder 0)';
         }
 
@@ -83,6 +87,7 @@
             {
                 return json_encode($this -> auctionsService -> getCurrentBidPrice($id));
             }
+
             return 'keine ID (oder 0)';
         }
 
@@ -102,8 +107,14 @@
             if (strlen($tense) > 3)
             {
 //                return $tense;
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('tense')
+                      -> setReferenceValue($tense)
+                      -> info('PluginAuctions::order.info', ['tense' => $tense]);
+
                 return json_encode($this -> auctionsService -> getAuctionsForTense($tense));
             }
+
             return 'keine ID (oder 0) - getAuctionsForTense';
         }
 
@@ -150,6 +161,11 @@
         public function updateBidderlist(int $id, Request $request)
         {
             $sendedBid = $request -> all();
+
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionId')
+                  -> setReferenceValue($id)
+                  -> debug('PluginAuctions::order.debug', ['req' => $request]);
 
             return $this -> auctionsService -> updateBidderList($id, $sendedBid);
         }

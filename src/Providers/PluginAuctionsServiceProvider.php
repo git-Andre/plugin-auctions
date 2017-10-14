@@ -39,7 +39,7 @@
             // register reference types for logs
             try
             {
-                $referenceContainer -> add(['auctionId' => 'auctionId']);
+                $referenceContainer -> add(['auctionId' => 'auctionId', 'tense' => 'tense']);
             }
             catch ( ReferenceTypeException $ex )
             {
