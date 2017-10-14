@@ -152,10 +152,14 @@
             return false;
         }
 
+        /**
+         * @param $tense
+         * @return array|bool
+         */
         public function getAuctionsForTense($tense)
         {
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::order.debug', ['tenseTest' => $tense]);
+                  -> debug('PluginAuctions::auction.debug', ['tenseTest' => $tense]);
 
             if ($tense)
             {
