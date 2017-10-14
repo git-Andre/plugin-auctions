@@ -34,13 +34,12 @@
             $endedAuctions = [];
 
             $endedAuctions = $this -> auctionsService -> getAuctionsForTense("past");
-            $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler 1', $exception);
 
             try
             {
 //               $test = $this -> auctionOrderService -> placeOrder($auctionId);
                 $this -> getLogger('Crons/AuctionToOrderCron::handle') -> debug('Schaffrath::Auction to Order', $endedAuctions);
-                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler 2', $exception);
+                $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order Fehler 2', $endedAuctions);
             }
             catch ( \Exception $exception )
             {
