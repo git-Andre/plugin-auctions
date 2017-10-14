@@ -140,6 +140,9 @@
             return ['Fehler' => $tense];
         }
 
+        /**
+         * @return array|string
+         */
         public function getAuctionsInPast()
         {
             $now = time();
@@ -164,7 +167,7 @@
                 return $auctionIdsPastArray;
             }
 
-            return ['Fehler' => $tense];
+            return 'Fehler getAuctionsInPast';
         }
 
         /**
