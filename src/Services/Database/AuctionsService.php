@@ -154,7 +154,7 @@
 
                 foreach ($auctions as $auction)
                 {
-                    if ($auction -> tense != AuctionStatus::PAST_PERFECT)
+                    if ($auction -> tense != AuctionStatus::PAST_PERFECT && count($auction -> bidderList) > 1)
                     {
                         array_push($auctionIdsPastArray, (int) $auction -> id);
                     }
@@ -167,7 +167,7 @@
                 return $auctionIdsPastArray;
             }
 
-            return 'Fehler getAuctionsInPast';
+            return false;
         }
 
         /**

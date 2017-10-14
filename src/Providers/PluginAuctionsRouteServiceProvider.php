@@ -91,6 +91,8 @@
 
             $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@triggerPlaceOrder')
                     -> where('auctionId', '\d+');
+            $router -> put('api/set-tense/{auctionId}', 'PluginAuctions\Controllers\AuctionsController@updateAuctionWithTense')
+                    -> where('auctionId', '\d+');
 
             // test
             $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
@@ -103,8 +105,6 @@
                     -> where('auctionId', '\d+');
             $router -> get('api/test-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
 
-            $router -> put('api/set-tense/{auctionId}', 'PluginAuctions\Controllers\AuctionsController@updateAuctionWithTense')
-                    -> where('auctionId', '\d+');
 
 
             // auctionend - add to basket

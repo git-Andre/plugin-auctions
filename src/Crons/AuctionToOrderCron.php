@@ -4,12 +4,11 @@
 
     use Plenty\Modules\Cron\Contracts\CronHandler as Cron;
     use Plenty\Plugin\Log\Loggable;
-
     use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Services\AuctionOrderService;
     use PluginAuctions\Services\Database\AuctionsService;
 
-//use Etsy\Services\Batch\Item\ItemExportService;
+    //use Etsy\Services\Batch\Item\ItemExportService;
 //use Etsy\Helper\AccountHelper;
 //use Etsy\Helper\SettingsHelper;
 
@@ -37,19 +36,27 @@
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auction.debug', ['endedAuctions' => $endedAuctionIds]);
+                  -> debug('PluginAuctions::auctions.debug', ['endedAuctions' => $endedAuctionIds]);
 
-            foreach ($endedAuctionIds as $endedAuctionId)
+            if ($endedAuctionIds)
             {
-                try
+                foreach ($endedAuctionIds as $endedAuctionId)
                 {
-                    $test = $this -> auctionOrderService -> placeOrder($endedAuctionId);
+                    try
+                    {
+                        $localOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
-                    $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
-                }
-                catch ( \Exception $exception )
-                {
-                    $this -> getLogger(__FUNCTION__) -> error('Schaffrath::Auction to Order CRON', $exception);
+                        $this -> getLogger(__METHOD__)
+                              -> setReferenceType('auctionId')
+                              -> setReferenceValue($endedAuctionId)
+                              -> info('PluginAuctions::auctions.info', ['$localOrder: ' => $localOrder]);
+
+                        $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
+                    }
+                    catch ( \Exception $exception )
+                    {
+                        $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::Auction to Order CRON-Error', $exception);
+                    }
                 }
             }
         }
