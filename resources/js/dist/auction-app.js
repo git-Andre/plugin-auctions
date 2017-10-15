@@ -175,8 +175,8 @@ Vue.component("auction-bids", {
                 "auctionDuration": 1,
                 "startPrice": this.minbid - 2
             };
-
-            ApiService.put("/api/auction/11", JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
+            var url = "/api/auction/" + this.auction.id;
+            ApiService.put(url, JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
                 alert('Upps - ein Fehler beim auctionend ??!!');

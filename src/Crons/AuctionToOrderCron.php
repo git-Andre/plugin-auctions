@@ -35,21 +35,18 @@
 
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['endedAuctions' => $endedAuctionIds]);
-
             if ($endedAuctionIds)
             {
                 foreach ($endedAuctionIds as $endedAuctionId)
                 {
                     try
                     {
-                        $localOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
+                        $localisedOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
                         $this -> getLogger(__METHOD__)
                               -> setReferenceType('auctionId')
                               -> setReferenceValue($endedAuctionId)
-                              -> info('PluginAuctions::auctions.info', ['$localOrder: ' => $localOrder]);
+                              -> info('PluginAuctions::auctions.newOrder', ['newOrderId: ' => $localisedOrder -> order -> id]);
 
                         $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
                     }

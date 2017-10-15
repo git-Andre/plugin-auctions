@@ -200,8 +200,8 @@ Vue.component( "auction-bids", {
                 "auctionDuration": 1,
                 "startPrice": this.minbid - 2
             };
-
-            ApiService.put( "/api/auction/11", JSON.stringify( Bidtest ), { contentType: "application/json" }
+            const url = "/api/auction/" + this.auction.id;
+            ApiService.put( url, JSON.stringify( Bidtest ), { contentType: "application/json" }
             )
                 .done( auction => {
                     // alert( "ok" );

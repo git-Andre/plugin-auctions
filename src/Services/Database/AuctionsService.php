@@ -161,12 +161,8 @@
                 }
                 unset($auction);
 
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debug', ['$auctionIdsPastArray' => $auctionIdsPastArray]);
-
                 return $auctionIdsPastArray;
             }
-
             return false;
         }
 
@@ -368,10 +364,8 @@
 
                     return $this -> setValue($auction);
                 }
-
                 return 'Diese ID: ' + $auctionId + ' ist uns nicht bekannt';
             }
-
             return false;
         }
 
