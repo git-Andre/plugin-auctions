@@ -45,7 +45,7 @@
                   -> setReferenceValue($auctionId)
                   -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
-            if ($this -> auctionParams['isSalableAndActive'])
+            if ($auctionParams['isSalableAndActive'])
             {
 
                 $order = pluginApp(AuctionOrderBuilder::class)
