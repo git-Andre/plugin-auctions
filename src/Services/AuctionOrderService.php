@@ -8,9 +8,8 @@
     use IO\Models\LocalizedOrder;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-    use PluginAuctions\Builder\AuctionOrderBuilder;
     use Plenty\Plugin\Log\Loggable;
-
+    use PluginAuctions\Builder\AuctionOrderBuilder;
 
 
     /**
@@ -41,9 +40,14 @@
         public function placeOrder($auctionId) : LocalizedOrder
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionId')
+                  -> setReferenceValue($auctionId)
+                  -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
             if ($this -> $auctionParams -> isSalableAndActive)
             {
+
                 $order = pluginApp(AuctionOrderBuilder::class)
                     -> prepare(OrderType::ORDER)
                     -> fromAuction($auctionParams) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
@@ -55,11 +59,17 @@
                     -> done();
                 try
                 {
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$order: ' => $order]);
+
                     $order = $this -> orderRepository -> createOrder($order);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$order danach: ' => $order]);
 
                     return LocalizedOrder ::wrap($order, "de");
                 }
-                catch (\Exception $exception)
+                catch ( \Exception $exception )
                 {
                     $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::place Order', $exception);
                 }
