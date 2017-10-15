@@ -39,6 +39,10 @@ Vue.component( "auction-end", {
 
                     // Gewinner eingeloggt ??
                     if ( this.bidderList[this.bidderList.length - 1].customerId == this.userdata.id ) {
+                        sessionStorage.getItem( "basketItem" );
+
+                        if ( ) {
+                        }
                         this.isWinnerLoggedIn = true;
                         NotificationService.success(
                             "<h3>Herzlichen Glückwunsch!</h3><hr>" +

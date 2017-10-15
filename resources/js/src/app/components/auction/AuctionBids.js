@@ -215,7 +215,7 @@ Vue.component( "auction-bids", {
                 // ToDO Modal mit Time 5sec
                 this.printClockWarn();
                 // Todo: Wiederholung unterbinden !!
-                this.reload( 1 );
+                this.reload( 10 );
             }
             else {
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
@@ -263,6 +263,7 @@ Vue.component( "auction-bids", {
                                     if ( result == this.item['variation']['id'] ) {
                                         // flag für Uhrzeit Differenz ???
                                         this.reload( 10 );
+                                        sessionStorage.setItem( "basketItem", result );
                                     }
                                     else {
                                         alert(

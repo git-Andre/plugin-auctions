@@ -110,7 +110,7 @@
 
                 <auction-end
                         template="#vue-auction-end"
-                        auctionid="{{ auction.id }}"
+                        auction="{{ auction | json_encode() }}"
                         userdata="{{ userdata }}"
                 >
                 </auction-end>
