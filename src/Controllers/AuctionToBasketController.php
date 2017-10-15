@@ -6,8 +6,12 @@
     use Plenty\Modules\Basket\Models\BasketItem;
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
+    use Plenty\Plugin\Log\Loggable;
+
 
     class AuctionToBasketController extends Controller {
+
+        use Loggable;
 
         public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
         {
