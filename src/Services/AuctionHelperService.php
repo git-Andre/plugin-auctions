@@ -77,8 +77,10 @@
             {
                 $customerDeliveryAddressId = $customerBillingAddressId;
             }
+            $isSalableAndActive = $item -> filter -> isSalableAndActive;
 
             $auctionOrderParams = [
+                "isSalableAndActive"        => $isSalableAndActive,
                 "contactId"                 => $lastCustomerId,
                 "lastPrice"                 => $lastPrice,
                 "itemVariationId"           => $itemVariationId,

@@ -8,9 +8,9 @@
     use IO\Models\LocalizedOrder;
     use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
-
     use PluginAuctions\Builder\AuctionOrderBuilder;
-    use PluginAuctions\Services\AuctionHelperService;
+    use Plenty\Plugin\Log\Loggable;
+
 
 
     /**
@@ -18,6 +18,8 @@
      * @package IO\Services
      */
     class AuctionOrderService {
+
+        use Loggable;
 
         private $orderRepository;
 
@@ -31,6 +33,7 @@
             $this -> orderRepository = $orderRepository;
             $this -> auctionHelperService = $auctionHelperService;
         }
+
         /**
          * Place an order
          * @return LocalizedOrder
@@ -39,20 +42,28 @@
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
 
-            $order = pluginApp(AuctionOrderBuilder::class)
-                -> prepare(OrderType::ORDER)
-                -> fromAuction($auctionParams) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
-                -> withContactId($auctionParams['contactId'])
-                -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
-                -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
-                -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
-                -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
-                -> done()
-            ;
+            if ($this -> $auctionParams -> isSalableAndActive)
+            {
+                $order = pluginApp(AuctionOrderBuilder::class)
+                    -> prepare(OrderType::ORDER)
+                    -> fromAuction($auctionParams) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
+                    -> withContactId($auctionParams['contactId'])
+                    -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
+                    -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
+                    -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
+                    -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
+                    -> done();
+                try
+                {
+                    $order = $this -> orderRepository -> createOrder($order);
 
-            $order = $this -> orderRepository -> createOrder($order);
-
-            return LocalizedOrder ::wrap($order, "de");
+                    return LocalizedOrder ::wrap($order, "de");
+                }
+                catch (\Exception $exception)
+                {
+                    $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::place Order', $exception);
+                }
+            }
         }
 
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)

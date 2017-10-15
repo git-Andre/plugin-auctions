@@ -263,7 +263,7 @@ Vue.component( "auction-bids", {
                                     if ( result == this.item['variation']['id'] ) {
                                         // flag für Uhrzeit Differenz ???
                                         this.reload( 10 );
-                                        sessionStorage.setItem( "basketItem", result );
+                                        sessionStorage.setItem( "basketItem", this.auction.itemId );
                                     }
                                     else {
                                         alert(

@@ -22,13 +22,26 @@
 ////                $data['quantity'] = (int) $data['quantity'] + $basketItem -> quantity;
 //                $basketItemRepository -> updateBasketItem($basketItem -> id, $data);
 //
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('auctionVarId')
+                      -> setReferenceValue($data['variationId'])
+                      -> debug('PluginAuctions::auctions.basketItemAlreadyInBasket', ['$basketItem: ' => $basketItem]);
+
                 return json_encode($basketItem);
             }
             else
             {
                 try
                 {
+                    $data['shippingProfileId'] = 34; // ToDo: von config holen
+                    $data['referrerId'] = 9;
+
                     $basketItemRepository -> addBasketItem($data);
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('auctionVarId')
+                          -> setReferenceValue($data['variationId'])
+                          -> debug('PluginAuctions::auctions.basketItemAdded', ['$data: ' => $data]);
 
                     return json_encode($data['variationId']);
                 }
