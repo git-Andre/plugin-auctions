@@ -1,3 +1,13 @@
+{% set bidderListLast = auction.bidderList | last %}
+{#{% set bidderListLength = auction.bidderList | length %}#}
+
+
+<dt class="alarm">Auktions-Aufgeld (10%):</dt>
+<dd>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
+    <span>
+       | Gesamtpreis: {{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
+    </span>
+</dd>
 <dt>Start Datum:</dt>
 <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
 <dt>Dauer:</dt>
