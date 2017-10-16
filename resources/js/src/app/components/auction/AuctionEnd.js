@@ -43,7 +43,7 @@ Vue.component( "auction-end", {
                         .closeAfter( NOTIFY_TIME );
                     setTimeout( () => {
                         sessionStorage.removeItem( "basketItem" );
-                    }, (2 * 60 * 1000) );
+                    }, (2000) );
                 }
                 else {
                     this.isWinnerLoggedIn = false;

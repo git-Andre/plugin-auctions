@@ -222,7 +222,8 @@ Vue.component("auction-bids", {
                     // Gewinner eingeloggt?
                     if (_this3.userdata.id == bidderListLastEntry.customerId) {
                         // Artikel in den Warenkorb
-                        var url = '/auction_to_basket?number=' + _this3.item['variation']['id'];
+                        var url = '/auction_to_basket?number=' + _this3.item['variation']['id'] + '&auctionid=' + _this3.auction.id;
+                        console.log('url: ' + url);
                         ApiService.post(url).done(function (response) {
 
                             var result = JSON.parse(response);

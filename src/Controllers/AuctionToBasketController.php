@@ -47,7 +47,7 @@
                 {
                     $data['shippingProfileId'] = 34; // ToDo: von config holen
                     $data['referrerId'] = 9;
-                    $data['price'] = $lastBidPrice + $lastBidPrice * 0.1; // ToDo: Aufgeld von config
+                    $data['price'] = 33.33; // $lastBidPrice + $lastBidPrice * 0.1; // ToDo: Aufgeld von config
 
                     $basketItemRepository -> addBasketItem($data);
 
