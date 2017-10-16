@@ -4,7 +4,7 @@
 
 <div class="m-t-2">
     <dt><span class="alarm">Aufgeld</span> (10%):</dt>
-    <dd class="alarm">{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
+    <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
         <span class="m-x-1">|</span>
         <span>Gesamtpreis: </span>
         <span class="alarm"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>

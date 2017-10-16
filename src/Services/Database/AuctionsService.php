@@ -140,9 +140,6 @@
             return ['Fehler' => $tense];
         }
 
-        /**
-         * @return array|string
-         */
         public function getAuctionsInPast()
         {
             $now = time();

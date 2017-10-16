@@ -229,9 +229,9 @@ Vue.component("auction-bids", {
                             var result = JSON.parse(response);
 
                             if (result == _this3.item['variation']['id']) {
-                                // flag für Uhrzeit Differenz ???
-                                _this3.reload(10);
                                 sessionStorage.setItem("basketItem", _this3.auction.itemId);
+                                _this3.reload(10000);
+                                // this.reload( 10);
                             } else {
                                 alert('Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)');
                             }
@@ -325,7 +325,7 @@ Vue.component("auction-end", {
                     NotificationService.success("<h3>Herzlichen Glückwunsch!</h3><hr>" + "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen.").closeAfter(NOTIFY_TIME);
                     setTimeout(function () {
                         sessionStorage.removeItem("basketItem");
-                    }, 2 * 60 * 1000);
+                    }, 2000);
                 } else {
                     this.isWinnerLoggedIn = false;
                     NotificationService.success("<h3>Herzlichen Glückwunsch!</h3><hr>" + "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email.").closeAfter(NOTIFY_TIME);

@@ -259,12 +259,9 @@ Vue.component( "auction-bids", {
                             ApiService.post( url )
                                 .done( response => {
 
-                                    const result = JSON.parse( response );
-
                                     if ( result == this.item['variation']['id'] ) {
                                         sessionStorage.setItem( "basketItem", this.auction.itemId );
-                                        this.reload( 10000);
-                                        // this.reload( 10);
+                                        this.reload( 10);
                                     }
                                     else {
                                         alert(

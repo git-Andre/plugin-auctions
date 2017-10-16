@@ -16,9 +16,6 @@
 
         public function add(Request $request, BasketItemRepositoryContract $basketItemRepository, AuctionsService $auctionsService)
         {
-
-
-
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
 
