@@ -7,16 +7,24 @@
     use Plenty\Plugin\Controller;
     use Plenty\Plugin\Http\Request;
     use Plenty\Plugin\Log\Loggable;
+    use PluginAuctions\Services\Database\AuctionsService;
 
 
     class AuctionToBasketController extends Controller {
 
         use Loggable;
 
-        public function add(Request $request, BasketItemRepositoryContract $basketItemRepository)
+        public function add(Request $request, BasketItemRepositoryContract $basketItemRepository, AuctionsService $auctionsService)
         {
+
+
+
             $data['variationId'] = $request -> get('number', '');
             $data['quantity'] = 1;
+
+            $auctionId = $request -> get('auctionid', '');
+
+            $lastBidPrice = (double)$auctionsService -> getCurrentBidPrice($auctionId);
 
             $basketItem = $basketItemRepository -> findExistingOneByData($data);
 
@@ -39,7 +47,7 @@
                 {
                     $data['shippingProfileId'] = 34; // ToDo: von config holen
                     $data['referrerId'] = 9;
-                    $data['price'] = 33.33;
+                    $data['price'] = $lastBidPrice + $lastBidPrice * 0.1; // ToDo: Aufgeld von config
 
                     $basketItemRepository -> addBasketItem($data);
 

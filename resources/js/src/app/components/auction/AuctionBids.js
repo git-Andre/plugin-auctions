@@ -254,7 +254,7 @@ Vue.component( "auction-bids", {
                         // Gewinner eingeloggt?
                         if ( this.userdata.id == bidderListLastEntry.customerId ) {
                             // Artikel in den Warenkorb
-                            const url = ('/auction_to_basket?number=' + this.item['variation']['id'])
+                            const url = ('/auction_to_basket?number=' + this.item['variation']['id'] + '&auctionid=' + this.auction.id)
                             ApiService.post( url )
                                 .done( response => {
 
