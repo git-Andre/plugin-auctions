@@ -47,8 +47,8 @@
                     $data['price'] = 33.33; // $lastBidPrice + $lastBidPrice * 0.1; // ToDo: Aufgeld von config
                     $data['givenPrice'] = 22.22;
                     $data['useGivenPrice'] = true;
-                    $data['variation']['data']['calculatedPrices']['default']['basePrice'] = [11.11];
-                    $data['variation']['data']['calculatedPrices']['default']['basePriceNet'] = 11.10;
+//                    $data['variation']['data']['calculatedPrices']['default']['basePrice'] = [11.11];
+//                    $data['variation']['data']['calculatedPrices']['default']['basePriceNet'] = 11.10;
 
                     $basketItemRepository -> addBasketItem($data);
 
