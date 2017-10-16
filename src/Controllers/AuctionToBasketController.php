@@ -39,6 +39,7 @@
                 {
                     $data['shippingProfileId'] = 34; // ToDo: von config holen
                     $data['referrerId'] = 9;
+                    $data['price'] = 33.33;
 
                     $basketItemRepository -> addBasketItem($data);
 
