@@ -2,17 +2,20 @@
 {#{% set bidderListLength = auction.bidderList | length %}#}
 
 
-<dt class="alarm">Auktions-Aufgeld (10%):</dt>
-<dd>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
-    <span>
-       | Gesamtpreis: {{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
-    </span>
-</dd>
-<dt>Start Datum:</dt>
-<dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-<dt>Dauer:</dt>
-<dd>{{ auction.auctionDuration }} Tage</dd>
-<dt>End Datum:</dt>
-<dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-<dt>Versand:</dt>
-<dd>Innerhalb Deutschlands kostenlos.</dd>
+<div class="m-b-1">
+    <dt class="alarm">Aufgeld (10%):</dt>
+    <dd>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}
+        <span class="m-x-2">|</span>
+        <span>Gesamtpreis: </span>
+        <span class="alarm"> {{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</span>
+    </dd>
+    <dt>Start Datum:</dt>
+    <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
+    <dt>Dauer:</dt>
+    <dd>{{ auction.auctionDuration }} Tage</dd>
+    <dt>End Datum:</dt>
+    <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
+    <dt>Versand:</dt>
+    <dd>Innerhalb Deutschlands kostenlos.</dd>
+
+</div>
