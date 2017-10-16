@@ -223,15 +223,13 @@ Vue.component("auction-bids", {
                     if (_this3.userdata.id == bidderListLastEntry.customerId) {
                         // Artikel in den Warenkorb
                         var url = '/auction_to_basket?number=' + _this3.item['variation']['id'] + '&auctionid=' + _this3.auction.id;
-                        console.log('url: ' + url);
                         ApiService.post(url).done(function (response) {
 
                             var result = JSON.parse(response);
 
                             if (result == _this3.item['variation']['id']) {
                                 sessionStorage.setItem("basketItem", _this3.auction.itemId);
-                                _this3.reload(10000);
-                                // this.reload( 10);
+                                _this3.reload(10);
                             } else {
                                 alert('Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)');
                             }

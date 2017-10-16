@@ -255,9 +255,10 @@ Vue.component( "auction-bids", {
                         if ( this.userdata.id == bidderListLastEntry.customerId ) {
                             // Artikel in den Warenkorb
                             const url = ('/auction_to_basket?number=' + this.item['variation']['id'] + '&auctionid=' + this.auction.id)
-                            console.log( 'url: ' + url );
                             ApiService.post( url )
                                 .done( response => {
+
+                                    const result = JSON.parse( response );
 
                                     if ( result == this.item['variation']['id'] ) {
                                         sessionStorage.setItem( "basketItem", this.auction.itemId );

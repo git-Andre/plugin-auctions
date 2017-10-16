@@ -7,7 +7,7 @@
     <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
         <span class="m-x-1">|</span>
         <span>Gesamtpreis: </span>
-        <span class="alarm"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+        <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
     </dd>
     <dt>Start Datum:</dt>
     <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
