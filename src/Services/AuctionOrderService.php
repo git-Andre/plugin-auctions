@@ -37,7 +37,7 @@
          * Place an order
          * @return LocalizedOrder
          */
-        public function placeOrder($auctionId) : LocalizedOrder
+        public function placeOrder($auctionId) // : LocalizedOrder
         {
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
             $this -> getLogger(__METHOD__)
@@ -60,12 +60,12 @@
                 try
                 {
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['$order: ' => $order]);
+                          -> debug('PluginAuctions::auctions.debugBefor', ['$order: ' => $order]);
 
                     $order = $this -> orderRepository -> createOrder($order);
 
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['$order danach: ' => $order]);
+                          -> debug('PluginAuctions::auctions.debugAfter', ['$order danach: ' => $order]);
 
                     return LocalizedOrder ::wrap($order, "de");
                 }
@@ -74,6 +74,10 @@
                     $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::place Order', $exception);
                 }
             }
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', ['isSalableAndActive: ' => $auctionParams['isSalableAndActive']]);
+
+            return false;
         }
 
 //	public function findOrderByAccessKey($orderId, $orderAccessKey)
