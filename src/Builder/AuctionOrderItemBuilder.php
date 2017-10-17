@@ -29,7 +29,7 @@
             return [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 9, // Mandant Auktion (Shop)
-                "itemVariationId"   => (int) $auctionParams['itemVariationId'],  // 38443
+                "itemVariationId"   => 4248, // (int) $auctionParams['itemVariationId'],  // 38443
                 "quantity"          => 1, // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionParams['orderItemName'],
                 "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
@@ -44,13 +44,11 @@
                 ],
                 "orderProperties"   => [
                     [
-                        "propertyId" => 29, // Artikel-Merkmal für Aufgeld Todo config
+                        "propertyId" => 30, // Artikel-Merkmal für Aufgeld Todo config
                         "value"      => '10%',
-                        "name"       => 'Aufgeld Auktionen'
+                        "name"       => 'Aufgeld Auktion'
                     ]
                 ]
-
             ];
         }
-
     }

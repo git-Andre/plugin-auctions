@@ -51,7 +51,7 @@
                 $order = pluginApp(AuctionOrderBuilder::class)
                     -> prepare(OrderType::ORDER)
                     -> fromAuction($auctionParams) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
-                    -> withStatus(3.0) // Status 3.0
+                    -> withStatus(3.1) // Status 3.0
                     -> withContactId($auctionParams['contactId'])
                     -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
                     -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
