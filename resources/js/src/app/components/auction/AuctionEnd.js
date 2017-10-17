@@ -35,24 +35,29 @@ Vue.component( "auction-end", {
             // Gewinner eingeloggt ??
             if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id ) {
 
-                if ( sessionStorage.getItem( "basketItem" ) == parseInt( this.auction.itemId ) ) {
-                    this.isWinnerLoggedIn = true;
-                    NotificationService.success(
-                        "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                        "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-                        .closeAfter( NOTIFY_TIME );
-                    setTimeout( () => {
-                        sessionStorage.removeItem( "basketItem" );
-                    }, (2000) );
-                }
-                else {
+                // if ( sessionStorage.getItem( "basketItem" ) == parseInt( this.auction.itemId ) ) {
+                //     this.isWinnerLoggedIn = true;
+                //     NotificationService.success(
+                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
+                //         "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
+                //         .closeAfter( NOTIFY_TIME );
+                //     setTimeout( () => {
+                //         sessionStorage.removeItem( "basketItem" );
+                //     }, (2000) );
+                // }
+                // else {
+                //     this.isWinnerLoggedIn = false;
+                //     NotificationService.success(
+                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
+                //         "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
+                //         .closeAfter( NOTIFY_TIME );
+                //     sessionStorage.removeItem( "basketItem" );
+                // }
                     this.isWinnerLoggedIn = false;
                     NotificationService.success(
                         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
                         "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
                         .closeAfter( NOTIFY_TIME );
-                    sessionStorage.removeItem( "basketItem" );
-                }
             }
             // Anderer User eingeloggt
             else {

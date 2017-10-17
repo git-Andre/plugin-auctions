@@ -224,7 +224,8 @@ Vue.component( "auction-bids", {
                         tense = tensefromServer;
 
                         if ( tense == AuctionConstants.PAST ) {
-                            this.afterAuctionWithServerTensePast();
+                            this.reload( 100);
+                            // this.afterAuctionWithServerTensePast();
                         }
                         else {
                             counter++;

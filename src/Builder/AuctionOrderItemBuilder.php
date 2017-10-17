@@ -23,7 +23,8 @@
         private function buildOrderItem($auctionParams) : array
         {
 
-            $priceWithAgio = (float) $auctionParams['lastPrice'] * 0.1; // Todo config ???
+            $agio = (float) $auctionParams['lastPrice'] * 0.1; // Todo config ???
+            $priceWithAgio = (float) $auctionParams['lastPrice'] + $agio; // Todo config ???
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
@@ -34,12 +35,21 @@
                 "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
                 "amounts"           => [
                     [
+                        "isSystemCurrency"   => 1,
                         "currency"           => "EUR",
                         "priceOriginalGross" => (float) $auctionParams['lastPrice'],
-                        "surcharge"          => $priceWithAgio,
+//                        "surcharge"          => $agio,
                         "isPercentage"       => 1
                     ]
+                ],
+                "orderProperties"   => [
+                    [
+                        "propertyId" => 29, // Artikel-Merkmal für Aufgeld Todo config
+                        "value"      => '10%',
+                        "name"       => 'Aufgeld Auktionen'
+                    ]
                 ]
+
             ];
         }
 
