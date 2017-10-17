@@ -84,11 +84,11 @@
                 "isSalableAndActive"        => $isSalableAndActive,
                 "contactId"                 => $lastCustomerId,
                 "lastPrice"                 => $lastPrice,
-                "itemVariationId"           => $itemVariationId,
+                "itemVariationId"           => (int)$itemVariationId,
                 "itemId"                    => (int)$auction -> itemId,
                 "orderItemName"             => $itemNameForOrder,
-                "customerBillingAddressId"  => $customerBillingAddressId,
-                "customerDeliveryAddressId" => $customerDeliveryAddressId
+                "customerBillingAddressId"  => (int)$customerBillingAddressId,
+                "customerDeliveryAddressId" => (int)$customerDeliveryAddressId
             ];
 
             return (array) $auctionOrderParams;

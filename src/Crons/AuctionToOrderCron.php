@@ -35,6 +35,9 @@
 
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debugCronHelper', ['$endedAuctionIds: ' => $endedAuctionIds ]);
+
             if ($endedAuctionIds)
             {
                 foreach ($endedAuctionIds as $endedAuctionId)
