@@ -29,7 +29,7 @@
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 1, // Mandant Auktion (Shop)
+                "referrerId"        => 9, // Mandant Auktion (Shop)
                 "itemVariationId"   => (int) $auctionParams['itemVariationId'],  // 38443
                 "quantity"          => 1, // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionParams['orderItemName'],
