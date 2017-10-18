@@ -107,7 +107,7 @@
 
             $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
 
-            $router -> get('api/test-handle-cron', 'PluginAuctions\Crons\AuctionToOrderCron@handle');
+            $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
 
 
 
