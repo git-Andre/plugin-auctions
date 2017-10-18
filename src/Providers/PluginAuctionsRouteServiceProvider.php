@@ -107,6 +107,8 @@
 
             $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
 
+            $router -> get('api/test-handle-cron', 'PluginAuctions\Crons\AuctionToOrderCron@handle');
+
 
 
             // auctionend - add to basket
