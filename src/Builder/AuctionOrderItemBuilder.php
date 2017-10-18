@@ -3,6 +3,7 @@
     namespace PluginAuctions\Builder;
 
     use IO\Builder\Order\OrderItemType;
+    use Plenty\Plugin\Log\Loggable;
 
 
     /**
@@ -10,6 +11,8 @@
      * @package IO\Builder\Order
      */
     class AuctionOrderItemBuilder {
+
+        use Loggable;
 
         public function getOrderItem($auctionParams) : array
         {
@@ -38,12 +41,12 @@
                     [
                         "isSystemCurrency"   => 1,
                         "currency"           => "EUR",
-                        "priceOriginalNet" => $lastPrice,
+                        "priceOriginalNet"   => $lastPrice,
                         "priceOriginalGross" => $lastPrice,
 //                        "priceNet" => $lastPrice,
 //                        "priceGross" => $lastPrice,
                         "surcharge"          => $agio,
-                        "discount"          => -0.5,
+                        "discount"           => - 0.5,
                         "isPercentage"       => 1 // discount prozentual
                     ]
                 ],
@@ -59,7 +62,7 @@
             $this -> getLogger(__METHOD__)
                   -> setReferenceType('auctionVarId')
                   -> setReferenceValue((int) $auctionParams['itemVariationId'])
-                  -> debug('PluginAuctions::auctions.info', ['$orderItem: ' => $orderItem ]);
+                  -> debug('PluginAuctions::auctions.info', ['$orderItem: ' => $orderItem]);
 
 
             return $orderItem;
