@@ -46,15 +46,15 @@
 //                        "priceNet" => $lastPrice,
 //                        "priceGross" => $lastPrice,
                         "surcharge"          => $agio,
-//                        "discount"           => 0.5,
-//                        "isPercentage"       => 1 // discount prozentual
+                        "discount"           => - 0.5,
+                        "isPercentage"       => 1 // discount prozentual
                     ]
                 ],
                 "orderProperties"   => [
 
                     [
-                        "propertyId" => 31, // Artikel-Merkmal für Aufgeld Todo config
-                        "value"      => $agio,
+                        "propertyId" => 30, // Artikel-Merkmal für Aufgeld Todo config
+                        "value"      => "$agio",
                         "name"       => "Auktion Aufgeld 10%"
                     ]
                 ]
