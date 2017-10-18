@@ -27,7 +27,7 @@
             $agio = $lastPrice * 0.1; // Todo config ???
             $priceWithoutAgio = $lastPrice - $agio; // Todo config ???
 
-            return [
+            $orderItem = [
                 "typeId"            => OrderItemType::VARIATION,
                 "referrerId"        => 9, // Mandant Auktion (Shop)
                 "itemVariationId"   => (int) $auctionParams['itemVariationId'],  // 38443
@@ -38,19 +38,30 @@
                     [
                         "isSystemCurrency"   => 1,
                         "currency"           => "EUR",
-                        "priceOriginalNet" => $priceWithoutAgio,
+                        "priceOriginalNet" => $lastPrice,
                         "priceOriginalGross" => $lastPrice,
+//                        "priceNet" => $lastPrice,
+//                        "priceGross" => $lastPrice,
                         "surcharge"          => $agio,
+                        "discount"          => -0.5,
                         "isPercentage"       => 1 // discount prozentual
                     ]
                 ],
                 "orderProperties"   => [
+
                     [
-                        "propertyId" => 30, // Artikel-Merkmal für Aufgeld Todo config
-                        "value"      => "10%",
-                        "name"       => "Aufgeld Auktion"
+                        "propertyId" => 31, // Artikel-Merkmal für Aufgeld Todo config
+                        "value"      => $agio,
+                        "name"       => "Auktion Aufgeld 10%"
                     ]
                 ]
             ];
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionVarId')
+                  -> setReferenceValue((int) $auctionParams['itemVariationId'])
+                  -> debug('PluginAuctions::auctions.info', ['$orderItem: ' => $orderItem ]);
+
+
+            return $orderItem;
         }
     }

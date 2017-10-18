@@ -55,7 +55,7 @@
                     -> withContactId($auctionParams['contactId'])
                     -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
                     -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
-//                    -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
+                    -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6003) // ToDo config...
 //                    -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
                     -> done();
                 try
