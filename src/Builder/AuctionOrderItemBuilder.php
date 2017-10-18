@@ -23,12 +23,13 @@
         private function buildOrderItem($auctionParams) : array
         {
 
-            $agio = (float) $auctionParams['lastPrice'] * 0.1; // Todo config ???
-            $priceWithoutAgio = (float) $auctionParams['lastPrice'] - $agio; // Todo config ???
+            $lastPrice = (float) $auctionParams['lastPrice']; // Todo config ???
+            $agio = $lastPrice * 0.1; // Todo config ???
+            $priceWithoutAgio = $lastPrice - $agio; // Todo config ???
 
             return [
                 "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 9, // Mandant Auktion (Shop)
+                "referrerId"        => 1, // Mandant Auktion (Shop)
                 "itemVariationId"   => (int) $auctionParams['itemVariationId'],  // 38443
                 "quantity"          => 1, // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionParams['orderItemName'],
@@ -38,7 +39,7 @@
                         "isSystemCurrency"   => 1,
                         "currency"           => "EUR",
                         "priceOriginalNet" => $priceWithoutAgio,
-                        "priceOriginalGross" => (float) $auctionParams['lastPrice'],
+                        "priceOriginalGross" => $lastPrice,
                         "surcharge"          => $agio,
                         "isPercentage"       => 1 // discount prozentual
                     ]
