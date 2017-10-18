@@ -27,10 +27,5 @@
 //            }
             return $response -> json($auctionId);
         }
-        public function testCron() //: Response
-        {
-
-            return $response -> json($auctionId);
-        }
 
     }
