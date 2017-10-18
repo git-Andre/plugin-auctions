@@ -123,7 +123,7 @@ Vue.component("auction-bids", {
                             {
                                 NotificationService.success(
                                 // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>GLÜCKWUNSCH:</h3><hr>Sie sind derzeit Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
+                                "<h3>STATUS:</h3><hr>Sie sind derzeit Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
