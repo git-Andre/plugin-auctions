@@ -44,9 +44,6 @@
 
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debugCronHelper', ['$endedAuctionIds: ' => $endedAuctionIds]);
-
             if ($endedAuctionIds)
             {
                 foreach ($endedAuctionIds as $endedAuctionId)
@@ -54,11 +51,6 @@
                     try
                     {
                         $localizedOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
-
-                        $this -> getLogger(__METHOD__)
-                              -> setReferenceType('auctionId')
-                              -> setReferenceValue($endedAuctionId)
-                              -> info('PluginAuctions::auctions.newOrder', ['newOrderId: ' => $localizedOrder -> order -> id]);
 
                         $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
                     }

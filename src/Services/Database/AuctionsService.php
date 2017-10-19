@@ -145,9 +145,6 @@
             $now = time();
             $auctions = $this -> getValues(Auction_7::class, ['expiryDate'], [$now], ['<']);
 
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debugCronHelper', ['$auctions: ' => $auctions ]);
-
             if ($auctions)
             {
                 $auctionIdsPastArray = [];

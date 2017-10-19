@@ -8,33 +8,33 @@
   {
     "tab"     : "Global",
     "key"     : "global.paymentMethod",
-    "label"   : "Standard Zahlungsmenthode für Auktionen",
+    "label"   : "Standard Zahlungsmethode für Auktionen (int) Standard: Plugin Vorkasse",
     "type"    : "text",
     "default" : "6000"
   },
   {
     "tab"     : "Global",
     "key"     : "global.shippingProfile",
-    "label"   : "Standard Versandprofil für Auktionen",
+    "label"   : "Standard Versandprofil für Auktionen (int) s. Einstellung->Versand->...Optionen",
     "type"    : "text"
   },
   {
     "tab"     : "Global",
     "key"     : "global.orderProperty",
-    "label"   : "Artikel-Bestell-Merkmal für Aufgeld",
+    "label"   : "Artikel-Bestell-Merkmal für Aufgeld (int) s. Anleitung",
     "type"    : "text"
   },
   {
     "tab"     : "Global",
     "key"     : "global.referrerId",
-    "label"   : "Herkunft für Auftrag Auktion (Shop)",
+    "label"   : "Herkunft für Auftrag Auktion (Shop) BETA",
     "type"    : "text",
     "default" : "1"
   },
   {
     "tab"     : "Global",
     "key"     : "global.agioPercentual",
-    "label"   : "Aufgeld für Auktion (10% Standard)",
+    "label"   : "Aufgeld für Auktion (10% Standard) (int) BETA",
     "type"    : "text",
     "default" : "10"
   }

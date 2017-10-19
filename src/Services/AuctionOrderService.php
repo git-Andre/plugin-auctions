@@ -64,8 +64,6 @@
                     -> done();
                 try
                 {
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debugBefor', ['config?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
 
                     $order = $this -> orderRepository -> createOrder($order);
 
