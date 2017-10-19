@@ -42,13 +42,14 @@
          */
         public function placeOrder($auctionId) // : LocalizedOrder
         {
+            $config = pluginApp(ConfigRepository::class);
+
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
             $this -> getLogger(__METHOD__)
                   -> setReferenceType('auctionId')
                   -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
                   -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
-            $config = pluginApp(ConfigRepository::class);
 
             if ($config->get("PluginAuctions.global.shippingProfile") != 35)
             {
