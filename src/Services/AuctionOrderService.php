@@ -10,6 +10,8 @@
     use Plenty\Modules\Order\Property\Models\OrderPropertyType;
     use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Builder\AuctionOrderBuilder;
+    use Plenty\Plugin\ConfigRepository;
+
 
 
     /**
@@ -19,6 +21,7 @@
     class AuctionOrderService {
 
         use Loggable;
+
 
         private $orderRepository;
 
@@ -45,9 +48,10 @@
                   -> setReferenceValue($auctionId)
                   -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
+            $config = pluginApp(ConfigRepository::class);
+
             if ($auctionParams['isSalableAndActive'])
             {
-
                 $order = pluginApp(AuctionOrderBuilder::class)
                     -> prepare(OrderType::ORDER)
                     -> fromAuction($auctionParams) // TODO: (von plenty) Add shipping costs & payment surcharge as OrderItem
@@ -55,8 +59,8 @@
                     -> withContactId($auctionParams['contactId'])
                     -> withAddressId($auctionParams['customerBillingAddressId'], AddressType::BILLING)
                     -> withAddressId($auctionParams['customerDeliveryAddressId'], AddressType::DELIVERY)
-                    -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, 6001) // ToDo config...
-                    -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, 34) // ToDo config... WebstoreConfigurationService ???
+                    -> withOrderProperty(OrderPropertyType::PAYMENT_METHOD, OrderOptionSubType::MAIN_VALUE, $config->get("PluginAuctions.global.paymentMethod"))
+                    -> withOrderProperty(OrderPropertyType::SHIPPING_PROFILE, OrderOptionSubType::MAIN_VALUE, $config->get("PluginAuctions.global.shippingProfile"))
                     -> done();
                 try
                 {

@@ -1,8 +1,41 @@
 [
   {
-    "tab"       : "Global",
-    "key"       : "global.liveAuctionCategoryId",
-    "label"     : "Category to provide an auction",
-    "type"      : "category_select"
+    "tab"   : "Global",
+    "key"   : "global.liveAuctionCategoryId",
+    "label" : "Category to provide an auction",
+    "type"  : "category_select"
+  },
+  {
+    "tab"     : "Global",
+    "key"     : "global.paymentMethod",
+    "label"   : "Standard Zahlungsmenthode für Auktionen",
+    "type"    : "text",
+    "default" : "6000"
+  },
+  {
+    "tab"     : "Global",
+    "key"     : "global.shippingProfile",
+    "label"   : "Standard Versandprofil für Auktionen",
+    "type"    : "text"
+  },
+  {
+    "tab"     : "Global",
+    "key"     : "global.orderProperty",
+    "label"   : "Artikel-Bestell-Merkmal für Aufgeld",
+    "type"    : "text"
+  },
+  {
+    "tab"     : "Global",
+    "key"     : "global.referrerId",
+    "label"   : "Herkunft für Auftrag Auktion (Shop)",
+    "type"    : "text",
+    "default" : "1"
+  },
+  {
+    "tab"     : "Global",
+    "key"     : "global.agioPercentual",
+    "label"   : "Aufgeld für Auktion (10% Standard)",
+    "type"    : "text",
+    "default" : "10"
   }
 ]

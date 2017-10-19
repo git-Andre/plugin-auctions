@@ -298,9 +298,9 @@ Vue.component( "auction-bids", {
         },
         printClockWarn() {
             alert(
-                'Bitte überprüfen Sie die Uhrzeit Ihres Computers!\n' +
+                'Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n' +
                 '(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n' +
-                'Die Serverzeit für diese Auktion unterscheidet sich signifikant von der dieses Computers!')
+                'Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!')
         }
     },
     watch: {

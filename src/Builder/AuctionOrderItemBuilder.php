@@ -4,6 +4,7 @@
 
     use IO\Builder\Order\OrderItemType;
     use Plenty\Plugin\Log\Loggable;
+    use Plenty\Plugin\ConfigRepository;
 
 
     /**
@@ -25,19 +26,23 @@
 
         private function buildOrderItem($auctionParams) : array
         {
+            $config = pluginApp(ConfigRepository::class);
 
-            $lastPrice = (float) $auctionParams['lastPrice']; // Todo config ???
-            $agio = $lastPrice * 0.1; // Todo config ???
-            $priceWithoutAgio = $lastPrice - $agio; // Todo config ???
+            $lastPrice = (float) $auctionParams['lastPrice'];
+            $agio = $lastPrice * ($config->get("PluginAuctions.global.agioPercentual") / 100);
+            $priceWithoutAgio = $lastPrice - $agio;
             $formattedAgio = sprintf("%01.2f EUR", $agio);
 
             $orderItem = [
                 "typeId"            => OrderItemType::VARIATION,
-                "referrerId"        => 1, // Mandant Auktion (Shop) - TodO eigene id ohne AuftragsFehler...
-                "itemVariationId"   => (int) $auctionParams['itemVariationId'],  // 38443
-                "quantity"          => 1, // bei Auktionen immer nur 1
+                "referrerId"        => $config->get("PluginAuctions.global.referrerId"),
+                // Herkunft für Auftrag Auktion (Shop) - TodO eigene id ohne AuftragsFehler...
+                "itemVariationId"   => (int) $auctionParams['itemVariationId'],
+                // 38443 paymentMethod
+                "quantity"          => 1,
+                // bei Auktionen immer nur 1
                 "orderItemName"     => $auctionParams['orderItemName'],
-                "shippingProfileId" => 34, // Todo config ??? Standard für Auktionen
+                "shippingProfileId" => $config->get("PluginAuctions.global.shippingProfile"),
                 "amounts"           => [
                     [
                         "isSystemCurrency"   => 1,
@@ -54,17 +59,12 @@
                 "orderProperties"   => [
 
                     [
-                        "propertyId" => 30, // Artikel-Merkmal für Aufgeld Todo config
+                        "propertyId" => $config->get("PluginAuctions.global.orderProperty"), // Artikel-BestellMerkmal für Aufgeld
                         "value"      => $formattedAgio,
                         "name"       => "Aufgeld Auktion 10%"
                     ]
                 ]
             ];
-            $this -> getLogger(__METHOD__)
-                  -> setReferenceType('auctionVarId')
-                  -> setReferenceValue((int) $auctionParams['itemVariationId'])
-                  -> debug('PluginAuctions::auctions.info', ['$orderItem: ' => $orderItem]);
-
 
             return $orderItem;
         }
