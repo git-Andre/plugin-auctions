@@ -45,7 +45,7 @@
             $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
             $this -> getLogger(__METHOD__)
                   -> setReferenceType('auctionId')
-                  -> setReferenceValue($auctionId)
+                  -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
                   -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
             $config = pluginApp(ConfigRepository::class);
