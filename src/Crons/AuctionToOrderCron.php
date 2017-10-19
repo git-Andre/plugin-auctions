@@ -66,16 +66,4 @@
          *
          * @return string|null
          */
-//	private function lastRun()
-//	{
-//		return $this->settingsHelper->get(SettingsHelper::SETTINGS_LAST_ITEM_EXPORT);
-//	}
-//
-//	/**
-//	 * Save the last run.
-//	 */
-//	private function saveLastRun()
-//	{
-//		$this->settingsHelper->save(SettingsHelper::SETTINGS_LAST_ITEM_EXPORT, date('Y-m-d H:i:s'));
-//	}
     }

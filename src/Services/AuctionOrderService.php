@@ -65,7 +65,7 @@
                 try
                 {
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debugBefor', ['$order: ' => $order]);
+                          -> debug('PluginAuctions::auctions.debugBefor', ['config?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
 
                     $order = $this -> orderRepository -> createOrder($order);
 
@@ -84,126 +84,6 @@
 
             return false;
         }
-
-//	public function findOrderByAccessKey($orderId, $orderAccessKey)
-//    {
-//        /**
-//         * @var TemplateConfigService $templateConfigService
-//         */
-//        $templateConfigService = pluginApp(TemplateConfigService::class);
-//        $redirectToLogin = $templateConfigService->get('my_account.confirmation_link_login_redirect');
-//
-//        $order = $this->orderRepository->findOrderByAccessKey($orderId, $orderAccessKey);
-//
-//        if($redirectToLogin == 'true')
-//        {
-//            /**
-//             * @var CustomerService $customerService
-//             */
-//            $customerService = pluginApp(CustomerService::class);
-//
-//            $orderContactId = 0;
-//            foreach ($order->relations as $relation)
-//            {
-//                if ($relation['referenceType'] == 'contact' && (int)$relation['referenceId'] > 0)
-//                {
-//                    $orderContactId = $relation['referenceId'];
-//                }
-//            }
-//
-//            if ((int)$orderContactId > 0)
-//            {
-//                if ((int)$customerService->getContactId() <= 0)
-//                {
-//                    return pluginApp(Response::class)->redirectTo('login?backlink=confirmation/' . $orderId . '/' . $orderAccessKey);
-//                }
-//                elseif ((int)$orderContactId !== (int)$customerService->getContactId())
-//                {
-//                    return null;
-//                }
-//            }
-//        }
-//
-//        return LocalizedOrder::wrap($order, 'de');
-//    }
-
-//    /**
-//     * @param $paymentMethodId
-//     * @param int $orderId
-//     * @return bool
-//     */
-//	public function allowPaymentMethodSwitchFrom($paymentMethodId, $orderId = null)
-//	{
-//		/** @var TemplateConfigService $config */
-//		$config = pluginApp(TemplateConfigService::class);
-//		if ($config->get('my_account.change_payment') == "false")
-//		{
-//			return false;
-//		}
-//		if($orderId != null)
-//		{
-//			$order = $this->orderRepository->findOrderById($orderId);
-//			if ($order->paymentStatus !== OrderPaymentStatus::UNPAID)
-//			{
-//				// order was paid
-//				return false;
-//			}
-//
-//			$statusId = $order->statusId;
-//			$orderCreatedDate = $order->createdAt;
-//
-//			if(!($statusId <= 3.4 || ($statusId == 5 && $orderCreatedDate->toDateString() == date('Y-m-d'))))
-//			{
-//				return false;
-//			}
-//		}
-//		return $this->frontendPaymentMethodRepository->getPaymentMethodSwitchFromById($paymentMethodId, $orderId);
-//	}
-//
-//
-//    /**
-//     * @param int $orderId
-//     * @param int $paymentMethodId
-//     */
-//    public function switchPaymentMethodForOrder($orderId, $paymentMethodId)
-//    {
-//        if((int)$orderId > 0)
-//        {
-//            $currentPaymentMethodId = 0;
-//
-//            $order = $this->findOrderById($orderId);
-//
-//            $newOrderProperties = [];
-//            $orderProperties = $order->order->properties;
-//
-//            if(count($orderProperties))
-//            {
-//                foreach($orderProperties as $key => $orderProperty)
-//                {
-//                    $newOrderProperties[$key] = $orderProperty;
-//                    if($orderProperty->typeId == OrderPropertyType::PAYMENT_METHOD)
-//                    {
-//                        $currentPaymentMethodId = (int)$orderProperty->value;
-//                        $newOrderProperties[$key]['value'] = (int)$paymentMethodId;
-//                    }
-//                }
-//            }
-//
-//            if($paymentMethodId !== $currentPaymentMethodId)
-//            {
-//                if($this->frontendPaymentMethodRepository->getPaymentMethodSwitchFromById($currentPaymentMethodId, $orderId) && $this->frontendPaymentMethodRepository->getPaymentMethodSwitchToById($paymentMethodId))
-//                {
-//                    $order = $this->orderRepository->updateOrder(['properties' => $newOrderProperties], $orderId);
-//                    if(!is_null($order))
-//                    {
-//                        return LocalizedOrder::wrap( $order, "de" );
-//                    }
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
 
         /**
          * Find an order by ID
