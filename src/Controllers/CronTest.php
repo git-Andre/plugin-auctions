@@ -1,6 +1,7 @@
 <?php
 
     namespace PluginAuctions\Controllers;
+
     use IO\Controllers\LayoutController;
 
     use Plenty\Modules\Cron\Contracts\CronHandler as Cron;
@@ -9,9 +10,7 @@
     use PluginAuctions\Services\AuctionOrderService;
     use PluginAuctions\Services\Database\AuctionsService;
     use IO\Services\ItemService;
-    //use Etsy\Services\Batch\Item\ItemExportService;
-//use Etsy\Helper\AccountHelper;
-//use Etsy\Helper\SettingsHelper;
+    use Plenty\Plugin\ConfigRepository;
 
 
     /**
@@ -34,10 +33,18 @@
         {
             $endedAuctionIds = [];
 
+            $config = pluginApp(ConfigRepository::class);
+            if ($config->get("PluginAuctions.global.shippingProfile") != 35)
+            {
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::auctions.debugBefor', ['TEST?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
+                return $config->get("PluginAuctions.global.paymentMethod");
+            }
+
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debugCronHelper', ['$endedAuctionIds: ' => $endedAuctionIds ]);
+                  -> debug('PluginAuctions::auctions.debugCronHelper', ['$endedAuctionIds: ' => $endedAuctionIds]);
 
             if ($endedAuctionIds)
             {

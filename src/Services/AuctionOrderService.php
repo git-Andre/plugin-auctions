@@ -50,13 +50,6 @@
                   -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
                   -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
-
-            if ($config->get("PluginAuctions.global.shippingProfile") != 35)
-            {
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debugBefor', ['TEST?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
-            }
-
             if ($auctionParams['isSalableAndActive'])
             {
                 $order = pluginApp(AuctionOrderBuilder::class)
