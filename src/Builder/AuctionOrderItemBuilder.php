@@ -29,7 +29,7 @@
             $lastPrice = (float) $auctionParams['lastPrice']; // Todo config ???
             $agio = $lastPrice * 0.1; // Todo config ???
             $priceWithoutAgio = $lastPrice - $agio; // Todo config ???
-            $formattedAgio = sprintf("%01.2f", $agio);
+            $formattedAgio = sprintf("%01.2f EUR", $agio);
 
             $orderItem = [
                 "typeId"            => OrderItemType::VARIATION,
@@ -42,13 +42,13 @@
                     [
                         "isSystemCurrency"   => 1,
                         "currency"           => "EUR",
-                        "priceOriginalNet"   => $lastPrice,
+//                        "priceOriginalNet"   => $lastPrice,
                         "priceOriginalGross" => $lastPrice,
 //                        "priceNet" => $lastPrice,
 //                        "priceGross" => $lastPrice,
                         "surcharge"          => $agio,
-                        "discount"           => - 10,
-                        "isPercentage"       => 1 // discount prozentual
+//                        "discount"           => - 10,
+//                        "isPercentage"       => 1 // discount prozentual
                     ]
                 ],
                 "orderProperties"   => [
