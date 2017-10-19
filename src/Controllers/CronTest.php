@@ -34,12 +34,13 @@
             $endedAuctionIds = [];
 
             $config = pluginApp(ConfigRepository::class);
-            if ($config->get("PluginAuctions.global.shippingProfile") != 35)
-            {
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debugBefor', ['TEST?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
-                return $config->get("PluginAuctions.global.paymentMethod");
-            }
+
+//            if ($config->get("PluginAuctions.global.shippingProfile") != 35)
+//            {
+//                $this -> getLogger(__METHOD__)
+//                      -> debug('PluginAuctions::auctions.debugBefor', ['TEST?: ' => $config->get("PluginAuctions.global.shippingProfile")]);
+//                return $config->get("PluginAuctions.global.paymentMethod");
+//            }
 
             $endedAuctionIds = $this -> auctionsService -> getAuctionsInPast();
 
