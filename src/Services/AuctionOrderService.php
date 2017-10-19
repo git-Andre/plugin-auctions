@@ -50,6 +50,11 @@
 
             $config = pluginApp(ConfigRepository::class);
 
+            if ($config->get("PluginAuctions.global.shippingProfile") != 35)
+            {
+                return $config->get("PluginAuctions.global.shippingProfile");
+            }
+
             if ($auctionParams['isSalableAndActive'])
             {
                 $order = pluginApp(AuctionOrderBuilder::class)
