@@ -1,7 +1,7 @@
-const ApiService          = require( "services/ApiService" );
+const ApiService = require( "services/ApiService" );
 const NotificationService = require( "services/NotificationService" );
-const AuctionConstants    = require( "constants/AuctionConstants" );
-const NOTIFY_TIME         = 10000;
+const AuctionConstants = require( "constants/AuctionConstants" );
+const NOTIFY_TIME = 10000;
 
 Vue.component( "auction-end", {
     props: [
@@ -18,7 +18,7 @@ Vue.component( "auction-end", {
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
-        this.auction  = JSON.parse( this.auction );
+        this.auction = JSON.parse( this.auction );
     },
     ready() {
         // User loggedIn ??
@@ -53,11 +53,11 @@ Vue.component( "auction-end", {
                 //         .closeAfter( NOTIFY_TIME );
                 //     sessionStorage.removeItem( "basketItem" );
                 // }
-                    this.isWinnerLoggedIn = false;
-                    NotificationService.success(
-                        "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                        "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
-                        .closeAfter( NOTIFY_TIME );
+                this.isWinnerLoggedIn = false;
+                NotificationService.success(
+                    "<h3>Herzlichen Glückwunsch!</h3><hr>" +
+                    "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
+                    .closeAfter( NOTIFY_TIME );
             }
             // Anderer User eingeloggt
             else {

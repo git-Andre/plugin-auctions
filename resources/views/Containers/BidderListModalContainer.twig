@@ -17,7 +17,7 @@
     {#<resource name="deadline" :data="{{ auction.expiryDate }}"></resource>#}
 
 
-    <div class="wrapper wrapper-top">
+    <div class="wrapper wrapper-top notify-auction">
         <!-- messages -->
         <notifications-plugin-auction
                 template="#vue-notifications-plugin-auction"
@@ -58,5 +58,10 @@
         -ms-transform: translateX(-34%);
         -o-transform: translateX(-34%);
         transform: translateX(-34%);
+    }
+    .notify-auction {
+        z-index: 99999;
+        position: fixed;
+        opacity:0.93;
     }
 </style>
