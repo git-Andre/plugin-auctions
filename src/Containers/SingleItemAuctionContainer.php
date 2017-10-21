@@ -36,7 +36,7 @@
             }
             $prependTest += $sessionRepo -> get("prependTest");
             $pushTest += $sessionRepo -> get("pushTest");
-            $visitorCounter += $sessionRepo -> get("$visitorCounter");
+            $visitorCounter += $sessionRepo -> get("testEins");
 
             $sessionRepo -> prepend("prependTest", 1);
             $this -> getLogger(__METHOD__)
