@@ -31,12 +31,12 @@
             if ($repoTestEins != $itemId)
             {
                 $sessionRepo -> set("testEins", $itemId);
-                $sessionRepo -> set("pushTest", 0);
+                $sessionRepo -> set("pushTest", $itemId);
 //                $sessionRepo -> set("prependTest", 1);
             }
 //            $repoTestEins += $repoTestEins;
             $visitorCounter = $repoTestEins;
-            $pushTest = $sessionRepo -> push("pushTest", ($sessionRepo -> get("pushTest") + 1) );
+            $pushTest = $sessionRepo -> push("pushTest", $itemId );
 //            $prependTest += $sessionRepo -> get("prependTest");
 
 //            $sessionRepo -> prepend("prependTest", 1);
