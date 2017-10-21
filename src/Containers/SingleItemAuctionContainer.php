@@ -20,7 +20,7 @@
             // sessionstorage (Service) abfragen
             $session = pluginApp(SessionStorageService::class);
 
-            $session -> setSessionValue("counter", "testValue"); // test
+//            $session -> setSessionValue("counter", "testValue"); // test
             $visitorCounter = $session -> getSessionValue("counter"); // test
 //            $visitorCounter = $session -> getSessionValue("testCounter"); // test
 
