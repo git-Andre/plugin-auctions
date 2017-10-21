@@ -31,7 +31,7 @@
             if ($repoTestEins != $itemId)
             {
                 $sessionRepo -> set("testEins", $itemId);
-                $sessionRepo -> set("pushTest", $itemId );
+//                $sessionRepo -> set("pushTest", $itemId );
 //                $sessionRepo -> set("pushTest", $itemId);
 //                $sessionRepo -> set("prependTest", 1);
             }
