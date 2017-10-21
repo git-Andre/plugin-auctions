@@ -20,7 +20,8 @@
             // sessionstorage (Service) abfragen
             $session = pluginApp(SessionStorageService::class);
 
-            $visitorCounter = $session -> getLang(); // test
+            $session -> setSessionValue("counter", "testValue"); // test
+            $visitorCounter = $session -> getSessionValue("testValue"); // test
 //            $visitorCounter = $session -> getSessionValue("testCounter"); // test
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
