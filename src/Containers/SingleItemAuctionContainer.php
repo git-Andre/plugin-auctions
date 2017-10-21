@@ -3,6 +3,7 @@
     namespace PluginAuctions\Containers;
 
     use Plenty\Plugin\Templates\Twig;
+    use Plenty\Plugin\SessionRepository;
     use IO\Services\SessionStorageService;
 
     class SingleItemAuctionContainer {
@@ -19,9 +20,12 @@
             $itemId = $arg[0]['item']['id'];
             // sessionstorage (Service) abfragen
             $session = pluginApp(SessionStorageService::class);
+            $sessionRepo = pluginApp(SessionRepository::class);
 
 //            $session -> setSessionValue("counter", "testValue"); // test
-            $visitorCounter = $session -> getSessionValue("counter"); // test
+            $sessionRepo -> set("repo", $itemId); // test
+            $visitorCounter = $sessionRepo -> get("repo"); // test
+//            $visitorCounter = $session -> getSessionValue("counter"); // test
 //            $visitorCounter = $session -> getSessionValue("testCounter"); // test
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
