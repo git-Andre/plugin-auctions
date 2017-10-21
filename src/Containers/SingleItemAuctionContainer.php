@@ -23,7 +23,7 @@
             $sessionRepo = pluginApp(SessionRepository::class);
 
 //            $session -> setSessionValue("counter", "testValue"); // test
-            $sessionRepo -> set("repo", $itemId); // test
+//            $sessionRepo -> set("repo", $itemId); // test
             $visitorCounter = $sessionRepo -> get("repo"); // test
 //            $visitorCounter = $session -> getSessionValue("counter"); // test
 //            $visitorCounter = $session -> getSessionValue("testCounter"); // test
