@@ -35,7 +35,7 @@
 //                $sessionRepo -> set("prependTest", 1);
             }
             $visitorCounter += $sessionRepo -> get("testEins");
-            $pushTest += $sessionRepo -> get("pushTest");
+//            $pushTest += $sessionRepo -> get("pushTest");
 //            $prependTest += $sessionRepo -> get("prependTest");
 
 //            $sessionRepo -> prepend("prependTest", 1);
@@ -44,11 +44,11 @@
 //                  -> setReferenceValue($itemId)
 //                  -> debug('PluginAuctions::auctions.debug', ['prependTest: ' => $prependTest]);
 
-            $sessionRepo -> push("pushTest", 0);
-            $this -> getLogger(__METHOD__)
-                  -> setReferenceType('auctionId')
-                  -> setReferenceValue($itemId)
-                  -> debug('PluginAuctions::auctions.debug', ['pushTest: ' => $pushTest]);
+//            $sessionRepo -> push("pushTest", 0);
+//            $this -> getLogger(__METHOD__)
+//                  -> setReferenceType('auctionId')
+//                  -> setReferenceValue($itemId)
+//                  -> debug('PluginAuctions::auctions.debug', ['pushTest: ' => $pushTest]);
 
             $visitorCounter = $sessionRepo -> get("testEins");
             $this -> getLogger(__METHOD__)
