@@ -34,7 +34,7 @@
                 $sessionRepo -> set("pushTest", 0);
 //                $sessionRepo -> set("prependTest", 1);
             }
-            $repoTestEins += $repoTestEins;
+//            $repoTestEins += $repoTestEins;
             $visitorCounter = $repoTestEins;
             $pushTest += $sessionRepo -> get("pushTest");
 //            $prependTest += $sessionRepo -> get("prependTest");
@@ -60,7 +60,7 @@
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "visitorCounter" => $visitorCounter,
-                                                                                    "sessionRepo"    => $sessionRepo
+                                                                                    "sessionRepo"    => $pushTest
             ]);
         }
 
