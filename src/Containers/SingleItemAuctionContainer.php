@@ -61,7 +61,7 @@
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "visitorCounter" => $sessionRepo -> get("testEins"),
-                                                                                    "pushTest"    => $sessionRepo -> get("pushTest")
+                                                                                    "pushTest"    => json_encode($sessionRepo -> get("pushTest"))
             ]);
         }
 
