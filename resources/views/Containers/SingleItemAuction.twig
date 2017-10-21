@@ -1,10 +1,16 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set visitorCounter = visitorCounter %}
+{% set sessionRepo = sessionRepo %}
 
 
 {# ao Var-Dump #}
 {% include "CeresSchaffrath::VarDump" with { 'testDescription': 'visitorCounter', 'dumpData': visitorCounter } %}
+
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'sessionRepo', 'dumpData': sessionRepo } %}
+
 
 
 

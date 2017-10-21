@@ -4,9 +4,13 @@
 
     use Plenty\Plugin\Templates\Twig;
     use Plenty\Plugin\SessionRepository;
+    use Plenty\Plugin\Log\Loggable;
+
     use IO\Services\SessionStorageService;
 
     class SingleItemAuctionContainer {
+
+        use Loggable;
 
 //        private $sessionStorageService;
 //
@@ -19,17 +23,43 @@
         {
             $itemId = $arg[0]['item']['id'];
             // sessionstorage (Service) abfragen
-            $session = pluginApp(SessionStorageService::class);
+//            $session = pluginApp(SessionStorageService::class);
             $sessionRepo = pluginApp(SessionRepository::class);
 
-//            $session -> setSessionValue("counter", "testValue"); // test
-//            $sessionRepo -> set("repo", $itemId); // test
-            $visitorCounter = $sessionRepo -> get("repo"); // test
-//            $visitorCounter = $session -> getSessionValue("counter"); // test
-//            $visitorCounter = $session -> getSessionValue("testCounter"); // test
+            $repoTestEins = $sessionRepo -> get("testEins"); // test
+
+            if ($repoTestEins != $itemId)
+            {
+                $sessionRepo -> set("testEins", $itemId);
+                $sessionRepo -> set("prependTest", 1);
+                $sessionRepo -> set("pushTest", 0);
+            }
+            $prependTest += get("prependTest");
+            $pushTest += get("pushTest");
+            $visitorCounter += get("$visitorCounter");
+
+            $sessionRepo -> prepend("prependTest", 1);
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionId')
+                  -> setReferenceValue($itemId)
+                  -> debug('PluginAuctions::auctions.debug', ['prependTest: ' => $prependTest]);
+
+            $sessionRepo -> push("pushTest", 0);
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionId')
+                  -> setReferenceValue($itemId)
+                  -> debug('PluginAuctions::auctions.debug', ['pushTest: ' => $pushTest]);
+
+            $visitorCounter = $sessionRepo -> get("testEins");
+            $this -> getLogger(__METHOD__)
+                  -> setReferenceType('auctionId')
+                  -> setReferenceValue($itemId)
+                  -> debug('PluginAuctions::auctions.debug', ['testEins: ' => $testEins]);
+
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
-                                                                                    "visitorCounter" => $visitorCounter
+                                                                                    "visitorCounter" => $visitorCounter,
+                                                                                    "sessionRepo"    => $sessionRepo
             ]);
         }
 
