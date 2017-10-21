@@ -34,9 +34,9 @@
                 $sessionRepo -> set("prependTest", 1);
                 $sessionRepo -> set("pushTest", 0);
             }
-            $prependTest += get("prependTest");
-            $pushTest += get("pushTest");
-            $visitorCounter += get("$visitorCounter");
+            $prependTest += $sessionRepo -> get("prependTest");
+            $pushTest += $sessionRepo -> get("pushTest");
+            $visitorCounter += $sessionRepo -> get("$visitorCounter");
 
             $sessionRepo -> prepend("prependTest", 1);
             $this -> getLogger(__METHOD__)
