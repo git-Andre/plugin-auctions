@@ -11,9 +11,9 @@
         {
             // sessionstorage (Service) abfragen
             // "itemData" => $arg[0] - itemId abfragen
-            // 
+            $itemId = $arg[0]['item']['id'];
 
-            $visitorCounter = (int) 55; // test
+            $visitorCounter = (int) $itemId; // test
             return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["itemData" => $arg[0], "visitorCounter" => $visitorCounter]);
         }
 
