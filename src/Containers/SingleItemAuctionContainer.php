@@ -3,17 +3,24 @@
     namespace PluginAuctions\Containers;
 
     use Plenty\Plugin\Templates\Twig;
+    use IO\Services\SessionStorageService;
 
     class SingleItemAuctionContainer {
 
+private $sessionStorageService;
+
+public function __construct(SessionStorageService $sessionStorageService)
+{
+    $this -> sessionStorageService = $sessionStorageService;
+}
 
         public function call(Twig $twig, $arg):string
         {
-            // sessionstorage (Service) abfragen
-            // "itemData" => $arg[0] - itemId abfragen
             $itemId = $arg[0]['item']['id'];
+            // sessionstorage (Service) abfragen
 
-            $visitorCounter = (int) $itemId; // test
+
+            $visitorCounter = (int) $this -> sessionStorageService ->getSessionValue("testCounter"); // test
             return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["itemData" => $arg[0], "visitorCounter" => $visitorCounter]);
         }
 
