@@ -9,7 +9,12 @@
 
         public function call(Twig $twig, $arg):string
         {
-            return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["itemData" => $arg[0]]);
+            // sessionstorage (Service) abfragen
+            // "itemData" => $arg[0] - itemId abfragen
+            // 
+
+            $visitorCounter = (int) 55; // test
+            return $twig->render('PluginAuctions::Containers.SingleItemAuction', ["itemData" => $arg[0], "visitorCounter" => $visitorCounter]);
         }
 
     }

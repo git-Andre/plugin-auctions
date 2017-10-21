@@ -308,9 +308,14 @@ Vue.component("auction-end", {
         if (this.userdata != null) {
             this.evaluateAndNotifyAfterAuction();
         }
-        // if ( sessionStorage.getItem( "auctionEnd" ) ) {
-        //     sessionStorage.removeItem( "auctionEnd" );
-        // }
+        if (!sessionStorage.getItem("testCounter")) {
+            sessionStorage.setItem("testCounter", 1);
+        }
+        var testCounter = parseInt(sessionStorage.getItem("testCounter"));
+        testCounter += 1;
+        // sessionStorage.getItem( "auctionEnd" )
+        sessionStorage.setItem("testCounter", testCounter);
+        // sessionStorage.removeItem( "basketItem" )
     },
 
     methods: {

@@ -19,7 +19,7 @@
      * Class AuctionPlaceOrderController
      * @package IO\Controllers
      */
-    class AuctionHelperService extends LayoutController {
+    class AuctionParamsService extends LayoutController {
 
         /**
          * @var ContactRepositoryContract

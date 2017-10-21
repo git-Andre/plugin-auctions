@@ -8,7 +8,7 @@
     use Plenty\Plugin\Application;
 
     use PluginAuctions\Builder\AuctionOrderBuilder;
-    use PluginAuctions\Services\AuctionHelperService;
+    use PluginAuctions\Services\AuctionParamsService;
 
 
     /**
@@ -21,12 +21,12 @@
 
         private $app;
 
-        private $auctionHelperService;
+        private $auctionParamsService;
 
-        public function __construct(Application $app, AuctionHelperService $auctionHelperService, int $type, int $plentyId)
+        public function __construct(Application $app, AuctionParamsService $auctionParamsService, int $type, int $plentyId)
         {
             $this -> app = $app;
-            $this -> auctionHelperService = $auctionHelperService;
+            $this -> auctionParamsService = $auctionParamsService;
             $this -> order = [];
             $this -> order["typeId"] = $type;
             $this -> order["plentyId"] = $plentyId;

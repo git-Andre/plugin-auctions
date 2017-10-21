@@ -4,7 +4,7 @@
 //    use IO\Services\NotificationService;
     use IO\Controllers\LayoutController;
     use Plenty\Modules\Account\Contact\Models\Contact;
-    use PluginAuctions\Services\AuctionHelperService;
+    use PluginAuctions\Services\AuctionParamsService;
 
     //use Plenty\Plugin\Http\Response;
 //use Plenty\Plugin\Http\Request;
@@ -16,21 +16,21 @@
      */
     class AuctionHelperController extends LayoutController {
 
-        private $auctionHelperService;
+        private $auctionParamsService;
 
 
         private $itemService;
 
         public function __construct(
-            AuctionHelperService $auctionHelperService
+            AuctionParamsService $auctionParamsService
         )
         {
-            $this -> auctionHelperService = $auctionHelperService;
+            $this -> auctionParamsService = $auctionParamsService;
         }
 
         public function testItemService($itemId)
         {
-            return $this -> auctionHelperService -> getItemById($itemId);
+            return $this -> auctionParamsService -> getItemById($itemId);
         }
 
         /**
@@ -41,7 +41,7 @@
         {
             if ($contactId > 0)
             {
-                return $this -> auctionHelperService -> getCustomerById($contactId);
+                return $this -> auctionParamsService -> getCustomerById($contactId);
             }
 
             return "kein Kunde...";
@@ -50,7 +50,7 @@
         {
             if ($contactId > 0)
             {
-                return $this -> auctionHelperService -> getCustomerAddresses($contactId, $typeId, $last);
+                return $this -> auctionParamsService -> getCustomerAddresses($contactId, $typeId, $last);
             }
             return "kein Kunde...";
         }
@@ -58,7 +58,7 @@
         {
             if ($auctionId > 0)
             {
-                return $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+                return $this -> auctionParamsService -> auctionParamsBuilder($auctionId);
             }
             return "keine Auktion...";
         }

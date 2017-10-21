@@ -1,5 +1,13 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
+{% visitorCounter = visitorCounter%}
+
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'visitorCounter', 'dumpData': visitorCounter } %}
+
+
+
 
 {% if ( auction ) %}
 

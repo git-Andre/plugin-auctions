@@ -25,15 +25,15 @@
 
         private $orderRepository;
 
-        private $auctionHelperService;
+        private $auctionParamsService;
 
         public function __construct(
             OrderRepositoryContract $orderRepository,
-            AuctionHelperService $auctionHelperService
+            AuctionParamsService $auctionParamsService
         )
         {
             $this -> orderRepository = $orderRepository;
-            $this -> auctionHelperService = $auctionHelperService;
+            $this -> auctionParamsService = $auctionParamsService;
         }
 
         /**
@@ -44,7 +44,7 @@
         {
             $config = pluginApp(ConfigRepository::class);
 
-            $auctionParams = $this -> auctionHelperService -> auctionParamsBuilder($auctionId);
+            $auctionParams = $this -> auctionParamsService -> auctionParamsBuilder($auctionId);
             $this -> getLogger(__METHOD__)
                   -> setReferenceType('auctionId')
                   -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
