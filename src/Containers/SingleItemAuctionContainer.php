@@ -31,18 +31,18 @@
             if ($repoTestEins != $itemId)
             {
                 $sessionRepo -> set("testEins", $itemId);
-                $sessionRepo -> set("prependTest", 1);
                 $sessionRepo -> set("pushTest", 0);
+//                $sessionRepo -> set("prependTest", 1);
             }
-            $prependTest += $sessionRepo -> get("prependTest");
-            $pushTest += $sessionRepo -> get("pushTest");
             $visitorCounter += $sessionRepo -> get("testEins");
+            $pushTest += $sessionRepo -> get("pushTest");
+//            $prependTest += $sessionRepo -> get("prependTest");
 
-            $sessionRepo -> prepend("prependTest", 1);
-            $this -> getLogger(__METHOD__)
-                  -> setReferenceType('auctionId')
-                  -> setReferenceValue($itemId)
-                  -> debug('PluginAuctions::auctions.debug', ['prependTest: ' => $prependTest]);
+//            $sessionRepo -> prepend("prependTest", 1);
+//            $this -> getLogger(__METHOD__)
+//                  -> setReferenceType('auctionId')
+//                  -> setReferenceValue($itemId)
+//                  -> debug('PluginAuctions::auctions.debug', ['prependTest: ' => $prependTest]);
 
             $sessionRepo -> push("pushTest", 0);
             $this -> getLogger(__METHOD__)
