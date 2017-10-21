@@ -31,12 +31,13 @@
             if ($repoTestEins != $itemId)
             {
                 $sessionRepo -> set("testEins", $itemId);
-                $sessionRepo -> set("pushTest", $itemId);
+                $sessionRepo -> set("pushTest", $itemId );
+//                $sessionRepo -> set("pushTest", $itemId);
 //                $sessionRepo -> set("prependTest", 1);
             }
 //            $repoTestEins += $repoTestEins;
-            $visitorCounter = $repoTestEins;
-            $pushTest = $sessionRepo -> push("pushTest", $itemId );
+//            $visitorCounter = $sessionRepo -> get("testEins");
+            $sessionRepo -> push("pushTest", $itemId );
 //            $prependTest += $sessionRepo -> get("prependTest");
 
 //            $sessionRepo -> prepend("prependTest", 1);
@@ -59,8 +60,8 @@
 
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
-                                                                                    "visitorCounter" => $visitorCounter,
-                                                                                    "sessionRepo"    => $pushTest
+                                                                                    "visitorCounter" => $sessionRepo -> get("testEins"),
+                                                                                    "pushTest"    => $sessionRepo -> get("pushTest")
             ]);
         }
 
