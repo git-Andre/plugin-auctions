@@ -109,6 +109,10 @@
 
             $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
 
+            $router -> get('api/get-counter/{itemId}', 'PluginAuctions\Controllers\VisitorCounterService@getVisitorCounter');
+
+            $router -> post('api/create-counter', 'PluginAuctions\Controllers\VisitorCounterService@createVisitorCounter');
+
 
 
             // auctionend - add to basket
