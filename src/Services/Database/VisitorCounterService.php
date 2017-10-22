@@ -52,11 +52,6 @@
 
                 if ($visitorCounter instanceof VisitorCounter_1)
                 {
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('auctionId')
-                          -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::auctions.debug', ['numberOfVisitors: ' => $visitorCounter -> numberOfVisitors]);
-
                     return $visitorCounter -> numberOfVisitors;
                 }
 
@@ -103,11 +98,6 @@
 
                     $resultVisitorCounter = $this -> setValue($visitorCounter);
 
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('auctionId')
-                          -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::auctions.debug', ['resultCounter++: ' => $resultVisitorCounter]);
-
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
 
@@ -132,11 +122,6 @@
                 $visitorCounter -> updatedAt = (int) time();
 
                 $resultVisitorCounter = $this -> setValue($visitorCounter);
-
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('auctionId')
-                      -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::auctions.debugAfter', ['resultCounter: ' => $resultVisitorCounter]);
 
                 return $resultVisitorCounter;
             }

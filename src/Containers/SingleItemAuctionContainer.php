@@ -2,11 +2,10 @@
 
     namespace PluginAuctions\Containers;
 
-    use Plenty\Plugin\Templates\Twig;
     use Plenty\Plugin\SessionRepository;
-//    use Plenty\Plugin\Log\Loggable;
+    use Plenty\Plugin\Templates\Twig;
 
-    use IO\Services\SessionStorageService;
+    //    use Plenty\Plugin\Log\Loggable;
 
     class SingleItemAuctionContainer {
 
@@ -28,16 +27,16 @@
 
             $repoTestEins = $sessionRepo -> get("testEins"); // test
 
-            if ($repoTestEins != $itemId)
-            {
-                $sessionRepo -> set("testEins", $itemId);
-//                $sessionRepo -> set("pushTest", $itemId );
-//                $sessionRepo -> set("pushTest", $itemId);
-//                $sessionRepo -> set("prependTest", 1);
-            }
+            $sessionRepo -> set("pushTest", [12,13,15]);
+//            if ($repoTestEins != $itemId)
+//            {
+//                $sessionRepo -> set("testEins", $itemId);
+////                $sessionRepo -> set("pushTest", $itemId);
+////                $sessionRepo -> set("prependTest", 1);
+//            }
 //            $repoTestEins += $repoTestEins;
 //            $visitorCounter = $sessionRepo -> get("testEins");
-            $sessionRepo -> push("$itemId", $sessionRepo );
+            $sessionRepo -> push("pushTest", 22);
 //            $prependTest += $sessionRepo -> get("prependTest");
 
 //            $sessionRepo -> prepend("prependTest", 1);
@@ -61,7 +60,7 @@
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "visitorCounter" => $sessionRepo -> get("testEins"),
-                                                                                    "pushTest"    => $sessionRepo -> get("pushTest")
+                                                                                    "pushTest"       => $sessionRepo -> get("pushTest")
             ]);
         }
 
