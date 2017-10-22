@@ -7,94 +7,98 @@
      */
 
 
-namespace PluginAuctions\Services\Database;
+    namespace PluginAuctions\Services\Database;
 
-//use PluginAuctions\Models\Auction_7;
-use PluginAuctions\Models\LiveAuction_53;
-use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
-use Plenty\Modules\Plugin\DataBase\Contracts\Model;
+//    use PluginAuctions\Models\Auction_7;
+//    use PluginAuctions\Models\VisitorCounter_1;
+    use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+    use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
-class DataBaseService
-{
-    /**
-     * @var DataBase
-     */
-    public $dataBase;
+    class DataBaseService {
 
-    public function __construct(DataBase $dataBase)
-    {
-        $this->dataBase = $dataBase;
-    }
+        /**
+         * @var DataBase
+         */
+        public $dataBase;
 
-    /**
-     * @param Model $model
-     * @return bool|Model
-     */
-    protected function setValue(Model $model)
-    {
-        if($model instanceof Model)
+        public function __construct(DataBase $dataBase)
         {
-            return $this->dataBase->save($model);
+            $this -> dataBase = $dataBase;
         }
-        return false;
-    }
 
-    /**
-     * Delete the give model from the database
-     * @param $model
-     * @return bool
-     */
-    public function deleteValue($model)
-    {
-        if($model instanceof Model)
+        /**
+         * Delete the give model from the database
+         * @param $model
+         * @return bool
+         */
+        public function deleteValue($model)
         {
-            return $this->dataBase->delete($model);
-        }
-        return false;
-    }
-
-    /**
-     * Get the settings value
-     *
-     * @param string $modelClassName
-     * @param mixed $key
-     * @return bool|mixed
-     */
-    protected function getValue($modelClassName, $key)
-    {
-        $result = $this->dataBase->find($modelClassName, $key);
-
-        if($result)
-        {
-            return $result;
-        }
-        return false;
-    }
-
-    /**
-     * @param string $modelClassName
-     * @return bool|array
-     */
-    protected function getValues($modelClassName, $fields=[], $values=[], $operator=['='])
-    {
-        $query = $this->dataBase->query($modelClassName);
-
-        if( is_array($fields) && is_array($values) &&
-            count($fields) > 0 && count($values) && count($values) == count($fields)
-        )
-        {
-            foreach ($fields as $key => $field)
+            if ($model instanceof Model)
             {
-                $query->where($field, array_key_exists($key,$operator)?$operator[$key]:'=', $values[$key]);
+                return $this -> dataBase -> delete($model);
             }
+
+            return false;
         }
 
-        $results = $query->get();
-
-        if($results)
+        /**
+         * @param Model $model
+         * @return bool|Model
+         */
+        protected function setValue(Model $model)
         {
-            return $results;
+            if ($model instanceof Model)
+            {
+                return $this -> dataBase -> save($model);
+            }
+
+            return false;
         }
-        return false;
+
+        /**
+         * Get the settings value
+         *
+         * @param string $modelClassName
+         * @param mixed $key
+         * @return bool|mixed
+         */
+        protected function getValue($modelClassName, $key)
+        {
+            $result = $this -> dataBase -> find($modelClassName, $key);
+
+            if ($result)
+            {
+                return $result;
+            }
+
+            return false;
+        }
+
+        /**
+         * @param string $modelClassName
+         * @return bool|array
+         */
+        protected function getValues($modelClassName, $fields = [], $values = [], $operator = ['='])
+        {
+            $query = $this -> dataBase -> query($modelClassName);
+
+            if (is_array($fields) && is_array($values) &&
+                count($fields) > 0 && count($values) && count($values) == count($fields)
+            )
+            {
+                foreach ($fields as $key => $field)
+                {
+                    $query -> where($field, array_key_exists($key, $operator) ? $operator[ $key ] : '=', $values[ $key ]);
+                }
+            }
+
+            $results = $query -> get();
+
+            if ($results)
+            {
+                return $results;
+            }
+
+            return false;
+        }
     }
-}

@@ -54,7 +54,7 @@
          * @param int $id
          * @return int
          */
-        public function deleteVisitorCounter($id = 0) : int
+        public function deleteVisitorCounter($id = 0)
         {
             if ($id > 0)
             {
