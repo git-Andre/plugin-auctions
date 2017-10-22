@@ -48,7 +48,7 @@
                 'id'             => $this -> id,
                 'updatedAt'      => $this -> updatedAt,
                 'itemId'         => $this -> itemId,
-                'visitorCounter' => $this -> visitorCounter,
+                'numberOfVisitors' => $this -> numberOfVisitors,
             ];
         }
 
@@ -62,8 +62,8 @@
                     return $this -> updatedAt;
                 case 'itemId'        :
                     return $this -> itemId;
-                case 'visitorCounter'        :
-                    return $this -> visitorCounter;
+                case 'numberOfVisitors'        :
+                    return $this -> numberOfVisitors;
             }
         }
     }

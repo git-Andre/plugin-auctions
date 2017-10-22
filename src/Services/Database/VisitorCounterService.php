@@ -102,7 +102,7 @@
                 $visitorCounter = pluginApp(VisitorCounter_1::class);
 
                 $visitorCounter -> itemId = $itemId;
-                $visitorCounter -> numberOfVisitorsr = 1;
+                $visitorCounter -> numberOfVisitors = 1;
                 $visitorCounter -> updatedAt = (int) time();
 
                 $resultVisitorCounter = $this -> setValue($visitorCounter);
