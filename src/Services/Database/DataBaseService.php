@@ -31,7 +31,7 @@
          * @param $model
          * @return bool
          */
-        public function deleteValue($model)
+        public function deleteValue(Model $model)
         {
             if ($model instanceof Model)
             {
