@@ -109,10 +109,14 @@
 
             $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
 
-            $router -> get('api/get-counter/{itemId}', 'PluginAuctions\Controllers\VisitorCounterService@getVisitorCounter');
+            // Visitors...
+            $router -> get('api/get-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterService@getNumberOfVisitorsForItemId')
+                -> where('itemId', '\d+');
 
-            $router -> post('api/create-counter', 'PluginAuctions\Controllers\VisitorCounterService@createVisitorCounter');
+            $router -> post('api/create-visitor-counter', 'PluginAuctions\Controllers\VisitorCounterService@createVisitorCounter');
 
+            $router -> put('api/increase-number-visitors/{itemId}', 'PluginAuctions\Controllers\AuctionsController@increaseNumberOfVisitorsForItemId')
+                    -> where('itemId', '\d+');
 
 
             // auctionend - add to basket
