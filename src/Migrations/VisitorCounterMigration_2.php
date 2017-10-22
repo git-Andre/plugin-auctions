@@ -9,7 +9,7 @@
      * Class AuctionTableMigration_0_9
      * @package PluginAuctions\Migrations
      */
-    class VisitorCounterMigration_1 {
+    class VisitorCounterMigration_2 {
 
         /**
          * @param Migrate $migrate
