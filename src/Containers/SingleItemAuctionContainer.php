@@ -36,7 +36,7 @@
 //            }
 //            $repoTestEins += $repoTestEins;
 //            $visitorCounter = $sessionRepo -> get("testEins");
-            $sessionRepo -> push("pushTest", 22);
+            $sessionRepo -> prepend("pushTest", 21232);
 //            $prependTest += $sessionRepo -> get("prependTest");
 
 //            $sessionRepo -> prepend("prependTest", 1);
