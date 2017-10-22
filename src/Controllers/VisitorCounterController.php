@@ -72,7 +72,7 @@
 
             if ($itemId > 0)
             {
-                $result = $this -> visitorCounterService -> createAuction($itemId);
+                $result = $this -> visitorCounterService -> createVisitorCounter($itemId);
 
                 if ($result instanceof VisitorCounterService)
                 {
