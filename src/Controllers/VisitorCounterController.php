@@ -11,57 +11,77 @@
     // TODO Response ohne json_encode????
 
     class VisitorCounterController extends Controller {
+        // VisitorCounter = Class / numberOfVisitors = int number of visitors
 
         use Loggable;
 
-        /**
-         * @var AuctionsService
-         */
         private $visitorCounterService;
 
-        /**
-         * AuctionsController constructor.
-         * @param AuctionsService $auctionsService
-         */
         public function __construct(VisitorCounterService $visitorCounterService)
         {
             $this -> visitorCounterService = $visitorCounterService;
         }
 
-        public function getCounterForItemId($itemId = 0)
+        /**
+         * @param int $itemId
+         * @return int
+         */
+        public function getNumberOfVisitorsForItemId($itemId = 0)
         {
-            if ($itemId && $itemId > 0)
+            if ($itemId > 0)
             {
-                return $this -> visitorCounterService -> getCounterForItemId($itemId);
+                return $this -> visitorCounterService -> getNumberOfVisitorsForItemId($itemId);
             }
-            return 'keine ID (oder 0)';
+            return -3;
         }
 
+        /**
+         * @param int $itemId
+         * @return int
+         */
+        public function increaseNumberOfVisitorsForItemId($itemId = 0)
+        {
+            if ($itemId > 0)
+            {
+                return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
+            }
+            return -3;
+        }
+
+        /**
+         * get Class VisitorCounter
+         * @param $itemId
+         * @return string
+         */
         public function getVisitorCounterForItemId($itemId)
         {
             if ($itemId && $itemId > 0)
             {
-                return json_encode($this -> visitorCounterService -> getAuctionForItemId($itemId));
+                return json_encode($this -> visitorCounterService -> getVisitorCounterForItemId($itemId));
             }
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
+
+        /**
+         * @param Request $request
+         * @return string
+         */
         public function createVisitorCounter(Request $request)
         {
-            $newBackendAuction = $request -> all();
+            $itemId = $request -> get('itemId', 0);
 
-            if ($newBackendAuction)
+            if ($itemId > 0)
             {
-                $result = $this -> auctionsService -> createAuction($newBackendAuction);
+                $result = $this -> visitorCounterService -> createAuction($itemId);
 
-                if ($result)
+                if ($result instanceof VisitorCounterService)
                 {
                     return json_encode($result);
                 }
-
-                return false;
+                return 'keine Class: VisitorCounterService';
             }
 
-            return 'Fehler beim Request createAuction';
+            return 'Fehler beim Request getVisitorCounterForItemId';
         }
 
 //        public function updateAuction(int $id, Request $request)

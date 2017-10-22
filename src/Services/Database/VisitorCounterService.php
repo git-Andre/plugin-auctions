@@ -7,8 +7,6 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
-    use PluginAuctions\Constants\AuctionStatus;
-    use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\VisitorCounter_1;
 
 
@@ -16,12 +14,14 @@
 
         use Loggable;
 
+        // VisitorCounter = Class / numberOfVisitors = int number of visitors
+
         public function __construct(DataBase $dataBase)
         {
             parent ::__construct($dataBase);
         }
 
-        public function increaseVisitorCounterForItemId(int $itemId)
+        public function increaseNumberOfVisitorsForItemId(int $itemId)
         {
             if ($itemId > 0)
             {
@@ -29,23 +29,27 @@
 
                 if ($visitorCounter instanceof VisitorCounter_1)
                 {
-                    $visitorCounter -> visitorCounter = $visitorCounter -> visitorCounter + 1;
+                    $visitorCounter -> numberOfVisitors = $visitorCounter -> numberOfVisitors + 1;
                     $visitorCounter -> updatedAt = time();
 
-                    $resultCounter = $this -> setValue($visitorCounter);
+                    $resultVisitorCounter = $this -> setValue($visitorCounter);
 
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
                           -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::auctions.debug', ['resultCounter++: ' => $resultCounter]);
+                          -> debug('PluginAuctions::auctions.debug', ['resultCounter++: ' => $resultVisitorCounter]);
 
-                    return $resultCounter;
+                    return $visitorCounter -> numberOfVisitors;
                 }
-                return 'Diese itemID: ' + $itemId + ' ist uns nicht bekannt';
+                return -1;
             }
-            return false;
+            return -2;
         }
 
+        /**
+         * @param int $itemId
+         * @return bool|object
+         */
         public function getVisitorCounterForItemId(int $itemId)
         {
             if ($itemId > 0)
@@ -61,7 +65,11 @@
             return false;
         }
 
-        public function getCounterForItemId(int $itemId) : int
+        /**
+         * @param int $itemId
+         * @return int
+         */
+        public function getNumberOfVisitorsForItemId(int $itemId) : int
         {
             if ($itemId > 0)
             {
@@ -69,18 +77,18 @@
 
                 if ($visitorCounter instanceof VisitorCounter_1)
                 {
-                    $counter = $visitorCounter -> visitorCounter;
-
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
                           -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::auctions.debug', ['counter: ' => $counter]);
+                          -> debug('PluginAuctions::auctions.debug', ['numberOfVisitors: ' => $visitorCounter -> numberOfVisitors]);
 
-                    return $counter;
+                    return $visitorCounter -> numberOfVisitors;
                 }
-                return 'Diese itemID getCounter: ' + $itemId + ' ist uns nicht bekannt';
+
+                return -1;
             }
-            return false;
+
+            return -2;
         }
 
         /**
@@ -91,22 +99,21 @@
         {
             if ($itemId > 0)
             {
-                $counter = pluginApp(VisitorCounter_1::class);
+                $visitorCounter = pluginApp(VisitorCounter_1::class);
 
-                $counter -> itemId = $itemId;
-                $counter -> visitorCounter = 1;
-                $counter -> updatedAt = (int) time();
+                $visitorCounter -> itemId = $itemId;
+                $visitorCounter -> numberOfVisitorsr = 1;
+                $visitorCounter -> updatedAt = (int) time();
 
-                $resultCounter = $this -> setValue($counter);
+                $resultVisitorCounter = $this -> setValue($visitorCounter);
 
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('auctionId')
                       -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::auctions.debugAfter', ['resultCounter: ' => $resultCounter]);
+                      -> debug('PluginAuctions::auctions.debugAfter', ['resultCounter: ' => $resultVisitorCounter]);
 
-                return $resultCounter;
+                return $resultVisitorCounter;
             }
-
             return false;
         }
 
@@ -118,7 +125,7 @@
 //
 //                if ($visitorCounter instanceof VisitorCounter_1)
 //                {
-//                    $counter = $visitorCounter -> visitorCounter;
+//                    $visitorCounter = $visitorCounter -> visitorCounter;
 //
 //                    $formattedCounterArray = [0,0,0,2,3];
 //

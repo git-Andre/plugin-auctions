@@ -10,10 +10,10 @@
 
         const NAMESPACE = 'PluginAuctions\Models\VisitorCounter_1';
 
-        public $id             = 0;
-        public $updatedAt      = 0;
-        public $itemId         = 0;
-        public $visitorCounter = 0;
+        public $id               = 0;
+        public $updatedAt        = 0;
+        public $itemId           = 0;
+        public $numberOfVisitors = 0;
 
         /**
          * @return string
