@@ -36,7 +36,7 @@
         }
 
         /**
-         * @param int $itemId
+         * @param Request $request
          * @return int
          */
         public function increaseNumberOfVisitorsForItemId(Request $request) : int
@@ -48,6 +48,19 @@
                 return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
             }
             return -3;
+        }
+
+        /**
+         * @param int $id
+         * @return int
+         */
+        public function deleteVisitorCounter($id = 0) : int
+        {
+            if ($id > 0)
+            {
+                return $this -> visitorCounterService -> deleteVisitorCounter($id);
+            }
+            return false;
         }
 
         /**
@@ -64,25 +77,28 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
+        /**
+         * @return string
+         */
         public function getVisitorCounters()
         {
                 return json_encode($this -> visitorCounterService -> getVisitorCounters());
         }
 
-        /**
-         * @param Request $request
-         * @return string
-         */
-        public function createVisitorCounter(Request $request)
-        {
-            $itemId = $request -> get('itemId', 0);
-
-            if ($itemId > 0)
-            {
-                return $this -> visitorCounterService -> createVisitorCounter($itemId);
-            }
-            return 'Fehler beim Request getVisitorCounterForItemId';
-        }
+//        /**
+//         * @param Request $request
+//         * @return string
+//         */
+//        public function createVisitorCounter(Request $request)
+//        {
+//            $itemId = $request -> get('itemId', 0);
+//
+//            if ($itemId > 0)
+//            {
+//                return $this -> visitorCounterService -> createVisitorCounter($itemId);
+//            }
+//            return 'Fehler beim Request getVisitorCounterForItemId';
+//        }
 
 //        public function updateAuction(int $id, Request $request)
 //        {
