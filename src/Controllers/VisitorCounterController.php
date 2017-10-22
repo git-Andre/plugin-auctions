@@ -39,8 +39,10 @@
          * @param int $itemId
          * @return int
          */
-        public function increaseNumberOfVisitorsForItemId($itemId = 0)
+        public function increaseNumberOfVisitorsForItemId(Request $request) : int
         {
+            $itemId = $request -> get('itemId', 0);
+
             if ($itemId > 0)
             {
                 return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
@@ -62,6 +64,11 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
+        public function getVisitorCounters()
+        {
+                return json_encode($this -> visitorCounterService -> getVisitorCounters());
+        }
+
         /**
          * @param Request $request
          * @return string
@@ -72,15 +79,8 @@
 
             if ($itemId > 0)
             {
-                $result = $this -> visitorCounterService -> createVisitorCounter($itemId);
-
-                if ($result instanceof VisitorCounterService)
-                {
-                    return json_encode($result);
-                }
-                return 'keine Class: VisitorCounterService';
+                return $this -> visitorCounterService -> createVisitorCounter($itemId);
             }
-
             return 'Fehler beim Request getVisitorCounterForItemId';
         }
 

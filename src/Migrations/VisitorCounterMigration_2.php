@@ -6,7 +6,7 @@
     use PluginAuctions\Models\VisitorCounter_1;
 
     /**
-     * Class AuctionTableMigration_0_9
+     * Class VisitorCounterMigration_2
      * @package PluginAuctions\Migrations
      */
     class VisitorCounterMigration_2 {

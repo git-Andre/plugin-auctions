@@ -113,10 +113,12 @@
             $router -> get('api/get-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterController@getNumberOfVisitorsForItemId')
                 -> where('itemId', '\d+');
 
+
+            $router -> get('api/get-visitor-counters', 'PluginAuctions\Controllers\VisitorCounterController@getVisitorCounters');
+
             $router -> post('api/create-visitor-counter', 'PluginAuctions\Controllers\VisitorCounterController@createVisitorCounter');
 
-            $router -> put('api/increase-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterController@increaseNumberOfVisitorsForItemId')
-                    -> where('itemId', '\d+');
+            $router -> put('api/increase-number-visitors', 'PluginAuctions\Controllers\VisitorCounterController@increaseNumberOfVisitorsForItemId');
 
 
             // auctionend - add to basket

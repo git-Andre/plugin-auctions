@@ -21,7 +21,18 @@
             parent ::__construct($dataBase);
         }
 
-        public function increaseNumberOfVisitorsForItemId(int $itemId)
+        public function getVisitorCounters()
+        {
+            $visitorCounters = $this -> getValues(VisitorCounter_1::class);
+            if ($visitorCounters)
+            {
+                return $visitorCounters;
+            }
+
+            return 'Fehler getVisitorCounters';
+        }
+
+        public function increaseNumberOfVisitorsForItemId(int $itemId) : int
         {
             if ($itemId > 0)
             {
@@ -41,9 +52,11 @@
 
                     return $visitorCounter -> numberOfVisitors;
                 }
-                return -1;
+
+                return - 1;
             }
-            return -2;
+
+            return - 2;
         }
 
         /**
@@ -85,10 +98,10 @@
                     return $visitorCounter -> numberOfVisitors;
                 }
 
-                return -1;
+                return - 1;
             }
 
-            return -2;
+            return - 2;
         }
 
         /**
@@ -99,22 +112,35 @@
         {
             if ($itemId > 0)
             {
-                $visitorCounter = pluginApp(VisitorCounter_1::class);
+                $isThereAlreadyACounterForItemId = $this -> getVisitorCounterForItemId($itemId) instanceof VisitorCounter_1;
 
-                $visitorCounter -> itemId = $itemId;
-                $visitorCounter -> numberOfVisitors = 1;
-                $visitorCounter -> updatedAt = (int) time();
+                if ( ! $isThereAlreadyACounterForItemId)
+                {
+                    $visitorCounter = pluginApp(VisitorCounter_1::class);
 
-                $resultVisitorCounter = $this -> setValue($visitorCounter);
+                    $visitorCounter -> itemId = $itemId;
+                    $visitorCounter -> numberOfVisitors = 1;
+                    $visitorCounter -> updatedAt = (int) time();
+
+                    $resultVisitorCounter = $this -> setValue($visitorCounter);
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('auctionId')
+                          -> setReferenceValue($itemId)
+                          -> debug('PluginAuctions::auctions.debugAfter', ['resultCounter: ' => $resultVisitorCounter]);
+
+                    return $resultVisitorCounter;
+                }
 
                 $this -> getLogger(__METHOD__)
-                      -> setReferenceType('auctionId')
+                      -> setReferenceType('testedId')
                       -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::auctions.debugAfter', ['resultCounter: ' => $resultVisitorCounter]);
+                      -> debug('PluginAuctions::auctions.debug', ['$isThereAlreadyACounterForItemId: ' => $isThereAlreadyACounterForItemId]);
 
-                return $resultVisitorCounter;
+                return $this -> increaseNumberOfVisitorsForItemId($itemId);
             }
-            return false;
+
+            return 'Id ???';
         }
 
 //        public function getFormattedVisitorCounterForItemId(int $itemId) : array
