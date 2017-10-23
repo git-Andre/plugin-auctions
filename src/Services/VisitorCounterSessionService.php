@@ -30,7 +30,7 @@
             $sessionItemArray = $this -> sessionRepository -> get("auctionSession");
             $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
-            if (is_array($sessionItemArray) && $auction['tense'] == AuctionStatus::PRESENT)
+            if (is_array($sessionItemArray) && $auction -> tense == AuctionStatus::PRESENT)
             {
                 if (in_array($itemId, $sessionItemArray))
                 {
@@ -43,7 +43,7 @@
                     return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
                 }
             }
-            elseif ($auction['tense'] == AuctionStatus::PRESENT)
+            elseif ($auction -> tense == AuctionStatus::PRESENT)
             {
                 $this -> sessionRepository -> set("auctionSession", [$itemId]);
 
