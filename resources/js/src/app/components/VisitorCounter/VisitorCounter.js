@@ -4,14 +4,14 @@
 
 Vue.component( "visitor-counter", {
     props: [
-        numberOfVisitors
+        "numberOfVisitors"
     ],
     data() {
         return {
-            oneS      = 0,
-            tens      = 0,
-            hundreds      = 0,
-            thousands      = 0
+            oneS: 0,
+            tens: 0,
+            hundreds: 0,
+            thousands: 0
         }
     },
     created() {

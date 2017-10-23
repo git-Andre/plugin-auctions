@@ -1,6 +1,59 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
+// const ApiService = require( "services/ApiService" );
+// const NotificationService = require( "services/NotificationService" );
+// const AuctionConstants    = require( "constants/AuctionConstants" );
+
+Vue.component("visitor-counter", {
+    props: ["numberOfVisitors"],
+    data: function data() {
+        return {
+            oneS: 0,
+            tens: 0,
+            hundreds: 0,
+            thousands: 0
+        };
+    },
+    created: function created() {
+        this.$options.template = this.template;
+    },
+    compiled: function compiled() {
+
+        console.log('numberOfVisitors: ' + this.numberOfVisitors);
+    },
+    ready: function ready() {
+        this.oneS = this.numberOfVisitors % 10;
+        this.tens = (this.numberOfVisitors / 10 - oneS) % 10;
+        this.hundreds = (this.numberOfVisitors / 10 - tens) % 10;
+        this.thousands = (this.numberOfVisitors / 10 - hundreds) % 10;
+    },
+
+    methods: {
+        // twoDigits(value) {
+        //     if ( value.toString().length <= 1 ) {
+        //         return '0' + value.toString()
+        //     }
+        //     return value.toString()
+        // }
+
+        // getTest() {
+        //     ApiService.get( "/api/auction/" + this.auctionid )
+        //         .done( auction => {
+        //             this.auction = auction;
+        //             this.$children['AuctionBids'].auction = this.auction;
+        //         } )
+        //         .fail( () => {
+        //                    alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );
+        //                }
+        //         )
+        // }
+    }
+});
+
+},{}],2:[function(require,module,exports){
+"use strict";
+
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionConstants = require("constants/AuctionConstants");
@@ -283,7 +336,7 @@ Vue.component("auction-bids", {
     }
 });
 
-},{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8,"services/ResourceService":9}],2:[function(require,module,exports){
+},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9,"services/ResourceService":10}],3:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -308,14 +361,6 @@ Vue.component("auction-end", {
         if (this.userdata != null) {
             this.evaluateAndNotifyAfterAuction();
         }
-        if (!sessionStorage.getItem("testCounter")) {
-            sessionStorage.setItem("testCounter", 1);
-        }
-        var testCounter = parseInt(sessionStorage.getItem("testCounter"));
-        testCounter += 1;
-        // sessionStorage.getItem( "auctionEnd" )
-        sessionStorage.setItem("testCounter", testCounter);
-        // sessionStorage.removeItem( "basketItem" )
     },
 
     methods: {
@@ -372,7 +417,7 @@ Vue.component("auction-end", {
     }
 });
 
-},{"constants/AuctionConstants":6,"services/ApiService":7,"services/NotificationService":8}],3:[function(require,module,exports){
+},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9}],4:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -433,7 +478,7 @@ Vue.component("auction-show-bidderlist", {
     }
 });
 
-},{"services/ApiService":7}],4:[function(require,module,exports){
+},{"services/ApiService":8}],5:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
@@ -501,7 +546,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":8}],5:[function(require,module,exports){
+},{"services/NotificationService":9}],6:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -561,7 +606,7 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -593,7 +638,7 @@ var PRESENT = exports.PRESENT = "present";
 var PAST = exports.PAST = "past";
 var PAST_PERFECT = exports.PAST_PERFECT = "past-perfect";
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -729,7 +774,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":8,"services/WaitScreenService":10}],8:[function(require,module,exports){
+},{"services/NotificationService":9,"services/WaitScreenService":11}],9:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -886,7 +931,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1351,7 +1396,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":7}],10:[function(require,module,exports){
+},{"services/ApiService":8}],11:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -1394,7 +1439,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[1,2,3,4,5,6])
+},{}]},{},[2,3,4,5,6,1,7])
 
 
 // var ao = new Vue( {
