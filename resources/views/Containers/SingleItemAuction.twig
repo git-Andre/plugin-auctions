@@ -2,6 +2,11 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
 
+
+{# ao Var-Dump #}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auctions.visitorCounter', 'dumpData': auctions.visitorCounter } %}
+
+
 {% if ( auction ) %}
 
     {% set bidderListLast = auction.bidderList | last %}
@@ -22,7 +27,7 @@
 
                 {#Aufgeld Start#}
                 <dt><span class="alarm">Aufgeld:</span></dt>
-                <dd><span>10% vom Höchstgebot:</span>
+                <dd><span>10% vom Höchstgebot</span>
                     <span class="m-x-5">|</span>
                     <span>Gesamtpreis: </span>
                     <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
@@ -69,7 +74,7 @@
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
                         <dt><span class="alarm">Aufgeld:</span></dt>
-                        <dd><span>10% vom Höchstgebot:</span>
+                        <dd><span>10% vom Höchstgebot</span>
                             <span class="m-x-5">|</span>
                             <span>Gesamtpreis: </span>
                             <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
