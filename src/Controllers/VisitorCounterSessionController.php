@@ -13,6 +13,7 @@
         use Loggable;
 
         private $visitorCounterService;
+
         private $sessionRepo;
 
         public function __construct(VisitorCounterService $visitorCounterService)

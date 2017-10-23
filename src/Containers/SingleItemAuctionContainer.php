@@ -22,7 +22,7 @@
 
 //            $visitorCounterSessionController = VisitorCounterSessionController::class;
 //
-//            $itemId = $arg[0]['item']['id'];
+            $itemId = $arg[0]['item']['id'];
 //
 //            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId);
 
