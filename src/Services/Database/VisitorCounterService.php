@@ -88,9 +88,9 @@
 
                 if ( ! $visitorCounter instanceof VisitorCounter_1)
                 {
-                    $visitorCounter = $this -> createVisitorCounter($itemId);
+                    $result = $this -> createVisitorCounter($itemId);
 
-                    return $visitorCounter -> numberOfVisitors;
+                    return $result;
                 }
 
                 if ($visitorCounter instanceof VisitorCounter_1)
@@ -124,8 +124,12 @@
                 $visitorCounter -> updatedAt = (int) time();
 
                 $resultVisitorCounter = $this -> setValue($visitorCounter);
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($itemId)
+                      -> debug('PluginAuctions::auctions.debug', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
 
-                return $resultVisitorCounter -> numberOfVisitors;
+                return 1;
             }
 
             return false;
