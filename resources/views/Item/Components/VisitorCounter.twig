@@ -7,16 +7,16 @@
             <span>
             <ul class="visitor-counter">
                 <li v-if="(thousands > 0)">
-                    <p class="h3 digit">${ thousands }</p>
+                    <p class="digit">${ thousands }</p>
                 </li>
                 <li>
-                    <p class="h3 digit">${ hundreds }</p>
+                    <p class="digit">${ hundreds }</p>
                 </li>
                 <li>
-                    <p class="h3 digit">${ tens }</p>
+                    <p class="digit">${ tens }</p>
                 </li>
                 <li>
-                    <p class="h3 digit">${ ones }</p>
+                    <p class="digit">${ ones }</p>
                 </li>
             </ul>
             </span>
@@ -45,28 +45,29 @@
         margin: 0;
     }
 
-    .visitor-counter li:after {
-        content: ":";
-        position: absolute;
-        top: 0;
-        right: -13px;
-        font-size: 32px;
-    }
+    /*.visitor-counter li:after {*/
+        /*content: ":";*/
+        /*position: absolute;*/
+        /*top: 0;*/
+        /*right: -13px;*/
+        /*font-size: 32px;*/
+    /*}*/
 
-    .visitor-counter li:first-of-type {
-        margin-left: 0;
-    }
+    /*.visitor-counter li:first-of-type {*/
+        /*margin-left: 0;*/
+    /*}*/
 
-    .visitor-counter li:last-of-type {
-        margin-right: 0;
-    }
+    /*.visitor-counter li:last-of-type {*/
+        /*margin-right: 0;*/
+    /*}*/
 
-    .visitor-counter li:last-of-type:after {
-        content: "";
-    }
+    /*.visitor-counter li:last-of-type:after {*/
+        /*content: "";*/
+    /*}*/
 
     .visitor-counter .digit {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        color: dimgrey;
         font-weight: 600;
         line-height: 1.4;
         margin-bottom: 0;

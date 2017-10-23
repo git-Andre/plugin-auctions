@@ -4,6 +4,7 @@
 
 Vue.component( "visitor-counter", {
     props: [
+        "template",
         "numberOfVisitors"
     ],
     data() {
@@ -18,14 +19,17 @@ Vue.component( "visitor-counter", {
         this.$options.template = this.template;
     },
     compiled() {
-        this.numberOfVisitors = parseInt(this.numberOfVisitors);
-        console.log( 'numberOfVisitors: ' + this.numberOfVisitors );
+        this.numberOfVisitors = parseInt( this.numberOfVisitors );
     },
     ready() {
         this.ones      = this.numberOfVisitors % 10;
-        this.tens      = (this.numberOfVisitors / 10 - ones) % 10;
-        this.hundreds  = (this.numberOfVisitors / 10 - tens) % 10;
-        this.thousands = (this.numberOfVisitors / 10 - hundreds) % 10;
+        this.tens      = (this.numberOfVisitors / 10 - this.ones) % 10;
+        this.hundreds  = (this.numberOfVisitors / 10 - this.tens) % 10;
+        this.thousands = (this.numberOfVisitors / 10 - this.hundreds) % 10;
+        console.log( 'this.ones: ' + this.ones );
+        console.log( 'this.tens: ' + this.tens );
+        console.log( 'this.hundreds: ' + this.hundreds );
+        console.log( 'this.thousands: ' + this.thousands );
     },
     methods: {
         // twoDigits(value) {
