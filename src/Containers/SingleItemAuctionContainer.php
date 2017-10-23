@@ -17,7 +17,7 @@
 //            $this -> visitorCounterSessionController = $visitorCounterSessionController;
 //        }
 
-        public function call(Twig $twig, $arg) : string
+        public function call(Twig $twig, $arg)
         {
 
             $visitorCounterSessionController = VisitorCounterSessionController::class;
