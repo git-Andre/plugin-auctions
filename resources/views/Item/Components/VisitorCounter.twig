@@ -1,0 +1,91 @@
+<script type="x/template" id="vue-visitor-counter">
+    <div id="number-visitors">
+        <dl class="auctionList">
+            <dt>Besucheranzahl:</dt>
+            <dd>
+            <span>
+            <ul class="visitor-counter">
+                <li v-if="(thousands > 0)">
+                    <p class="h3 digit">${ thousands }</p>
+                </li>
+                <li>
+                    <p class="h3 digit">${ hundreds }</p>
+                </li>
+                <li>
+                    <p class="h3 digit">${ tens }</p>
+                </li>
+                <li>
+                    <p class="h3 digit">${ ones }</p>
+                </li>
+            </ul>
+            </span>
+            </dd>
+        </dl>
+
+    </div>
+
+
+
+</script>
+<style>
+
+</style>
+
+
+
+
+<style>
+    .visitor-counter {
+        columns: #555;
+        padding: 0;
+        margin: -8px 0 0 0;
+    }
+
+    .visitor-counter li {
+        display: inline-block;
+        margin: 0 8px;
+        text-align: center;
+        position: relative;
+    }
+
+    .visitor-counter li p {
+        margin: 0;
+    }
+
+    .visitor-counter li:after {
+        content: ":";
+        position: absolute;
+        top: 0;
+        right: -13px;
+        font-size: 32px;
+    }
+
+    .visitor-counter li:first-of-type {
+        margin-left: 0;
+    }
+
+    .visitor-counter li:last-of-type {
+        margin-right: 0;
+    }
+
+    .visitor-counter li:last-of-type:after {
+        content: "";
+    }
+
+    .visitor-counter .digit {
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.4;
+        margin-bottom: 0;
+    }
+
+    .visitor-counter .alarm {
+        color: #c50000
+    }
+
+    .visitor-counter .text {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        font-size: 10px;
+    }
+</style>

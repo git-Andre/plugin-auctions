@@ -11,6 +11,8 @@ Vue.component( "auction-parent", {
         }
     },
     created() {
+        this.$options.template = this.template;
+
     },
     compiled() {
     },
