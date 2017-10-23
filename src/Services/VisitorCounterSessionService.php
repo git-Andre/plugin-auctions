@@ -28,6 +28,7 @@
         public function getNumberOfVisitors(int $itemId) : int
         {
             $sessionItemArray = $this -> sessionRepository -> get("auctionSession");
+
             $auction = $this -> auctionsService -> getAuctionForItemId($itemId);
 
             if (is_array($sessionItemArray) && $auction -> tense == AuctionStatus::PRESENT)
