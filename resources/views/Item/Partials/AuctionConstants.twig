@@ -3,24 +3,6 @@
 
 
 <div class="m-t-2">
-    {% if (auction.tense != 'future') %}
-        <dt><span class="alarm">Aufgeld</span> <span class="small">(10%)</span>:</dt>
-        <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
-            <span class="m-x-1">|</span>
-            <span>Gesamtpreis: </span>
-            <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
-        </dd>
-    {% else %}
-
-        <dt><span class="alarm">Aufgeld:</span></dt>
-        <dd><span>10% vom Höchstgebot:</span>
-            <span class="m-x-1">|</span>
-            <span>Startpreis + Aufgeld: </span>
-            <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
-        </dd>
-
-    {% endif %}
-
     <dt>Start Datum:</dt>
     <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
     <dt>Dauer:</dt>

@@ -20,8 +20,18 @@
                 <dt>Start Preis:</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
+                {#Aufgeld Start#}
+                <dt><span class="alarm">Aufgeld:</span></dt>
+                <dd><span>10% vom Höchstgebot:</span>
+                    <span class="m-x-5">|</span>
+                    <span>Gesamtpreis: </span>
+                    <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                </dd>
+
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
+
             </dl>
+
 
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
@@ -47,10 +57,29 @@
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                         <dt>Start Preis:</dt>
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+                        {#Aufgeld Standard#}
+                        <dt><span class="alarm">Aufgeld</span> <span class="small">(10%)</span>:</dt>
+                        <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                            <span class="m-x-1">|</span>
+                            <span>Gesamtpreis: </span>
+                            <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                        </dd>
                     {% else %}
                         <dt>Start Preis:</dt>
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
+                        {#Aufgeld Start#}
+                        <dt><span class="alarm">Aufgeld:</span></dt>
+                        <dd><span>10% vom Höchstgebot:</span>
+                            <span class="m-x-5">|</span>
+                            <span>Gesamtpreis: </span>
+                            <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                        </dd>
                     {% endif %}
+
+
+
+
+
 
                     {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
@@ -90,9 +119,18 @@
                 {% if bidderListLength != 1 %}
                     <dt>Höchstgebot:</dt>
                     <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
+                    {#Aufgeld Standard#}
+                    <dt><span class="alarm">Aufgeld</span> <span class="small">(10%)</span>:</dt>
+                    <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                        <span class="m-x-1">|</span>
+                        <span>Gesamtpreis: </span>
+                        <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
+                    </dd>
+
                 {% else %}
                     <dt>Ergebnis:</dt>
                     <dd class="price h3 m-b-2">Keine Gebote.</dd>
+
                 {% endif %}
 
                 <dt>Start Preis:</dt>
