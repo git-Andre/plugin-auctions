@@ -5,7 +5,7 @@
 
     use Plenty\Plugin\Templates\Extensions\Twig_Extension;
     use PluginAuctions\Services\Database\AuctionsService;
-    use PluginAuctions\Services\VisitorCounterSessionService;
+    use PluginAuctions\Services\V;
 
     /**
      * Provide services and helper functions to twig engine

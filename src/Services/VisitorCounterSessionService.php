@@ -1,6 +1,6 @@
 <?php
 
-    namespace PluginAuctions\Controllers;
+    namespace PluginAuctions\Services;
 
     use Plenty\Plugin\Log\Loggable;
     use Plenty\Plugin\SessionRepository;
