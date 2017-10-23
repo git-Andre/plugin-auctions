@@ -20,13 +20,13 @@ Vue.component("visitor-counter", {
     },
     compiled: function compiled() {
         this.numberOfVisitors = parseInt(this.numberOfVisitors);
-        console.log('numberOfVisitors: ' + this.numberOfVisitors);
     },
     ready: function ready() {
+
         this.ones = this.numberOfVisitors % 10;
-        this.tens = (this.numberOfVisitors / 10 - this.ones) % 10;
-        this.hundreds = (this.numberOfVisitors / 10 - this.tens) % 10;
-        this.thousands = (this.numberOfVisitors / 10 - this.hundreds) % 10;
+        this.tens = parseInt(this.numberOfVisitors / 10) % 10;
+        this.hundreds = parseInt(this.numberOfVisitors / 10 / 10) % 10;
+        this.thousands = parseInt(this.numberOfVisitors / 10 / 10 / 10) % 10;
     },
 
     methods: {

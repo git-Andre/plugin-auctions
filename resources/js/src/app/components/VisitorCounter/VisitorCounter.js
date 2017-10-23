@@ -22,14 +22,11 @@ Vue.component( "visitor-counter", {
         this.numberOfVisitors = parseInt( this.numberOfVisitors );
     },
     ready() {
+
         this.ones      = this.numberOfVisitors % 10;
-        this.tens      = (this.numberOfVisitors / 10 - this.ones) % 10;
-        this.hundreds  = (this.numberOfVisitors / 10 - this.tens) % 10;
-        this.thousands = (this.numberOfVisitors / 10 - this.hundreds) % 10;
-        console.log( 'this.ones: ' + this.ones );
-        console.log( 'this.tens: ' + this.tens );
-        console.log( 'this.hundreds: ' + this.hundreds );
-        console.log( 'this.thousands: ' + this.thousands );
+        this.tens      = (parseInt( this.numberOfVisitors / 10 )) % 10;
+        this.hundreds  = (parseInt( this.numberOfVisitors / 10 / 10 )) % 10;
+        this.thousands = (parseInt( this.numberOfVisitors / 10 / 10 / 10 )) % 10;
     },
     methods: {
         // twoDigits(value) {
