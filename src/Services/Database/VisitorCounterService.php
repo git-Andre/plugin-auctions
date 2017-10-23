@@ -88,9 +88,9 @@
 
                 if ( ! $visitorCounter instanceof VisitorCounter_1)
                 {
-                    $resultVisitorCounter = $this -> createVisitorCounter($itemId);
+                    $visitorCounter = $this -> createVisitorCounter($itemId);
 
-                    return $resultVisitorCounter -> numberOfVisitors;
+                    return $visitorCounter -> numberOfVisitors;
                 }
 
                 if ($visitorCounter instanceof VisitorCounter_1)
