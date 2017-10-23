@@ -8,7 +8,7 @@ Vue.component( "visitor-counter", {
     ],
     data() {
         return {
-            oneS: 0,
+            ones: 0,
             tens: 0,
             hundreds: 0,
             thousands: 0
@@ -18,12 +18,12 @@ Vue.component( "visitor-counter", {
         this.$options.template = this.template;
     },
     compiled() {
-
+        this.numberOfVisitors = parseInt(this.numberOfVisitors);
         console.log( 'numberOfVisitors: ' + this.numberOfVisitors );
     },
     ready() {
-        this.oneS      = this.numberOfVisitors % 10;
-        this.tens      = (this.numberOfVisitors / 10 - oneS) % 10;
+        this.ones      = this.numberOfVisitors % 10;
+        this.tens      = (this.numberOfVisitors / 10 - ones) % 10;
         this.hundreds  = (this.numberOfVisitors / 10 - tens) % 10;
         this.thousands = (this.numberOfVisitors / 10 - hundreds) % 10;
     },

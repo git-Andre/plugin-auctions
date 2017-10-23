@@ -2,9 +2,6 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
 
-{# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'numberOfVisitors', 'dumpData': numberOfVisitors } %}
-
 {% if ( auction ) %}
 
     {% set bidderListLast = auction.bidderList | last %}
@@ -81,7 +78,6 @@
                         template="#vue-visitor-counter"
                         number-of-visitors="{{ numberOfVisitors }}"
                 >
-                    000
                 </visitor-counter>
             </div>
 
