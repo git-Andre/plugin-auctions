@@ -26,7 +26,7 @@
 //
 //            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId);
 
-            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId) || ['hi ','Andrè', 'first'];
+            $itemIdArray = $this -> visitorCounterSessionController -> getItemArray($itemId) || ['hi ','Andrè', 'first'];
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "itemIdArray"    => $itemIdArray
