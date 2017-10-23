@@ -10,12 +10,12 @@
 
 //        use Loggable;
 
-//        private $visitorCounterSessionController;
-//
-//        public function __construct(VisitorCounterSessionController $visitorCounterSessionController)
-//        {
-//            $this -> visitorCounterSessionController = $visitorCounterSessionController;
-//        }
+        private $visitorCounterSessionController;
+
+        public function __construct(VisitorCounterSessionController $visitorCounterSessionController)
+        {
+            $this -> visitorCounterSessionController = $visitorCounterSessionController;
+        }
 
         public function call(Twig $twig, $arg)
         {
@@ -26,7 +26,7 @@
 //
 //            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId);
 
-            $itemIdArray = ['hi ','Andrè', 'first'];
+            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId) || ['hi ','Andrè', 'first'];
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "itemIdArray"    => $itemIdArray

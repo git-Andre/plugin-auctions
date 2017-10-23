@@ -26,7 +26,7 @@
         public function getItemArray(int $itemId)
         {
 
-            return ['hi ','Andrè'];
+            return [$itemId];
 
 
 //            $sessionRepo = pluginApp(SessionRepository::class);
