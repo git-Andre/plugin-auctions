@@ -18,12 +18,12 @@
         public function __construct(VisitorCounterService $visitorCounterService, SessionRepository $sessionRepository)
         {
             $this -> visitorCounterService = $visitorCounterService;
-            $this -> $sessionRepository = $$sessionRepository;
+            $this -> sessionRepository = $sessionRepository;
         }
 
         public function getNumberOfVisitors(int $itemId) : int
         {
-            $sessionItemArray = $this -> $sessionRepository -> get("auctionSession");
+            $sessionItemArray = $this -> sessionRepository -> get("auctionSession");
 
             if (is_array($sessionItemArray))
             {
@@ -33,14 +33,14 @@
                 }
                 else
                 {
-                    $$sessionRepository -> push("auctionSession", $itemId);
+                    $sessionRepository -> push("auctionSession", $itemId);
 
                     return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
                 }
             }
             else
             {
-                $$sessionRepository -> set("auctionSession", [$itemId]);
+                $sessionRepository -> set("auctionSession", [$itemId]);
 
                 return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
 
