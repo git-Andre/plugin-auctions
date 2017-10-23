@@ -4,7 +4,9 @@
 
     use Plenty\Plugin\Log\Loggable;
     use Plenty\Plugin\SessionRepository;
+    use PluginAuctions\Services\Database\AuctionsService;
     use PluginAuctions\Services\Database\VisitorCounterService;
+    use PluginAuctions\Constants\AuctionStatus;
 
 
     class VisitorCounterSessionService {
@@ -14,18 +16,21 @@
         private $visitorCounterService;
 
         private $sessionRepository;
+        private $auctionsService;
 
-        public function __construct(VisitorCounterService $visitorCounterService, SessionRepository $sessionRepository)
+        public function __construct(VisitorCounterService $visitorCounterService, SessionRepository $sessionRepository, AuctionsService $auctionsService)
         {
             $this -> visitorCounterService = $visitorCounterService;
             $this -> sessionRepository = $sessionRepository;
+            $this -> auctionsService = $auctionsService;
         }
 
         public function getNumberOfVisitors(int $itemId) : int
         {
             $sessionItemArray = $this -> sessionRepository -> get("auctionSession");
+            $tense = $this -> auctionsService -> getAuctionForItemId($itemId);
 
-            if (is_array($sessionItemArray))
+            if (is_array($sessionItemArray) && $this -> auctionsService['tense'] == AuctionStatus::PRESENT)
             {
                 if (in_array($itemId, $sessionItemArray))
                 {
@@ -38,7 +43,7 @@
                     return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
                 }
             }
-            else
+            elseif ($this -> auctionsService['tense'] == AuctionStatus::PRESENT)
             {
                 $this -> sessionRepository -> set("auctionSession", [$itemId]);
 
@@ -46,6 +51,6 @@
 
             }
 
-            return - 1;
+            return $this -> visitorCounterService -> getNumberOfVisitorsForItemId($itemId);
         }
     }
