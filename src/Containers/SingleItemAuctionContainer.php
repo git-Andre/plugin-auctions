@@ -20,11 +20,11 @@
         public function call(Twig $twig, $arg)
         {
 
-            $visitorCounterSessionController = VisitorCounterSessionController::class;
-
-            $itemId = $arg[0]['item']['id'];
-
-            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId);
+//            $visitorCounterSessionController = VisitorCounterSessionController::class;
+//
+//            $itemId = $arg[0]['item']['id'];
+//
+//            $itemIdArray = $visitorCounterSessionController -> getItemArray($itemId);
 
             return $twig -> render('PluginAuctions::Containers.SingleItemAuction', ["itemData"       => $arg[0],
                                                                                     "itemIdArray"    => $itemIdArray
