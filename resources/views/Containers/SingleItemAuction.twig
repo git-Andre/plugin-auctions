@@ -1,7 +1,7 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set visitorCounter = visitorCounter %}
-{% set pushTest = pushTest %}
+{% set itemIdArray = itemIdArray %}
 
 
 {# ao Var-Dump #}
@@ -9,7 +9,7 @@
 
 
 {# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'pushTest', 'dumpData': pushTest } %}
+{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'itemIdArray', 'dumpData': itemIdArray } %}
 
 {% if ( auction ) %}
 
