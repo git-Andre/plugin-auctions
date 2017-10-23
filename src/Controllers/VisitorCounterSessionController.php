@@ -27,7 +27,7 @@
 //            $sessionRepo = pluginApp(SessionRepository::class);
 //            $visitorCounterService = pluginApp(VisitorCounterService::class);
 
-            return [$itemId];
+            return $itemId;
 
 
 //            $sessionRepo = pluginApp(SessionRepository::class);
