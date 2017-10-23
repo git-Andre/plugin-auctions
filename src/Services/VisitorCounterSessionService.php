@@ -33,14 +33,14 @@
                 }
                 else
                 {
-                    $this -> $sessionRepository -> push("auctionSession", $itemId);
+                    $this -> sessionRepository -> push("auctionSession", $itemId);
 
                     return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
                 }
             }
             else
             {
-                $this -> $sessionRepository -> set("auctionSession", [$itemId]);
+                $this -> sessionRepository -> set("auctionSession", [$itemId]);
 
                 return $this -> visitorCounterService -> increaseNumberOfVisitorsForItemId($itemId);
 
