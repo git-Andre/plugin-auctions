@@ -88,9 +88,9 @@
 
                 if ( ! $visitorCounter instanceof VisitorCounter_1)
                 {
-                    $result = $this -> createVisitorCounter($itemId);
+                    $visitorCounter = $this -> createVisitorCounter($itemId);
 
-                    return $result;
+                    return $visitorCounter -> numberOfVisitors;
                 }
 
                 if ($visitorCounter instanceof VisitorCounter_1)
@@ -99,6 +99,11 @@
                     $visitorCounter -> updatedAt = time();
 
                     $resultVisitorCounter = $this -> setValue($visitorCounter);
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('auctionId')
+                          -> setReferenceValue($itemId)
+                          -> debug('PluginAuctions::auctions.debug', ['resultCounter++: ' => $resultVisitorCounter]);
 
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
@@ -113,7 +118,7 @@
          * @param int $itemId
          * @return bool|\Plenty\Modules\Plugin\DataBase\Contracts\Model
          */
-        private function createVisitorCounter(int $itemId)
+        private function createVisitorCounter(int $itemId) : int
         {
             if ($itemId > 0)
             {
@@ -124,15 +129,16 @@
                 $visitorCounter -> updatedAt = (int) time();
 
                 $resultVisitorCounter = $this -> setValue($visitorCounter);
+
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('testedId')
                       -> setReferenceValue($itemId)
                       -> debug('PluginAuctions::auctions.debug', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
 
-                return 1;
+                return $resultVisitorCounter -> numberOfVisitors;
             }
 
-            return false;
+            return -5;
         }
 
 //        public function getFormattedVisitorCounterForItemId(int $itemId) : array
