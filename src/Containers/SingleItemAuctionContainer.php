@@ -2,7 +2,7 @@
 
     namespace PluginAuctions\Containers;
 
-    use Plenty\Plugin\SessionRepository;
+//    use Plenty\Plugin\SessionRepository;
     use Plenty\Plugin\Templates\Twig;
     use PluginAuctions\Controllers\VisitorCounterSessionController;
 

@@ -26,42 +26,19 @@
         public function getItemArray(int $itemId)
         {
 
-            // sessionstorage (Service) abfragen
-//            $session = pluginApp(SessionStorageService::class);
-            $sessionRepo = pluginApp(SessionRepository::class);
+            return ['hi ','Andrè'];
 
 
-            $sessionRepo -> set("itemIdArray", [$itemId]);
-//            if ($repoTestEins != $itemId)
-//            {
-//                $sessionRepo -> set("testEins", $itemId);
-////                $sessionRepo -> set("itemIdArray", $itemId);
-////                $sessionRepo -> set("prependTest", 1);
-//            }
-//            $repoTestEins += $repoTestEins;
-//            $visitorCounter = $sessionRepo -> get("testEins");
-            $sessionRepo -> push("itemIdArray", $itemId);
-//            $prependTest += $sessionRepo -> get("prependTest");
-
-//            $sessionRepo -> prepend("prependTest", 1);
-//            $this -> getLogger(__METHOD__)
-//                  -> setReferenceType('auctionId')
-//                  -> setReferenceValue($itemId)
-//                  -> debug('PluginAuctions::auctions.debug', ['prependTest: ' => $prependTest]);
-
-//            $sessionRepo -> push("itemIdArray", 0);
-//            $this -> getLogger(__METHOD__)
-//                  -> setReferenceType('auctionId')
-//                  -> setReferenceValue($itemId)
-//                  -> debug('PluginAuctions::auctions.debug', ['itemIdArray: ' => $itemIdArray]);
+//            $sessionRepo = pluginApp(SessionRepository::class);
 //
-//            $visitorCounter = $sessionRepo -> get("testEins");
-//            $this -> getLogger(__METHOD__)
-//                  -> setReferenceType('auctionId')
-//                  -> setReferenceValue($itemId)
-//                  -> debug('PluginAuctions::auctions.debug', ['testEins: ' => $testEins]);
+//
+//            $sessionRepo -> set("itemIdArray", [$itemId]);
+//
+//            $sessionRepo -> push("itemIdArray", $itemId);
+//
+//
+//            return $sessionRepo -> get("itemIdArray");
 
-            return $sessionRepo -> get("itemIdArray");
         }
 
     }
