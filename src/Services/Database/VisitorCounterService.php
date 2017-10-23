@@ -88,7 +88,9 @@
 
                 if ( ! $visitorCounter instanceof VisitorCounter_1)
                 {
-                    $visitorCounter = $this -> createVisitorCounter($itemId);
+                    $resultVisitorCounter = $this -> createVisitorCounter($itemId);
+
+                    return $resultVisitorCounter -> numberOfVisitors;
                 }
 
                 if ($visitorCounter instanceof VisitorCounter_1)
@@ -101,7 +103,7 @@
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
 
-                return -1;
+                return - 1;
             }
 
             return - 2;
@@ -118,12 +120,12 @@
                 $visitorCounter = pluginApp(VisitorCounter_1::class);
 
                 $visitorCounter -> itemId = $itemId;
-                $visitorCounter -> numberOfVisitors = 0;
+                $visitorCounter -> numberOfVisitors = 1;
                 $visitorCounter -> updatedAt = (int) time();
 
                 $resultVisitorCounter = $this -> setValue($visitorCounter);
 
-                return $resultVisitorCounter;
+                return $resultVisitorCounter -> numberOfVisitors;
             }
 
             return false;
