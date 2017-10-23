@@ -12,20 +12,20 @@
 
         use Loggable;
 
-        private $visitorCounterService;
-
-        private $sessionRepo;
-
-        public function __construct(VisitorCounterService $visitorCounterService)
-        {
-            $this -> visitorCounterService = $visitorCounterService;
-
-//            $this -> sessionRepo = pluginApp(SessionRepository::class);
-
-        }
+//        private $visitorCounterService;
+//
+//        private $sessionRepo;
+//
+//        public function __construct(VisitorCounterService $visitorCounterService)
+//        {
+//
+//
+//        }
 
         public function getItemArray(int $itemId)
         {
+//            $sessionRepo = pluginApp(SessionRepository::class);
+//            $visitorCounterService = pluginApp(VisitorCounterService::class);
 
             return [$itemId];
 
