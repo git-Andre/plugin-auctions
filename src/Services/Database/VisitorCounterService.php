@@ -55,7 +55,7 @@
                     return $visitorCounter -> numberOfVisitors;
                 }
 
-                return - 1;
+                return 0;
             }
 
             return - 3;
@@ -108,7 +108,7 @@
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
 
-                return - 1;
+                return 0;
             }
 
             return - 2;
