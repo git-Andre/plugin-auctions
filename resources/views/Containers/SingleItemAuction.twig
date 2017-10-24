@@ -1,12 +1,12 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-    {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionEnd" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
-    {{ component( "PluginAuctions::Item.Components.Notifications" ) }}
-    {{ component( "PluginAuctions::Item.Components.VisitorCounter" ) }}
+    {#{{ component( "PluginAuctions::Item.Components.Countdown" ) }}#}
+    {#{{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}#}
+    {#{{ component( "PluginAuctions::Item.Components.AuctionEnd" ) }}#}
+    {#{{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}#}
+    {#{{ component( "PluginAuctions::Item.Components.Notifications" ) }}#}
+    {#{{ component( "PluginAuctions::Item.Components.VisitorCounter" ) }}#}
 
 {% if ( auction ) %}
 
