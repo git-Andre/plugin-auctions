@@ -2,11 +2,6 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
 
-
-{# ao Var-Dump #}
-{% include "CeresSchaffrath::VarDump" with { 'testDescription': 'auctions.visitorCounter', 'dumpData': auctions.visitorCounter } %}
-
-
 {% if ( auction ) %}
 
     {% set bidderListLast = auction.bidderList | last %}
