@@ -1,13 +1,6 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
-    {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionEnd" ) }}
-    {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
-    {{ component( "PluginAuctions::Item.Components.Notifications" ) }}
-    {{ component( "PluginAuctions::Item.Components.VisitorCounter" ) }}
-
 {% if ( auction ) %}
 
     {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
@@ -172,39 +165,6 @@
 
         {% endif %}
     </div>
-    {#Modals etc...########################################## #}
-    <div class="wrapper wrapper-top notify-auction">
-        <!-- messages -->
-        <notifications-plugin-auction
-                template="#vue-notifications-plugin-auction"
-        ></notifications-plugin-auction>
-    </div>
-
-
-    <!-- BidderList MODAL -->
-    <div id="bidderlist-modal-wrapper">
-        <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
-            <div class="modal-dialog" style="max-width: 640px;">
-                <div class="modal-content modal-auction">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                        </button>
-                        <h3 class="modal-title">
-                            Alle Gebote für diese Auktion</h3>
-                    </div>
-                    <div class="modal-body">
-
-                        <auction-show-bidderlist
-                                template="#vue-auction-show-bidderlist"
-                                auctionid="{{ auction.id }}"
-                        >
-                        </auction-show-bidderlist>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ./BidderList MODAL -->
 
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
@@ -240,20 +200,5 @@
         color: #c50000;
     }
 
-    /*modal...*/
-
-    .modal-auction {
-        -webkit-transform: translateX(-34%);
-        -moz-transform: translateX(-34%);
-        -ms-transform: translateX(-34%);
-        -o-transform: translateX(-34%);
-        transform: translateX(-34%);
-    }
-
-    .notify-auction {
-        z-index: 99999;
-        position: fixed;
-        opacity: 0.93;
-    }
 </style>
 
