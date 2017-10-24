@@ -1,26 +1,20 @@
 {% set itemId = itemData.item.id %}
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
-{% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
 
-{% if ( auction ) %}
-
-    {% set bidderListLast = auction.bidderList | last %}
-    {% set bidderListLength = auction.bidderList | length %}
-
-    {% set userdata = services.customer.getContact() | json_encode() %}
-
+    {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
     {{ component( "PluginAuctions::Item.Components.AuctionBids" ) }}
     {{ component( "PluginAuctions::Item.Components.AuctionEnd" ) }}
-    {{ component( "PluginAuctions::Item.Components.Countdown" ) }}
     {{ component( "PluginAuctions::Item.Components.AuctionShowBidderList" ) }}
     {{ component( "PluginAuctions::Item.Components.Notifications" ) }}
     {{ component( "PluginAuctions::Item.Components.VisitorCounter" ) }}
 
+{% if ( auction ) %}
 
+    {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
+    {% set bidderListLast = auction.bidderList | last %}
+    {% set bidderListLength = auction.bidderList | length %}
 
-
-
-
+    {% set userdata = services.customer.getContact() | json_encode() %}
 
     <div id="addAuctionVue">
         {#Zukunft ------------------------------------------------------- #}
@@ -191,7 +185,7 @@
     <div id="bidderlist-modal-wrapper">
         <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
             <div class="modal-dialog" style="max-width: 640px;">
-                <div class="modal-content modal-left">
+                <div class="modal-content modal-auction">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
                         </button>
@@ -248,17 +242,18 @@
 
     /*modal...*/
 
-    .modal-left {
+    .modal-auction {
         -webkit-transform: translateX(-34%);
         -moz-transform: translateX(-34%);
         -ms-transform: translateX(-34%);
         -o-transform: translateX(-34%);
         transform: translateX(-34%);
     }
+
     .notify-auction {
         z-index: 99999;
         position: fixed;
-        opacity:0.93;
+        opacity: 0.93;
     }
 </style>
 
