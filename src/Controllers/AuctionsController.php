@@ -102,6 +102,21 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
+        public function getAuctionParamsListForCategoryItem(Request $request)
+        {
+            $itemIds = (array) $request -> get('itemIds');
+
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', ['$request: ' => $request]);
+
+            if (is_array($itemIds) && count($itemIds) > 0)
+            {
+                return json_encode($this -> auctionsService -> getAuctionParamsListForCategoryItem($itemIds));
+            }
+
+            return 'keine ID (oder 0) - getAuctionParamsListForCategoryItem';
+        }
+
         public function getAuctionForItemIdAndTense(Request $request)
         {
             $itemId = (int) $request -> get('itemId');
@@ -116,7 +131,7 @@
                 return json_encode($this -> auctionsService -> getAuctionForItemIdAndTense($itemId, $tense));
             }
 
-            return $itemId;
+            return false;
         }
 
         public function getAuctionsForTense(Request $request)

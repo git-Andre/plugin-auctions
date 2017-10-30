@@ -88,6 +88,40 @@
             }
         }
 
+        public function getAuctionParamsListForCategoryItem(array $itemIds)
+        {
+            $auctionList = [];
+            foreach ($itemIds as $itemId)
+            {
+                $auction = $this -> getAuctionForItemId($itemId);
+
+                if ($auction instanceof Auction_7)
+                {
+
+                    $item['itemId'] = $auction -> itemId;
+                    $item['tense'] = $auction -> tense;
+
+                    $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
+                    if ($bidderListLastEntry -> bidPrice != (float) $auction -> startPrice - 1)
+                    {
+                        $item['currentPrice'] = (float) $auction -> Price;
+                    }
+                    else
+                    {
+                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
+                    }
+                    array_push($auctionList, $item);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$item: ' => $item]);
+                }
+            }
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', ['$auctionList: ' => $auctionList]);
+
+            return $auctionList;
+        }
+
         public function getAuctionForItemId($itemId)
         {
             if ($itemId > 0)

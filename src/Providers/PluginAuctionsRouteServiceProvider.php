@@ -54,7 +54,7 @@
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
-            $router -> post('api/auctions-itemids-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemIdAndTense');
+            $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
 
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 
@@ -111,6 +111,9 @@
             $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
 
             $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
+
+            $router -> post('api/auctions-itemids-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemIdAndTense');
+
 
             // Visitors...
             $router -> get('api/get-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterController@getNumberOfVisitorsForItemId')
