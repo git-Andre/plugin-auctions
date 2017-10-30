@@ -54,7 +54,7 @@
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
-            $router -> post('api/auctions-itemids', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForItemIds');
+            $router -> post('api/auctions-itemids-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemIdAndTense');
 
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 

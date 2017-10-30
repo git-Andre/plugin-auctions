@@ -129,24 +129,28 @@
             return $auction;
         }
 
-        public function getAuctionsForItemIds(array $itemIds)
+        public function getAuctionForItemIdAndTense(int $itemId, $tense)
         {
-            if (count($itemIds) > 0)
+            if ($itemId > 0)
             {
-                $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemIds]);
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($itemId)
+                      -> debug('PluginAuctions::auctions.debug', ['$tense: ' => $tense]);
 
-                $auctions = (object) $auctionArray;
+                $auctionArray = $this -> getValues(Auction_7::class, ['itemId', 'tense'], [$itemId, $tense]);
 
-                foreach ($auctions as $auction)
+                $auction = (object) $auctionArray[0];
+
+                if ($auction -> id)
                 {
                     $auction = $this -> buildAuctionView($auction);
-                }
-                unset($auction);
 
-                return $auctions;
+                    return $auction;
+                }
             }
 
-            return $itemIds;
+            return $itemId;
         }
 
         public function getAuctionsForTense($tense)

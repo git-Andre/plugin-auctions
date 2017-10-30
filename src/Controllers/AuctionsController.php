@@ -102,17 +102,18 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
-        public function getAuctionsForItemIds(Request $request)
+        public function getAuctionForItemIdAndTense(Request $request)
         {
-            $itemIds = (array) $request -> get('itemIds');
+            $itemId = (int) $request -> get('itemId');
+            $tense =  $request -> get('tense');
 
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['$itemIds: ' => $itemIds]);
+                  -> debug('PluginAuctions::auctions.debug', ['$itemId: ' => $itemId], ['$tense: ' => $tense]);
 
-            if (is_array($itemIds))
+            if ($itemId > 0)
             {
-                return json_encode($this -> auctionsService -> getAuctionsForItemIds($itemIds));
+                return json_encode($this -> auctionsService -> getAuctionForItemIdAndTense($itemId, $tense));
             }
 
             return $itemIds;
