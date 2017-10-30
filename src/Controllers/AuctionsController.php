@@ -116,7 +116,7 @@
                 return json_encode($this -> auctionsService -> getAuctionForItemIdAndTense($itemId, $tense));
             }
 
-            return $itemIds;
+            return $itemId;
         }
 
         public function getAuctionsForTense(Request $request)
