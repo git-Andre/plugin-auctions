@@ -102,8 +102,14 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
-        public function getAuctionsForItemIds($itemIds)
+        public function getAuctionsForItemIds(Request $request)
         {
+            $itemIds = (array) $request -> get('itemIds');
+
+
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', ['$itemIds: ' => $itemIds]);
+
             if (is_array($itemIds))
             {
                 return json_encode($this -> auctionsService -> getAuctionsForItemIds($itemIds));

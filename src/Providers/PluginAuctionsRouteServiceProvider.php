@@ -54,7 +54,7 @@
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
-            $router -> get('api/auctions-for-item-ids/{itemIds}', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForItemIds');
+            $router -> get('api/auctions-itemids', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForItemIds');
 
             $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 
