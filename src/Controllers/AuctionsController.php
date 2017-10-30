@@ -107,7 +107,7 @@
             $itemIds = (array) $request -> get('itemIds');
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['$request: ' => $request]);
+                  -> debug('PluginAuctions::auctions.debug', ['$request: ' => $request -> all()]);
 
             if (is_array($itemIds) && count($itemIds) > 0)
             {
