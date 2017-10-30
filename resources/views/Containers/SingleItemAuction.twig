@@ -34,7 +34,7 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <h2 class="m-b-1 alarm">Laufende Auktion:</h2>
+            <h2 class="m-b-1 alarm">Aktuelle Auktion:</h2>
 
 
             <div class="row container m-t-0 m-b-2">
@@ -73,11 +73,6 @@
                             <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% endif %}
-
-
-
-
-
 
                     {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 

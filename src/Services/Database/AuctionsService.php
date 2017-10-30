@@ -74,11 +74,11 @@
             {
                 return AuctionStatus::PAST;
             }
-            elseif ($startDate < $now && $endDate > $now)
+            else if ($startDate < $now && $endDate > $now)
             {
                 return AuctionStatus::PRESENT;
             }
-            elseif ($startDate > $now && $endDate > $now)
+            else if ($startDate > $now && $endDate > $now)
             {
                 return AuctionStatus::FUTURE;
             }
@@ -129,14 +129,35 @@
             return $auction;
         }
 
+        public function getAuctionsForItemIds(array $itemIds)
+        {
+            if (count($itemIds) > 0)
+            {
+                $auctionArray = $this -> getValues(Auction_7::class, ['itemId'], [$itemIds]);
+
+                $auctions = (object) $auctionArray;
+
+                foreach ($auctions as $auction)
+                {
+                    $auction = $this -> buildAuctionView($auction);
+                }
+                unset($auction);
+
+                return $auctions;
+            }
+
+            return $itemIds;
+        }
+
         public function getAuctionsForTense($tense)
         {
-            if ($tense != 'past')
+            if ($tense != AuctionStatus::PAST)
             {
                 $auctionArray = $this -> getValues(Auction_7::class, ['tense'], [$tense]);
 
                 return $auctionArray;
             }
+
             return ['Fehler' => $tense];
         }
 
@@ -160,6 +181,7 @@
 
                 return $auctionIdsPastArray;
             }
+
             return false;
         }
 
@@ -361,8 +383,10 @@
 
                     return $this -> setValue($auction);
                 }
+
                 return 'Diese ID: ' + $auctionId + ' ist uns nicht bekannt';
             }
+
             return false;
         }
 

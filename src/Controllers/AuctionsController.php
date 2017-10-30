@@ -102,6 +102,16 @@
             return 'keine ID (oder 0) - getLiveAuctionForItemId';
         }
 
+        public function getAuctionsForItemIds($itemIds)
+        {
+            if (is_array($itemIds))
+            {
+                return json_encode($this -> auctionsService -> getAuctionsForItemIds($itemIds));
+            }
+
+            return $itemIds;
+        }
+
         public function getAuctionsForTense(Request $request)
         {
             $tense = (string) $request -> get('tense');
