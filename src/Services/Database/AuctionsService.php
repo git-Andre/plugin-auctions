@@ -109,15 +109,16 @@
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::auctions.debug', ['$auction: ' => $auction]);
 
+                    $item['currentPrice'] = 999.99;
 
-                    if ($bidderListLastEntry -> bidderName == "Startpreis") // todo: bitte mal richtig - nicht so grottenmäßig
-                    {
-                        $item['currentPrice'] = (float) $auction -> startPrice;
-                    }
-                    else
-                    {
-                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
-                    }
+//                    if ($bidderListLastEntry -> bidderName == "Startpreis") // todo: bitte mal richtig - nicht so grottenmäßig
+//                    {
+//                        $item['currentPrice'] = (float) $auction -> startPrice;
+//                    }
+//                    else
+//                    {
+//                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
+//                    }
                     array_push($auctionList, $item);
                 }
             }
