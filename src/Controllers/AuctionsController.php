@@ -106,12 +106,6 @@
         {
             $itemIds = (array) $request -> get('itemIds');
 
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['$itemIds: ' => $itemIds]);
-
-            $this -> getLogger(__METHOD__)
-                  -> debug('MeldungsTest', ['$itemIds: ' => $itemIds]);
-
             if (is_array($itemIds) && count($itemIds) > 0)
             {
                 return json_encode($this -> auctionsService -> getAuctionParamsListForCategoryItem($itemIds));

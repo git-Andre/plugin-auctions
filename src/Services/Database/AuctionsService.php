@@ -106,17 +106,18 @@
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry: ' => $bidderListLastEntry]);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['count($bidderListLastEntry): ' => count($bidderListLastEntry)]);
-
-//                    $item['currentPrice'] = 999.99;
-
-                    if (count($bidderListLastEntry) > 1)
+                    if (count($auction -> bidderList) > 1)
                     {
-                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
+                        $this -> getLogger(__METHOD__)
+                              -> debug('PluginAuctions::auctions.debug', ['count($bidderListLastEntry): ' => count($auction -> bidderList)]);
+
+                        $item['currentPrice'] = (float) $bidderListLastEntry -> bidPrice;
                     }
                     else
                     {
+                        $this -> getLogger(__METHOD__)
+                              -> debug('PluginAuctions::auctions.debug', ['count($bidderListLastEntry): ' => count($auction -> bidderList)]);
+
                         $item['currentPrice'] = (float) $auction -> startPrice;
                     }
                     array_push($auctionList, $item);
