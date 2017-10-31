@@ -107,18 +107,18 @@
                           -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry: ' => $bidderListLastEntry]);
 
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['$auction: ' => $auction]);
+                          -> debug('PluginAuctions::auctions.debug', ['count($bidderListLastEntry): ' => count($bidderListLastEntry)]);
 
-                    $item['currentPrice'] = 999.99;
+//                    $item['currentPrice'] = 999.99;
 
-//                    if ($bidderListLastEntry -> bidderName == "Startpreis") // todo: bitte mal richtig - nicht so grottenmäßig
-//                    {
-//                        $item['currentPrice'] = (float) $auction -> startPrice;
-//                    }
-//                    else
-//                    {
-//                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
-//                    }
+                    if (count($bidderListLastEntry) > 1)
+                    {
+                        $item['currentPrice'] = $bidderListLastEntry -> bidPrice;
+                    }
+                    else
+                    {
+                        $item['currentPrice'] = (float) $auction -> startPrice;
+                    }
                     array_push($auctionList, $item);
                 }
             }
