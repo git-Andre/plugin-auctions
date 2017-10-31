@@ -102,7 +102,7 @@
                     $item['tense'] = $auction -> tense;
 
                     $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
-                    if ($bidderListLastEntry -> bidPrice != (float) $auction -> startPrice - 1)
+                    if ($bidderListLastEntry -> bidPrice == (float) $auction -> startPrice - 1)
                     {
                         $item['currentPrice'] = (float) $auction -> startPrice;
                     }
