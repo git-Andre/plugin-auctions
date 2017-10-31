@@ -103,6 +103,12 @@
 
                     $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
 
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry: ' => $bidderListLastEntry]);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$auction: ' => $auction]);
+
 
                     if ($bidderListLastEntry -> bidderName == "Startpreis") // todo: bitte mal richtig - nicht so grottenmäßig
                     {
