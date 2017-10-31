@@ -102,7 +102,14 @@
                     $item['tense'] = $auction -> tense;
 
                     $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
-                    if ($bidderListLastEntry -> bidPrice == (float) $auction -> startPrice - 1)
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry: ' => $bidderListLastEntry]);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$auction -> startPrice: ' => $auction -> startPrice]);
+
+                    if ($bidderListLastEntry -> bidPrice != (float) $auction -> startPrice - 1)
                     {
                         $item['currentPrice'] = (float) $auction -> startPrice;
                     }
@@ -112,8 +119,6 @@
                     }
                     array_push($auctionList, $item);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['$item: ' => $item]);
                 }
             }
             $this -> getLogger(__METHOD__)
