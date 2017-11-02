@@ -99,7 +99,7 @@
                 return json_encode($this -> auctionsService -> getAuctionForItemId($itemId));
             }
 
-            return 'keine ID (oder 0) - getLiveAuctionForItemId';
+            return json_encode('keine ID (oder 0) - getLiveAuctionForItemId');
         }
 
         public function getAuctionParamsListForCategoryItem(Request $request)
@@ -111,7 +111,7 @@
                 return json_encode($this -> auctionsService -> getAuctionParamsListForCategoryItem($itemIds));
             }
 
-            return 'keine ID (oder 0) - getAuctionParamsListForCategoryItem';
+            return json_encode('keine itemIds - getAuctionParamsListForCategoryItem');
         }
 
         public function getAuctionForItemIdAndTense(Request $request)

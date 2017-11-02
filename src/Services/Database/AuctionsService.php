@@ -105,19 +105,6 @@
 
                     if (count($auction -> bidderList) > 1)
                     {
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry: ' => $bidderListLastEntry]);
-//
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry -> bidPrice): ' => $bidderListLastEntry -> bidPrice]);
-//
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry -> bidStatus): ' => $bidderListLastEntry -> bidStatus]);
-//
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::auctions.debug', ['$bidderListLastEntry -> customerId): ' => $bidderListLastEntry -> customerId]);
-
-//                        $item['currentPrice'] = (float) $bidderListLastEntry -> bidPrice;
                         $item['currentPrice'] = (float) $bidderListLastEntry['bidPrice'];
                     }
                     else
