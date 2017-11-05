@@ -95,8 +95,11 @@
                   -> debug('PluginAuctions::auctions.debug', ['$paginatedResults: ' => $paginatedResults]);
 
             $itemIds = [46987];
-            $this . $this -> getAuctionParamsListForCategoryItem($itemIds);
 
+            $auctionList = $this -> getAuctionParamsListForCategoryItem($itemIds);
+
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debugAfter', ['$auctionList: ' => $auctionList]);
             return $auctionList;
         }
 
