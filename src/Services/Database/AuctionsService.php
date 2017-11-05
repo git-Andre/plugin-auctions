@@ -89,10 +89,10 @@
             }
         }
 
-        public function getAuctionParamsForPaginatedResults(array $paginatedResults)
+        public function getAuctionParamsForPaginatedResults($paginatedResults)
         {
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['$paginatedResults: ' => $paginatedResults]);
+                  -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => $paginatedResults]);
 
             $itemIds = [46987];
 
