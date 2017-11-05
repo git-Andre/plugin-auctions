@@ -89,7 +89,7 @@
             }
         }
 
-        public function getAuctionParamsForPaginatedResults(PaginatedResult $paginatedResults)
+        public function getAuctionParamsForPaginatedResults(array $paginatedResults)
         {
             $this -> getLogger(__METHOD__)
                   -> debug('PluginAuctions::auctions.debug', ['$paginatedResults: ' => $paginatedResults]);
