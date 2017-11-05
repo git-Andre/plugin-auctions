@@ -7,6 +7,7 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
+    use Plenty\Repositories\Models\PaginatedResult;
     use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
@@ -86,6 +87,17 @@
             {
                 return 'Fehler - startDate: ' . $startDate . ' - endDate: ' . $endDate . ' - now: ' . $now;
             }
+        }
+
+        public function getAuctionParamsForPaginatedResults(PaginatedResult $paginatedResults)
+        {
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', ['$paginatedResults: ' => $paginatedResults]);
+
+            $itemIds = [46987];
+            $this . $this -> getAuctionParamsListForCategoryItem($itemIds);
+
+            return $auctionList;
         }
 
         public function getAuctionParamsListForCategoryItem(array $itemIds)
