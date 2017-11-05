@@ -7,7 +7,6 @@
 
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
-    use Plenty\Repositories\Models\PaginatedResult;
     use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
@@ -89,10 +88,18 @@
             }
         }
 
-        public function getAuctionParamsForPaginatedResults(array $paginatedResults)
+        public function getAuctionParamsForPaginatedResults($paginatedResults)
         {
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => $paginatedResults]);
+            if ($paginatedResults)
+            {
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => $paginatedResults]);
+            }
+            else
+            {
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => "Mist"]);
+            }
 
             $itemIds = [46987];
 
