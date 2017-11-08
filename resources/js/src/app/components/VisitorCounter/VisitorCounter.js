@@ -2,31 +2,35 @@
 // const NotificationService = require( "services/NotificationService" );
 // const AuctionConstants    = require( "constants/AuctionConstants" );
 
-Vue.component( "visitor-counter", {
+Vue.component("visitor-counter", {
     props: [
         "template",
         "numberOfVisitors"
     ],
-    data() {
+    data()
+{
         return {
             ones: 0,
             tens: 0,
             hundreds: 0,
             thousands: 0
-        }
+        };
     },
-    created() {
+    created()
+{
         this.$options.template = this.template;
     },
-    compiled() {
-        this.numberOfVisitors = parseInt( this.numberOfVisitors );
+    compiled()
+{
+        this.numberOfVisitors = parseInt(this.numberOfVisitors);
     },
-    ready() {
+    ready()
+{
 
-        this.ones      = this.numberOfVisitors % 10;
-        this.tens      = (parseInt( this.numberOfVisitors / 10 )) % 10;
-        this.hundreds  = (parseInt( this.numberOfVisitors / 10 / 10 )) % 10;
-        this.thousands = (parseInt( this.numberOfVisitors / 10 / 10 / 10 )) % 10;
+        this.ones = this.numberOfVisitors % 10;
+        this.tens = (parseInt(this.numberOfVisitors / 10)) % 10;
+        this.hundreds = (parseInt(this.numberOfVisitors / 10 / 10)) % 10;
+        this.thousands = (parseInt(this.numberOfVisitors / 10 / 10 / 10)) % 10;
     },
     methods: {
         // twoDigits(value) {
@@ -48,4 +52,4 @@ Vue.component( "visitor-counter", {
         //         )
         // }
     }
-} )
+});

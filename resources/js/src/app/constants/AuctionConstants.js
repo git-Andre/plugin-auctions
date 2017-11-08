@@ -1,4 +1,5 @@
-class AuctionConstants {
+class AuctionConstants
+{
 
 }
 
@@ -13,10 +14,8 @@ export const START           = "Auktion beginnt!";
         // export const LOWER_BID       = "lowerBid";
         // export const START           = "withoutBid";
 
-
 // tense
 export const PRESENT = "present";
 export const PAST = "past";
 export const PAST_PERFECT = "past-perfect";
-
 

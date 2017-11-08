@@ -1,59 +1,67 @@
-const ApiService = require( "services/ApiService" );
+const ApiService = require("services/ApiService");
 
-Vue.component( "auction-show-bidderlist", {
+Vue.component("auction-show-bidderlist", {
 
     props: {
-        "template": String,
-        "auctionid": String,
+        template: String,
+        auctionid: String
     },
 
-    data() {
+    data()
+{
         return {
             bidderList: [],
             bidders: 0
         };
     },
 
-    created() {
+    created()
+{
         this.$options.template = this.template;
-        this.auctionid         = parseInt( this.auctionid );
+        this.auctionid = parseInt(this.auctionid);
     },
-    ready() {
+    ready()
+{
         this.getBidderList();
     },
     methods: {
-        getBidderList() {
-            ApiService.get( "/api/bidderlist/" + this.auctionid )
-                .done( biddersFromServer => {
+        getBidderList()
+{
+            ApiService.get("/api/bidderlist/" + this.auctionid)
+                .done(biddersFromServer =>
+{
 
                     // const bidderData     = this.getBidderList();
                     var differentBidders = [];
 
                     this.bidderList = [];
 
-                    for (var i = biddersFromServer.length; --i >= 0;) {
+                    for (var i = biddersFromServer.length; --i >= 0;)
+{
                         var bidView = {};
 
-                        bidView.bidderName   = biddersFromServer[i].bidderName;
-                        bidView.bidPrice     = biddersFromServer[i].bidPrice;
-                        bidView.bidStatus    = biddersFromServer[i].bidStatus;
+                        bidView.bidderName = biddersFromServer[i].bidderName;
+                        bidView.bidPrice = biddersFromServer[i].bidPrice;
+                        bidView.bidStatus = biddersFromServer[i].bidStatus;
                         bidView.bidTimeStamp = biddersFromServer[i].bidTimeStamp * 1000;
 
-                        this.bidderList.push( bidView );
+                        this.bidderList.push(bidView);
 
                         const currentUserId = biddersFromServer[i].customerId;
 
-                        if ( differentBidders.indexOf( currentUserId ) < 0 ) {
-                            differentBidders.push( currentUserId );
+                        if (differentBidders.indexOf(currentUserId) < 0)
+{
+                            differentBidders.push(currentUserId);
                         }
                     }
                     this.bidders = differentBidders.length - 1;
-                } )
-                .fail( () => {
-                           alert( 'Upps - ein Fehler bei biddersFromServer ??!!' );
-                       }
-                )
-        },
+                })
+                .fail(() =>
+{
+                    alert("Upps - ein Fehler bei biddersFromServer ??!!");
+                }
+                );
+        }
     }
-} )
+})
 ;

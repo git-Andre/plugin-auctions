@@ -1,4 +1,4 @@
-const NotificationService  = require( "services/NotificationService" );
+const NotificationService  = require("services/NotificationService");
 var WaitScreenService   = require("services/WaitScreenService");
 
 module.exports = (function($)
