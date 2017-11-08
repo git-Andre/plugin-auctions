@@ -3,13 +3,13 @@
 
 
 <div class="m-t-2">
-    <dt>Start Datum:</dt>
+    <dt>{{ trans("PluginAuctions::auctions.startDate") }}</dt>
     <dd>{{ auction.startDate | date('D d. M Y H:i') }}</dd>
-    <dt>Dauer:</dt>
+    <dt>{{ trans("PluginAuctions::auctions.duration") }}</dt>
     <dd>{{ auction.auctionDuration }} Tage</dd>
-    <dt>End Datum:</dt>
+    <dt>{{ trans("PluginAuctions::auctions.endDate") }}</dt>
     <dd>{{ auction.expiryDate | date('D d. M Y H:i e') }}</dd>
-    <dt>Versand:</dt>
-    <dd>Innerhalb Deutschlands kostenlos.</dd>
+    <dt>{{ trans("PluginAuctions::auctions.shipping") }}</dt>
+    <dd>{{ trans("PluginAuctions::auctions.shippinGermany") }}</dd>
 
 </div>

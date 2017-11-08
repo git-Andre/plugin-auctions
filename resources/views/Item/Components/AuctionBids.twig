@@ -20,16 +20,14 @@
                     aria-describedby="maxBidHelpBlock"
             >
             <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">Bitte geben Sie mindestens
-                <span :class="{alarm: !isInputValid}">${ minbid | currency }</span>
-                                                             ein!</p>
+                    class="form-text text-muted text-center">{{ trans("PluginAuctions::auctions.bidAtLeast") }}<span
+                        :class="{alarm: !isInputValid}">${ minbid | currency }</span>{{ trans("PluginAuctions::auctions.bidAtLeastEnd") }}</p>
 
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
                     :disabled="!isInputValid"
                     @click="addBid"
-            >Gebot verbindlich abgeben
-            </button>
+            >{{ trans("PluginAuctions::auctions.makeBindingBid") }}</button>
 
             <button class="btn btn-primary btn-lg btn-block"
                     v-if="userdata.id == 7076"

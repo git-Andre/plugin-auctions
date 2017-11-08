@@ -5,23 +5,14 @@
         <div class="row container m-b-1">
             <div class="col-md-6 p-t-5">
                 <h4>
-                    ${bidders}<span class="small muted"> Bieter, </span>${bidderList.length -
-                    1}<span class="small muted"> Gebot(e)</span>
+                    ${bidders}<span class="small muted">{{ trans("PluginAuctions::auctions.bidderListBidders") }}</span>${bidderList.length -
+                    1}<span class="small muted">{{ trans("PluginAuctions::auctions.bidderListBids") }}</span>
                 </h4>
             </div>
 
-            {#<div class="col-md-6 text-right">#}
-                {#<button class="btn btn-secondary"#}
-                        {#@click="getBidderList"#}
-                {#><i class="fa fa-refresh fa-2 m-r-1" aria-hidden="true"></i>reload#}
-                {#</button>#}
-
-            {#</div>#}
-
         </div>
 
-        <p class="muted small p-l-1">Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und auch geändert werden!<br>
-                                     Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...</p>
+        <p class="muted small p-l-1">{{ trans("PluginAuctions::auctions.bidderListMaxBids1") }}<br>{{ trans("PluginAuctions::auctions.bidderListMaxBids2") }}</p>
 
         <div class="tab-pane" id="ao-bidderList" role="tabpanel">
 
@@ -30,12 +21,12 @@
                     <tbody>
                     <tr>
                         <th class="column-left p-l-1"><h4><span class="p-r-1"><i class="fa fa-user fa-2"
-                                            aria-hidden="true"></i></span>Höchstbieter
+                                            aria-hidden="true"></i></span>{{ trans("PluginAuctions::auctions.bidderListHighestBidder") }}
                             </h4></th>
                         <th class="column text-right p-r-3"><h4><span class="p-r-1"><i class="fa fa-money fa-1"
-                                            aria-hidden="true"></i></span>Gebots-Preis </h4></th>
+                                            aria-hidden="true"></i></span>{{ trans("PluginAuctions::auctions.bidderListHighestBid") }}</h4></th>
                         <th class="column-right text-right p-r-1"><h4><span class="p-r-1"><i class="fa fa-clock-o"
-                                            aria-hidden="true"></i></span>Gebots-Zeitpunkt</h4></th>
+                                            aria-hidden="true"></i></span>{{ trans("PluginAuctions::auctions.bidderListBidTime") }}</h4></th>
                     </tr>
                     <tr v-for="bid in bidderList">
                         <td class="bid p-l-3">${ bid.bidderName }</td>

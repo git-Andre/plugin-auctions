@@ -77,7 +77,7 @@
                     {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                     {% if bidderListLength != 1 %}
-                        <dt>Anzahl Gebote:</dt>
+                        <dt>{{ trans("PluginAuctions::auctions.countOffers") }}</dt>
                         <dd> {{ bidderListLength - 1 }}
                             <span>
                             <a data-toggle="modal" href="#bidderlist">
@@ -132,7 +132,7 @@
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                 {% if bidderListLength != 1 %}
-                    <dt>Anzahl Gebote:</dt>
+                    <dt>{{ trans("PluginAuctions::auctions.countOffers") }}</dt>
                     <dd> {{ bidderListLength - 1 }}
                         <span>
                             <a data-toggle="modal" href="#bidderlist">
