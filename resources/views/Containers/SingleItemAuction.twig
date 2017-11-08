@@ -12,17 +12,17 @@
     <div id="addAuctionVue">
         {#Zukunft ------------------------------------------------------- #}
         {% if (auction.tense == 'future') %}
-            <h2 class="m-b-2">Bald beginnende Auktion:</h2>
+            <h2 class="m-b-2">{{ trans("PluginAuctions::auctions.pronouncedAuction") }}</h2>
 
             <dl class="auctionList">
-                <dt>Start Preis:</dt>
+                <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
                 {#Aufgeld Start#}
-                <dt><span class="alarm">Aufgeld:</span></dt>
-                <dd><span>10% vom Höchstgebot</span>
+                <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span></dt>
+                <dd><span>{{ trans("PluginAuctions::auctions.surchargePercent") }}</span>
                     <span class="m-x-5">|</span>
-                    <span>Gesamtpreis: </span>
+                    <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
                     <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                 </dd>
 
@@ -51,25 +51,25 @@
                 <dl class="auctionList">
 
                     {% if (bidderListLength > 1) %}
-                        <dt>Aktuelles Gebot:</dt>
+                        <dt>{{ trans("PluginAuctions::auctions.currentOffer") }}</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
-                        <dt>Start Preis:</dt>
+                        <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Standard#}
-                        <dt><span class="alarm">Aufgeld</span> <span class="small">(10%)</span>:</dt>
+                        <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
                         <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                             <span class="m-x-1">|</span>
-                            <span>Gesamtpreis: </span>
+                            <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% else %}
-                        <dt>Start Preis:</dt>
+                        <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
-                        <dt><span class="alarm">Aufgeld:</span></dt>
-                        <dd><span>10% vom Höchstgebot</span>
+                        <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span></dt>
+                        <dd><span>{{ trans("PluginAuctions::auctions.surchargePercent") }}</span>
                             <span class="m-x-5">|</span>
-                            <span>Gesamtpreis: </span>
+                            <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% endif %}
@@ -105,28 +105,28 @@
 
             {#Vergangenheit #}
         {% elseif (auction.tense == 'past' or auction.tense == 'past-perfect') %}
-            <h2 class="m-b-2">Beendete Auktion:</h2>
+            <h2 class="m-b-2">{{ trans("PluginAuctions::auctions.closedAuction") }}</h2>
 
             <dl class="auctionList">
 
                 {% if bidderListLength != 1 %}
-                    <dt>Höchstgebot:</dt>
+                    <dt>{{ trans("PluginAuctions::auctions.highestBid") }}</dt>
                     <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                     {#Aufgeld Standard#}
-                    <dt><span class="alarm">Aufgeld</span> <span class="small">(10%)</span>:</dt>
+                    <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
                     <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         <span class="m-x-1">|</span>
-                        <span>Gesamtpreis: </span>
+                        <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
                         <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                     </dd>
 
                 {% else %}
-                    <dt>Ergebnis:</dt>
-                    <dd class="price h3 m-b-2">Keine Gebote.</dd>
+                    <dt>{{ trans("PluginAuctions::auctions.outcome") }}</dt>
+                    <dd class="price h3 m-b-2">{{ trans("PluginAuctions::auctions.noBids") }}</dd>
 
                 {% endif %}
 
-                <dt>Start Preis:</dt>
+                <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
 
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
@@ -136,7 +136,7 @@
                     <dd> {{ bidderListLength - 1 }}
                         <span>
                             <a data-toggle="modal" href="#bidderlist">
-                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i> alle anzeigen
+                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::auctions.showAll") }}
                                      </a>
                         </span>
                     </dd>
