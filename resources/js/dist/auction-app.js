@@ -317,7 +317,10 @@ Vue.component("auction-bids", {
     watch: {
         maxCustomerBid: function maxCustomerBid() {
             if (this.maxCustomerBid > 0 && this.userdata == null) {
-                NotificationService.error({ "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" }).closeAfter(5000);
+                // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                NotificationService.error(Translations.auctions.auctionPleaseLogin)
+                // NotificationService.error( "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" )
+                .closeAfter(5000);
                 this.isInputValid = false;
             }
             if (this.maxCustomerBid >= this.minbid && this.userdata != null) {

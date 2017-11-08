@@ -1,8 +1,1 @@
-var LanguagesAo   = LanguagesAo || {};
-LanguagesAo['de'] = {
-    TemplateAo:
-        {
-            accAccountSettings: "Kontoeinstellungen",
-            auctionBidderlistTitel: "Alle Gebote zu dieser Auktion"
-        }
-};
+var Languages = Languages || {}; Languages['de'] = {auctions: {info: "info-meldung",alert: "alert-meldung",debug: "debug-meldung",error: "error-meldung",newOrder: "Neuer Auftrag nach Auktionsende",basketItemAlreadyInBasket: "Fehler: basketAlreadyInBasket",debugBefor: "debug vor einer Aktion",debugAfter: "debug NACH der Aktion",debugCronHelper: "Cron Job - Aufträge für Auktionen",currentAuction: "Aktuelle Auktion:",pronouncedAuction: "Bald beginnende Auktion:",closedAuction: "Beendete Auktion:",maxBid: "Ihr Maximalgebot",startPrice: "Start Preis:",startDate: "Start Datum:",duration: "Dauer:",endDate: "End Datum:",shipping: "Versand:",shippinGermany: "Innerhalb Deutschlands kostenlos.",surcharge: "Aufgeld:",surchargePercent: "10% vom Höchstgebot",totalPrice: "Gesamtpreis: ",currentOffer: "Aktuelles Gebot:",highestBid: "Höchstgebot:",outcome: "Ergebnis:",noBids: "Keine Gebote.",showAll: " alle anzeigen",countOffers: "Anzahl Gebote",bidAtLeast: "Bitte geben Sie mindestens ",bidAtLeastEnd: " ein!",makeBindingBid: "Gebot verbindlich abgeben!",allOffersThisAuction: "Alle Gebote für diese Auktion",bidderListBidders: " Bieter, ",bidderListBids: " Gebot(e)",bidderListMaxBids1: "Maximalgebote können jederzeit vor Ablauf der Auktion abgegeben und auch geändert werden!",bidderListMaxBids2: "Maximalgebote des jeweiligen Bieters werden natürlich nicht angezeigt...",bidderListHighestBidder: "Höchstbieter",bidderListHighestBid: "Gebots-Preis",bidderListBidTime: "Gebots-Zeitpunkt",timeLeft: "Restzeit:",counterDays: "tage",counterHrs: "std.",counterMin: "min.",counterSec: "sek.",visitors: "Besucher: ",auction: "Auktion",auctionPleaseLogin: "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!",},};

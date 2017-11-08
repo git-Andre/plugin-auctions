@@ -200,7 +200,7 @@ Vue.component( "auction-bids", {
                 "auctionDuration": 1,
                 "startPrice": this.minbid - 2
             };
-            const url = "/api/auction/" + this.auction.id;
+            const url   = "/api/auction/" + this.auction.id;
             ApiService.put( url, JSON.stringify( Bidtest ), { contentType: "application/json" }
             )
                 .done( auction => {
@@ -224,7 +224,7 @@ Vue.component( "auction-bids", {
                         tense = tensefromServer;
 
                         if ( tense == AuctionConstants.PAST ) {
-                            this.reload( 100);
+                            this.reload( 100 );
                             // this.afterAuctionWithServerTensePast();
                         }
                         else {
@@ -263,7 +263,7 @@ Vue.component( "auction-bids", {
 
                                     if ( result == this.item['variation']['id'] ) {
                                         sessionStorage.setItem( "basketItem", this.auction.itemId );
-                                        this.reload( 10);
+                                        this.reload( 10 );
                                     }
                                     else {
                                         alert(
@@ -300,14 +300,15 @@ Vue.component( "auction-bids", {
             alert(
                 'Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n' +
                 '(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n' +
-                'Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!')
+                'Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!' )
         }
     },
     watch: {
         maxCustomerBid: function () {
             if ( this.maxCustomerBid > 0 && this.userdata == null ) {
-                NotificationService.error(
-                    { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                NotificationService.error( Translations.auctions.auctionPleaseLogin )
+                // NotificationService.error( "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" )
                     .closeAfter( 5000 );
                 this.isInputValid = false;
             }
