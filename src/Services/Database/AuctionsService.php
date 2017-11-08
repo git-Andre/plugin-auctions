@@ -88,28 +88,6 @@
             }
         }
 
-        public function getAuctionParamsForPaginatedResults($paginatedResults)
-        {
-            if ($paginatedResults)
-            {
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => $paginatedResults]);
-            }
-            else
-            {
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debugBefor', ['$paginatedResults: ' => "Mist"]);
-            }
-
-            $itemIds = [46987];
-
-            $auctionList = $this -> getAuctionParamsListForCategoryItem($itemIds);
-
-//            $this -> getLogger(__METHOD__)
-//                  -> debug('PluginAuctions::auctions.debugAfter', ['$auctionList: ' => $auctionList]);
-            return $auctionList;
-        }
-
         public function getAuctionParamsListForCategoryItem(array $itemIds)
         {
             $auctionList = [];
