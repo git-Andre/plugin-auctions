@@ -7,7 +7,7 @@
     use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Services\AuctionOrderService;
     use PluginAuctions\Services\Database\AuctionsService;
-    use IO\Services\ItemService;
+
     //use Etsy\Services\Batch\Item\ItemExportService;
 //use Etsy\Helper\AccountHelper;
 //use Etsy\Helper\SettingsHelper;
@@ -43,11 +43,25 @@
                     {
                         $localizedOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
-                        $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
+                        $this -> getLogger(__METHOD__)
+                              -> setReferenceType('testedId')
+                              -> setReferenceValue($endedAuctionId)
+                              -> debug('PluginAuctions::auctions.debugCronHelper', ['$localizedOrder: ' => $localizedOrder]);
+
+                        if ($localizedOrder)
+                        {
+                            $this -> auctionsService -> updateAuctionWithTense($endedAuctionId, AuctionStatus::PAST_PERFECT);
+
+                            $this -> getLogger(__METHOD__)
+                                  -> setReferenceType('auctionId')
+                                  -> setReferenceValue($endedAuctionId)
+                                  -> debug('PluginAuctions::auctions.debugCronHelper', ['AuctionStatus: ' => AuctionStatus::PAST_PERFECT]);
+
+                        }
                     }
                     catch ( \Exception $exception )
                     {
-                        $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::Auction to Order CRON-Error', $exception);
+                        $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auctions.error', $exception);
                     }
                 }
             }

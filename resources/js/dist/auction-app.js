@@ -57,7 +57,7 @@ Vue.component("visitor-counter", {
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionConstants = require("constants/AuctionConstants");
-var ResourceService = require("services/ResourceService");
+// const ResourceService     = require("services/ResourceService");
 
 var NOTIFY_TIME = 10000;
 
@@ -83,9 +83,9 @@ Vue.component("auction-bids", {
     },
     ready: function ready() {
         // tense "present" und Customer loggedIn ??
-        if (this.auction.tense == AuctionConstants.PRESENT && this.userdata != null) {
+        if (this.auction.tense === AuctionConstants.PRESENT && this.userdata !== null) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
+            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") === this.userdata.id) {
                 this.liveEvaluateAndNotify();
             }
         }
@@ -95,10 +95,11 @@ Vue.component("auction-bids", {
         addBid: function addBid() {
             var _this = this;
 
-            ApiService.get("/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate).done(function (tenseFromServer) {
+            ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tenseFromServer) {
                 var tense = tenseFromServer;
                 // Absicherung mit Server Time, dass Auktion noch 'present' ist
-                if (tense == AuctionConstants.PRESENT) {
+
+                if (tense === AuctionConstants.PRESENT) {
                     ApiService.get("/api/auctionbidprice/" + _this.auction.id).done(function (lastBidPrice) {
                         // ist es ein gültiges Gebot (höher als letztes Gebot) ?
                         if (_this.maxCustomerBid > _this.toFloatTwoDecimal(lastBidPrice)) {
@@ -107,9 +108,9 @@ Vue.component("auction-bids", {
                             var newBidderName = _this.userdata.email.slice(0, 2) + " *** " + _this.userdata.email.slice(pos - 2, pos);
 
                             var currentBid = {
-                                'customerMaxBid': _this.toFloatTwoDecimal(_this.maxCustomerBid),
-                                'bidderName': newBidderName,
-                                'customerId': parseInt(_this.userdata.id)
+                                customerMaxBid: _this.toFloatTwoDecimal(_this.maxCustomerBid),
+                                bidderName: newBidderName,
+                                customerId: parseInt(_this.userdata.id)
                             };
 
                             // super Time Tunnel
@@ -118,18 +119,17 @@ Vue.component("auction-bids", {
                             ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
                                 _this.reload(5);
                             }, function (error) {
-                                alert('error3: ' + error.toString());
+                                alert("error3: " + error.toString());
                             });
                         }
                         // es gibt inzwischen schon ein höheres Gebot
                         else {
-                                NotificationService.warn(
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").close;
-                                _this.reload(2600); // :)
+                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).close;
+                                _this.reload(2600);
                             }
                     }).fail(function () {
-                        alert('Upps - ein Fehler bei auctionbidprice ??!!');
+                        alert("Upps - ein Fehler bei auctionbidprice ??!!");
                     });
                 } else {
                     // ToDO Modal mit Time 5sec
@@ -137,28 +137,23 @@ Vue.component("auction-bids", {
                     _this.afterAuctionWithServerTensePast();
                 }
             }).fail(function () {
-                alert('Upps - ein Fehler bei der Zeitabfrage ??!!');
+                alert("Upps - ein Fehler bei der Zeitabfrage ??!!");
             });
         },
         liveEvaluateAndNotify: function liveEvaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id) {
+                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId === this.userdata.id) {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
-                                NotificationService.info(
-                                // "<span><i class=\"fa fa-info-circle p-l-0 p-r-1\"></span>" +
-                                "<h3>Letzte Aktion:</h3><hr>" + "Sie haben Ihr eigenes Maximal-Gebot geändert!").closeAfter(NOTIFY_TIME);
+                                NotificationService.info("<h3>" + TranslationsAo.auctions.auctionlastAction + "</h3><hr>" + TranslationsAo.auctions.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
-                                NotificationService.success({
-                                    "message":
-                                    // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                    "<h3>STATUS:</h3><hr>Es wurde ein geringeres Maximal-Gebot abgegeben... " + "<br> Sie sind aber immer noch Höchstbietende(r)..."
-                                }).closeAfter(NOTIFY_TIME);
+                                // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
+                                NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionLowerMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                     }
@@ -167,33 +162,31 @@ Vue.component("auction-bids", {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
-                                NotificationService.info(
                                 // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>Sie haben Ihr eigenes Maximal-Gebot verändert!").closeAfter(NOTIFY_TIME);
+                                NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.HIGHEST_BID:
                             {
                                 NotificationService.success(
                                 // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>Sie sind derzeit Höchstbietende(r)...").closeAfter(NOTIFY_TIME);
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionYouHaveHighestBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
-                                NotificationService.warn(
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").closeAfter(NOTIFY_TIME);
+                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
 
                                 break;
                             }
-                            console.log('keine Info / bidStatus ?????: ');
+
                     }
                 }
             } else {
                 NotificationService.warn(
                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                "<h3>STATUS:</h3><hr>Es wurde schon ein höheres Maximal-Gebot abgegeben...").closeAfter(NOTIFY_TIME);
+                "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
             }
             /**/
             sessionStorage.removeItem("currentBidder");
@@ -201,7 +194,7 @@ Vue.component("auction-bids", {
         hasLoggedInUserBiddenYet: function hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
-                if (this.userdata.id == this.auction.bidderList[i].customerId) {
+                if (this.userdata.id === this.auction.bidderList[i].customerId) {
                     return true;
                 }
             }
@@ -209,86 +202,89 @@ Vue.component("auction-bids", {
         },
         hasLoggedInUserTheLastBid: function hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id) {
+            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
             return Math.round(parseFloat(value) * 100) / 100.0;
         },
         auctionend: function auctionend() {
             var startD = Math.trunc(new Date().getTime() / 1000);
+
             startD = startD - 24 * 60 * 60 + 10;
             var Bidtest = {
-                "startDate": startD,
-                "startHour": 16,
-                "startMinute": 45,
-                "auctionDuration": 1,
-                "startPrice": this.minbid - 2
+                startDate: startD,
+                startHour: 16,
+                startMinute: 45,
+                auctionDuration: 1,
+                startPrice: this.minbid - 2
             };
             var url = "/api/auction/" + this.auction.id;
+
             ApiService.put(url, JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
-                alert('Upps - ein Fehler beim auctionend ??!!');
+                alert("Upps - ein Fehler beim auctionend ??!!");
             });
         },
         afterAuctionWithFrontendTime: function afterAuctionWithFrontendTime(counter, tense) {
             var _this2 = this;
 
-            if (counter == 5) {
+            if (counter === 5) {
                 // ToDO Modal mit Time 5sec
                 this.printClockWarn();
                 // Todo: Wiederholung unterbinden !!
                 this.reload(10);
             } else {
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
-                ApiService.get("/api/calctime/" + this.auction.startDate + '/' + this.auction.expiryDate).done(function (tensefromServer) {
+                ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tensefromServer) {
                     tense = tensefromServer;
 
-                    if (tense == AuctionConstants.PAST) {
+                    if (tense === AuctionConstants.PAST) {
                         _this2.reload(100);
                         // this.afterAuctionWithServerTensePast();
                     } else {
                         counter++;
                         if (counter > 2) {
-                            NotificationService.warn("<h3>STATUS:</h3><hr>Abgleich Auktions-Serverzeit mit aktueller Computerzeit...").closeAfter(3000);
+                            NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionMatchServerTime).closeAfter(3000);
                         }
                         setTimeout(function () {
                             _this2.afterAuctionWithFrontendTime(counter, tense);
                         }, counter * 1000 + 2000);
                     }
                 }).fail(function () {
-                    alert('Ein Fehler in afterAuctionWithFrontendTime  ??!!');
+                    alert("Ein Fehler in afterAuctionWithFrontendTime  ??!!");
                 });
             }
         },
         afterAuctionWithServerTensePast: function afterAuctionWithServerTensePast() {
             var _this3 = this;
 
-            if (this.userdata != null) {
+            if (this.userdata !== null) {
                 ApiService.get("/api/auction_last_entry/" + this.auction.id).done(function (lastEntry) {
 
                     var bidderListLastEntry = lastEntry;
 
                     // Gewinner eingeloggt?
-                    if (_this3.userdata.id == bidderListLastEntry.customerId) {
+                    if (_this3.userdata.id === bidderListLastEntry.customerId) {
                         // Artikel in den Warenkorb
-                        var url = '/auction_to_basket?number=' + _this3.item['variation']['id'] + '&auctionid=' + _this3.auction.id;
+                        var url = "/auction_to_basket?number=" + _this3.item.variation.id + "&auctionid=" + _this3.auction.id;
+
                         ApiService.post(url).done(function (response) {
 
                             var result = JSON.parse(response);
 
-                            if (result == _this3.item['variation']['id']) {
+                            if (result == _this3.item.variation.id) {
                                 sessionStorage.setItem("basketItem", _this3.auction.itemId);
                                 _this3.reload(10);
                             } else {
-                                alert('Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)');
+                                alert("Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)");
                             }
                         }).fail(function () {
-                            alert('Oops - Fehler bei Auction Auswertung 2 ??!!');
+                            alert("Oops - Fehler bei Auction Auswertung 2 ??!!");
                         });
                     }
                     // Nichtgewinner angemeldet...
@@ -296,7 +292,7 @@ Vue.component("auction-bids", {
                             _this3.reload(10);
                         }
                 }).fail(function () {
-                    alert('Fehler bei After Auction 1 ??!!');
+                    alert("Fehler bei After Auction 1 ??!!");
                 });
             }
             // niemand angemeldet...
@@ -311,19 +307,17 @@ Vue.component("auction-bids", {
             }, timeout);
         },
         printClockWarn: function printClockWarn() {
-            alert('Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n' + '(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n' + 'Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!');
+            alert("Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" + "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n" + "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!");
         }
     },
     watch: {
         maxCustomerBid: function maxCustomerBid() {
-            if (this.maxCustomerBid > 0 && this.userdata == null) {
+            if (this.maxCustomerBid > 0 && this.userdata === null) {
                 // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                NotificationService.error(Languages.auctions.auctionPleaseLogin)
-                // NotificationService.error( "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" )
-                .closeAfter(5000);
+                NotificationService.error(TranslationsAo.auctions.auctionPleaseLogin).closeAfter(5000);
                 this.isInputValid = false;
             }
-            if (this.maxCustomerBid >= this.minbid && this.userdata != null) {
+            if (this.maxCustomerBid >= this.minbid && this.userdata !== null) {
                 this.isInputValid = true;
             } else {
                 this.isInputValid = false;
@@ -333,18 +327,19 @@ Vue.component("auction-bids", {
             if (this.auctionEnd) {
                 var tense = AuctionConstants.PRESENT;
                 var counter = 0;
+
                 this.afterAuctionWithFrontendTime(counter, tense);
             }
         }
     }
 });
 
-},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9,"services/ResourceService":10}],3:[function(require,module,exports){
+},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9}],3:[function(require,module,exports){
 "use strict";
 
-var ApiService = require("services/ApiService");
+// const ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
-var AuctionConstants = require("constants/AuctionConstants");
+// const AuctionConstants = require("constants/AuctionConstants");
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-end", {
@@ -361,7 +356,7 @@ Vue.component("auction-end", {
     },
     ready: function ready() {
         // User loggedIn ??
-        if (this.userdata != null) {
+        if (this.userdata !== null) {
             this.evaluateAndNotifyAfterAuction();
         }
     },
@@ -370,39 +365,20 @@ Vue.component("auction-end", {
         evaluateAndNotifyAfterAuction: function evaluateAndNotifyAfterAuction() {
 
             // Gewinner eingeloggt ??
-            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id) {
-
-                // if ( sessionStorage.getItem( "basketItem" ) == parseInt( this.auction.itemId ) ) {
-                //     this.isWinnerLoggedIn = true;
-                //     NotificationService.success(
-                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                //         "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-                //         .closeAfter( NOTIFY_TIME );
-                //     setTimeout( () => {
-                //         sessionStorage.removeItem( "basketItem" );
-                //     }, (2000) );
-                // }
-                // else {
-                //     this.isWinnerLoggedIn = false;
-                //     NotificationService.success(
-                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                //         "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
-                //         .closeAfter( NOTIFY_TIME );
-                //     sessionStorage.removeItem( "basketItem" );
-                // }
+            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id) {
                 this.isWinnerLoggedIn = false;
-                NotificationService.success("<h3>Herzlichen Glückwunsch!</h3><hr>" + "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email.").closeAfter(NOTIFY_TIME);
+                NotificationService.success(TranslationsAo.auctions.auctionEndCongratulations).closeAfter(NOTIFY_TIME);
             }
             // Anderer User eingeloggt
             else {
                     this.isWinnerLoggedIn = false;
                     // ist der eingeloggte User in BidderList
-                    if (this.hasLoggedInUserBiddenYet() == true) {
-                        NotificationService.error("<h3>STATUS:</h3><hr>Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.").closeAfter(NOTIFY_TIME);
+                    if (this.hasLoggedInUserBiddenYet() === true) {
+                        NotificationService.error("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionUnfortunalyOutbid).closeAfter(NOTIFY_TIME);
                     }
                     // nein
                     else {
-                            NotificationService.info("<h3>STATUS:</h3><hr>Bei dieser Auktion haben Sie nicht mitgeboten.").closeAfter(NOTIFY_TIME);
+                            NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionNotBid).closeAfter(NOTIFY_TIME);
                         }
                     sessionStorage.removeItem("basketItem");
                 }
@@ -411,7 +387,7 @@ Vue.component("auction-end", {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
                 // console.log( 'this.userdata.id: ' + this.userdata.id + i + 'customerid' + this.auction.bidderList[i].customerId );
-                if (this.userdata.id == this.auction.bidderList[i].customerId) {
+                if (this.userdata.id === this.auction.bidderList[i].customerId) {
                     return true;
                 }
             }
@@ -420,7 +396,7 @@ Vue.component("auction-end", {
     }
 });
 
-},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9}],4:[function(require,module,exports){
+},{"services/NotificationService":9}],4:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -428,8 +404,8 @@ var ApiService = require("services/ApiService");
 Vue.component("auction-show-bidderlist", {
 
     props: {
-        "template": String,
-        "auctionid": String
+        template: String,
+        auctionid: String
     },
 
     data: function data() {
@@ -475,7 +451,7 @@ Vue.component("auction-show-bidderlist", {
                 }
                 _this.bidders = differentBidders.length - 1;
             }).fail(function () {
-                alert('Upps - ein Fehler bei biddersFromServer ??!!');
+                alert("Upps - ein Fehler bei biddersFromServer ??!!");
             });
         }
     }
@@ -577,7 +553,7 @@ Vue.component("auction-countdown", {
         },
         twoDigits: function twoDigits(value) {
             if (value.toString().length <= 1) {
-                return '0' + value.toString();
+                return "0" + value.toString();
             }
             return value.toString();
         }
@@ -634,7 +610,6 @@ var START = exports.START = "Auktion beginnt!";
 // export const HIGHEST_BID     = "highestBid";
 // export const LOWER_BID       = "lowerBid";
 // export const START           = "withoutBid";
-
 
 // tense
 var PRESENT = exports.PRESENT = "present";
@@ -777,7 +752,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":9,"services/WaitScreenService":11}],9:[function(require,module,exports){
+},{"services/NotificationService":9,"services/WaitScreenService":10}],9:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -789,6 +764,7 @@ module.exports = function ($) {
 
     var handlerList = [];
     var printStackTrace = true;
+
     return {
         log: _log,
         info: _info,
@@ -937,471 +913,6 @@ module.exports = function ($) {
 },{}],10:[function(require,module,exports){
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var ApiService = require("services/ApiService");
-
-module.exports = function ($) {
-
-    var resources = {};
-
-    return {
-        registerResource: registerResource,
-        registerResourceList: registerResourceList,
-        getResource: getResource,
-        watch: watch,
-        bind: bind
-    };
-
-    /**
-     * Register a new resource
-     * @param {string}  name          The name of the resource. Must be a unique identifier
-     * @param {string}  route         The route to bind the resource to
-     * @param {*}       initialValue  The initial value to assign to the resource
-     *
-     * @returns {Resource} The created resource.
-     */
-    function registerResource(name, route, initialValue, responseTemplate) {
-        if (!name) {
-            throw new Error("Cannot register resource. Name is required.");
-        }
-
-        if (!route && typeof initialValue === "undefined") {
-            throw new Error("Cannot register resource. Route or initial value is required.");
-        }
-
-        if (resources[name]) {
-            throw new Error("Resource '" + name + "' already exists.");
-        }
-
-        var data;
-
-        try {
-            data = $.parseJSON(initialValue);
-        } catch (err) {
-            data = initialValue;
-        }
-
-        name = name.toLowerCase();
-        resources[name] = new Resource(route, data, responseTemplate);
-
-        return resources[name];
-    }
-
-    /**
-     * Register a new list resource
-     * @param {string}  name          The name of the resource. Must be a unique identifier
-     * @param {string}  route         The route to bind the resource to
-     * @param {*}       initialValue  The initial value to assign to the resource
-     *
-     * @returns {Resource}            The created resource.
-     */
-    function registerResourceList(name, route, initialValue, responseTemplate) {
-        if (!name) {
-            throw new Error("Cannot register resource. Name is required.");
-        }
-
-        if (!route && typeof initialValue === "undefined") {
-            throw new Error("Cannot register resource. Route or initial value is required.");
-        }
-
-        if (resources[name]) {
-            throw new Error("Resource '" + name + "' already exists.");
-        }
-
-        var data;
-
-        try {
-            data = $.parseJSON(initialValue);
-        } catch (err) {
-            data = initialValue;
-        }
-
-        name = name.toLowerCase();
-        resources[name] = new ResourceList(route, data, responseTemplate);
-
-        return resources[name];
-    }
-
-    /**
-     * Receive a registered resource by its name
-     * @param {string}  name    The name of the resource to receive
-     *
-     * @returns {Resource}      The resource
-     */
-    function getResource(name) {
-        name = name.toLowerCase();
-
-        if (!resources[name]) {
-            throw new Error("Unkown resource: " + name);
-        }
-
-        return resources[name];
-    }
-
-    /**
-     * Track changes of a given resource.
-     * @param {string}      name        The name of the resource to watch
-     * @param {function}    callback    The handler to call on each change
-     */
-    function watch(name, callback) {
-        getResource(name).watch(callback);
-    }
-
-    /**
-     * Bind a resource to a property of a vue instance.
-     * @param {string}  name        The name of the resource to bind
-     * @param {Vue}     vue         The vue instance
-     * @param {string}  property    The property of the vue instance. Optional if the property name is equal to the resource name.
-     */
-    function bind(name, vue, property) {
-        property = property || name;
-        getResource(name).bind(vue, property);
-    }
-
-    /**
-     * @class Observable
-     * Automatically notify all attached listeners on any changes.
-     */
-    function Observable() {
-        var _value;
-        var _watchers = [];
-
-        return {
-            get value() {
-                return _value;
-            },
-            set value(newValue) {
-                for (var i = 0; i < _watchers.length; i++) {
-                    var watcher = _watchers[i];
-
-                    watcher.apply({}, [newValue, _value]);
-                }
-                _value = newValue;
-            },
-            watch: function watch(cb) {
-                _watchers.push(cb);
-            }
-        };
-    }
-
-    /**
-     * @class Resource
-     * @param {string}  url              The url to bind the resource to
-     * @param {string}  initialValue     The initial value to assign to the resource
-     * @param {string}  responseTemplate The path to the response fields file
-     */
-    function Resource(url, initialValue, responseTemplate) {
-        var data = new Observable();
-        var ready = false;
-
-        // initialize resource
-        if (typeof initialValue !== "undefined") {
-            // Initial value that was given by constructor
-            data.value = initialValue;
-            ready = true;
-        } else if (url) {
-            // If no initial value was given, get the value from the URL
-            ApiService.get(url, { template: this.responseTemplate }).done(function (response) {
-                data.value = response;
-                ready = true;
-            });
-        } else {
-            throw new Error("Cannot initialize resource.");
-        }
-
-        return {
-            watch: watch,
-            bind: bind,
-            val: val,
-            set: set,
-            update: update,
-            listen: listen
-        };
-
-        /**
-         * Update this resource on a given event triggered by ApiService.
-         * @param {string} event        The event to listen on
-         * @param {string} usePayload   A property of the payload to assign to this resource.
-         *                              The resource will be updated by GET request if not set.
-         */
-        function listen(event, usePayload) {
-            ApiService.listen(event, function (payload) {
-                if (usePayload) {
-                    update(payload[usePayload]);
-                } else {
-                    update();
-                }
-            });
-        }
-
-        /**
-         * Add handler to track changes on this resource
-         * @param {function} cb     The callback to call on each change
-         */
-        function watch(cb) {
-            if (typeof cb !== "function") {
-                throw new Error("Callback expected but got '" + (typeof cb === "undefined" ? "undefined" : _typeof(cb)) + "'.");
-            }
-            data.watch(cb);
-            if (ready) {
-                cb.apply({}, [data.value, null]);
-            }
-        }
-
-        /**
-         * Bind a property of a vue instance to this resource
-         * @param {Vue}     vue         The vue instance
-         * @param {string}   property    The property of the vue instance
-         */
-        function bind(vue, property) {
-            if (!vue) {
-                throw new Error("Vue instance not set.");
-            }
-
-            if (!property) {
-                throw new Error("Cannot bind undefined property.");
-            }
-
-            watch(function (newValue) {
-                vue.$set(property, newValue);
-            });
-        }
-
-        /**
-         * Receive the current value of this resource
-         * @returns {*}
-         */
-        function val() {
-            return data.value;
-        }
-
-        /**
-         * Set the value of the resource.
-         * @param {*}   value   The value to set.
-         * @returns {Deferred}  The PUT request to the url of the resource
-         */
-        function set(value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.put(url, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-
-            data.value = value;
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Update the value of the resource.
-         * @param {*}           value   The new value to assign to this resource. Will receive current value from url if not set
-         * @returns {Deferred}          The GET request to the url of the resource
-         */
-        function update(value) {
-            if (value) {
-                var deferred = $.Deferred();
-
-                data.value = value;
-                deferred.resolve();
-                return deferred;
-            } else if (url) {
-                return ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            throw new Error("Cannot update resource. Neither an URL nor a value is prodivded.");
-        }
-    }
-
-    /**
-     * @class ResourceList
-     * @param {string}  url              The url to bind the resource to
-     * @param {string}  initialValue     The initial value to assign to the resource
-     * @param {string}  responseTemplate The path to the response fields file
-     */
-    function ResourceList(url, initialValue, responseTemplate) {
-        var data = new Observable();
-        var ready = false;
-
-        if (url.charAt(url.length - 1) !== "/") {
-            url += "/";
-        }
-
-        if (typeof initialValue !== "undefined") {
-            data.value = initialValue;
-            ready = true;
-        } else if (url) {
-            ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                data.value = response;
-                ready = true;
-            });
-        } else {
-            throw new Error("Cannot initialize resource.");
-        }
-
-        return {
-            watch: watch,
-            bind: bind,
-            val: val,
-            set: set,
-            push: push,
-            remove: remove,
-            update: update,
-            listen: listen
-        };
-
-        /**
-         * Update this resource on a given event triggered by ApiService.
-         * @param {string} event        The event to listen on
-         * @param {string} usePayload   A property of the payload to assign to this resource.
-         *                              The resource will be updated by GET request if not set.
-         */
-        function listen(event, usePayload) {
-            ApiService.listen(event, function (payload) {
-                if (usePayload) {
-                    update(payload[usePayload]);
-                } else {
-                    update();
-                }
-            });
-        }
-
-        /**
-         * Add handler to track changes on this resource
-         * @param {function} cb     The callback to call on each change
-         */
-        function watch(cb) {
-            if (typeof cb !== "function") {
-                throw new Error("Callback expected but got '" + (typeof cb === "undefined" ? "undefined" : _typeof(cb)) + "'.");
-            }
-            data.watch(cb);
-
-            if (ready) {
-                cb.apply({}, [data.value, null]);
-            }
-        }
-
-        /**
-         * Bind a property of a vue instance to this resource
-         * @param {Vue}     vue         The vue instance
-         * @param {sting}   property    The property of the vue instance
-         */
-        function bind(vue, property) {
-            if (!vue) {
-                throw new Error("Vue instance not set.");
-            }
-
-            if (!property) {
-                throw new Error("Cannot bind undefined property.");
-            }
-
-            watch(function (newValue) {
-                vue.$set(property, newValue);
-            });
-        }
-
-        /**
-         * Receive the current value of this resource
-         * @returns {*}
-         */
-        function val() {
-            return data.value;
-        }
-
-        /**
-         * Set the value of a single element of this resource.
-         * @param {string|number}   key     The key of the element
-         * @param {*}               value   The value to set.
-         * @returns {Deferred}      The PUT request to the url of the resource
-         */
-        function set(key, value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.put(url + key, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-            var deferred = $.Deferred();
-
-            data.value = value;
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Add a new element to this resource
-         * @param {*}   value   The element to add
-         * @returns {Deferred}  The POST request to the url of the resource
-         */
-        function push(value) {
-            if (url) {
-                value.template = responseTemplate;
-                return ApiService.post(url, value).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-            var list = data.value;
-
-            list.push(value);
-            data.value = list;
-
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Remove an element from this resource
-         * @param {string|number}   key     The key of the element
-         * @returns {Deferred}              The DELETE request to the url of the resource
-         */
-        function remove(key) {
-            if (url) {
-                return ApiService.delete(url + key, { template: responseTemplate }).done(function (response) {
-                    data.value = response;
-                });
-            }
-
-            var deferred = $.Deferred();
-            var list = data.value;
-
-            list.splice(key, 1);
-            data.value = list;
-
-            deferred.resolve();
-            return deferred;
-        }
-
-        /**
-         * Update the value of the resource.
-         * @param {*}           value   The new value to assign to this resource. Will receive current value from url if not set
-         * @returns {Deferred}          The GET request to the url of the resource
-         */
-        function update(value) {
-            if (value) {
-                var deferred = $.Deferred();
-
-                data.value = value;
-                deferred.resolve();
-                return deferred;
-            }
-
-            return ApiService.get(url, { template: responseTemplate }).done(function (response) {
-                data.value = response;
-            });
-        }
-    }
-}(jQuery);
-
-},{"services/ApiService":8}],11:[function(require,module,exports){
-"use strict";
-
 module.exports = function ($) {
 
     var overlay = {
@@ -1460,8 +971,9 @@ module.exports = function ($) {
 //
 
 // helper ohne Vue
-function aoCustomReload() {
-    location.reload()
+function aoCustomReload()
+{
+    location.reload();
 }
 
 

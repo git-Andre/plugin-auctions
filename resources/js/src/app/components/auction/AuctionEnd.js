@@ -38,29 +38,8 @@ Vue.component("auction-end", {
             // Gewinner eingeloggt ??
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id)
 {
-
-                // if ( sessionStorage.getItem( "basketItem" ) == parseInt( this.auction.itemId ) ) {
-                //     this.isWinnerLoggedIn = true;
-                //     NotificationService.success(
-                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                //         "Sie haben diese Auktion gewonnen!<br>Sie können jetzt zur Kasse gehen." )
-                //         .closeAfter( NOTIFY_TIME );
-                //     setTimeout( () => {
-                //         sessionStorage.removeItem( "basketItem" );
-                //     }, (2000) );
-                // }
-                // else {
-                //     this.isWinnerLoggedIn = false;
-                //     NotificationService.success(
-                //         "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                //         "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email." )
-                //         .closeAfter( NOTIFY_TIME );
-                //     sessionStorage.removeItem( "basketItem" );
-                // }
                 this.isWinnerLoggedIn = false;
-                NotificationService.success(
-                    "<h3>Herzlichen Glückwunsch!</h3><hr>" +
-                    "Sie haben diese Auktion gewonnen!<br>Sie erhalten in Kürze eine Email.")
+                NotificationService.success(TranslationsAo.auctions.auctionEndCongratulations )
                     .closeAfter(NOTIFY_TIME);
             }
             // Anderer User eingeloggt
@@ -71,13 +50,13 @@ Vue.component("auction-end", {
                 if (this.hasLoggedInUserBiddenYet() === true)
 {
                     NotificationService.error(
-                        "<h3>STATUS:</h3><hr>Leider wurden Sie überboten...<br>Wir wünschen mehr Glück bei einer nächsten Auktion.")
+                        "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionUnfortunalyOutbid)
                         .closeAfter(NOTIFY_TIME);
                 }
                 // nein
                 else
 {
-                    NotificationService.info("<h3>STATUS:</h3><hr>Bei dieser Auktion haben Sie nicht mitgeboten.")
+                    NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionNotBid)
                         .closeAfter(NOTIFY_TIME);
                 }
                 sessionStorage.removeItem("basketItem");
