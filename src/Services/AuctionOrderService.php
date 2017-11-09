@@ -45,10 +45,11 @@
             $config = pluginApp(ConfigRepository::class);
 
             $auctionParams = $this -> auctionParamsService -> auctionParamsBuilder($auctionId);
-            $this -> getLogger(__METHOD__)
-                  -> setReferenceType('auctionId')
-                  -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
-                  -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
+
+//            $this -> getLogger(__METHOD__)
+//                  -> setReferenceType('auctionId')
+//                  -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
+//                  -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
 
             if ($auctionParams['isSalableAndActive'])
             {
@@ -67,8 +68,8 @@
 
                     $order = $this -> orderRepository -> createOrder($order);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debugAfter', ['$order danach: ' => $order]);
+//                    $this -> getLogger(__METHOD__)
+//                          -> debug('PluginAuctions::auctions.debugAfter', ['$order danach: ' => $order]);
 
                     return LocalizedOrder ::wrap($order, "de");
                 }

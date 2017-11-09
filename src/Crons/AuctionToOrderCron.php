@@ -43,10 +43,10 @@
                     {
                         $localizedOrder = $this -> auctionOrderService -> placeOrder($endedAuctionId);
 
-                        $this -> getLogger(__METHOD__)
-                              -> setReferenceType('testedId')
-                              -> setReferenceValue($endedAuctionId)
-                              -> debug('PluginAuctions::auctions.debugCronHelper', ['$localizedOrder: ' => $localizedOrder]);
+//                        $this -> getLogger(__METHOD__)
+//                              -> setReferenceType('testedId')
+//                              -> setReferenceValue($endedAuctionId)
+//                              -> debug('PluginAuctions::auctions.debugCronHelper', ['$localizedOrder: ' => $localizedOrder]);
 
                         if ($localizedOrder)
                         {
