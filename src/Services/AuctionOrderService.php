@@ -74,7 +74,7 @@
                 }
                 catch ( \Exception $exception )
                 {
-                    $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::place Order', $exception);
+                    $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auctions.error', $exception);
                 }
             }
             $this -> getLogger(__METHOD__)

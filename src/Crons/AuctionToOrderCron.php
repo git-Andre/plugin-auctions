@@ -56,7 +56,6 @@
                                   -> setReferenceType('auctionId')
                                   -> setReferenceValue($endedAuctionId)
                                   -> debug('PluginAuctions::auctions.debugCronHelper', ['AuctionStatus: ' => AuctionStatus::PAST_PERFECT]);
-
                         }
                     }
                     catch ( \Exception $exception )
