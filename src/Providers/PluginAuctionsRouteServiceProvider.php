@@ -29,15 +29,20 @@
 
                     $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
 
-                    $apiRouter -> get('auctions/auction/{id}', 'AuctionsController@getAuction')
-                               -> where('id', '\d+');
 
                     $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
                 });
 
             // new + API
 
+            $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
+                               -> where('id', '\d+');
 
+
+
+
+
+            // old
             $router -> get('api/auctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId')
                     -> where('itemId', '\d+');
 
