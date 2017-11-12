@@ -7,7 +7,7 @@
 {% if config("PluginAuctions.performance.level") == 'development' %}
     {#<script src="{{ plugin_path('PluginAuctions') }}/js/lang/{{ lang }}.js"></script>#}
     <script src="https://www.schaffrathnumis.de/layout/theme//js/lang/{{ lang }}.js"></script>
-    <script>var TranslationsAo = Languages['{{ lang }}'];</script>
+    <script>var TranslationsAo = LanguagesPlugin['{{ lang }}'];</script>
     {#<script src="{{ plugin_path('PluginAuctions') }}/js/dist/auction-vendor.js"></script>#}
     {#<script src="{{ plugin_path('PluginAuctions') }}/js/src/app.config.js"></script>#}
     
@@ -16,7 +16,7 @@
 {% else %}
     {# TODO remove douplicate import #}
     <script src="{{ plugin_path('PluginAuctions') }}/js/lang/{{ lang }}.js"></script>
-    <script>var TranslationsAo = Languages['{{ lang }}'];</script>
+    <script>var TranslationsAo = LanguagesPlugin['{{ lang }}'];</script>
     
     <script src="{{ plugin_path('PluginAuctions') }}/js/dist/auction.min.js"></script>
 {% endif %}

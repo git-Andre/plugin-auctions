@@ -185,7 +185,7 @@ gulp.task("build:lang", function()
                     }).on("end", function()
                     {
                         defered.resolve();
-                        var text = "var Languages = Languages || {}; Languages['" + lang + "'] = {";
+                        var text = "var LanguagesPlugin = LanguagesPlugin || {}; LanguagesPlugin['" + lang + "'] = {";
 
                         for (var group in translations[lang])
                         {
