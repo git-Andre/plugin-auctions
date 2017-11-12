@@ -5,12 +5,15 @@
     use Plenty\Plugin\RouteServiceProvider;
     use Plenty\Plugin\Routing\ApiRouter;
     use Plenty\Plugin\Routing\Router;
+    use Plenty\Plugin\Log\Loggable;
+
 
 
     /**
      * Class PluginAuctionsRouteServiceProvider
      */
     class PluginAuctionsRouteServiceProvider extends RouteServiceProvider {
+        use Loggable;
 
         /**
          * @param Router $router
