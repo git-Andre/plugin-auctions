@@ -2,17 +2,17 @@
 
     namespace PluginAuctions\Providers;
 
+    use Plenty\Plugin\Log\Loggable;
     use Plenty\Plugin\RouteServiceProvider;
     use Plenty\Plugin\Routing\ApiRouter;
     use Plenty\Plugin\Routing\Router;
-    use Plenty\Plugin\Log\Loggable;
-
 
 
     /**
      * Class PluginAuctionsRouteServiceProvider
      */
     class PluginAuctionsRouteServiceProvider extends RouteServiceProvider {
+
         use Loggable;
 
         /**
@@ -21,6 +21,8 @@
          */
         public function map(Router $router, ApiRouter $apiRouter)
         {
+            $this -> getLogger(__METHOD__) -> debug('PluginAuctions::auctions.debug', ['$apiRouter: ' => $apiRouter]);
+
             $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
                 function ($apiRouter) {
                     /** @var ApiRouter $routerApi */
@@ -28,8 +30,6 @@
 //                    $routerApi -> post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
 //                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::auctions.debug', ['$apiRouter: ' => $apiRouter]);
 
                     $apiRouter -> delete('api/auction/{id}', 'AuctionsController@deleteAuction');
                 });
