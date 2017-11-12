@@ -26,39 +26,24 @@
             $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
                 function ($apiRouter) {
 
-                    $apiRouter -> delete('/auction/{id}', 'AuctionsController@deleteAuction');
+
+                    $apiRouter -> get('auctions/', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
+
+                    $apiRouter -> get('auctions/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
+                               -> where('id', '\d+');
+
+                    $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
                 });
 
-////            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
-//            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers'],
-//                function ($api) {
-//
-//                    //                $api -> get('api/auctionshelper', 'AuctionsController@getAuctionsHelper');
-//
-////                    $api -> get('api/auction/{id}', 'AuctionsController@getAuction') -> where('id', '\d+');
-//
-//                    // Order...
-////                    $api -> post('api/auction', 'AuctionsController@createAuction');
-//
-//                    $api -> post('api/placeorder', 'AuctionPlaceOrderController@createOrder');
-//
-//                    $api -> get('api/placeorder', 'AuctionPlaceOrderController@index');
-//
-//
-//                    //                    $api -> get('api/auctions', ['uses' => '\AuctionsController@getAuctions']);
-//                    //                    $api -> post('api/auction', ['uses' => '\AuctionsController@createAuction']);
-//                    //                    $api -> put('api/auction/{id}', ['uses' => '\AuctionsController@updateAuction']);
-//                });
+            // new + API
+
 
             $router -> get('api/auctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId')
                     -> where('itemId', '\d+');
 
-            $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
             $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
 
-
-            $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction') -> where('id', '\d+');
 
             $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList') -> where('id', '\d+');
 
