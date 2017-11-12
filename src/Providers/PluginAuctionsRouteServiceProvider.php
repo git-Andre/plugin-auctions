@@ -27,9 +27,9 @@
                 function ($apiRouter) {
 
 
-                    $apiRouter -> get('auctions/', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
+                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
 
-                    $apiRouter -> get('auctions/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
+                    $apiRouter -> get('auctions/auction/{id}', 'AuctionsController@getAuction')
                                -> where('id', '\d+');
 
                     $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
