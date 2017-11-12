@@ -204,10 +204,14 @@
          * @param $id
          * @return bool|string
          */
-        public function deleteAuction(Request $request)
+        public function deleteAuction(int $id)
         {
-            $id = $request -> get ('auctionId');
-            if ($id)
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::auctions.debug', [' (auctionId): ' => $id]);
+
+
+//            $id = (int)$request -> get ('auctionId');
+            if ($id > 0)
             {
                 return $this -> auctionsService -> deleteAuction($id);
             }

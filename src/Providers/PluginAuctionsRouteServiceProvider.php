@@ -24,7 +24,11 @@
 //                    $routerApi->get('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
 //                    $routerApi -> post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionTestController@testApi']);
 //                    $routerApi->post('api/placeorder', ['uses' => 'PluginAuctions\Controllers\AuctionPlaceOrderController@createOrder']);
-                    $apiRouter -> delete('api/auction/', 'AuctionsController@deleteAuction');
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::auctions.debug', ['$apiRouter: ' => $apiRouter]);
+
+                    $apiRouter -> delete('api/auction/{id}', 'AuctionsController@deleteAuction');
                 });
 
 ////            $api -> version(['v1'], ['namespace' => 'PluginAuctions\Api\Resources', 'middelware' => 'oauth'],
