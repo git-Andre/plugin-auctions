@@ -204,8 +204,9 @@
          * @param $id
          * @return bool|string
          */
-        public function deleteAuction($id)
+        public function deleteAuction(Request $request)
         {
+            $id = $request -> get ('auctionId');
             if ($id)
             {
                 return $this -> auctionsService -> deleteAuction($id);
@@ -214,11 +215,25 @@
             return $id;
         }
 
-        /**
-         * helper
-         * @param $time
-         * @return false|string
-         */
+//        /**
+//         * @param $id
+//         * @return bool|string
+//         */
+//        public function deleteAuction($id)
+//        {
+//            if ($id)
+//            {
+//                return $this -> auctionsService -> deleteAuction($id);
+//            }
+//
+//            return $id;
+//        }
+//
+//        /**
+//         * helper
+//         * @param $time
+//         * @return false|string
+//         */
         public function formatDate($time)
         {
             return json_encode(date('d.m.Y H:i:s e', $time));
