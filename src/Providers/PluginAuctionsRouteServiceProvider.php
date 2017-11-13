@@ -22,27 +22,26 @@
             $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
                 function ($apiRouter) {
 
-//                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
                     $apiRouter -> delete('auctions/delete/{id}', 'AuctionsController@deleteAuction');
 
                     $apiRouter -> post('auctions/create', 'AuctionsController@createAuction');
 
                     $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
+
                 });
 
             // new - Routes for all...
             $router -> get('auctions/all', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
-            $router -> get('auctions/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                    -> where('id', '\d+');
+            $router -> get('auctions/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction') -> where('id', '\d+');
 
-//            $router -> put('auctions/update/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
+            $router -> get('auctions/for/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId') -> where('itemId', '\d+');
+
+            //            $router -> put('auctions/update/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
 
 
-            // old
+            // old #########################################
 //            $router -> post('auction/create', 'PluginAuctions\Controllers\AuctionsController@createAuction');
-            $router -> get('api/auctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId')
-                    -> where('itemId', '\d+');
 
 
             $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');

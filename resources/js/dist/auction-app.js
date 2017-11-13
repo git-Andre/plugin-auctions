@@ -316,9 +316,7 @@ Vue.component("auction-bids", {
         maxCustomerBid: function maxCustomerBid() {
 
             if (this.maxCustomerBid > 0 && this.userdata == null) {
-                // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                NotificationService.error("Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!").closeAfter(5000);
-                // NotificationService.error( TranslationsAo.Template.auctionPleaseLogin ).closeAfter( 5000 );
+                NotificationService.error(TranslationsAo.Template.auctionPleaseLogin).closeAfter(5000);
                 this.isInputValid = false;
             }
             if (this.maxCustomerBid >= this.minbid && this.userdata != null) {
