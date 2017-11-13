@@ -54,7 +54,8 @@
                     {% if (bidderListLength > 1) %}
                         <dt>{{ trans("PluginAuctions::Template.currentOffer") }}</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
-                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
+                        <dt>{{ trans("CeresSchaffrath::Template.startPrice") }}</dt>
+                        {#<dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>#}
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Standard#}
                         <dt><span class="alarm">{{ trans("CeresSchaffrath::Template.footerCol3LinkTitle1") }}</span> <span class="small">(10%)</span>:</dt>
