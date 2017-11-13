@@ -166,7 +166,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('testedId')
                       -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::auctions.debug', ['$tense: ' => $tense]);
+                      -> debug('PluginAuctions::Template.debug', ['$tense: ' => $tense]);
 
                 $auctionArray = $this -> getValues(Auction_7::class, ['itemId', 'tense'], [$itemId, $tense]);
 

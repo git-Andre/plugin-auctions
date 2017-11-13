@@ -103,7 +103,7 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
                           -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::auctions.debug', ['resultCounter++: ' => $resultVisitorCounter]);
+                          -> debug('PluginAuctions::Template.debug', ['resultCounter++: ' => $resultVisitorCounter]);
 
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
@@ -133,7 +133,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('testedId')
                       -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::auctions.debug', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
+                      -> debug('PluginAuctions::Template.debug', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
 
                 return $resultVisitorCounter -> numberOfVisitors;
             }
@@ -156,7 +156,7 @@
 //                    $this -> getLogger(__METHOD__)
 //                          -> setReferenceType('auctionId')
 //                          -> setReferenceValue($itemId)
-//                          -> debug('PluginAuctions::auctions.debug', ['FORMATTED: ' => $formattedCounterArray]);
+//                          -> debug('PluginAuctions::Template.debug', ['FORMATTED: ' => $formattedCounterArray]);
 //
 //                    return $formattedCounterArray;
 //                }

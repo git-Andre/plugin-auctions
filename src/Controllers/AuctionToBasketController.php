@@ -34,7 +34,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('auctionVarId')
                       -> setReferenceValue($data['variationId'])
-                      -> debug('PluginAuctions::auctions.basketItemAlreadyInBasket', ['$basketItem: ' => $basketItem]);
+                      -> debug('PluginAuctions::Template.basketItemAlreadyInBasket', ['$basketItem: ' => $basketItem]);
 
                 return json_encode($basketItem);
             }
@@ -55,7 +55,7 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionVarId')
                           -> setReferenceValue($data['variationId'])
-                          -> debug('PluginAuctions::auctions.basketItemAdded', ['$data: ' => $data]);
+                          -> debug('PluginAuctions::Template.basketItemAdded', ['$data: ' => $data]);
 
                     return json_encode($data['variationId']);
                 }

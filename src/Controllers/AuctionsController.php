@@ -121,7 +121,7 @@
 
 
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['$itemId: ' => $itemId], ['$tense: ' => $tense]);
+                  -> debug('PluginAuctions::Template.debug', ['$itemId: ' => $itemId], ['$tense: ' => $tense]);
 
             if ($itemId > 0)
             {
@@ -207,7 +207,7 @@
         public function deleteAuction(int $id)
         {
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', [' (auctionId): ' => $id]);
+                  -> debug('PluginAuctions::Template.debug', [' (auctionId): ' => $id]);
 
 
 //            $id = (int)$request -> get ('auctionId');

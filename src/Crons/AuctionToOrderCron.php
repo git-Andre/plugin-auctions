@@ -46,7 +46,7 @@
 //                        $this -> getLogger(__METHOD__)
 //                              -> setReferenceType('testedId')
 //                              -> setReferenceValue($endedAuctionId)
-//                              -> debug('PluginAuctions::auctions.debugCronHelper', ['$localizedOrder: ' => $localizedOrder]);
+//                              -> debug('PluginAuctions::Template.debugCronHelper', ['$localizedOrder: ' => $localizedOrder]);
 
                         if ($localizedOrder)
                         {
@@ -55,12 +55,12 @@
                             $this -> getLogger(__METHOD__)
                                   -> setReferenceType('auctionId')
                                   -> setReferenceValue($endedAuctionId)
-                                  -> debug('PluginAuctions::auctions.debugCronHelper', ['AuctionStatus: ' => AuctionStatus::PAST_PERFECT]);
+                                  -> debug('PluginAuctions::Template.debugCronHelper', ['AuctionStatus: ' => AuctionStatus::PAST_PERFECT]);
                         }
                     }
                     catch ( \Exception $exception )
                     {
-                        $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auctions.error', $exception);
+                        $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::Template.error', $exception);
                     }
                 }
             }

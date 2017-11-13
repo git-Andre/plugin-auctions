@@ -49,7 +49,7 @@
 //            $this -> getLogger(__METHOD__)
 //                  -> setReferenceType('auctionId')
 //                  -> setReferenceValue($config->get("PluginAuctions.global.shippingProfile"))
-//                  -> debug('PluginAuctions::auctions.debug', ['$auctionParams: ' => $auctionParams]);
+//                  -> debug('PluginAuctions::Template.debug', ['$auctionParams: ' => $auctionParams]);
 
             if ($auctionParams['isSalableAndActive'])
             {
@@ -69,17 +69,17 @@
                     $order = $this -> orderRepository -> createOrder($order);
 
 //                    $this -> getLogger(__METHOD__)
-//                          -> debug('PluginAuctions::auctions.debugAfter', ['$order danach: ' => $order]);
+//                          -> debug('PluginAuctions::Template.debugAfter', ['$order danach: ' => $order]);
 
                     return LocalizedOrder ::wrap($order, "de");
                 }
                 catch ( \Exception $exception )
                 {
-                    $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::auctions.error', $exception);
+                    $this -> getLogger(__FUNCTION__) -> error('PluginAuctions::Template.error', $exception);
                 }
             }
             $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::auctions.debug', ['isSalableAndActive: ' => $auctionParams['isSalableAndActive']]);
+                  -> debug('PluginAuctions::Template.debug', ['isSalableAndActive: ' => $auctionParams['isSalableAndActive']]);
 
             return false;
         }

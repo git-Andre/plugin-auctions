@@ -16,18 +16,18 @@
                     min="${ minbid }"
                     type="number"
                     id="maximumBid"
-                    placeholder="{{ trans("PluginAuctions::auctions.maxBid") }}"
+                    placeholder="{{ trans("PluginAuctions::Template.maxBid") }}"
                     aria-describedby="maxBidHelpBlock"
             >
             <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">{{ trans("PluginAuctions::auctions.bidAtLeast") }}<span
-                        :class="{alarm: !isInputValid}">${ minbid | currency }</span>{{ trans("PluginAuctions::auctions.bidAtLeastEnd") }}</p>
+                    class="form-text text-muted text-center">{{ trans("PluginAuctions::Template.bidAtLeast") }}<span
+                        :class="{alarm: !isInputValid}">${ minbid | currency }</span>{{ trans("PluginAuctions::Template.bidAtLeastEnd") }}</p>
 
             <button class="btn btn-primary btn-lg btn-block"
                     type="submit"
                     :disabled="!isInputValid"
                     @click="addBid"
-            >{{ trans("PluginAuctions::auctions.makeBindingBid") }}</button>
+            >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
 
             <button class="btn btn-primary btn-lg btn-block"
                     v-if="userdata.id == 7076"

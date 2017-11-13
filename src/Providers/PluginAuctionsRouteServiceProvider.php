@@ -21,7 +21,7 @@
          */
         public function map(Router $router, ApiRouter $apiRouter)
         {
-            $this -> getLogger(__METHOD__) -> debug('PluginAuctions::auctions.debug', ['$apiRouter: ' => $apiRouter]);
+            $this -> getLogger(__METHOD__) -> debug('PluginAuctions::Template.debug', ['$apiRouter: ' => $apiRouter]);
 
             $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
                 function ($apiRouter) {
