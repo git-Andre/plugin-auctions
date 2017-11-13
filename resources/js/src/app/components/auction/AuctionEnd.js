@@ -39,7 +39,7 @@ Vue.component("auction-end", {
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id)
 {
                 // this.isWinnerLoggedIn = true;
-                NotificationService.success(TranslationsAo.auctions.auctionEndCongratulations )
+                NotificationService.success(TranslationsAo.Template.auctionEndCongratulations)
                     .closeAfter(NOTIFY_TIME);
             }
             // Anderer User eingeloggt
@@ -50,13 +50,13 @@ Vue.component("auction-end", {
                 if (this.hasLoggedInUserBiddenYet() === true)
 {
                     NotificationService.error(
-                        "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionUnfortunalyOutbid)
+                        "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionUnfortunalyOutbid)
                         .closeAfter(NOTIFY_TIME);
                 }
                 // nein
                 else
 {
-                    NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionNotBid)
+                    NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionNotBid)
                         .closeAfter(NOTIFY_TIME);
                 }
                 sessionStorage.removeItem("basketItem");

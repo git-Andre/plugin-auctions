@@ -1,4 +1,5 @@
-const ApiService = require("services/ApiService");
+const ApiService          = require("services/ApiService");
+const NotificationService = require("services/NotificationService");
 
 Vue.component("auction-show-bidderlist", {
 
@@ -58,7 +59,7 @@ Vue.component("auction-show-bidderlist", {
                 })
                 .fail(() =>
 {
-                    alert("Upps - ein Fehler bei biddersFromServer ??!!");
+                    NotificationService.error("Upps - ein Fehler bei biddersFromServer ??!!").close;
                 }
                 );
         }

@@ -5,7 +5,7 @@ module.exports = (function($)
     var notifications     = new NotificationList();
 
     var handlerList     = [];
-    var printStackTrace = true;
+    // var printStackTrace = true;
 
     return {
         log: _log,

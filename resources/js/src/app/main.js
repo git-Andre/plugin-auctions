@@ -13,8 +13,9 @@
 //
 
 // helper ohne Vue
-function aoCustomReload()
-{
-    location.reload();
-}
+
+// function aoCustomReload()
+// {
+//     location.reload();
+// }
 
