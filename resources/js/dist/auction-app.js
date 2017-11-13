@@ -119,17 +119,19 @@ Vue.component("auction-bids", {
                             ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
                                 _this.reload(5);
                             }, function (error) {
-                                alert("error3: " + error.toString());
+                                NotificationService.error("error3: " + error.toString()).close;
+
+                                // alert("error3: " + error.toString());
                             });
                         }
                         // es gibt inzwischen schon ein höheres Gebot
                         else {
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).close;
+                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid).close;
                                 _this.reload(2600);
                             }
                     }).fail(function () {
-                        alert("Upps - ein Fehler bei auctionbidprice ??!!");
+                        NotificationService.error("Upps - ein Fehler bei auctionbidprice ??!!").close;
                     });
                 } else {
                     // ToDO Modal mit Time 5sec
@@ -137,7 +139,7 @@ Vue.component("auction-bids", {
                     _this.afterAuctionWithServerTensePast();
                 }
             }).fail(function () {
-                alert("Upps - ein Fehler bei der Zeitabfrage ??!!");
+                NotificationService.error("Upps - ein Fehler bei der Zeitabfrage ??!!").close;
             });
         },
         liveEvaluateAndNotify: function liveEvaluateAndNotify() {
@@ -147,13 +149,13 @@ Vue.component("auction-bids", {
                     switch (this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus.toString()) {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
-                                NotificationService.info("<h3>" + TranslationsAo.auctions.auctionlastAction + "</h3><hr>" + TranslationsAo.auctions.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
+                                NotificationService.info("<h3>" + TranslationsAo.Template.auctionlastAction + "</h3><hr>" + TranslationsAo.Template.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
                                 // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionLowerMaxBid).closeAfter(NOTIFY_TIME);
+                                NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionLowerMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                     }
@@ -163,20 +165,20 @@ Vue.component("auction-bids", {
                         case AuctionConstants.OWN_BID_CHANGED:
                             {
                                 // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
+                                NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionChangedOwnMaxBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.HIGHEST_BID:
                             {
                                 NotificationService.success(
                                 // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionYouHaveHighestBid).closeAfter(NOTIFY_TIME);
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionYouHaveHighestBid).closeAfter(NOTIFY_TIME);
                                 break;
                             }
                         case AuctionConstants.LOWER_BID:
                             {
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
+                                NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
 
                                 break;
                             }
@@ -186,7 +188,7 @@ Vue.component("auction-bids", {
             } else {
                 NotificationService.warn(
                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                "<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
+                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
             }
             /**/
             sessionStorage.removeItem("currentBidder");
@@ -227,7 +229,7 @@ Vue.component("auction-bids", {
             ApiService.put(url, JSON.stringify(Bidtest), { contentType: "application/json" }).done(function (auction) {
                 // alert( "ok" );
             }).fail(function () {
-                alert("Upps - ein Fehler beim auctionend ??!!");
+                NotificationService.error("Upps - ein Fehler beim auctionend ??!!").close;
             });
         },
         afterAuctionWithFrontendTime: function afterAuctionWithFrontendTime(counter, tense) {
@@ -249,14 +251,14 @@ Vue.component("auction-bids", {
                     } else {
                         counter++;
                         if (counter > 2) {
-                            NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionMatchServerTime).closeAfter(3000);
+                            NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionMatchServerTime).closeAfter(3000);
                         }
                         setTimeout(function () {
                             _this2.afterAuctionWithFrontendTime(counter, tense);
                         }, counter * 1000 + 2000);
                     }
                 }).fail(function () {
-                    alert("Ein Fehler in afterAuctionWithFrontendTime  ??!!");
+                    NotificationService.error("Ein Fehler in afterAuctionWithFrontendTime  ??!!").close;
                 });
             }
         },
@@ -281,7 +283,7 @@ Vue.component("auction-bids", {
                                 sessionStorage.setItem("basketItem", _this3.auction.itemId);
                                 _this3.reload(10);
                             } else {
-                                alert("Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)");
+                                NotificationService.error("Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)").close;
                             }
                         }).fail(function () {
                             alert("Oops - Fehler bei Auction Auswertung 2 ??!!");
@@ -307,28 +309,29 @@ Vue.component("auction-bids", {
             }, timeout);
         },
         printClockWarn: function printClockWarn() {
-            alert("Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" + "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n" + "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!");
-        }
-    },
-    watch: {
-        maxCustomerBid: function maxCustomerBid() {
-            if (this.maxCustomerBid > 0 && this.userdata === null) {
-                // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                NotificationService.error(TranslationsAo.auctions.auctionPleaseLogin).closeAfter(5000);
-                this.isInputValid = false;
-            }
-            if (this.maxCustomerBid >= this.minbid && this.userdata !== null) {
-                this.isInputValid = true;
-            } else {
-                this.isInputValid = false;
-            }
+            NotificationService.error("Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" + "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n" + "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!").close;
         },
-        auctionEnd: function auctionEnd() {
-            if (this.auctionEnd) {
-                var tense = AuctionConstants.PRESENT;
-                var counter = 0;
 
-                this.afterAuctionWithFrontendTime(counter, tense);
+        watch: {
+            maxCustomerBid: function maxCustomerBid() {
+                if (this.maxCustomerBid > 0 && this.userdata === null) {
+                    // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                    NotificationService.error(TranslationsAo.Template.auctionPleaseLogin).closeAfter(5000);
+                    this.isInputValid = false;
+                }
+                if (this.maxCustomerBid >= this.minbid && this.userdata !== null) {
+                    this.isInputValid = true;
+                } else {
+                    this.isInputValid = false;
+                }
+            },
+            auctionEnd: function auctionEnd() {
+                if (this.auctionEnd) {
+                    var tense = AuctionConstants.PRESENT;
+                    var counter = 0;
+
+                    this.afterAuctionWithFrontendTime(counter, tense);
+                }
             }
         }
     }
@@ -367,18 +370,18 @@ Vue.component("auction-end", {
             // Gewinner eingeloggt ??
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id) {
                 // this.isWinnerLoggedIn = true;
-                NotificationService.success(TranslationsAo.auctions.auctionEndCongratulations).closeAfter(NOTIFY_TIME);
+                NotificationService.success(TranslationsAo.Template.auctionEndCongratulations).closeAfter(NOTIFY_TIME);
             }
             // Anderer User eingeloggt
             else {
                     // this.isWinnerLoggedIn = false;
                     // ist der eingeloggte User in BidderList
                     if (this.hasLoggedInUserBiddenYet() === true) {
-                        NotificationService.error("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionUnfortunalyOutbid).closeAfter(NOTIFY_TIME);
+                        NotificationService.error("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionUnfortunalyOutbid).closeAfter(NOTIFY_TIME);
                     }
                     // nein
                     else {
-                            NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.auctions.auctionNotBid).closeAfter(NOTIFY_TIME);
+                            NotificationService.info("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionNotBid).closeAfter(NOTIFY_TIME);
                         }
                     sessionStorage.removeItem("basketItem");
                 }
@@ -400,6 +403,7 @@ Vue.component("auction-end", {
 "use strict";
 
 var ApiService = require("services/ApiService");
+var NotificationService = require("services/NotificationService");
 
 Vue.component("auction-show-bidderlist", {
 
@@ -451,13 +455,13 @@ Vue.component("auction-show-bidderlist", {
                 }
                 _this.bidders = differentBidders.length - 1;
             }).fail(function () {
-                alert("Upps - ein Fehler bei biddersFromServer ??!!");
+                NotificationService.error("Upps - ein Fehler bei biddersFromServer ??!!").close;
             });
         }
     }
 });
 
-},{"services/ApiService":8}],5:[function(require,module,exports){
+},{"services/ApiService":8,"services/NotificationService":9}],5:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
@@ -763,7 +767,7 @@ module.exports = function ($) {
     var notifications = new NotificationList();
 
     var handlerList = [];
-    var printStackTrace = true;
+    // var printStackTrace = true;
 
     return {
         log: _log,
@@ -971,10 +975,11 @@ module.exports = function ($) {
 //
 
 // helper ohne Vue
-function aoCustomReload()
-{
-    location.reload();
-}
+
+// function aoCustomReload()
+// {
+//     location.reload();
+// }
 
 
 //# sourceMappingURL=auction-app.js.map

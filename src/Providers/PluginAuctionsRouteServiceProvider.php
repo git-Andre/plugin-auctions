@@ -2,7 +2,6 @@
 
     namespace PluginAuctions\Providers;
 
-    use Plenty\Plugin\Log\Loggable;
     use Plenty\Plugin\RouteServiceProvider;
     use Plenty\Plugin\Routing\ApiRouter;
     use Plenty\Plugin\Routing\Router;
@@ -13,7 +12,6 @@
      */
     class PluginAuctionsRouteServiceProvider extends RouteServiceProvider {
 
-        use Loggable;
 
         /**
          * @param Router $router
@@ -21,27 +19,19 @@
          */
         public function map(Router $router, ApiRouter $apiRouter)
         {
-            $this -> getLogger(__METHOD__) -> debug('PluginAuctions::Template.debug', ['$apiRouter: ' => $apiRouter]);
-
             $apiRouter -> version(['v1'], ['namespace' => 'PluginAuctions\Controllers', 'middleware' => 'oauth'],
                 function ($apiRouter) {
 
-
 //                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
-
-
                     $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
                 });
 
             // new + API
 
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
-                               -> where('id', '\d+');
+                    -> where('id', '\d+');
 
             $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
-
-
-
 
 
             // old
