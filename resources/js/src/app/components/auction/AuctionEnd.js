@@ -38,14 +38,14 @@ Vue.component("auction-end", {
             // Gewinner eingeloggt ??
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id)
 {
-                this.isWinnerLoggedIn = false;
+                // this.isWinnerLoggedIn = true;
                 NotificationService.success(TranslationsAo.auctions.auctionEndCongratulations )
                     .closeAfter(NOTIFY_TIME);
             }
             // Anderer User eingeloggt
             else
 {
-                this.isWinnerLoggedIn = false;
+                // this.isWinnerLoggedIn = false;
                 // ist der eingeloggte User in BidderList
                 if (this.hasLoggedInUserBiddenYet() === true)
 {
