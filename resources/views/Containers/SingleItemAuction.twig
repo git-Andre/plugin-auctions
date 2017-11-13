@@ -12,17 +12,17 @@
     <div id="addAuctionVue">
         {#Zukunft ------------------------------------------------------- #}
         {% if (auction.tense == 'future') %}
-            <h2 class="m-b-2">{{ trans("PluginAuctions::auctions.pronouncedAuction") }}</h2>
+            <h2 class="m-b-2">{{ trans("PluginAuctions::Template.pronouncedAuction") }}</h2>
 
             <dl class="auctionList">
-                <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
+                <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
 
                 {#Aufgeld Start#}
-                <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span></dt>
-                <dd><span>{{ trans("PluginAuctions::auctions.surchargePercent") }}</span>
+                <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>
+                <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
                     <span class="m-x-5">|</span>
-                    <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
+                    <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                     <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                 </dd>
 
@@ -34,8 +34,8 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            {#<h2 class="m-b-1 alarm">{{ trans("PluginAuctions::auctions.currentAuction") }}</h2>#}
-            <h2 class="m-b-1 alarm">Fehler durch Missachtung </h2>
+            <h2 class="m-b-1 alarm">{{ trans("Ceres::Template.variationLastUpdateTimestamp_asc") }}</h2>
+            {#<h2 class="m-b-1 alarm">{{ trans("PluginAuctions::Template.currentAuction") }}</h2>#}
 
 
             <div class="row container m-t-0 m-b-2">
@@ -52,25 +52,26 @@
                 <dl class="auctionList">
 
                     {% if (bidderListLength > 1) %}
-                        <dt>{{ trans("PluginAuctions::auctions.currentOffer") }}</dt>
+                        <dt>{{ trans("PluginAuctions::Template.currentOffer") }}</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
-                        <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
+                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Standard#}
-                        <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
+                        <dt><span class="alarm">{{ trans("CeresSchaffrath::Template.footerCol3LinkTitle1") }}</span> <span class="small">(10%)</span>:</dt>
+                        {#<dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>#}
                         <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                             <span class="m-x-1">|</span>
-                            <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
+                            <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% else %}
-                        <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
+                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
-                        <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span></dt>
-                        <dd><span>{{ trans("PluginAuctions::auctions.surchargePercent") }}</span>
+                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>
+                        <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
                             <span class="m-x-5">|</span>
-                            <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
+                            <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% endif %}
@@ -78,11 +79,11 @@
                     {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                     {% if bidderListLength != 1 %}
-                        <dt>{{ trans("PluginAuctions::auctions.countOffers") }}</dt>
+                        <dt>{{ trans("PluginAuctions::Template.countOffers") }}</dt>
                         <dd> {{ bidderListLength - 1 }}
                             <span>
                             <a data-toggle="modal" href="#bidderlist">
-                                <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::auctions.showAll") }}
+                                <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
                             </a>
                             </span>
                             {% if (auction.tense == 'present') %}
@@ -106,38 +107,38 @@
 
             {#Vergangenheit #}
         {% elseif (auction.tense == 'past' or auction.tense == 'past-perfect') %}
-            <h2 class="m-b-2">{{ trans("PluginAuctions::auctions.closedAuction") }}</h2>
+            <h2 class="m-b-2">{{ trans("PluginAuctions::Template.closedAuction") }}</h2>
 
             <dl class="auctionList">
 
                 {% if bidderListLength != 1 %}
-                    <dt>{{ trans("PluginAuctions::auctions.highestBid") }}</dt>
+                    <dt>{{ trans("PluginAuctions::Template.highestBid") }}</dt>
                     <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                     {#Aufgeld Standard#}
-                    <dt><span class="alarm">{{ trans("PluginAuctions::auctions.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
+                    <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
                     <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         <span class="m-x-1">|</span>
-                        <span>{{ trans("PluginAuctions::auctions.totalPrice") }}</span>
+                        <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                         <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                     </dd>
 
                 {% else %}
-                    <dt>{{ trans("PluginAuctions::auctions.outcome") }}</dt>
-                    <dd class="price h3 m-b-2">{{ trans("PluginAuctions::auctions.noBids") }}</dd>
+                    <dt>{{ trans("PluginAuctions::Template.outcome") }}</dt>
+                    <dd class="price h3 m-b-2">{{ trans("PluginAuctions::Template.noBids") }}</dd>
 
                 {% endif %}
 
-                <dt>{{ trans("PluginAuctions::auctions.startPrice") }}</dt>
+                <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
 
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
 
                 {% if bidderListLength != 1 %}
-                    <dt>{{ trans("PluginAuctions::auctions.countOffers") }}</dt>
+                    <dt>{{ trans("PluginAuctions::Template.countOffers") }}</dt>
                     <dd> {{ bidderListLength - 1 }}
                         <span>
                             <a data-toggle="modal" href="#bidderlist">
-                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::auctions.showAll") }}
+                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
                                      </a>
                         </span>
                     </dd>
