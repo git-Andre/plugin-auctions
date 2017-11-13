@@ -1,11 +1,11 @@
-const ApiService          = require("services/ApiService");
-const NotificationService = require("services/NotificationService");
-const AuctionConstants    = require("constants/AuctionConstants");
+const ApiService          = require( "services/ApiService" );
+const NotificationService = require( "services/NotificationService" );
+const AuctionConstants    = require( "constants/AuctionConstants" );
 // const ResourceService     = require("services/ResourceService");
 
 const NOTIFY_TIME = 10000;
 
-Vue.component("auction-bids", {
+Vue.component( "auction-bids", {
     props: [
         "template",
         "userdata",
@@ -15,215 +15,184 @@ Vue.component("auction-bids", {
         "item",
         "deadline"
     ],
-    data()
-{
+    data() {
         return {
             isInputValid: false,
             maxCustomerBid: null
         };
     },
-    created()
-{
+    created() {
         this.$options.template = this.template;
     },
-    compiled()
-{
-        this.userdata = JSON.parse(this.userdata);
+    compiled() {
+        this.userdata = JSON.parse( this.userdata );
 
-        this.item = JSON.parse(this.item);
+        this.item = JSON.parse( this.item );
 
-        this.auction = JSON.parse(this.auction);
-        this.deadline = parseInt(this.auction.expiryDate);
-        this.minbid = this.toFloatTwoDecimal(((this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice)) + 1);
+        this.auction  = JSON.parse( this.auction );
+        this.deadline = parseInt( this.auction.expiryDate );
+        this.minbid   = this.toFloatTwoDecimal( ((this.auction.bidderList[this.auction.bidderList.length - 1].bidPrice)) + 1 );
     },
-    ready()
-{
+    ready() {
         // tense "present" und Customer loggedIn ??
-        if (this.auction.tense === AuctionConstants.PRESENT && this.userdata !== null)
-{
+        if ( this.auction.tense === AuctionConstants.PRESENT && this.userdata !== null ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") === this.userdata.id)
-{
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) === this.userdata.id ) {
                 this.liveEvaluateAndNotify();
             }
         }
     },
     methods: {
 
-        addBid()
-{
-            ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate)
-                .done(tenseFromServer =>
-{
+        addBid() {
+            ApiService.get( "/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
+                .done( tenseFromServer => {
                     const tense = tenseFromServer;
                     // Absicherung mit Server Time, dass Auktion noch 'present' ist
 
-                    if (tense === AuctionConstants.PRESENT)
-{
-                        ApiService.get("/api/auctionbidprice/" + this.auction.id)
-                            .done(lastBidPrice =>
-{
+                    if ( tense === AuctionConstants.PRESENT ) {
+                        ApiService.get( "/api/auctionbidprice/" + this.auction.id )
+                            .done( lastBidPrice => {
                                 // ist es ein gültiges Gebot (höher als letztes Gebot) ?
-                                if (this.maxCustomerBid > this.toFloatTwoDecimal(lastBidPrice))
-{
+                                if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
 
-                                    const pos           = this.userdata.email.indexOf("@");
-                                    const newBidderName = this.userdata.email.slice(0, 2) + " *** " +
-                                        this.userdata.email.slice(pos - 2, pos);
+                                    const pos           = this.userdata.email.indexOf( "@" );
+                                    const newBidderName = this.userdata.email.slice( 0, 2 ) + " *** " +
+                                        this.userdata.email.slice( pos - 2, pos );
 
                                     var currentBid = {
-                                        customerMaxBid: this.toFloatTwoDecimal(this.maxCustomerBid),
+                                        customerMaxBid: this.toFloatTwoDecimal( this.maxCustomerBid ),
                                         bidderName: newBidderName,
-                                        customerId: parseInt(this.userdata.id)
+                                        customerId: parseInt( this.userdata.id )
                                     };
 
                                     // super Time Tunnel
-                                    sessionStorage.setItem("currentBidder", this.userdata.id);
+                                    sessionStorage.setItem( "currentBidder", this.userdata.id );
 
-                                    ApiService.put("/api/bidderlist/" + this.auction.id, JSON.stringify(currentBid),
-                                                                                          {contentType: "application/json"}
+                                    ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
+                                                                                          { contentType: "application/json" }
                                     )
-                                        .then(response =>
-{
-                                            this.reload(5);
-                                        },
-                                               error =>
-{
-                                                   NotificationService.error("error3: " + error.toString()).close;
+                                        .then( response => {
+                                                   this.reload( 5 );
+                                               },
+                                               error => {
+                                                   NotificationService.error( "error3: " + error.toString() ).close;
 
                                                    // alert("error3: " + error.toString());
                                                }
                                         );
                                 }
                                 // es gibt inzwischen schon ein höheres Gebot
-                                else
-{
+                                else {
                                     // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
                                     NotificationService.warn(
-                                        "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid)
+                                        "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid )
                                         .close;
-                                    this.reload(2600);
+                                    this.reload( 2600 );
                                 }
-                            })
-                            .fail(() =>
-{
-                                NotificationService.error("Upps - ein Fehler bei auctionbidprice ??!!").close;
-                            }
+                            } )
+                            .fail( () => {
+                                       NotificationService.error( "Upps - ein Fehler bei auctionbidprice ??!!" ).close;
+                                   }
                             );
                     }
-                    else
-{
+                    else {
                         // ToDO Modal mit Time 5sec
                         this.printClockWarn();
                         this.afterAuctionWithServerTensePast();
                     }
-                })
-                .fail(() =>
-{
-                    NotificationService.error("Upps - ein Fehler bei der Zeitabfrage ??!!").close;
-                }
+                } )
+                .fail( () => {
+                           NotificationService.error( "Upps - ein Fehler bei der Zeitabfrage ??!!" ).close;
+                       }
                 );
 
         },
-        liveEvaluateAndNotify()
-{
-            if (this.hasLoggedInUserTheLastBid())
-{
+        liveEvaluateAndNotify() {
+            if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if (this.auction.bidderList[this.auction.bidderList.length - 2].customerId === this.userdata.id)
-{
-                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString())
-{
-                    case AuctionConstants.OWN_BID_CHANGED: {
-                        NotificationService.info(
+                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId === this.userdata.id ) {
+                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                        case AuctionConstants.OWN_BID_CHANGED: {
+                            NotificationService.info(
                                 "<h3>" + TranslationsAo.Template.auctionlastAction + "</h3><hr>" +
-                                TranslationsAo.Template.auctionChangedOwnMaxBid)
-                                .closeAfter(NOTIFY_TIME);
-                        break;
-                    }
-                    case AuctionConstants.LOWER_BID: {
+                                TranslationsAo.Template.auctionChangedOwnMaxBid )
+                                .closeAfter( NOTIFY_TIME );
+                            break;
+                        }
+                        case AuctionConstants.LOWER_BID: {
                             // "<i class=\"fa fa-check-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                        NotificationService.success(
-                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionLowerMaxBid)
-                                .closeAfter(NOTIFY_TIME);
-                        break;
-                    }
+                            NotificationService.success(
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionLowerMaxBid )
+                                .closeAfter( NOTIFY_TIME );
+                            break;
+                        }
                     }
                 }
-                else
-{
+                else {
                     // bidStatus von letzter bid ???
-                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString())
-{
-                    case AuctionConstants.OWN_BID_CHANGED: {
+                    switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
+                        case AuctionConstants.OWN_BID_CHANGED: {
                             // "<i class=\"fa fa-info-circle p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                        NotificationService.info(
-                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionChangedOwnMaxBid)
-                                .closeAfter(NOTIFY_TIME);
-                        break;
-                    }
-                    case AuctionConstants.HIGHEST_BID: {
-                        NotificationService.success(
+                            NotificationService.info(
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionChangedOwnMaxBid )
+                                .closeAfter( NOTIFY_TIME );
+                            break;
+                        }
+                        case AuctionConstants.HIGHEST_BID: {
+                            NotificationService.success(
                                 // "<i class=\"fa fa-check-circle-o p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionYouHaveHighestBid)
-                                .closeAfter(NOTIFY_TIME);
-                        break;
-                    }
-                    case AuctionConstants.LOWER_BID: {
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionYouHaveHighestBid )
+                                .closeAfter( NOTIFY_TIME );
+                            break;
+                        }
+                        case AuctionConstants.LOWER_BID: {
                             // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                        NotificationService.warn(
-                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid)
-                                .closeAfter(NOTIFY_TIME);
+                            NotificationService.warn(
+                                "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid )
+                                .closeAfter( NOTIFY_TIME );
 
-                        break;
-                    }
+                            break;
+                        }
 
                     }
                 }
             }
-            else
-{
+            else {
                 NotificationService.warn(
                     // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
-                    "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid)
-                    .closeAfter(NOTIFY_TIME);
+                    "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid )
+                    .closeAfter( NOTIFY_TIME );
             }
             /**/
-            sessionStorage.removeItem("currentBidder");
+            sessionStorage.removeItem( "currentBidder" );
         },
-        hasLoggedInUserBiddenYet()
-{
+        hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
-            for (var i = this.auction.bidderList.length; --i > 0;)
-{
-                if (this.userdata.id === this.auction.bidderList[i].customerId)
-{
+            for (var i = this.auction.bidderList.length; --i > 0;) {
+                if ( this.userdata.id === this.auction.bidderList[i].customerId ) {
                     return true;
                 }
             }
             return false;
         },
-        hasLoggedInUserTheLastBid()
-{
+        hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id)
-{
+            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id ) {
                 return true;
             }
 
             return false;
 
         },
-        toFloatTwoDecimal(value)
-{
-            return Math.round(parseFloat(value) * 100) / 100.0;
+        toFloatTwoDecimal(value) {
+            return Math.round( parseFloat( value ) * 100 ) / 100.0;
         },
 
-        auctionend()
-{
-            var startD = Math.trunc((new Date()).getTime() / 1000);
+        auctionend() {
+            var startD = Math.trunc( (new Date()).getTime() / 1000 );
 
-            startD = startD - 24 * 60 * 60 + 10;
+            startD      = startD - 24 * 60 * 60 + 10;
             var Bidtest = {
                 startDate: startD,
                 startHour: 16,
@@ -233,161 +202,136 @@ Vue.component("auction-bids", {
             };
             const url   = "/api/auction/" + this.auction.id;
 
-            ApiService.put(url, JSON.stringify(Bidtest), {contentType: "application/json"}
+            ApiService.put( url, JSON.stringify( Bidtest ), { contentType: "application/json" }
             )
-                .done(auction =>
-{
+                .done( auction => {
                     // alert( "ok" );
-                })
-                .fail(() =>
-{
-                    NotificationService.error("Upps - ein Fehler beim auctionend ??!!").close;
-                });
+                } )
+                .fail( () => {
+                    NotificationService.error( "Upps - ein Fehler beim auctionend ??!!" ).close;
+                } );
         },
-        afterAuctionWithFrontendTime(counter, tense)
-{
-            if (counter === 5)
-{
+        afterAuctionWithFrontendTime(counter, tense) {
+            if ( counter === 5 ) {
                 // ToDO Modal mit Time 5sec
                 this.printClockWarn();
                 // Todo: Wiederholung unterbinden !!
-                this.reload(10);
+                this.reload( 10 );
             }
-            else
-{
+            else {
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
-                ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate)
-                    .done(tensefromServer =>
-{
+                ApiService.get( "/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
+                    .done( tensefromServer => {
                         tense = tensefromServer;
 
-                        if (tense === AuctionConstants.PAST)
-{
-                            this.reload(100);
+                        if ( tense === AuctionConstants.PAST ) {
+                            this.reload( 100 );
                             // this.afterAuctionWithServerTensePast();
                         }
-                        else
-{
+                        else {
                             counter++;
-                            if (counter > 2)
-{
+                            if ( counter > 2 ) {
                                 NotificationService.warn(
-                                    "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionMatchServerTime)
-                                    .closeAfter(3000);
+                                    "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionMatchServerTime )
+                                    .closeAfter( 3000 );
                             }
-                            setTimeout(() =>
-{
-                                this.afterAuctionWithFrontendTime(counter, tense);
-                            }, (counter * 1000 + 2000));
+                            setTimeout( () => {
+                                this.afterAuctionWithFrontendTime( counter, tense );
+                            }, (counter * 1000 + 2000) );
                         }
-                    })
-                    .fail(() =>
-{
-                        NotificationService.error("Ein Fehler in afterAuctionWithFrontendTime  ??!!").close;
-                    }
+                    } )
+                    .fail( () => {
+                               NotificationService.error( "Ein Fehler in afterAuctionWithFrontendTime  ??!!" ).close;
+                           }
                     );
             }
         },
-        afterAuctionWithServerTensePast()
-{
-            if (this.userdata !== null)
-{
-                ApiService.get("/api/auction_last_entry/" + this.auction.id)
-                    .done(lastEntry =>
-{
+        afterAuctionWithServerTensePast() {
+            if ( this.userdata !== null ) {
+                ApiService.get( "/api/auction_last_entry/" + this.auction.id )
+                    .done( lastEntry => {
 
                         const bidderListLastEntry = lastEntry;
 
                         // Gewinner eingeloggt?
-                        if (this.userdata.id === bidderListLastEntry.customerId)
-{
+                        if ( this.userdata.id === bidderListLastEntry.customerId ) {
                             // Artikel in den Warenkorb
                             const url = ("/auction_to_basket?number=" + this.item.variation.id + "&auctionid=" + this.auction.id);
 
-                            ApiService.post(url)
-                                .done(response =>
-{
+                            ApiService.post( url )
+                                .done( response => {
 
-                                    const result = JSON.parse(response);
+                                    const result = JSON.parse( response );
 
-                                    if (result == this.item.variation.id)
-{
-                                        sessionStorage.setItem("basketItem", this.auction.itemId);
-                                        this.reload(10);
+                                    if ( result == this.item.variation.id ) {
+                                        sessionStorage.setItem( "basketItem", this.auction.itemId );
+                                        this.reload( 10 );
                                     }
-                                    else
-{
+                                    else {
                                         NotificationService.error(
-                                            "Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)").close;
+                                            "Ein Fehler ist aufgetreten:\nBitte sehen Sie in Ihre Emails bzw. wenden Sie sich an unseren Kundendienst (s.Kontakt auf dieser Website)" ).close;
                                     }
-                                })
-                                .fail(() =>
-{
-                                    alert("Oops - Fehler bei Auction Auswertung 2 ??!!");
-                                }
+                                } )
+                                .fail( () => {
+                                           alert( "Oops - Fehler bei Auction Auswertung 2 ??!!" );
+                                       }
                                 );
                         }
                         // Nichtgewinner angemeldet...
-                        else
-{
-                            this.reload(10);
+                        else {
+                            this.reload( 10 );
                         }
-                    })
-                    .fail(() =>
-{
-                        alert("Fehler bei After Auction 1 ??!!");
-                    }
+                    } )
+                    .fail( () => {
+                               alert( "Fehler bei After Auction 1 ??!!" );
+                           }
                     );
             }
             // niemand angemeldet...
-            else
-{
-                this.reload(10);
+            else {
+                this.reload( 10 );
             }
             // }
         },
-        reload(timeout)
-{
-            setTimeout(() =>
-{
+        reload(timeout) {
+            setTimeout( () => {
                 location.reload();
-            }, timeout);
+            }, timeout );
         },
-        printClockWarn()
-{
-            NotificationService.error("Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" +
+        printClockWarn() {
+            NotificationService.error( "Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" +
                 "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n" +
-                "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!").close;
+                "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!" ).close;
 
         },
         watch: {
-            maxCustomerBid: function()
-{
-                if (this.maxCustomerBid > 0 && this.userdata === null)
-{
+            maxCustomerBid: function () {
+
+                console.log( 'this.maxCustomerBid: ' + this.maxCustomerBid );
+                console.log( 'this.userdata: ' + this.userdata );
+
+                if ( this.maxCustomerBid > 0 && this.userdata == null ) {
+
+                    console.log( 'drin' );
                     // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                    NotificationService.error(TranslationsAo.Template.auctionPleaseLogin).closeAfter(5000);
+                    NotificationService.error( TranslationsAo.Template.auctionPleaseLogin ).closeAfter( 5000 );
                     this.isInputValid = false;
                 }
-                if (this.maxCustomerBid >= this.minbid && this.userdata !== null)
-{
+                if ( this.maxCustomerBid >= this.minbid && this.userdata != null ) {
                     this.isInputValid = true;
                 }
-                else
-{
+                else {
                     this.isInputValid = false;
                 }
             },
-            auctionEnd: function()
-{
-                if (this.auctionEnd)
-{
+            auctionEnd: function () {
+                if ( this.auctionEnd ) {
                     var tense   = AuctionConstants.PRESENT;
                     var counter = 0;
 
-                    this.afterAuctionWithFrontendTime(counter, tense);
+                    this.afterAuctionWithFrontendTime( counter, tense );
                 }
             }
         }
     }
-});
+} );

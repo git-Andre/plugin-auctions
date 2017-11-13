@@ -314,12 +314,18 @@ Vue.component("auction-bids", {
 
         watch: {
             maxCustomerBid: function maxCustomerBid() {
-                if (this.maxCustomerBid > 0 && this.userdata === null) {
+
+                console.log('this.maxCustomerBid: ' + this.maxCustomerBid);
+                console.log('this.userdata: ' + this.userdata);
+
+                if (this.maxCustomerBid > 0 && this.userdata == null) {
+
+                    console.log('drin');
                     // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
                     NotificationService.error(TranslationsAo.Template.auctionPleaseLogin).closeAfter(5000);
                     this.isInputValid = false;
                 }
-                if (this.maxCustomerBid >= this.minbid && this.userdata !== null) {
+                if (this.maxCustomerBid >= this.minbid && this.userdata != null) {
                     this.isInputValid = true;
                 } else {
                     this.isInputValid = false;
