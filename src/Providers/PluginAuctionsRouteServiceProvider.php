@@ -27,7 +27,7 @@
                 function ($apiRouter) {
 
 
-                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
+//                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
 
 
                     $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
@@ -37,6 +37,8 @@
 
             $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
                                -> where('id', '\d+');
+
+            $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
 
 
