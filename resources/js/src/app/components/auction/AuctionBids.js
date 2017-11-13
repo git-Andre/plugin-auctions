@@ -35,9 +35,9 @@ Vue.component( "auction-bids", {
     },
     ready() {
         // tense "present" und Customer loggedIn ??
-        if ( this.auction.tense === AuctionConstants.PRESENT && this.userdata !== null ) {
+        if ( this.auction.tense == AuctionConstants.PRESENT && this.userdata != null ) {
             // Auswertung für Bieter in Bidderlist bzw. auch für den gerade in Session gespeicherten User... ???!!
-            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) === this.userdata.id ) {
+            if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.liveEvaluateAndNotify();
             }
         }
@@ -50,7 +50,7 @@ Vue.component( "auction-bids", {
                     const tense = tenseFromServer;
                     // Absicherung mit Server Time, dass Auktion noch 'present' ist
 
-                    if ( tense === AuctionConstants.PRESENT ) {
+                    if ( tense == AuctionConstants.PRESENT ) {
                         ApiService.get( "/api/auctionbidprice/" + this.auction.id )
                             .done( lastBidPrice => {
                                 // ist es ein gültiges Gebot (höher als letztes Gebot) ?
@@ -111,7 +111,7 @@ Vue.component( "auction-bids", {
         liveEvaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
-                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId === this.userdata.id ) {
+                if ( this.auction.bidderList[this.auction.bidderList.length - 2].customerId == this.userdata.id ) {
                     switch ((this.auction.bidderList[this.auction.bidderList.length - 1].bidStatus).toString()) {
                         case AuctionConstants.OWN_BID_CHANGED: {
                             NotificationService.info(
@@ -170,7 +170,7 @@ Vue.component( "auction-bids", {
         hasLoggedInUserBiddenYet() {
             // return true if LoggedInUser in BidderList (foreach... break wenn gefunden)
             for (var i = this.auction.bidderList.length; --i > 0;) {
-                if ( this.userdata.id === this.auction.bidderList[i].customerId ) {
+                if ( this.userdata.id == this.auction.bidderList[i].customerId ) {
                     return true;
                 }
             }
@@ -178,7 +178,7 @@ Vue.component( "auction-bids", {
         },
         hasLoggedInUserTheLastBid() {
             // return true if lastBid.CustomerId == loggedInCustomerID
-            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId === this.userdata.id ) {
+            if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id ) {
                 return true;
             }
 
@@ -212,7 +212,7 @@ Vue.component( "auction-bids", {
                 } );
         },
         afterAuctionWithFrontendTime(counter, tense) {
-            if ( counter === 5 ) {
+            if ( counter == 5 ) {
                 // ToDO Modal mit Time 5sec
                 this.printClockWarn();
                 // Todo: Wiederholung unterbinden !!
@@ -224,7 +224,7 @@ Vue.component( "auction-bids", {
                     .done( tensefromServer => {
                         tense = tensefromServer;
 
-                        if ( tense === AuctionConstants.PAST ) {
+                        if ( tense == AuctionConstants.PAST ) {
                             this.reload( 100 );
                             // this.afterAuctionWithServerTensePast();
                         }
@@ -247,14 +247,14 @@ Vue.component( "auction-bids", {
             }
         },
         afterAuctionWithServerTensePast() {
-            if ( this.userdata !== null ) {
+            if ( this.userdata != null ) {
                 ApiService.get( "/api/auction_last_entry/" + this.auction.id )
                     .done( lastEntry => {
 
                         const bidderListLastEntry = lastEntry;
 
                         // Gewinner eingeloggt?
-                        if ( this.userdata.id === bidderListLastEntry.customerId ) {
+                        if ( this.userdata.id == bidderListLastEntry.customerId ) {
                             // Artikel in den Warenkorb
                             const url = ("/auction_to_basket?number=" + this.item.variation.id + "&auctionid=" + this.auction.id);
 
@@ -299,39 +299,36 @@ Vue.component( "auction-bids", {
             }, timeout );
         },
         printClockWarn() {
-            NotificationService.error( "Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!\n" +
-                "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)\n" +
+            NotificationService.error( "Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!<br>" +
+                "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)<br>" +
                 "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!" ).close;
 
         },
-        watch: {
-            maxCustomerBid: function () {
+    },
+    watch: {
+        maxCustomerBid: function () {
 
-                console.log( 'this.maxCustomerBid: ' + this.maxCustomerBid );
-                console.log( 'this.userdata: ' + this.userdata );
+            if ( this.maxCustomerBid > 0 && this.userdata == null ) {
+                // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
+                NotificationService.error( "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" ).closeAfter( 5000 );
+                // NotificationService.error( TranslationsAo.Template.auctionPleaseLogin ).closeAfter( 5000 );
+                this.isInputValid = false;
+            }
+            if ( this.maxCustomerBid >= this.minbid && this.userdata != null ) {
+                this.isInputValid = true;
+            }
+            else {
+                this.isInputValid = false;
+            }
+        },
+        auctionEnd: function () {
+            if ( this.auctionEnd ) {
+                var tense   = AuctionConstants.PRESENT;
+                var counter = 0;
 
-                if ( this.maxCustomerBid > 0 && this.userdata == null ) {
-
-                    console.log( 'drin' );
-                    // { "message": "Bitte loggen Sie sich ein<br>bzw. registrieren Sie sich!" } )
-                    NotificationService.error( TranslationsAo.Template.auctionPleaseLogin ).closeAfter( 5000 );
-                    this.isInputValid = false;
-                }
-                if ( this.maxCustomerBid >= this.minbid && this.userdata != null ) {
-                    this.isInputValid = true;
-                }
-                else {
-                    this.isInputValid = false;
-                }
-            },
-            auctionEnd: function () {
-                if ( this.auctionEnd ) {
-                    var tense   = AuctionConstants.PRESENT;
-                    var counter = 0;
-
-                    this.afterAuctionWithFrontendTime( counter, tense );
-                }
+                this.afterAuctionWithFrontendTime( counter, tense );
             }
         }
     }
+
 } );

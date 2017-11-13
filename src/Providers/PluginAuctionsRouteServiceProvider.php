@@ -23,18 +23,24 @@
                 function ($apiRouter) {
 
 //                    $apiRouter -> get('auctions/', 'AuctionsController@getAuctions');
-                    $apiRouter -> delete('auctions/auction/{id}', 'AuctionsController@deleteAuction');
+                    $apiRouter -> delete('auctions/delete/{id}', 'AuctionsController@deleteAuction');
+
+                    $apiRouter -> post('auctions/create', 'AuctionsController@createAuction');
+
+                    $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
                 });
 
-            // new + API
+            // new - Routes for all...
+            $router -> get('auctions/all', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
 
-            $router -> get('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
+            $router -> get('auctions/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction')
                     -> where('id', '\d+');
 
-            $router -> get('api/auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctions');
+//            $router -> put('auctions/update/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
 
 
             // old
+//            $router -> post('auction/create', 'PluginAuctions\Controllers\AuctionsController@createAuction');
             $router -> get('api/auctionitemid/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId')
                     -> where('itemId', '\d+');
 
@@ -51,9 +57,7 @@
                     -> where('id', '\d+');
 
 
-            $router -> post('api/auction', 'PluginAuctions\Controllers\AuctionsController@createAuction');
 
-            $router -> put('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
 
             $router -> put('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist')
                     -> where('id', '\d+');
