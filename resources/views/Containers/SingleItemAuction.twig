@@ -54,22 +54,24 @@
                     {% if (bidderListLength > 1) %}
                         <dt>{{ trans("PluginAuctions::Template.currentOffer") }}</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
-                        <dt>{{ trans("CeresSchaffrath::Template.startPrice") }}</dt>
-                        {#<dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>#}
+                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Standard#}
-                        <dt><span class="alarm">{{ trans("CeresSchaffrath::Template.footerCol3LinkTitle1") }}</span> <span class="small">(10%)</span>:</dt>
-                        {#<dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>#}
+                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
                         <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                             <span class="m-x-1">|</span>
                             <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% else %}
-                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
+                        <dt>{{ trans("CeresSchaffrath::Template.startPrice") }}</dt>
+    
+                        {#<dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>#}
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
-                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>
+                        {#<dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>#}
+                        <dt><span class="alarm">{{ trans("CeresSchaffrath::Template.footerCol3LinkTitle1") }}</span> <span class="small">(10%)</span>:</dt>
+    
                         <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
                             <span class="m-x-5">|</span>
                             <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
