@@ -35,7 +35,7 @@
 
             $router -> get('auctions/{id}', 'PluginAuctions\Controllers\AuctionsController@getAuction') -> where('id', '\d+');
 
-            $router -> get('auctions/for/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId') -> where('itemId', '\d+');
+            $router -> get('auctions/forItemId/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId') -> where('itemId', '\d+');
 
             //            $router -> put('auctions/update/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
 
