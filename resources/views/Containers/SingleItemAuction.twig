@@ -34,9 +34,7 @@
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
 
-            <h2 class="m-b-1 alarm">{{ trans("Ceres::Template.variationLastUpdateTimestamp_asc") }}</h2>
-            {#<h2 class="m-b-1 alarm">{{ trans("PluginAuctions::Template.currentAuction") }}</h2>#}
-
+            <h2 class="m-b-1 alarm">{{ trans("PluginAuctions::Template.currentAuction") }}</h2>
 
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
@@ -64,13 +62,11 @@
                             <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% else %}
-                        <dt>{{ trans("CeresSchaffrath::Template.startPrice") }}</dt>
-                        {#<dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>#}
+                        <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
     
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
-                        {#<dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>#}
-                        <dt><span class="alarm">{{ trans("CeresSchaffrath::Template.footerCol3LinkTitle1") }}</span> <span class="small">(10%)</span>:</dt>
+                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
     
                         <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
                             <span class="m-x-5">|</span>
