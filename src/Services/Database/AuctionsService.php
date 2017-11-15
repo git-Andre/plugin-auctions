@@ -513,7 +513,7 @@
                     }
 
 
-
+                    $salesPriceId = 7;   // ToDo config:  7  salesPriceId
 
                     // itemId von auction um den Preis zu ändern
                     // $variationId holen
@@ -523,19 +523,19 @@
 
 //                    $salesPriceData = (VariationSalesPrice){['variationId' => $variationIds[0]] };
 
-                    $variationSalesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
+//                        $variationSalesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
+//
+//                        $this -> getLogger(__METHOD__)
+//                              -> debug('PluginAuctions::Template.debugBefor', ['$variationSalesPriceVorher: ' => $variationSalesPrice]);
+//
+                        $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => $salesPriceId ];
+//
+//
+//                        $this -> getLogger(__METHOD__)
+//                              -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
+//
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugBefor', ['$variationSalesPriceVorher: ' => $variationSalesPrice]);
-
-                    $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => 7 ];  // ToDo config:  7  salesPriceId
-
-
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
-
-
-                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData,7, $variationIds[0]);
+                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
 
 
 
