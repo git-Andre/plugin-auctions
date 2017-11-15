@@ -37,14 +37,16 @@
 
             $router -> get('auctions/forItemId/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId') -> where('itemId', '\d+');
 
-            //            $router -> put('auctions/update/{id}', 'PluginAuctions\Controllers\AuctionsController@updateAuction') -> where('id', '\d+');
+            //  in Arbeit
+            $router -> put('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist')
+                    -> where('id', '\d+');
 
+            $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
 
             // old #########################################
 //            $router -> post('auction/create', 'PluginAuctions\Controllers\AuctionsController@createAuction');
 
 
-            $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
 
 
             $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList') -> where('id', '\d+');
@@ -58,8 +60,6 @@
 
 
 
-            $router -> put('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist')
-                    -> where('id', '\d+');
 
 //            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
@@ -107,12 +107,10 @@
 
             $router -> put('api/increase-number-visitors', 'PluginAuctions\Controllers\VisitorCounterController@increaseNumberOfVisitorsForItemId');
 
-            $router -> delete('api/delete-visitor-counter/{id}', 'PluginAuctions\Controllers\VisitorCounterController@deleteVisitorCounter')
-                    -> where('id', '\d+');
-
+//            $router -> delete('api/delete-visitor-counter/{id}', 'PluginAuctions\Controllers\VisitorCounterController@deleteVisitorCounter') -> where('id', '\d+');
 
             // auctionend - add to basket
-            $router -> post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');
+//            $router -> post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');
 
         }
     }

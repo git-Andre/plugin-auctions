@@ -5,6 +5,8 @@
 //    use IO\Services\CustomerService;
 //    use IO\Services\SessionStorageService;
 
+    use IO\Services\ItemService;
+    use Plenty\Modules\Item\VariationSalesPrice\Contracts\VariationSalesPriceRepositoryContract;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Constants\AuctionStatus;
@@ -28,14 +30,20 @@
 //         */
 //        private $sessionStorage;
 
+
+        private $itemService;
+        private $variationSalesPriceRepository;
+
         /**
          * AuctionsService constructor.
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase)
+        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract)
         {
             parent ::__construct($dataBase);
+            $this -> itemService = $itemService;
+            $this -> variationSalesPriceRepository = $variationSalesPriceRepositoryContract;
         }
 
 //        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
@@ -451,6 +459,29 @@
 //                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
 //                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
 //                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
+
+
+
+
+
+
+                    // itemId von auction um den Preis zu ändern
+                    // $variationId holen
+                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('testedId')
+                          -> setReferenceValue($variationIds[0])
+                          -> debug('PluginAuctions::auctions.debugBefor', ['$auction: ' => $auction]);
+
+                    // VariationSalesPriceRepo... update
+
+                    $salesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('testedId')
+                          -> setReferenceValue()
+                          -> debug('PluginAuctions::auctions.debugAfter', ['$salesPrice: ' => $salesPrice]);
+
 
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
