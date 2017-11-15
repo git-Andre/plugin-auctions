@@ -7,6 +7,8 @@
 
     use IO\Services\ItemService;
     use Plenty\Modules\Item\VariationSalesPrice\Contracts\VariationSalesPriceRepositoryContract;
+    use Plenty\Modules\Item\VariationSalesPrice\Models\VariationSalesPrice;
+
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Constants\AuctionStatus;
@@ -464,29 +466,6 @@
 //                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
 //                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
 
-
-
-
-
-
-                    // itemId von auction um den Preis zu ändern
-                    // $variationId holen
-                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('testedId')
-                          -> setReferenceValue($variationIds[0])
-                          -> debug('PluginAuctions::Template.debugBefor', ['$auction: ' => $auction]);
-
-                    // VariationSalesPriceRepo... update
-
-                    $salesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
-
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('testedId')
-                          -> setReferenceValue()
-                          -> debug('PluginAuctions::Template.debugAfter', ['$salesPrice: ' => $salesPrice]);
-
-
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
                     {
@@ -532,6 +511,37 @@
                             $newEntry -> bidStatus = BidStatus::LOWER_BID;
                         }
                     }
+
+
+
+
+                    // itemId von auction um den Preis zu ändern
+                    // $variationId holen
+                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
+
+                    // VariationSalesPriceRepo... update
+
+//                    $salesPriceData = (VariationSalesPrice){['variationId' => $variationIds[0]] };
+
+                    $variationSalesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debugBefor', ['$variationSalesPriceVorher: ' => $variationSalesPrice]);
+
+                    $salesPriceData = [$newEntry -> bidPrice ];
+
+                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData,7, $variationIds[0]);
+
+
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debugAfter', ['$variationSalesPrice: ' => $variationSalesPrice]);
+
+
+
+
+
+
 
                     $newEntry -> bidTimeStamp = time();
 

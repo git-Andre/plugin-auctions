@@ -77,8 +77,6 @@ Vue.component( "auction-bids", {
                                                },
                                                error => {
                                                    NotificationService.error( "error3: " + error.toString() ).close;
-
-                                                   // alert("error3: " + error.toString());
                                                }
                                         );
                                 }
@@ -88,7 +86,7 @@ Vue.component( "auction-bids", {
                                     NotificationService.warn(
                                         "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid )
                                         .close;
-                                    this.reload( 2600 );
+                                    this.reload( 5000 );
                                 }
                             } )
                             .fail( () => {
