@@ -528,7 +528,12 @@
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::Template.debugBefor', ['$variationSalesPriceVorher: ' => $variationSalesPrice]);
 
-                    $salesPriceData = [$newEntry -> bidPrice ];
+                    $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => 7 ];  // ToDo config:  7  salesPriceId
+
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
+
 
                     $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData,7, $variationIds[0]);
 
