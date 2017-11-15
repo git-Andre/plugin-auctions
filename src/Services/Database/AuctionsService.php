@@ -444,7 +444,7 @@
                 $currentBid = (object) $currentBid;
 
                 $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::auctions.debug', ['$currentBid: ' => $currentBid]);
+                      -> debug('PluginAuctions::Template.debug', ['$currentBid: ' => $currentBid]);
 
 
                 $auction = $this -> getValue(Auction_7::class, $id);
@@ -475,7 +475,7 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('testedId')
                           -> setReferenceValue($variationIds[0])
-                          -> debug('PluginAuctions::auctions.debugBefor', ['$auction: ' => $auction]);
+                          -> debug('PluginAuctions::Template.debugBefor', ['$auction: ' => $auction]);
 
                     // VariationSalesPriceRepo... update
 
@@ -484,7 +484,7 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('testedId')
                           -> setReferenceValue()
-                          -> debug('PluginAuctions::auctions.debugAfter', ['$salesPrice: ' => $salesPrice]);
+                          -> debug('PluginAuctions::Template.debugAfter', ['$salesPrice: ' => $salesPrice]);
 
 
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
