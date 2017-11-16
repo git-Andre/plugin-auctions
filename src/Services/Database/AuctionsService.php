@@ -522,12 +522,18 @@
                     // $variationId holen um den AuctionPreis im Artikel zu ändern
                     $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
-                    $salesPriceData = ["variationId"  => $variationIds[0],
-                                       "price"        => $newEntry -> bidPrice,
-                                       "salesPriceId" => $salesPriceId
-                    ];
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('testedId')
+                          -> setReferenceValue($auction -> itemId)
+                          -> debug('PluginAuctions::Template.debug', ['$variationIds: ' => $variationIds]);
 
-                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
+
+//                    $salesPriceData = ["variationId"  => $variationIds[0],
+//                                       "price"        => $newEntry -> bidPrice,
+//                                       "salesPriceId" => $salesPriceId
+//                    ];
+//
+//                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
 
                     // neuer Eintrag
                     $newEntry -> bidTimeStamp = time();
