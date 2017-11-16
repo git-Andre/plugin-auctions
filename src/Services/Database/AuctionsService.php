@@ -521,22 +521,6 @@
                     }
 
 
-                    $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
-                    // $variationId holen um den AuctionPreis im Artikel zu ändern
-                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
-
-
-                    $salesPriceData = ["variationId"  => $variationIds[0],
-                                       "price"        => $newEntry -> bidPrice,
-                                       "salesPriceId" => $salesPriceId
-                    ];
-
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('testedId')
-                          -> setReferenceValue($salesPriceId)
-                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
-
-
                     $salesPriceRepo = pluginApp(VariationSalesPriceRepositoryContract::class);
 
 
@@ -545,6 +529,22 @@
 
                     $variationSalesPrice = $this -> authHelper -> processUnguarded(
                         function () use ($salesPriceRepo, $variationSalesPrice) {
+
+                            $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
+                            // $variationId holen um den AuctionPreis im Artikel zu ändern
+                            $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
+
+
+                            $salesPriceData = ["variationId"  => $variationIds[0],
+                                               "price"        => $newEntry -> bidPrice,
+                                               "salesPriceId" => $salesPriceId
+                            ];
+
+                            $this -> getLogger(__METHOD__)
+                                  -> setReferenceType('testedId')
+                                  -> setReferenceValue($salesPriceId)
+                                  -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
+
                             return $salesPriceRepo -> update($salesPriceData, $salesPriceId, $variationIds[0]);
                         }
                     );
