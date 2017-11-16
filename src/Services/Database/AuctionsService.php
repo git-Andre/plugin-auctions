@@ -3,8 +3,6 @@
     namespace PluginAuctions\Services\Database;
 
     use IO\Services\CustomerService;
-//    use IO\Services\SessionStorageService;
-
     use IO\Services\ItemService;
     use Plenty\Modules\Item\VariationSalesPrice\Contracts\VariationSalesPriceRepositoryContract;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
@@ -13,6 +11,8 @@
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+
+//    use IO\Services\SessionStorageService;
 
     //    use Plenty\Modules\Item\VariationSalesPrice\Models\VariationSalesPrice;
 
@@ -445,110 +445,110 @@
             {
                 $currentBid = (object) $currentBid;
 
+
+                $loggedInUser = $this -> customerService -> getContactId();
+
                 $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::Template.debugBefor', ['$currentBid: ' => $currentBid]);
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($loggedInUser)
+                      -> debug('PluginAuctions::Template.debug', ['$currentBid: ' => $currentBid]);
 
-
-                $auction = $this -> getValue(Auction_7::class, $auctionId);
-
-                if ($auction instanceof Auction_7)
+                if ($currentBid -> customerId === $loggedInUser)
                 {
-                    $newEntry = pluginApp(AuctionBidderListEntry::class);
 
-                    $newList = array (pluginApp(AuctionBidderListEntry::class));
-                    $newList = $auction -> bidderList;
+                    $auction = $this -> getValue(Auction_7::class, $auctionId);
 
-                    $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
+                    if ($auction instanceof Auction_7)
+                    {
+                        $newEntry = pluginApp(AuctionBidderListEntry::class);
 
+                        $newList = array (pluginApp(AuctionBidderListEntry::class));
+                        $newList = $auction -> bidderList;
 
-
-                    $loggedInUser = $this -> customerService -> getContactId();
-
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('auctionId')
-                          -> setReferenceValue($auctionId)
-                          -> debug('PluginAuctions::Template.debug', ['$loggedInUser: ' => $loggedInUser]);
-
-
+                        $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 //                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
 //                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
 //                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
 
-                    // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
-                    if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
-                    {
-                        $newEntry -> bidPrice = $bidderListLastEntry -> bidPrice;
-                        $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
-                        $newEntry -> bidderName = $currentBid -> bidderName;
-                        $newEntry -> customerId = $currentBid -> customerId;
-
-                        $newEntry -> bidStatus = BidStatus::OWN_BID_CHANGED;
-
-                    }
-                    // anderer Customer !
-                    else
-                    {
-                        // Neues Max-Gebot > Max-Gebot letzter Eintrag?
-                        if ($currentBid -> customerMaxBid > $bidderListLastEntry -> customerMaxBid)
+                        // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
+                        if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
                         {
-                            // Neues Max-Gebot < kleiner als letztes Max-Gebot +1  ??
-                            if ($currentBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
-                            {
-                                $newEntry -> bidPrice = $currentBid -> customerMaxBid;
-                            }
-                            // mehr als 1 EUR
-                            else
-                            {
-                                $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
-                            }
+                            $newEntry -> bidPrice = $bidderListLastEntry -> bidPrice;
                             $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
                             $newEntry -> bidderName = $currentBid -> bidderName;
                             $newEntry -> customerId = $currentBid -> customerId;
 
-                            $newEntry -> bidStatus = BidStatus::HIGHEST_BID;
+                            $newEntry -> bidStatus = BidStatus::OWN_BID_CHANGED;
 
                         }
+                        // anderer Customer !
                         else
-                            // überboten
                         {
-                            $newEntry -> bidPrice = $currentBid -> customerMaxBid;
-                            $newEntry -> customerMaxBid = $bidderListLastEntry -> customerMaxBid;
-                            $newEntry -> bidderName = $bidderListLastEntry -> bidderName;
-                            $newEntry -> customerId = $bidderListLastEntry -> customerId;
+                            // Neues Max-Gebot > Max-Gebot letzter Eintrag?
+                            if ($currentBid -> customerMaxBid > $bidderListLastEntry -> customerMaxBid)
+                            {
+                                // Neues Max-Gebot < kleiner als letztes Max-Gebot +1  ??
+                                if ($currentBid -> customerMaxBid < $bidderListLastEntry -> customerMaxBid + 1)
+                                {
+                                    $newEntry -> bidPrice = $currentBid -> customerMaxBid;
+                                }
+                                // mehr als 1 EUR
+                                else
+                                {
+                                    $newEntry -> bidPrice = $bidderListLastEntry -> customerMaxBid + 1;
+                                }
+                                $newEntry -> customerMaxBid = $currentBid -> customerMaxBid;
+                                $newEntry -> bidderName = $currentBid -> bidderName;
+                                $newEntry -> customerId = $currentBid -> customerId;
 
-                            $newEntry -> bidStatus = BidStatus::LOWER_BID;
+                                $newEntry -> bidStatus = BidStatus::HIGHEST_BID;
+
+                            }
+                            else
+                                // überboten
+                            {
+                                $newEntry -> bidPrice = $currentBid -> customerMaxBid;
+                                $newEntry -> customerMaxBid = $bidderListLastEntry -> customerMaxBid;
+                                $newEntry -> bidderName = $bidderListLastEntry -> bidderName;
+                                $newEntry -> customerId = $bidderListLastEntry -> customerId;
+
+                                $newEntry -> bidStatus = BidStatus::LOWER_BID;
+                            }
                         }
+
+
+                        $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
+                        // $variationId holen um den AuctionPreis im Artikel zu ändern
+                        $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
+
+                        $salesPriceData = ["variationId"  => $variationIds[0],
+                                           "price"        => $newEntry -> bidPrice,
+                                           "salesPriceId" => $salesPriceId
+                        ];
+
+                        $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
+
+                        // neuer Eintrag
+                        $newEntry -> bidTimeStamp = time();
+
+                        array_push($newList, $newEntry);
+
+                        $auction -> bidderList = $newList;
+
+                        $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                        if ($this -> setValue($auction))
+                        {
+                            return json_encode($auction -> tense);
+                        }
+
+                        return "Fehler in updateBidderList";
                     }
 
-
-                    $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
-                    // $variationId holen um den AuctionPreis im Artikel zu ändern
-                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
-
-                    $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => $salesPriceId ];
-
-                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
-
-                    // neuer Eintrag
-                    $newEntry -> bidTimeStamp = time();
-
-                    array_push($newList, $newEntry);
-
-                    $auction -> bidderList = $newList;
-
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-
-                    if ($this -> setValue($auction))
-                    {
-                        return json_encode($auction -> tense);
-                    }
-
-                    return "Fehler in updateBidderList";
+                    return 'Diese ID: ' + $auctionId + ' ist nicht bekannt';
                 }
-
-                return 'Diese ID: ' + $auctionId + ' ist uns nicht bekannt';
+                return 'falscher Kunde';
             }
-
             return $currentBid;
         }
 
