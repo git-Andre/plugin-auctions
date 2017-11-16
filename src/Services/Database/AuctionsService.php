@@ -2,7 +2,7 @@
 
     namespace PluginAuctions\Services\Database;
 
-//    use IO\Services\CustomerService;
+    use IO\Services\CustomerService;
 //    use IO\Services\SessionStorageService;
 
     use IO\Services\ItemService;
