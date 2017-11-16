@@ -4,6 +4,7 @@
 
     use IO\Services\CustomerService;
     use IO\Services\ItemService;
+    use Plenty\Modules\Authorization\Services\AuthHelper;
     use Plenty\Modules\Item\VariationSalesPrice\Contracts\VariationSalesPriceRepositoryContract;
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
@@ -35,18 +36,20 @@
 
         private $itemService;
         private $variationSalesPriceRepository;
+        private $authHelper;
 
         /**
          * AuctionsService constructor.
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract, CustomerService $customerService)
+        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract, CustomerService $customerService, AuthHelper $authHelper)
         {
             parent ::__construct($dataBase);
             $this -> itemService = $itemService;
             $this -> variationSalesPriceRepository = $variationSalesPriceRepositoryContract;
             $this -> customerService = $customerService;
+            $this -> authHelper = $authHelper;
         }
 
 //        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
@@ -522,16 +525,31 @@
                     // $variationId holen um den AuctionPreis im Artikel zu ändern
                     $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
+
+                    $salesPriceData = ["variationId"  => $variationIds[0],
+                                       "price"        => $newEntry -> bidPrice,
+                                       "salesPriceId" => $salesPriceId
+                    ];
+
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('testedId')
-                          -> setReferenceValue($auction -> itemId)
-                          -> debug('PluginAuctions::Template.debug', ['$variationIds: ' => $variationIds]);
+                          -> setReferenceValue($salesPriceId)
+                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
 
 
-//                    $salesPriceData = ["variationId"  => $variationIds[0],
-//                                       "price"        => $newEntry -> bidPrice,
-//                                       "salesPriceId" => $salesPriceId
-//                    ];
+                    $salesPriceRepo = pluginApp(VariationSalesPriceRepositoryContract::class);
+
+
+                    $variationSalesPrice = null;
+
+
+                    $variationSalesPrice = $this -> authHelper -> processUnguarded(
+                        function () use ($salesPriceRepo, $variationSalesPrice) {
+                            return $salesPriceRepo -> update($salesPriceData, $salesPriceId, $variationIds[0]);
+                        }
+                    );
+
+
 //
 //                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
 
