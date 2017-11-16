@@ -7,14 +7,14 @@
 
     use IO\Services\ItemService;
     use Plenty\Modules\Item\VariationSalesPrice\Contracts\VariationSalesPriceRepositoryContract;
-    use Plenty\Modules\Item\VariationSalesPrice\Models\VariationSalesPrice;
-
     use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
     use Plenty\Plugin\Log\Loggable;
     use PluginAuctions\Constants\AuctionStatus;
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+
+    //    use Plenty\Modules\Item\VariationSalesPrice\Models\VariationSalesPrice;
 
 
     class AuctionsService extends DataBaseService {
@@ -25,7 +25,7 @@
 //        /**
 //         * @var CustomerService
 //         */
-//        private $customerService;
+        private $customerService;
 //
 //        /**
 //         * @var SessionStorageService
@@ -41,17 +41,17 @@
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract)
+        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract, CustomerService $customerService)
         {
             parent ::__construct($dataBase);
             $this -> itemService = $itemService;
             $this -> variationSalesPriceRepository = $variationSalesPriceRepositoryContract;
+            $this -> customerService = $customerService;
         }
 
 //        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
 //        {
 //            parent ::__construct($dataBase);
-//            $this -> customerService = $customerService;
 //            $this -> sessionStorage = $sessionStorage;
 //        }
 //
@@ -439,17 +439,17 @@
          * @param $newBi
          * @return bool|string
          */
-        public function updateBidderList($id, $currentBid)
+        public function updateBidderList($auctionId, $currentBid)
         {
             if ($currentBid)
             {
                 $currentBid = (object) $currentBid;
 
                 $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::Template.debug', ['$currentBid: ' => $currentBid]);
+                      -> debug('PluginAuctions::Template.debugBefor', ['$currentBid: ' => $currentBid]);
 
 
-                $auction = $this -> getValue(Auction_7::class, $id);
+                $auction = $this -> getValue(Auction_7::class, $auctionId);
 
                 if ($auction instanceof Auction_7)
                 {
@@ -460,8 +460,16 @@
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
 
-//                    $loggedInUser = $this -> customerService -> getContactId();
-//
+
+
+                    $loggedInUser = $this -> customerService -> getContactId();
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('auctionId')
+                          -> setReferenceValue($auctionId)
+                          -> debug('PluginAuctions::Template.debug', ['$loggedInUser: ' => $loggedInUser]);
+
+
 //                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
 //                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
 //                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
@@ -513,41 +521,15 @@
                     }
 
 
-                    $salesPriceId = 7;   // ToDo config:  7  salesPriceId
-
-                    // itemId von auction um den Preis zu ändern
-                    // $variationId holen
+                    $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
+                    // $variationId holen um den AuctionPreis im Artikel zu ändern
                     $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
-                    // VariationSalesPriceRepo... update
-
-//                    $salesPriceData = (VariationSalesPrice){['variationId' => $variationIds[0]] };
-
-//                        $variationSalesPrice = $this -> variationSalesPriceRepository -> show(7, $variationIds[0]);
-//
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::Template.debugBefor', ['$variationSalesPriceVorher: ' => $variationSalesPrice]);
-//
-                        $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => $salesPriceId ];
-//
-//
-//                        $this -> getLogger(__METHOD__)
-//                              -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
-//
+                    $salesPriceData = [ "variationId" => $variationIds[0], "price" => $newEntry -> bidPrice, "salesPriceId" => $salesPriceId ];
 
                     $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
 
-
-
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugAfter', ['$variationSalesPrice: ' => $variationSalesPrice]);
-
-
-
-
-
-
-
+                    // neuer Eintrag
                     $newEntry -> bidTimeStamp = time();
 
                     array_push($newList, $newEntry);
@@ -564,7 +546,7 @@
                     return "Fehler in updateBidderList";
                 }
 
-                return 'Diese ID: ' + $id + ' ist uns nicht bekannt';
+                return 'Diese ID: ' + $auctionId + ' ist uns nicht bekannt';
             }
 
             return $currentBid;
