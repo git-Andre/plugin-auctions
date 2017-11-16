@@ -57,7 +57,7 @@ module.exports = (function($)
             if (auctionId)
 {
 
-                ApiService.get("/api/auctionbidprice/" + auctionId)
+                ApiService.get("/auctions/lastbidprice/" + auctionId)
                                         .then(currentBidPrice =>
 {
                                             resolve(currentBidPrice);

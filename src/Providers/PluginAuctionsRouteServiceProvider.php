@@ -28,6 +28,12 @@
 
                     $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
 
+                    // Visitors...
+                    $apiRouter -> put('auctions/increase-number-visitors', 'VisitorCounterController@increaseNumberOfVisitorsForItemId');
+
+                    $apiRouter -> delete('auctions/delete-visitor-counter/{id}', 'VisitorCounterController@deleteVisitorCounter') -> where('id', '\d+');
+
+
                 });
 
             // new - Routes for all...
@@ -37,36 +43,34 @@
 
             $router -> get('auctions/forItemId/{itemId}', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemId') -> where('itemId', '\d+');
 
-            //  in Arbeit
-            $router -> put('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist')
-                    -> where('id', '\d+');
+            $router -> get('auctions/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
 
-            $router -> post('api/auction-param-list', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
+            $router -> get('auctions/lastbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice') -> where('id', '\d+');
+
+            $router -> put('auctions/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist') -> where('id', '\d+');
+
+            $router -> post('auctions/paramlist', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
+
+
+            $router -> get('auctions/lastentry/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderListLastEntry') -> where('id', '\d+');
+
+            $router -> get('auctions/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList') -> where('id', '\d+');
+
+            // Visitors...
+            $router -> get('auctions/get-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterController@getNumberOfVisitorsForItemId') -> where('itemId', '\d+');
+
+            $router -> get('auctions/get-visitor-counters', 'PluginAuctions\Controllers\VisitorCounterController@getVisitorCounters');
+
+            //  in Arbeit
 
             // old #########################################
 //            $router -> post('auction/create', 'PluginAuctions\Controllers\AuctionsController@createAuction');
-
-
-
-
-            $router -> get('api/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderList') -> where('id', '\d+');
-
-            $router -> get('api/auctionbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice')
-                    -> where('id', '\d+');
-
-            $router -> get('api/auction_last_entry/{id}', 'PluginAuctions\Controllers\AuctionsController@getBidderListLastEntry')
-                    -> where('id', '\d+');
-
-
-
-
 
 //            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
             // helper
             $router -> get('api/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate')
                     -> where('time', '\d+');
-            $router -> get('api/calctime/{start}/{end}', 'PluginAuctions\Controllers\AuctionsController@calculateTense');
 
 
             // Order...
@@ -97,17 +101,9 @@
 
 //            $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 
-            // Visitors...
-            $router -> get('api/get-number-visitors/{itemId}', 'PluginAuctions\Controllers\VisitorCounterController@getNumberOfVisitorsForItemId')
-                    -> where('itemId', '\d+');
 
-            $router -> get('api/get-visitor-counters', 'PluginAuctions\Controllers\VisitorCounterController@getVisitorCounters');
+//            $router -> post('auctions/create-visitor-counter', 'PluginAuctions\Controllers\VisitorCounterController@createVisitorCounter');
 
-//            $router -> post('api/create-visitor-counter', 'PluginAuctions\Controllers\VisitorCounterController@createVisitorCounter');
-
-            $router -> put('api/increase-number-visitors', 'PluginAuctions\Controllers\VisitorCounterController@increaseNumberOfVisitorsForItemId');
-
-//            $router -> delete('api/delete-visitor-counter/{id}', 'PluginAuctions\Controllers\VisitorCounterController@deleteVisitorCounter') -> where('id', '\d+');
 
             // auctionend - add to basket
 //            $router -> post('auction_to_basket', 'PluginAuctions\Controllers\AuctionToBasketController@add');

@@ -28,7 +28,7 @@ Vue.component("auction-show-bidderlist", {
     methods: {
         getBidderList()
 {
-            ApiService.get("/api/bidderlist/" + this.auctionid)
+            ApiService.get("/auctions/bidderlist/" + this.auctionid)
                 .done(biddersFromServer =>
 {
 

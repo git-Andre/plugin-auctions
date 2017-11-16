@@ -197,7 +197,7 @@
         {
             $sendedBid = $request -> all();
 
-            return $this -> auctionsService -> updateBidderList($id, $sendedBid);
+            return json_encode($this -> auctionsService -> updateBidderList($id, $sendedBid));
         }
 
         /**

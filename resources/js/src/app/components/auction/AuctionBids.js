@@ -45,13 +45,13 @@ Vue.component( "auction-bids", {
     methods: {
 
         addBid() {
-            ApiService.get( "/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
+            ApiService.get( "/auctions/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
                 .done( tenseFromServer => {
                     const tense = tenseFromServer;
                     // Absicherung mit Server Time, dass Auktion noch 'present' ist
 
                     if ( tense == AuctionConstants.PRESENT ) {
-                        ApiService.get( "/api/auctionbidprice/" + this.auction.id )
+                        ApiService.get( "/auctions/lastbidprice/" + this.auction.id )
                             .done( lastBidPrice => {
                                 // ist es ein gültiges Gebot (höher als letztes Gebot) ?
                                 if ( this.maxCustomerBid > this.toFloatTwoDecimal( lastBidPrice ) ) {
@@ -69,11 +69,20 @@ Vue.component( "auction-bids", {
                                     // super Time Tunnel
                                     sessionStorage.setItem( "currentBidder", this.userdata.id );
 
-                                    ApiService.put( "/api/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
-                                                                                          { contentType: "application/json" }
+                                    ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
+                                                                                               { contentType: "application/json" }
                                     )
                                         .then( response => {
-                                                   this.reload( 5 );
+                                                   console.log( 'response: ' + response );
+
+                                                   if ( response.lastIndexOf( "Fehler" ) >= 0 ) {
+                                                       NotificationService.error( response ).close;
+                                                   }
+                                                   else {
+                                                       NotificationService.success(
+                                                           "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid ).close;
+                                                   }
+                                                   this.reload( 3000 );
                                                },
                                                error => {
                                                    NotificationService.error( "error3: " + error.toString() ).close;
@@ -218,7 +227,7 @@ Vue.component( "auction-bids", {
             }
             else {
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
-                ApiService.get( "/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
+                ApiService.get( "/auctions/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
                     .done( tensefromServer => {
                         tense = tensefromServer;
 
@@ -246,7 +255,7 @@ Vue.component( "auction-bids", {
         },
         afterAuctionWithServerTensePast() {
             if ( this.userdata != null ) {
-                ApiService.get( "/api/auction_last_entry/" + this.auction.id )
+                ApiService.get( "/auctions/lastentry/" + this.auction.id )
                     .done( lastEntry => {
 
                         const bidderListLastEntry = lastEntry;
