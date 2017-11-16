@@ -118,7 +118,7 @@ Vue.component("auction-bids", {
 
                             console.dir(currentBid);
 
-                            ApiService.put("/auctions/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
+                            ApiService.put("/rest/auctions/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
                                 console.log('response: ' + response);
 
                                 if (response.lastIndexOf("Fehler") >= 0) {

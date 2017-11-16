@@ -28,7 +28,7 @@
 
                     $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
 
-                    $apiRouter -> put('auctions/bidderlist/{id}', 'AuctionsController@updateBidderlist') -> where('id', '\d+');
+//                    $apiRouter -> put('auctions/bidderlist/{id}', 'AuctionsController@updateBidderlist') -> where('id', '\d+');
 
                     // Visitors...
                     $apiRouter -> put('auctions/increase-number-visitors', 'VisitorCounterController@increaseNumberOfVisitorsForItemId');
@@ -49,7 +49,7 @@
 
             $router -> get('auctions/lastbidprice/{id}', 'PluginAuctions\Controllers\AuctionsController@getCurrentBidPrice') -> where('id', '\d+');
 
-//            $router -> put('auctions/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist') -> where('id', '\d+');
+            $router -> put('auctions/bidderlist/{id}', 'PluginAuctions\Controllers\AuctionsController@updateBidderlist') -> where('id', '\d+');
 
             $router -> post('auctions/paramlist', 'PluginAuctions\Controllers\AuctionsController@getAuctionParamsListForCategoryItem');
 
