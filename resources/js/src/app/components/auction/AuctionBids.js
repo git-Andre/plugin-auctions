@@ -69,9 +69,9 @@ Vue.component( "auction-bids", {
                                     // super Time Tunnel
                                     sessionStorage.setItem( "currentBidder", this.userdata.id );
 
-                                    ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
-                                                                                               { contentType: "application/json" }
-                                    )
+                                    console.dir(currentBid);
+
+                                    ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ), { contentType: "application/json" } )
                                         .then( response => {
                                                    console.log( 'response: ' + response );
 
@@ -85,7 +85,7 @@ Vue.component( "auction-bids", {
                                                    this.reload( 3000 );
                                                },
                                                error => {
-                                                   NotificationService.error( "error3: " + error.toString() ).close;
+                                                   NotificationService.error( "error31: " + error.toString() ).closeAfter( NOTIFY_TIME );
                                                }
                                         );
                                 }

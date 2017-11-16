@@ -452,7 +452,7 @@
                       -> setReferenceValue($loggedInUser)
                       -> debug('PluginAuctions::Template.debug', ['$currentBid: ' => $currentBid]);
 
-                if ($currentBid -> customerId !== $loggedInUser)
+                if ($currentBid -> customerId != $loggedInUser)
                 {
                     return 'Fehler: updateBidderList - Nr.: 101';
                 }

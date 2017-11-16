@@ -95,12 +95,12 @@ Vue.component("auction-bids", {
         addBid: function addBid() {
             var _this = this;
 
-            ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tenseFromServer) {
+            ApiService.get("/auctions/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tenseFromServer) {
                 var tense = tenseFromServer;
                 // Absicherung mit Server Time, dass Auktion noch 'present' ist
 
                 if (tense == AuctionConstants.PRESENT) {
-                    ApiService.get("/api/auctionbidprice/" + _this.auction.id).done(function (lastBidPrice) {
+                    ApiService.get("/auctions/lastbidprice/" + _this.auction.id).done(function (lastBidPrice) {
                         // ist es ein gültiges Gebot (höher als letztes Gebot) ?
                         if (_this.maxCustomerBid > _this.toFloatTwoDecimal(lastBidPrice)) {
 
@@ -116,19 +116,26 @@ Vue.component("auction-bids", {
                             // super Time Tunnel
                             sessionStorage.setItem("currentBidder", _this.userdata.id);
 
-                            ApiService.put("/api/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                                _this.reload(5);
-                            }, function (error) {
-                                NotificationService.error("error3: " + error.toString()).close;
+                            console.dir(currentBid);
 
-                                // alert("error3: " + error.toString());
+                            ApiService.put("/auctions/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
+                                console.log('response: ' + response);
+
+                                if (response.lastIndexOf("Fehler") >= 0) {
+                                    NotificationService.error(response).close;
+                                } else {
+                                    NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid).close;
+                                }
+                                _this.reload(3000);
+                            }, function (error) {
+                                NotificationService.error("error31: " + error.toString()).closeAfter(NOTIFY_TIME);
                             });
                         }
                         // es gibt inzwischen schon ein höheres Gebot
                         else {
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
                                 NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid).close;
-                                _this.reload(2600);
+                                _this.reload(5000);
                             }
                     }).fail(function () {
                         NotificationService.error("Upps - ein Fehler bei auctionbidprice ??!!").close;
@@ -242,7 +249,7 @@ Vue.component("auction-bids", {
                 this.reload(10);
             } else {
                 // im Frontend-Browser abgelaufen, aber auf dem Server noch nicht
-                ApiService.get("/api/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tensefromServer) {
+                ApiService.get("/auctions/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate).done(function (tensefromServer) {
                     tense = tensefromServer;
 
                     if (tense == AuctionConstants.PAST) {
@@ -266,7 +273,7 @@ Vue.component("auction-bids", {
             var _this3 = this;
 
             if (this.userdata != null) {
-                ApiService.get("/api/auction_last_entry/" + this.auction.id).done(function (lastEntry) {
+                ApiService.get("/auctions/lastentry/" + this.auction.id).done(function (lastEntry) {
 
                     var bidderListLastEntry = lastEntry;
 
@@ -430,7 +437,7 @@ Vue.component("auction-show-bidderlist", {
         getBidderList: function getBidderList() {
             var _this = this;
 
-            ApiService.get("/api/bidderlist/" + this.auctionid).done(function (biddersFromServer) {
+            ApiService.get("/auctions/bidderlist/" + this.auctionid).done(function (biddersFromServer) {
 
                 // const bidderData     = this.getBidderList();
                 var differentBidders = [];
