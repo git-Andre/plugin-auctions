@@ -4,6 +4,7 @@
 {% if ( auction ) %}
 
     {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
+    
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
 

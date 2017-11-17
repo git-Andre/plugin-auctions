@@ -54,4 +54,9 @@
 
             return $this -> visitorCounterService -> getNumberOfVisitorsForItemId($itemId);
         }
+
+        public function getNumberOfVisitorsForLists(int $itemId) : int
+        {
+            return $this -> visitorCounterService -> getNumberOfVisitorsForItemId($itemId);
+        }
     }
