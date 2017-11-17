@@ -450,12 +450,7 @@
 
                 $loggedInUser = $this -> customerService -> getContactId();
 
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('testedId')
-                      -> setReferenceValue($loggedInUser)
-                      -> debug('PluginAuctions::Template.debug', ['$currentBid: ' => $currentBid]);
-
-                if ($currentBid -> customerId != $loggedInUser)
+                if ($currentBid -> customerId !== $loggedInUser)
                 {
                     return 'Fehler: updateBidderList - Nr.: 101';
                 }
@@ -470,9 +465,6 @@
                     $newList = $auction -> bidderList;
 
                     $bidderListLastEntry = (object) array_pop(array_slice($newList, - 1));
-//                    $this -> sessionStorage -> setSessionValue("customerBidId", $loggedInUser);
-//                    $this -> sessionStorage -> setSessionValue("currentBid_customerId", $currentBid -> customerId);
-//                    $this -> sessionStorage -> setSessionValue("bidderListLastEntry_customerId", $bidderListLastEntry -> customerId);
 
                     // ist eingeloggter Customer der Höchstbietende (letzte Bid CustomerId) ??
                     if ($currentBid -> customerId == $bidderListLastEntry -> customerId)
@@ -520,40 +512,33 @@
                         }
                     }
 
-
-
+                    // AuctionPreis im Artikel ändern - $variationId holen um den AuctionPreis im Artikel zu ändern etc.
                     $salesPriceRepo = pluginApp(VariationSalesPriceRepositoryContract::class);
-
 
                     $variationSalesPrice = null;
 
                     $salesPriceId = 7;   // ToDo config:  7  salesPriceId für Auktionen
-                    // $variationId holen um den AuctionPreis im Artikel zu ändern
-                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
+                    $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
                     $salesPriceData = ["variationId"  => $variationIds[0],
                                        "price"        => $newEntry -> bidPrice,
                                        "salesPriceId" => $salesPriceId
                     ];
-
-                    $this -> getLogger(__METHOD__)
-                          -> setReferenceType('testedId')
-                          -> setReferenceValue($salesPriceId)
-                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
-
-
+//
+//                    $this -> getLogger(__METHOD__)
+//                          -> setReferenceType('testedId')
+//                          -> setReferenceValue($salesPriceId)
+//                          -> debug('PluginAuctions::Template.debug', ['$salesPriceData: ' => $salesPriceData]);
+//
+//
                     $variationSalesPrice = $this -> authHelper -> processUnguarded(
                         function () use ($salesPriceRepo, $variationSalesPrice, $salesPriceData, $variationIds, $salesPriceId) {
                             return $salesPriceRepo -> update($salesPriceData, $salesPriceId, $variationIds[0]);
                         }
                     );
 
-
-//
-//                    $variationSalesPrice = $this -> variationSalesPriceRepository -> update($salesPriceData, $salesPriceId, $variationIds[0]);
-
-                    // neuer Eintrag
+                    // neuer Eintrag in bidderList
                     $newEntry -> bidTimeStamp = time();
 
                     array_push($newList, $newEntry);

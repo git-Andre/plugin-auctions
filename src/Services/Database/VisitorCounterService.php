@@ -71,8 +71,17 @@
             {
                 $counterArray = $this -> getValues(VisitorCounter_1::class, ['itemId'], [$itemId]);
                 $visitorCounter = (object) $counterArray[0];
+
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($itemId)
+                      -> debug('PluginAuctions::Template.debugBefor', ['counterArray: ' => $counterArray]);
+
                 if ($visitorCounter instanceof VisitorCounter_1)
                 {
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::Template.debugAfter', ['$visitorCounter: ' => $visitorCounter]);
+
                     return $visitorCounter;
                 }
             }
@@ -93,7 +102,7 @@
                     return $visitorCounter -> numberOfVisitors;
                 }
 
-                if ($visitorCounter instanceof VisitorCounter_1)
+                else if ($visitorCounter instanceof VisitorCounter_1)
                 {
                     $visitorCounter -> numberOfVisitors = $visitorCounter -> numberOfVisitors + 1;
                     $visitorCounter -> updatedAt = time();
@@ -103,7 +112,7 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
                           -> setReferenceValue($itemId)
-                          -> debug('PluginAuctions::Template.debug', ['resultCounter++: ' => $resultVisitorCounter]);
+                          -> debug('PluginAuctions::Template.debugNewVisitor', ['resultVisitorCounter: ' => $resultVisitorCounter]);
 
                     return $resultVisitorCounter -> numberOfVisitors;
                 }
@@ -133,7 +142,7 @@
                 $this -> getLogger(__METHOD__)
                       -> setReferenceType('testedId')
                       -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::Template.debug', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
+                      -> debug('PluginAuctions::Template.debugCreateVisitorCounter', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
 
                 return $resultVisitorCounter -> numberOfVisitors;
             }

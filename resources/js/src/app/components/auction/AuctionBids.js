@@ -69,20 +69,16 @@ Vue.component( "auction-bids", {
                                     // super Time Tunnel
                                     sessionStorage.setItem( "currentBidder", this.userdata.id );
 
-                                    console.dir(currentBid);
-
                                     ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ), { contentType: "application/json" } )
                                         .then( response => {
-                                                   console.log( 'response: ' + response );
-
-                                                   if ( response.lastIndexOf( "Fehler" ) >= 0 ) {
+                                                   if ( response.indexOf( "Fehler" ) >= 0 ) {
                                                        NotificationService.error( response ).close;
                                                    }
                                                    else {
                                                        NotificationService.success(
                                                            "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid ).close;
                                                    }
-                                                   this.reload( 3000 );
+                                                   this.reload( NOTIFY_TIME / 3 );
                                                },
                                                error => {
                                                    NotificationService.error( "error31: " + error.toString() ).closeAfter( NOTIFY_TIME );
@@ -113,7 +109,6 @@ Vue.component( "auction-bids", {
                            NotificationService.error( "Upps - ein Fehler bei der Zeitabfrage ??!!" ).close;
                        }
                 );
-
         },
         liveEvaluateAndNotify() {
             if ( this.hasLoggedInUserTheLastBid() ) {
@@ -158,10 +153,8 @@ Vue.component( "auction-bids", {
                             NotificationService.warn(
                                 "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid )
                                 .closeAfter( NOTIFY_TIME );
-
                             break;
                         }
-
                     }
                 }
             }
@@ -188,9 +181,7 @@ Vue.component( "auction-bids", {
             if ( this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id ) {
                 return true;
             }
-
             return false;
-
         },
         toFloatTwoDecimal(value) {
             return Math.round( parseFloat( value ) * 100 ) / 100.0;
@@ -298,7 +289,6 @@ Vue.component( "auction-bids", {
             else {
                 this.reload( 10 );
             }
-            // }
         },
         reload(timeout) {
             setTimeout( () => {
@@ -309,7 +299,6 @@ Vue.component( "auction-bids", {
             NotificationService.error( "Bitte überprüfen Sie ggf. die Uhrzeit Ihres Computers!<br>" +
                 "(Diese sollte in den System-Einstellungen auf automatisch (über das Internet) eingestellt werden)<br>" +
                 "Die Serverzeit für diese Auktion unterscheidet sich von der dieses Computers!" ).close;
-
         },
     },
     watch: {
@@ -335,5 +324,4 @@ Vue.component( "auction-bids", {
             }
         }
     }
-
 } );

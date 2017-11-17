@@ -116,17 +116,13 @@ Vue.component("auction-bids", {
                             // super Time Tunnel
                             sessionStorage.setItem("currentBidder", _this.userdata.id);
 
-                            console.dir(currentBid);
-
                             ApiService.put("/auctions/bidderlist/" + _this.auction.id, JSON.stringify(currentBid), { contentType: "application/json" }).then(function (response) {
-                                console.log('response: ' + response);
-
-                                if (response.lastIndexOf("Fehler") >= 0) {
+                                if (response.indexOf("Fehler") >= 0) {
                                     NotificationService.error(response).close;
                                 } else {
                                     NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid).close;
                                 }
-                                _this.reload(3000);
+                                _this.reload(NOTIFY_TIME / 3);
                             }, function (error) {
                                 NotificationService.error("error31: " + error.toString()).closeAfter(NOTIFY_TIME);
                             });
@@ -186,10 +182,8 @@ Vue.component("auction-bids", {
                             {
                                 // "<i class=\"fa fa-warning p-l-1 p-r-1\" aria-hidden=\"true\">" +
                                 NotificationService.warn("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.auctionIsHigherMaxBid).closeAfter(NOTIFY_TIME);
-
                                 break;
                             }
-
                     }
                 }
             } else {
@@ -214,7 +208,6 @@ Vue.component("auction-bids", {
             if (this.auction.bidderList[this.auction.bidderList.length - 1].customerId == this.userdata.id) {
                 return true;
             }
-
             return false;
         },
         toFloatTwoDecimal: function toFloatTwoDecimal(value) {
@@ -308,7 +301,6 @@ Vue.component("auction-bids", {
             else {
                     this.reload(10);
                 }
-            // }
         },
         reload: function reload(timeout) {
             setTimeout(function () {
@@ -341,7 +333,6 @@ Vue.component("auction-bids", {
             }
         }
     }
-
 });
 
 },{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9}],3:[function(require,module,exports){
