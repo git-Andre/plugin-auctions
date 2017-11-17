@@ -72,16 +72,8 @@
                 $counterArray = $this -> getValues(VisitorCounter_1::class, ['itemId'], [$itemId]);
                 $visitorCounter = (object) $counterArray[0];
 
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('testedId')
-                      -> setReferenceValue($itemId)
-                      -> debug('PluginAuctions::Template.debugBefor', ['counterArray: ' => $counterArray]);
-
                 if ($visitorCounter instanceof VisitorCounter_1)
                 {
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::Template.debugAfter', ['$visitorCounter: ' => $visitorCounter]);
-
                     return $visitorCounter;
                 }
             }
