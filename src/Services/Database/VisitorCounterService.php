@@ -91,7 +91,7 @@
                 {
                     $visitorCounter = $this -> createVisitorCounter($itemId);
 
-                    return $visitorCounter -> numberOfVisitors;
+                    return $visitorCounter;
                 }
 
                 else if ($visitorCounter instanceof VisitorCounter_1)
@@ -142,28 +142,5 @@
             return -5;
         }
 
-//        public function getFormattedVisitorCounterForItemId(int $itemId) : array
-//        {
-//            if ($itemId > 0)
-//            {
-//                $visitorCounter = $this -> getVisitorCounterForItemId($itemId);
-//
-//                if ($visitorCounter instanceof VisitorCounter_1)
-//                {
-//                    $visitorCounter = $visitorCounter -> visitorCounter;
-//
-//                    $formattedCounterArray = [0,0,0,2,3];
-//
-//                    $this -> getLogger(__METHOD__)
-//                          -> setReferenceType('auctionId')
-//                          -> setReferenceValue($itemId)
-//                          -> debug('PluginAuctions::Template.debug', ['FORMATTED: ' => $formattedCounterArray]);
-//
-//                    return $formattedCounterArray;
-//                }
-//                return 'Diese itemID: ' + $itemId + ' ist uns nicht bekannt';
-//            }
-//            return false;
-//        }
 
     }
