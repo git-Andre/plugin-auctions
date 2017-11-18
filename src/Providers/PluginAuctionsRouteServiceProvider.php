@@ -28,7 +28,10 @@
 
                     $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
 
-//                    $apiRouter -> put('auctions/bidderlist/{id}', 'AuctionsController@updateBidderlist') -> where('id', '\d+');
+                    $apiRouter -> get('auctions/helper', 'AuctionsController@getAuctionsHelper');
+
+                    // Helper Tense Update
+                    $apiRouter -> put('auctions/set-tense/{auctionId}', 'AuctionsController@updateAuctionWithTense') -> where('auctionId', '\d+');
 
                     // Visitors...
                     $apiRouter -> put('auctions/increase-number-visitors', 'VisitorCounterController@increaseNumberOfVisitorsForItemId');
@@ -63,6 +66,9 @@
 
             $router -> get('auctions/get-visitor-counters', 'PluginAuctions\Controllers\VisitorCounterController@getVisitorCounters');
 
+            // helper
+            $router -> get('auctions/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate') -> where('time', '\d+');
+
             //  in Arbeit
 
             // old #########################################
@@ -70,38 +76,34 @@
 
 //            $router -> delete('api/auction/{id}', 'PluginAuctions\Controllers\AuctionsController@deleteAuction') -> where('id', '\d+');
 
-            // helper
-            $router -> get('api/date/{time}', 'PluginAuctions\Controllers\AuctionsController@formatDate')
-                    -> where('time', '\d+');
 
 
             // Order...
-            $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
-                    -> where('orderId', '\d+');
-
-            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@triggerPlaceOrder')
-                    -> where('auctionId', '\d+');
-            $router -> put('api/set-tense/{auctionId}', 'PluginAuctions\Controllers\AuctionsController@updateAuctionWithTense')
-                    -> where('auctionId', '\d+');
+//            $router -> get('api/getorder/{orderId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@getOrderById')
+//                    -> where('orderId', '\d+');
+//
+//            $router -> get('api/placeorder/{auctionId}', 'PluginAuctions\Controllers\AuctionPlaceOrderController@triggerPlaceOrder')
+//                    -> where('auctionId', '\d+');
+//
 
             // test
-            $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
-                    -> where('itemId', '\d+');
-            $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
-                    -> where('customerId', '\d+');
-            $router -> get('api/testcustomeraddresses/{customerId}/{typeId}/{last}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerAddresses')
-                    -> where('customerId', '\d+');
-            $router -> get('api/testparamsbuilder/{auctionId}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
-                    -> where('auctionId', '\d+');
-            $router -> get('api/test-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
+//            $router -> get('api/testitem/{itemId}', 'PluginAuctions\Controllers\AuctionHelperController@testItemService')
+//                    -> where('itemId', '\d+');
+//            $router -> get('api/testcustomer/{customerId}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerService')
+//                    -> where('customerId', '\d+');
+//            $router -> get('api/testcustomeraddresses/{customerId}/{typeId}/{last}', 'PluginAuctions\Controllers\AuctionHelperController@testCustomerAddresses')
+//                    -> where('customerId', '\d+');
+//            $router -> get('api/testparamsbuilder/{auctionId}', 'PluginAuctions\Controllers\AuctionHelperController@auctionParamsBuilder')
+//                    -> where('auctionId', '\d+');
+//
+//            $router -> get('api/test-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionsForTense');
+//
+//            $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
 
-            $router -> get('api/test-past-auctions', 'PluginAuctions\Controllers\AuctionsController@getAuctionsInPast');
+//            $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
 
-            $router -> get('api/test-handle-cron', 'PluginAuctions\Controllers\CronTest@cronTest');
+//            $router -> post('api/auctions-itemids-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemIdAndTense');
 
-            $router -> post('api/auctions-itemids-tense', 'PluginAuctions\Controllers\AuctionsController@getAuctionForItemIdAndTense');
-
-//            $router -> get('api/auctionshelper', 'PluginAuctions\Controllers\AuctionsController@getAuctionsHelper');
 
 
 //            $router -> post('auctions/create-visitor-counter', 'PluginAuctions\Controllers\VisitorCounterController@createVisitorCounter');
