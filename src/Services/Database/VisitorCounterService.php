@@ -136,7 +136,7 @@
                       -> setReferenceValue($itemId)
                       -> debug('PluginAuctions::Template.debugCreateVisitorCounter', ['$resultVisitorCounter: ' => $resultVisitorCounter]);
 
-                return (int)$resultVisitorCounter['numberOfVisitors'];
+                return (int)$resultVisitorCounter -> numberOfVisitors;
             }
 
             return -5;
