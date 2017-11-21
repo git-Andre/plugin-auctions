@@ -121,6 +121,8 @@
                     $item['itemId'] = $auction -> itemId;
                     $item['tense'] = $auction -> tense;
 
+                    $item['deadline'] = $auction -> expiryDate;
+
                     $item['numberOfBids'] = count($auction -> bidderList) - 1;
                     $item['numberOfVisitors'] = $this -> visitorCounterService -> getNumberOfVisitorsForItemId ($itemId);
 
