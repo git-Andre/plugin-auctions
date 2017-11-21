@@ -12,6 +12,7 @@
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
+    use PluginAuctions\Services\Database\VisitorCounterService;
 
 //    use IO\Services\SessionStorageService;
 
@@ -35,6 +36,7 @@
 
 
         private $itemService;
+        private $visitorCounterService;
         private $variationSalesPriceRepository;
         private $authHelper;
 
@@ -43,13 +45,19 @@
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase, ItemService $itemService, VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract, CustomerService $customerService, AuthHelper $authHelper)
+        public function __construct(DataBase $dataBase,
+                                    ItemService $itemService,
+                                    VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract,
+                                    CustomerService $customerService,
+                                    AuthHelper $authHelper,
+                                    VisitorCounterService $visitorCounterService)
         {
             parent ::__construct($dataBase);
             $this -> itemService = $itemService;
             $this -> variationSalesPriceRepository = $variationSalesPriceRepositoryContract;
             $this -> customerService = $customerService;
             $this -> authHelper = $authHelper;
+            $this -> visitorCounterService = $visitorCounterService;
         }
 
 //        public function __construct(DataBase $dataBase, CustomerService $customerService, SessionStorageService $sessionStorage)
@@ -110,9 +118,11 @@
 
                 if ($auction instanceof Auction_7)
                 {
-
                     $item['itemId'] = $auction -> itemId;
                     $item['tense'] = $auction -> tense;
+
+                    $item['numberOfBids'] = count($auction -> bidderList) - 1;
+                    $item['numberOfVisitors'] = $this -> visitorCounterService -> getNumberOfVisitorsForItemId ($itemId);
 
                     $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
 

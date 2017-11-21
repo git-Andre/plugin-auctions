@@ -78,7 +78,7 @@ Vue.component( "auction-bids", {
                                                        NotificationService.success(
                                                            "<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid ).close;
                                                    }
-                                                   this.reload( NOTIFY_TIME / 3 );
+                                                   this.reload( 2000 );
                                                },
                                                error => {
                                                    NotificationService.error( "error31: " + error.toString() ).closeAfter( NOTIFY_TIME );
