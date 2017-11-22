@@ -109,6 +109,35 @@
             }
         }
 
+        public function areAllItemsAuctions($itemList)
+        {
+            if ( is_int( $itemList[0]['item']['id']) )
+            {
+                $auctionItemIds = [];
+
+                foreach ($itemList as $item)
+                {
+                    $itemId = $item['data']['item']['id'];
+                    $AuctionForItemId = $this -> getAuctionForItemId($itemId);
+
+                    if ( ! $auction instanceof Auction_7)
+
+                    {
+                        return false;
+//                        break;
+                    }
+
+                    array_push($auctionItemIds, $AuctionForItemId -> $itemId);
+                }
+
+                if (count($auctionItemIds) == count($itemList) )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public function getAuctionParamsListForCategoryItem(array $itemIds)
         {
             $auctionList = [];
