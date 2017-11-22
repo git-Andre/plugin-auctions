@@ -116,6 +116,9 @@
                   -> debug('PluginAuctions::Template.debug', ['$itemList: ' => $itemList]);
 
 
+            return $itemList;
+
+
             if (is_int($itemList[0]['item']['id']))
             {
                 $auctionItemIds = [];
