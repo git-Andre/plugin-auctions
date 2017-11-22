@@ -126,7 +126,7 @@
                     if ($auctionForItemId instanceof Auction_7)
 
                     {
-                        $auctionItemId = $auctionForItemId -> $itemId;
+                        $auctionItemId = $auctionForItemId['$itemId'];
 
                         array_push($auctionItemIds, $auctionItemId);
                     }
@@ -145,6 +145,10 @@
             return false;
         }
 
+        /**
+         * @param $itemId
+         * @return bool|object
+         */
         public function getAuctionForItemId($itemId)
         {
             if ($itemId > 0)
