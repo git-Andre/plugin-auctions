@@ -115,15 +115,19 @@
             if (is_int($itemList[0]['item']['id']))
             {
                 $auctionItemIds = [];
+                $auctionItemId = 0;
 
                 foreach ($itemList as $item)
                 {
                     $itemId = $item['data']['item']['id'];
+
                     $AuctionForItemId = $this -> getAuctionForItemId($itemId);
 
                     if ($AuctionForItemId instanceof Auction_7)
 
                     {
+                        $auctionItemId = $AuctionForItemId -> $itemId;
+
                         array_push($auctionItemIds, $AuctionForItemId -> $itemId);
                     }
                     else
