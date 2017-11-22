@@ -116,7 +116,7 @@
                   -> debug('PluginAuctions::Template.debug', ['$itemList: ' => $itemList]);
 
 
-            return $itemList;
+            return $itemList[0]['item']['id'];
 
 
             if (is_int($itemList[0]['item']['id']))
