@@ -119,7 +119,7 @@
             return $itemList[0]['item']['id'];
 
 
-            if (is_int($itemList[0]['item']['id']))
+            if ($itemList[0]['item']['id'])
             {
                 $auctionItemIds = [];
                 $auctionItemId = 0;
