@@ -12,7 +12,6 @@
     use PluginAuctions\Constants\BidStatus;
     use PluginAuctions\Models\Auction_7;
     use PluginAuctions\Models\Fields\AuctionBidderListEntry;
-    use PluginAuctions\Services\Database\VisitorCounterService;
 
 //    use IO\Services\SessionStorageService;
 
@@ -45,12 +44,14 @@
          * @param DataBase $dataBase
          */
 
-        public function __construct(DataBase $dataBase,
-                                    ItemService $itemService,
-                                    VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract,
-                                    CustomerService $customerService,
-                                    AuthHelper $authHelper,
-                                    VisitorCounterService $visitorCounterService)
+        public function __construct(
+            DataBase $dataBase,
+            ItemService $itemService,
+            VariationSalesPriceRepositoryContract $variationSalesPriceRepositoryContract,
+            CustomerService $customerService,
+            AuthHelper $authHelper,
+            VisitorCounterService $visitorCounterService
+        )
         {
             parent ::__construct($dataBase);
             $this -> itemService = $itemService;
@@ -111,7 +112,7 @@
 
         public function areAllItemsAuctions($itemList)
         {
-            if ( is_int( $itemList[0]['item']['id']) )
+            if (is_int($itemList[0]['item']['id']))
             {
                 $auctionItemIds = [];
 
@@ -120,56 +121,24 @@
                     $itemId = $item['data']['item']['id'];
                     $AuctionForItemId = $this -> getAuctionForItemId($itemId);
 
-                    if ( ! $auction instanceof Auction_7)
+                    if ($AuctionForItemId instanceof Auction_7)
 
+                    {
+                        array_push($auctionItemIds, $AuctionForItemId -> $itemId);
+                    }
+                    else
                     {
                         return false;
 //                        break;
                     }
-
-                    array_push($auctionItemIds, $AuctionForItemId['$itemId']);
                 }
-
-                if (count($auctionItemIds) == count($itemList) )
+                if (count($auctionItemIds) == count($itemList))
                 {
                     return true;
                 }
             }
+
             return false;
-        }
-
-        public function getAuctionParamsListForCategoryItem(array $itemIds)
-        {
-            $auctionList = [];
-            foreach ($itemIds as $itemId)
-            {
-                $auction = $this -> getAuctionForItemId($itemId);
-
-                if ($auction instanceof Auction_7)
-                {
-                    $item['itemId'] = $auction -> itemId;
-                    $item['tense'] = $auction -> tense;
-
-                    $item['deadline'] = $auction -> expiryDate;
-
-                    $item['numberOfBids'] = count($auction -> bidderList) - 1;
-                    $item['numberOfVisitors'] = $this -> visitorCounterService -> getNumberOfVisitorsForItemId ($itemId);
-
-                    $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
-
-                    if (count($auction -> bidderList) > 1)
-                    {
-                        $item['currentPrice'] = (float) $bidderListLastEntry['bidPrice'];
-                    }
-                    else
-                    {
-                        $item['currentPrice'] = (float) $auction -> startPrice;
-                    }
-                    array_push($auctionList, $item);
-                }
-            }
-
-            return $auctionList;
         }
 
         public function getAuctionForItemId($itemId)
@@ -211,6 +180,40 @@
             }
 
             return $auction;
+        }
+
+        public function getAuctionParamsListForCategoryItem(array $itemIds)
+        {
+            $auctionList = [];
+            foreach ($itemIds as $itemId)
+            {
+                $auction = $this -> getAuctionForItemId($itemId);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $item['itemId'] = $auction -> itemId;
+                    $item['tense'] = $auction -> tense;
+
+                    $item['deadline'] = $auction -> expiryDate;
+
+                    $item['numberOfBids'] = count($auction -> bidderList) - 1;
+                    $item['numberOfVisitors'] = $this -> visitorCounterService -> getNumberOfVisitorsForItemId($itemId);
+
+                    $bidderListLastEntry = array_pop(array_slice($auction -> bidderList, - 1));
+
+                    if (count($auction -> bidderList) > 1)
+                    {
+                        $item['currentPrice'] = (float) $bidderListLastEntry['bidPrice'];
+                    }
+                    else
+                    {
+                        $item['currentPrice'] = (float) $auction -> startPrice;
+                    }
+                    array_push($auctionList, $item);
+                }
+            }
+
+            return $auctionList;
         }
 
         public function getAuctionForItemIdAndTense(int $itemId, $tense)
