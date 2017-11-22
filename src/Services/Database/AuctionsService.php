@@ -116,7 +116,7 @@
                   -> debug('PluginAuctions::Template.debug', ['$itemList: ' => $itemList]);
 
 
-            return $itemList[0]['item']['id'];
+            return $itemList[0];
 
 
             if ($itemList[0]['item']['id'])
