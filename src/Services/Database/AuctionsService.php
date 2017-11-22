@@ -112,6 +112,10 @@
 
         public function areAllItemsAuctions($itemList)
         {
+            $this -> getLogger(__METHOD__)
+                  -> debug('PluginAuctions::Template.debug', ['$itemList: ' => $itemList]);
+
+
             if (is_int($itemList[0]['item']['id']))
             {
                 $auctionItemIds = [];
@@ -124,11 +128,8 @@
                     $auction = $this -> getAuctionForItemId($itemId);
 
                     if ($auction instanceof Auction_7)
-
                     {
-                        $auctionItemId = $auction -> itemId;
-
-                        array_push($auctionItemIds, $auctionItemId);
+                        array_push($auctionItemIds, $auction -> itemId);
                     }
                     else
                     {
