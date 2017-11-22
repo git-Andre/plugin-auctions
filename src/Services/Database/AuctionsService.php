@@ -127,7 +127,7 @@
 //                        break;
                     }
 
-                    array_push($auctionItemIds, $AuctionForItemId -> $itemId);
+                    array_push($auctionItemIds, $AuctionForItemId['$itemId']);
                 }
 
                 if (count($auctionItemIds) == count($itemList) )
