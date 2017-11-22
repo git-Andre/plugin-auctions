@@ -121,14 +121,14 @@
                 {
                     $itemId = $item['data']['item']['id'];
 
-                    $AuctionForItemId = $this -> getAuctionForItemId($itemId);
+                    $auctionForItemId = $this -> getAuctionForItemId($itemId);
 
-                    if ($AuctionForItemId instanceof Auction_7)
+                    if ($auctionForItemId instanceof Auction_7)
 
                     {
-                        $auctionItemId = $AuctionForItemId -> $itemId;
+                        $auctionItemId = $auctionForItemId -> $itemId;
 
-                        array_push($auctionItemIds, $AuctionForItemId -> $itemId);
+                        array_push($auctionItemIds, $auctionItemId);
                     }
                     else
                     {
