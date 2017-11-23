@@ -620,7 +620,7 @@
                 {
                     $bidderList = array (pluginApp(AuctionBidderListEntry::class));
 
-                    $bidderList = (object) array_pop($auction -> bidderList);
+                    $bidderList = array_pop($auction -> bidderList);
 
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
