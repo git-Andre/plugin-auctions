@@ -28,6 +28,8 @@
 
                     $apiRouter -> put('auctions/update/{id}', 'AuctionsController@updateAuction') -> where('id', '\d+');
 
+                    $apiRouter -> put('auctions/delete-last-bid/{id}', 'AuctionsController@deleteLastBid') -> where('id', '\d+');
+
                     $apiRouter -> get('auctions/helper', 'AuctionsController@getAuctionsHelper');
 
                     // Helper Tense Update

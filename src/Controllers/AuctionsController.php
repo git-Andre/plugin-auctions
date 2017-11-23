@@ -181,6 +181,11 @@
             return $this -> auctionsService -> updateAuction($id, $auctionData);
         }
 
+        public function deleteLastBid(int $auctionId)
+        {
+            return $this -> auctionsService -> deleteLastBid($auctionId);
+        }
+
         public function updateAuctionWithTense(int $auctionId, Request $request)
         {
             $tense = $request -> get('tense');

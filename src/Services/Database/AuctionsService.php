@@ -610,6 +610,41 @@
             return 'Fehler: updateBidderList - Nr.: 104';
         }
 
+        public function deleteLastBid($auctionId)
+        {
+            if ($auctionId > 1)
+            {
+                $auction = $this -> getValue(Auction_7::class, $auctionId);
+
+                if ($auction instanceof Auction_7)
+                {
+                    $bidderList = array (pluginApp(AuctionBidderListEntry::class));
+
+                    $bidderList = (object) array_pop($auction -> bidderList);
+
+                    $this -> getLogger(__METHOD__)
+                          -> setReferenceType('auctionId')
+                          -> setReferenceValue($auctionId)
+                          -> debug('PluginAuctions::Template.debug', ['$bidderList: ' => $bidderList]);
+
+                    $auction -> bidderList = $bidderList;
+
+                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+                    if ($this -> setValue($auction))
+                    {
+                        return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
+                    }
+
+                    return "Fehler: deleteLastBid - Nr.: 102";
+                }
+
+                return 'Fehler: deleteLastBid - Nr.: 103 - Die ID: ' + $auctionId + ' ist nicht bekannt';
+            }
+
+            return 'Fehler: deleteLastBid - Nr.: 104';
+        }
+
         /**
          * @param $auctionId
          * @return bool|string
