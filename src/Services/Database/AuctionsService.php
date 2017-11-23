@@ -625,16 +625,19 @@
                     $this -> getLogger(__METHOD__)
                           -> setReferenceType('auctionId')
                           -> setReferenceValue($auctionId)
-                          -> debug('PluginAuctions::Template.debug', ['$bidderList: ' => $bidderList]);
+                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
 
                     $auction -> bidderList = $bidderList;
 
-                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debugAfter', ['$bidderList: ' => $auction]);
 
-                    if ($this -> setValue($auction))
-                    {
-                        return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
-                    }
+//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
+
+//                    if ($this -> setValue($auction))
+//                    {
+//                        return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
+//                    }
 
                     return "Fehler: deleteLastBid - Nr.: 102";
                 }
