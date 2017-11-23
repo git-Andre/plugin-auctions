@@ -622,36 +622,17 @@
                 if ($auction instanceof Auction_7)
                 {
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
+                          -> debug('PluginAuctions::Template.debugBefor', ['$auction: ' => $auction]);
 
-//                    $bidderList = array (pluginApp(AuctionBidderListEntry::class));
-//                    $bidderList = $auction -> bidderList;
-//
                     array_pop($auction -> bidderList);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
+                    if ($this -> setValue($auction))
+                    {
+                        $this -> getLogger(__METHOD__)
+                              -> debug('PluginAuctions::Template.debugAfter', ['$auction: ' => $auction]);
 
-//                    $newList = array (pluginApp(AuctionBidderListEntry::class));
-//                    $newList = $auction -> bidderList;
-//
-//                    $test = array_pop(array_slice($newList, - 1));
-//
-//                    $this -> getLogger(__METHOD__)
-//                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
-//
-//                    $this -> getLogger(__METHOD__)
-//                          -> debug('PluginAuctions::Template.debugBefor', ['$test: ' => $test]);
-//
-//                    $auction -> bidderList = $bidderList;
-
-
-//                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
-
-//                    if ($this -> setValue($auction))
-//                    {
-//                        return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
-//                    }
+                        return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
+                    }
 
                     return "Fehler: deleteLastBid - Nr.: 102";
                 }
