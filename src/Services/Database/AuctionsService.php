@@ -622,7 +622,7 @@
                     $bidderList2 = array (pluginApp(AuctionBidderListEntry::class));
 
                     $bidderList = array_pop($auction -> bidderList);
-                    $bidderList2 = array_pop(array_pop(array_slice($auction, - 1)));
+                    $bidderList2 = array_pop(array_slice($auction, - 1));
 
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
