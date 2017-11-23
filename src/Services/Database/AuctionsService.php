@@ -624,23 +624,26 @@
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
 
-                    $bidderList = array (pluginApp(AuctionBidderListEntry::class));
-                    $bidderList = $auction -> bidderList;
-
-                    $bidderList = array_pop($auction -> bidderList);
-
-                    $newList = array (pluginApp(AuctionBidderListEntry::class));
-                    $newList = $auction -> bidderList;
-
-                    $test = array_pop(array_slice($newList, - 1));
+//                    $bidderList = array (pluginApp(AuctionBidderListEntry::class));
+//                    $bidderList = $auction -> bidderList;
+//
+                    array_pop($auction -> bidderList);
 
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
+                          -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugBefor', ['$test: ' => $test]);
-
-                    $auction -> bidderList = $bidderList;
+//                    $newList = array (pluginApp(AuctionBidderListEntry::class));
+//                    $newList = $auction -> bidderList;
+//
+//                    $test = array_pop(array_slice($newList, - 1));
+//
+//                    $this -> getLogger(__METHOD__)
+//                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
+//
+//                    $this -> getLogger(__METHOD__)
+//                          -> debug('PluginAuctions::Template.debugBefor', ['$test: ' => $test]);
+//
+//                    $auction -> bidderList = $bidderList;
 
 
 //                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
