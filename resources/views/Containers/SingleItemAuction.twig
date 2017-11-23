@@ -2,48 +2,49 @@
 {% set auction = auctions.auction.getAuctionForItemId(itemId) %}
 
 {% if ( auction ) %}
-
+    
     {% set numberOfVisitors = auctions.visitorCounter.getNumberOfVisitors(itemId) %}
     
     {% set bidderListLast = auction.bidderList | last %}
     {% set bidderListLength = auction.bidderList | length %}
-
+    
     {% set userdata = services.customer.getContact() | json_encode() %}
     
-    <!-- BID-CONFIRM MODAL -->
-    <div id="bid-confirm-modal-wrapper">
-        <div class="modal fade bid-confirm-modal" id="bid-confirm" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">{{ trans("Ceres::Template.accLogin") }}</h3>
-                    </div>
-                    <div class="modal-body">
-                        
-                        <button class="btn btn-primary btn-lg btn-block"
-                                type="submit"
-                                @click="addBid"
-                        >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
-    
-                        {#<bid-confirm template="#vue-bid-confirm"#}
-                                {#modal-element="bid-confirm-modal-wrapper"></bid-confirm>#}
+    <div id="addAuctionVue">
+        
+        <!-- BID-CONFIRM MODAL -->
+        <div id="bid-confirm-modal-wrapper">
+            <div class="modal fade bid-confirm-modal" id="bid-confirm" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3 class="modal-title">{{ trans("Ceres::Template.accLogin") }}</h3>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    type="submit"
+                                    @click="addBid"
+                            >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
+                            
+                            {#<bid-confirm template="#vue-bid-confirm"#}
+                            {#modal-element="bid-confirm-modal-wrapper"></bid-confirm>#}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ./BID-CONFIRM MODAL -->
-    
-    <div id="addAuctionVue">
+        <!-- ./BID-CONFIRM MODAL -->
+        
         {#Zukunft ------------------------------------------------------- #}
         {% if (auction.tense == 'future') %}
             <h2 class="m-b-2">{{ trans("PluginAuctions::Template.pronouncedAuction") }}</h2>
-
+            
             <dl class="auctionList">
                 <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                 <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
-
+                
                 {#Aufgeld Start#}
                 <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span></dt>
                 <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
@@ -51,17 +52,17 @@
                     <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                     <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                 </dd>
-
+                
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
-
+            
             </dl>
-
-
+            
+            
             {#Gegenwart#}
         {% elseif (auction.tense == 'present') %}
-
+            
             <h2 class="m-b-1 alarm">{{ trans("PluginAuctions::Template.currentAuction") }}</h2>
-
+            
             <div class="row container m-t-0 m-b-2">
                 <auction-bids
                         template="#vue-auction-bids"
@@ -70,18 +71,20 @@
                         userdata="{{ userdata }}">
                 </auction-bids>
             </div>
-
-
+            
+            
             <div class="row container m-t-0 m-b-1">
                 <dl class="auctionList">
-
+                    
                     {% if (bidderListLength > 1) %}
                         <dt>{{ trans("PluginAuctions::Template.currentOffer") }}</dt>
                         <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                         <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                         <dd>{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Standard#}
-                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
+                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span>
+                            <span class="small">(10%)</span>:
+                        </dt>
                         <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                             <span class="m-x-1">|</span>
                             <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
@@ -89,26 +92,29 @@
                         </dd>
                     {% else %}
                         <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
-    
+                        
                         <dd class="price h1 m-b-2">{{ auction.startPrice | formatMonetary('EUR') }}</dd>
                         {#Aufgeld Start#}
-                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
-    
+                        <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span>
+                            <span class="small">(10%)</span>:
+                        </dt>
+                        
                         <dd><span>{{ trans("PluginAuctions::Template.surchargePercent") }}</span>
                             <span class="m-x-5">|</span>
                             <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                             <span class="alarm h4"><strong>{{ ( auction.startPrice + auction.startPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         </dd>
                     {% endif %}
-
+                    
                     {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
-
+                    
                     {% if bidderListLength != 1 %}
                         <dt>{{ trans("PluginAuctions::Template.countBids") }}</dt>
                         <dd> {{ bidderListLength - 1 }}
                             <span>
                             <a data-toggle="modal" href="#bidderlist">
-                                <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
+                                <i class="fa fa-list-ul p-l-2 p-r-5"
+                                        aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
                             </a>
                             </span>
                             {% if (auction.tense == 'present') %}
@@ -129,41 +135,43 @@
                 >
                 </visitor-counter>
             </div>
-
+            
             {#Vergangenheit #}
         {% elseif (auction.tense == 'past' or auction.tense == 'past-perfect') %}
             <h2 class="m-b-2">{{ trans("PluginAuctions::Template.closedAuction") }}</h2>
-
+            
             <dl class="auctionList">
-
+                
                 {% if bidderListLength != 1 %}
                     <dt>{{ trans("PluginAuctions::Template.highestBid") }}</dt>
                     <dd class="price h1 m-b-2">{{ bidderListLast.bidPrice | formatMonetary('EUR') }}</dd>
                     {#Aufgeld Standard#}
-                    <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:</dt>
+                    <dt><span class="alarm">{{ trans("PluginAuctions::Template.surcharge") }}</span> <span class="small">(10%)</span>:
+                    </dt>
                     <dd><span class="alarm"><strong>{{ ( bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                         <span class="m-x-1">|</span>
                         <span>{{ trans("PluginAuctions::Template.totalPrice") }}</span>
                         <span class="alarm h4"><strong>{{ ( bidderListLast.bidPrice + bidderListLast.bidPrice * 0.1 ) | formatMonetary('EUR') }}</strong></span>
                     </dd>
-
+                
                 {% else %}
                     <dt>{{ trans("PluginAuctions::Template.outcome") }}</dt>
                     <dd class="price h3 m-b-2">{{ trans("PluginAuctions::Template.noBids") }}</dd>
-
+                
                 {% endif %}
-
+                
                 <dt>{{ trans("PluginAuctions::Template.startPrice") }}</dt>
                 <dd>{{ auction.startPrice | formatMonetary('EUR') }} </dd>
-
+                
                 {% include "PluginAuctions::Item.Partials.AuctionConstants" with { 'auction': auction } %}
-
+                
                 {% if bidderListLength != 1 %}
                     <dt>{{ trans("PluginAuctions::Template.countBids") }}</dt>
                     <dd> {{ bidderListLength - 1 }}
                         <span>
                             <a data-toggle="modal" href="#bidderlist">
-                                 <i class="fa fa-list-ul p-l-2 p-r-5" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
+                                 <i class="fa fa-list-ul p-l-2 p-r-5"
+                                         aria-hidden="true"></i>{{ trans("PluginAuctions::Template.showAll") }}
                                      </a>
                         </span>
                     </dd>
@@ -174,9 +182,9 @@
                     number-of-visitors="{{ numberOfVisitors }}"
             >
             </visitor-counter>
-
+            
             <div class="row container m-t-1 m-b-3">
-
+                
                 <auction-end
                         template="#vue-auction-end"
                         auction="{{ auction | json_encode() }}"
@@ -184,20 +192,19 @@
                 >
                 </auction-end>
             </div>
-
+        
         {% endif %}
     </div>
 
 {% else %}
     <h1>Standardkategorie Fehler:</h1>
-
+    
     <p>Die Standardkategorie in diesem Artikel ist auf 'Auktion' gesetzt, aber es ist keine Auktion im Backend
        definiert!!'</p>
 
 {% endif %}
 <script>
-    function aoCustomReload()
-    {
+    function aoCustomReload() {
         location.reload();
     }
 </script>
@@ -209,21 +216,21 @@
         padding: 1rem 1.5rem 1rem 1.5rem;
         margin-bottom: 0;
     }
-
+    
     .auctionList dt {
         width: 28%;
         float: left;
         font-weight: bold;
     }
-
+    
     .auctionList dd {
         width: 95%;
     }
-
+    
     a:focus {
         outline: none;
     }
-
+    
     .alarm {
         color: #c50000;
     }
