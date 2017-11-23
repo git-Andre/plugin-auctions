@@ -311,6 +311,9 @@
             {
                 $auction = $this -> getValue(Auction_7::class, $id);
 
+                $this -> getLogger(__METHOD__)
+                      -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
+
                 if ($auction instanceof Auction_7)
                 {
                     return $this -> buildAuctionView($auction);
@@ -618,6 +621,9 @@
 
                 if ($auction instanceof Auction_7)
                 {
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
+
                     $bidderList = array (pluginApp(AuctionBidderListEntry::class));
                     $bidderList = $auction -> bidderList;
 
@@ -636,8 +642,6 @@
 
                     $auction -> bidderList = $bidderList;
 
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugAfter', ['$auction: ' => $auction]);
 
 //                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
