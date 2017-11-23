@@ -619,16 +619,20 @@
                 if ($auction instanceof Auction_7)
                 {
                     $bidderList = array (pluginApp(AuctionBidderListEntry::class));
-                    $bidderList2 = array (pluginApp(AuctionBidderListEntry::class));
+                    $bidderList = $auction -> bidderList;
 
                     $bidderList = array_pop($auction -> bidderList);
-                    $bidderList2 = array_pop(array_slice($auction, - 1));
+
+                    $newList = array (pluginApp(AuctionBidderListEntry::class));
+                    $newList = $auction -> bidderList;
+
+                    $test = array_pop(array_slice($newList, - 1));
 
                     $this -> getLogger(__METHOD__)
                           -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
 
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList2: ' => $bidderList2]);
+                          -> debug('PluginAuctions::Template.debugBefor', ['$test: ' => $test]);
 
                     $auction -> bidderList = $bidderList;
 
