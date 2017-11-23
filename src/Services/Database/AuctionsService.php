@@ -619,18 +619,21 @@
                 if ($auction instanceof Auction_7)
                 {
                     $bidderList = array (pluginApp(AuctionBidderListEntry::class));
+                    $bidderList2 = array (pluginApp(AuctionBidderListEntry::class));
 
                     $bidderList = array_pop($auction -> bidderList);
+                    $bidderList2 = array_pop(array_pop(array_slice($auction, - 1)));
 
                     $this -> getLogger(__METHOD__)
-                          -> setReferenceType('auctionId')
-                          -> setReferenceValue($auctionId)
                           -> debug('PluginAuctions::Template.debugBefor', ['$bidderList: ' => $bidderList]);
+
+                    $this -> getLogger(__METHOD__)
+                          -> debug('PluginAuctions::Template.debugBefor', ['$bidderList2: ' => $bidderList2]);
 
                     $auction -> bidderList = $bidderList;
 
                     $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugAfter', ['$bidderList: ' => $auction]);
+                          -> debug('PluginAuctions::Template.debugAfter', ['$auction: ' => $auction]);
 
 //                    $auction -> tense = $this -> calculateTense($auction -> startDate, $auction -> expiryDate);
 
