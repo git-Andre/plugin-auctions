@@ -621,16 +621,13 @@
 
                 if ($auction instanceof Auction_7)
                 {
-                    $this -> getLogger(__METHOD__)
-                          -> debug('PluginAuctions::Template.debugBefor', ['$auction: ' => $auction]);
-
-                    array_pop($auction -> bidderList);
+                    if (count($auction -> bidderList) > 1)
+                    {
+                        array_pop($auction -> bidderList);
+                    }
 
                     if ($this -> setValue($auction))
                     {
-                        $this -> getLogger(__METHOD__)
-                              -> debug('PluginAuctions::Template.debugAfter', ['$auction: ' => $auction]);
-
                         return 'Das letzte Gebot wurde erfolgreich gelöscht!'; // json_encode($auction -> tense);
                     }
 
