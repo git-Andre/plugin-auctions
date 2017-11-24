@@ -57,7 +57,9 @@
                         <h3 class="modal-title">{{ trans("PluginAuctions::Template.makeBidModalTitle") }}</h3>
                     </div>
                     <div class="modal-body"
-                            v-el:auctionBidConfirmModalContent>
+                        
+                        id="auctionBidConfirmModalContent">
+                            {#v-el:auctionBidConfirmModalContent>#}
                         {#<button class="btn btn-primary btn-lg btn-block"#}
                         {#type="submit"#}
                         {#@click="addBidTest"#}

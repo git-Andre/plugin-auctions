@@ -97,13 +97,15 @@ Vue.component("auction-bids", {
 
     methods: {
         confirmBid: function confirmBid() {
-            alert('ok - hier');
-            var $modal = $(this.$els.auctionBidConfirmModal);
-            var $modalBody = $(this.$els.modalContent);
+            // alert('ok - hier');
+            // var $modal     = $( this.$els.auctionBidConfirmModal );
+            // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
+            //
+            // $modalBody.html( "<p>test</p>" );
+            //
+            $("#auctionBidConfirmModal").modal("show");
 
-            $modalBody.html("<p>test</p> ");
-
-            $modal.modal("show");
+            $("#auctionBidConfirmModalContent").html("<p>test</p>");
         },
         addBid: function addBid() {
             var _this = this;
