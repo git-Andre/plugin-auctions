@@ -9,15 +9,15 @@
 {{ component( "PluginAuctions::Item.Components.VisitorCounter" ) }}
 
 {% if auction %}
-
+    
     <div class="wrapper wrapper-top notify-auction">
         <!-- messages -->
         <notifications-plugin-auction
                 template="#vue-notifications-plugin-auction"
         ></notifications-plugin-auction>
     </div>
-
-
+    
+    
     <!-- BidderList MODAL -->
     <div id="bidderlist-modal-wrapper">
         <div class="modal fade" id="bidderlist" tabindex="-1" role="dialog">
@@ -29,7 +29,7 @@
                         <h3 class="modal-title">{{ trans("PluginAuctions::Template.allOffersThisAuction") }}</h3>
                     </div>
                     <div class="modal-body">
-
+                        
                         <auction-show-bidderlist
                                 template="#vue-auction-show-bidderlist"
                                 auctionid="{{ auction.id }}"
@@ -59,15 +59,16 @@
                         <h3 class="modal-title">{{ trans("PluginAuctions::Template.makeBidModalTitle") }}</h3>
                     </div>
                     <div class="modal-body"
-                        v-el:auctionBidConfirmModalContent>
+                            v-el:auctionBidConfirmModalContent>
                         {#<button class="btn btn-primary btn-lg btn-block"#}
-                                {#type="submit"#}
-                                {#@click="addBidTest"#}
+                        {#type="submit"#}
+                        {#@click="addBidTest"#}
                         {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
-
+                        
                         {#<auction-bid-confirm template="#vue-bid-confirm"#}
                         {#modal-element="bid-confirm-modal-wrapper"></auction-bid-confirm>#}
-                    {#</div>#}
+                        {#</div>#}
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,9 +84,10 @@
         -o-transform: translateX(-34%);
         transform: translateX(-34%);
     }
+    
     .notify-auction {
-        z-index: 99999;
+        z-index: 9999;
         position: fixed;
-        opacity:0.93;
+        opacity: 0.93;
     }
 </style>
