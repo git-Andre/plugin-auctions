@@ -1,6 +1,8 @@
 const ApiService          = require( "services/ApiService" );
 const NotificationService = require( "services/NotificationService" );
 const AuctionConstants    = require( "constants/AuctionConstants" );
+// const ModalService        = require("services/ModalService");
+
 // const ResourceService     = require("services/ResourceService");
 
 const NOTIFY_TIME = 10000;
@@ -40,9 +42,21 @@ Vue.component( "auction-bids", {
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.liveEvaluateAndNotify();
             }
-        }
+        };
+
+        // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
+
     },
     methods: {
+
+        confirmBid() {
+            var $modal     = $( this.$els.auctionBidConfirm );
+            var $modalBody = $( this.$els.modalBidConfirmContent );
+
+            $modalBody.html( "<p>test</p> " );
+
+            $modal.modal( "show" );
+        },
 
         addBid() {
             ApiService.get( "/auctions/calctime/" + this.auction.startDate + "/" + this.auction.expiryDate )
@@ -69,7 +83,9 @@ Vue.component( "auction-bids", {
                                     // super Time Tunnel
                                     sessionStorage.setItem( "currentBidder", this.userdata.id );
 
-                                    ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ), { contentType: "application/json" } )
+                                    ApiService.put( "/auctions/bidderlist/" + this.auction.id, JSON.stringify( currentBid ),
+                                                                                               { contentType: "application/json" }
+                                    )
                                         .then( response => {
                                                    if ( response.indexOf( "Fehler" ) >= 0 ) {
                                                        NotificationService.error( response ).close;
@@ -81,7 +97,8 @@ Vue.component( "auction-bids", {
                                                    this.reload( 2000 );
                                                },
                                                error => {
-                                                   NotificationService.error( "error31: " + error.toString() ).closeAfter( NOTIFY_TIME );
+                                                   NotificationService.error( "error31: " + error.toString() )
+                                                       .closeAfter( NOTIFY_TIME );
                                                }
                                         );
                                 }
