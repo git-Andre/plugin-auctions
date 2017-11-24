@@ -97,6 +97,8 @@ Vue.component("auction-bids", {
 
     methods: {
         confirmBid: function confirmBid() {
+            var content = "<p>test</p>";
+
             // alert('ok - hier');
             // var $modal     = $( this.$els.auctionBidConfirmModal );
             // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
@@ -105,7 +107,10 @@ Vue.component("auction-bids", {
             //
             $("#auctionBidConfirmModal").modal("show");
 
-            $("#auctionBidConfirmModalContent").html("<p>test</p>");
+            $("#auctionBidConfirmModalContent").html(content);
+        },
+        addBidTest: function addBidTest() {
+            alert('addBidTest');
         },
         addBid: function addBid() {
             var _this = this;

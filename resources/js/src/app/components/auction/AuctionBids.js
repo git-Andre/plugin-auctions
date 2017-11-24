@@ -50,7 +50,7 @@ Vue.component( "auction-bids", {
     methods: {
 
         confirmBid() {
-            const content = "<p>test</p>";
+            const content = "<p>test 2</p>";
 
 
 
@@ -63,6 +63,10 @@ Vue.component( "auction-bids", {
             $("#auctionBidConfirmModal").modal( "show" );
 
             $("#auctionBidConfirmModalContent").html( content );
+        },
+        addBidTest()
+        {
+           alert('addBidTest');
         },
 
         addBid() {
