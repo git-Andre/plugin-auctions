@@ -44,23 +44,30 @@
     
     <!-- BID-CONFIRM MODAL -->
     <div id="bid-confirm-modal-wrapper">
-        <div class="modal fade bid-confirm-modal" id="bid-confirm" tabindex="-1" role="dialog">
+        <div class="modal fade bid-confirm-modal"
+                id="auction-bid-confirm"
+                tabindex="-1"
+                role="dialog"
+                v-el:modal-bid-confirm
+                data-backdrop="static"
+                data-keyboard="true">
+            >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">{{ trans("Ceres::Template.accLogin") }}</h3>
+                        <h3 class="modal-title">{{ trans("PluginAuctions::Template.makeBidModalTitle") }}</h3>
                     </div>
-                    <div class="modal-body">
-                        
-                        <button class="btn btn-primary btn-lg btn-block"
-                                type="submit"
-                                @click="addBid"
-                        >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
-                        
-                        {#<bid-confirm template="#vue-bid-confirm"#}
-                        {#modal-element="bid-confirm-modal-wrapper"></bid-confirm>#}
-                    </div>
+                    <div class="modal-body"
+                        v-el:modal-bid-confirm-content>
+                        {#<button class="btn btn-primary btn-lg btn-block"#}
+                                {#type="submit"#}
+                                {#@click="addBidTest"#}
+                        {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
+
+                        {#<auction-bid-confirm template="#vue-bid-confirm"#}
+                        {#modal-element="bid-confirm-modal-wrapper"></auction-bid-confirm>#}
+                    {#</div>#}
                 </div>
             </div>
         </div>
