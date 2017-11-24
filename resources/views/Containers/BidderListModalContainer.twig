@@ -60,10 +60,16 @@
                         
                         id="auctionBidConfirmModalContent">
                             {#v-el:auctionBidConfirmModalContent>#}
-                        {#<button class="btn btn-primary btn-lg btn-block"#}
-                        {#type="submit"#}
-                        {#@click="addBidTest"#}
-                        {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
+                        <button class="btn btn-primary btn-lg btn-block"
+                        type="submit"
+                        @click="addBidTest"
+                        >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
+    
+                        <auction-countdown
+                                template="#vue-auction-countdown"
+                                :deadline=1510941297
+                        >
+                        </auction-countdown>
                         
                         {#<auction-bid-confirm template="#vue-bid-confirm"#}
                         {#modal-element="bid-confirm-modal-wrapper"></auction-bid-confirm>#}
