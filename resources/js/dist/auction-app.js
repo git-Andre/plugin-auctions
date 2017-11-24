@@ -97,8 +97,9 @@ Vue.component("auction-bids", {
 
     methods: {
         confirmBid: function confirmBid() {
-            var $modal = $(this.$els.auctionBidConfirm);
-            var $modalBody = $(this.$els.modalBidConfirmContent);
+            alert('ok - hier');
+            var $modal = $(this.$els.auctionBidConfirmModal);
+            var $modalBody = $(this.$els.modalContent);
 
             $modalBody.html("<p>test</p> ");
 
