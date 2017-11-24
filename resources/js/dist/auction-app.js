@@ -57,6 +57,8 @@ Vue.component("visitor-counter", {
 var ApiService = require("services/ApiService");
 var NotificationService = require("services/NotificationService");
 var AuctionConstants = require("constants/AuctionConstants");
+// const ModalService        = require("services/ModalService");
+
 // const ResourceService     = require("services/ResourceService");
 
 var NOTIFY_TIME = 10000;
@@ -88,10 +90,20 @@ Vue.component("auction-bids", {
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.liveEvaluateAndNotify();
             }
-        }
+        };
+
+        // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
     },
 
     methods: {
+        confirmBid: function confirmBid() {
+            var $modal = $(this.$els.auctionBidConfirm);
+            var $modalBody = $(this.$els.modalBidConfirmContent);
+
+            $modalBody.html("<p>test</p> ");
+
+            $modal.modal("show");
+        },
         addBid: function addBid() {
             var _this = this;
 
@@ -122,7 +134,7 @@ Vue.component("auction-bids", {
                                 } else {
                                     NotificationService.success("<h3>STATUS:</h3><hr>" + TranslationsAo.Template.successBid).close;
                                 }
-                                _this.reload(NOTIFY_TIME / 3);
+                                _this.reload(2000);
                             }, function (error) {
                                 NotificationService.error("error31: " + error.toString()).closeAfter(NOTIFY_TIME);
                             });

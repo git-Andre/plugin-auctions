@@ -50,8 +50,8 @@ Vue.component( "auction-bids", {
     methods: {
 
         confirmBid() {
-            var $modal     = $( this.$els.auctionBidConfirm );
-            var $modalBody = $( this.$els.modalBidConfirmContent );
+            var $modal     = $( this.$els.auctionBidConfirmModal );
+            var $modalBody = $( this.$els.auctionBidConfirmModalContent );
 
             $modalBody.html( "<p>test</p> " );
 
