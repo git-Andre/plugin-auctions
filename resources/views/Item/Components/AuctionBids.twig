@@ -33,7 +33,8 @@
             
             <button class="btn btn-primary btn-lg btn-block"
                     @click="confirmBid"
-                    :disabled="!isInputValid and ${isChecked}"
+                    :disabled="${isChecked}"
+                    {#:disabled="!isInputValid and ${isChecked}"#}
             >
                 <i class="fa fa-gavel p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
             </button>
