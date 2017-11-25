@@ -33,7 +33,7 @@
             
             <button class="btn btn-primary btn-lg btn-block"
                     @click="confirmBid"
-                    :disabled="!isInputValid"
+                    :disabled="!isInputValid and ${isChecked}"
             >
                 <i class="fa fa-gavel p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
             </button>
@@ -62,5 +62,6 @@
     font-family: 'Abel', sans-serif;
     font-size: 1rem;
     line-height: 1.2rem;
+    margin: 0.66rem 0 0 0.5rem;
 }
 </style>

@@ -68,7 +68,8 @@ Vue.component("auction-bids", {
     data: function data() {
         return {
             isInputValid: false,
-            maxCustomerBid: null
+            maxCustomerBid: null,
+            checkoutValidation: {}
         };
     },
     created: function created() {
@@ -90,24 +91,32 @@ Vue.component("auction-bids", {
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.liveEvaluateAndNotify();
             }
-        };
+        }
+        ;
 
         // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
     },
 
     methods: {
         confirmBid: function confirmBid() {
-            var content = "<p>test 2</p>" + "                        <button class=\"btn btn-primary btn-lg btn-block\"\n" + "                        @click=\"addBidTest\"\n" + "                        >{{ trans(\"PluginAuctions::Template.makeBindingBid\") }}</button>\n" + "    \n" + "                        <auction-countdown\n" + "                                template=\"#vue-auction-countdown\"\n" + "                                :deadline=1520941297\n" + "                        >\n" + "                        </auction-countdown>\n";
-
-            // alert('ok - hier');
-            // var $modal     = $( this.$els.auctionBidConfirmModal );
-            // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
+            // const content = "<p>test 2</p>";
             //
-            // $modalBody.html( "<p>test</p>" );
             //
-            $("#auctionBidConfirmModal").modal("show");
+            //
+            // // alert('ok - hier');
+            // // var $modal     = $( this.$els.auctionBidConfirmModal );
+            // // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
+            // //
+            // // $modalBody.html( "<p>test</p>" );
+            // //
+            // $("#auctionBidConfirmModal").modal( "show" );
+            //
+            // $("#auctionBidConfirmModalContent").html( content );
+            var self = this;
 
-            $("#auctionBidConfirmModalContent").html(content);
+            if (self.validateCheckout()) {
+                this.addBidTest();
+            };
         },
         addBidTest: function addBidTest() {
             alert('addBidTest');
@@ -165,6 +174,24 @@ Vue.component("auction-bids", {
                 NotificationService.error("Upps - ein Fehler bei der Zeitabfrage ??!!").close;
             });
         },
+
+
+        validateCheckout: function validateCheckout() {
+            for (var validator in this.checkoutValidation) {
+                if (this.checkoutValidation[validator].validate) {
+                    this.checkoutValidation[validator].validate();
+                }
+            }
+
+            for (var i in this.checkoutValidation) {
+                if (this.checkoutValidation[i].showError) {
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
         liveEvaluateAndNotify: function liveEvaluateAndNotify() {
             if (this.hasLoggedInUserTheLastBid()) {
                 // vorletztes Gebot auch von mir ? - entweder mein MaxGebot geändert, oder unterlegenes Gebot... ?
