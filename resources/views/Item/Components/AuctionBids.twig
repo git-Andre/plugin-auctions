@@ -2,6 +2,11 @@
 
 <script type="x/template" id="vue-auction-bids">
     
+    <resource
+            name="checkoutValidation"
+            :data="{ gtc: { showError: false } }"></resource>
+    
+    
     {#<h3>${ auction.expiryDate }</h3>#}
     <auction-countdown
             template="#vue-auction-countdown"
@@ -49,9 +54,13 @@
     </div>
 
 </script>
-{#<style>#}
-    {#.alarm {#}
-        {#color: #c50000;#}
-    {#}#}
-
-{#</style>#}
+<style>
+    /*.alarm {*/
+        /*color: #c50000;*/
+    /*}*/
+.auction-gtc-check {
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    line-height: 1.2rem;
+}
+</style>
