@@ -60,9 +60,10 @@
                         
                         id="auctionBidConfirmModalContent">
                             {#v-el:auctionBidConfirmModalContent>#}
+                        
                         <button class="btn btn-primary btn-lg btn-block"
                         {#type="submit"#}
-                        @click="addBidTest"
+                        {#@click="addBidTest"#}
                         >{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>
     
                         <auction-countdown
