@@ -1,3 +1,5 @@
+{{ component( "Ceres::Checkout.Components.AcceptGtcCheck" ) }}
+
 <script type="x/template" id="vue-auction-bids">
     
     {#<h3>${ auction.expiryDate }</h3>#}
@@ -35,6 +37,13 @@
             {#type="submit"#}
             {#@click="addBidTest"#}
             {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
+    
+            <div class="form-check auction-gtc-check">
+        
+                <accept-gtc-check template="#vue-accept-gtc-check"></accept-gtc-check>
+    
+            </div>
+
 
         </div>
     </div>

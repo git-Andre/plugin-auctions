@@ -97,7 +97,7 @@ Vue.component("auction-bids", {
 
     methods: {
         confirmBid: function confirmBid() {
-            var content = "<p>test 2</p>";
+            var content = "<p>test 2</p>" + "                        <button class=\"btn btn-primary btn-lg btn-block\"\n" + "                        @click=\"addBidTest\"\n" + "                        >{{ trans(\"PluginAuctions::Template.makeBindingBid\") }}</button>\n" + "    \n" + "                        <auction-countdown\n" + "                                template=\"#vue-auction-countdown\"\n" + "                                :deadline=1520941297\n" + "                        >\n" + "                        </auction-countdown>\n";
 
             // alert('ok - hier');
             // var $modal     = $( this.$els.auctionBidConfirmModal );

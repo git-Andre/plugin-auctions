@@ -50,17 +50,7 @@ Vue.component( "auction-bids", {
     methods: {
 
         confirmBid() {
-            const content = "<p>test 2</p>" +
-                "                        <button class=\"btn btn-primary btn-lg btn-block\"\n" +
-                "                        {#type=\"submit\"#}\n" +
-                "                        {#@click=\"addBidTest\"#}\n" +
-                "                        >{{ trans(\"PluginAuctions::Template.makeBindingBid\") }}</button>\n" +
-                "    \n" +
-                "                        <auction-countdown\n" +
-                "                                template=\"#vue-auction-countdown\"\n" +
-                "                                :deadline=1520941297\n" +
-                "                        >\n" +
-                "                        </auction-countdown>\n";
+            const content = "<p>test 2</p>";
 
 
 
