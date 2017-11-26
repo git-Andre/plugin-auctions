@@ -10,11 +10,12 @@
     
     {% set userdata = services.customer.getContact() | json_encode() %}
     
+    <div id="addAuctionVue">
+    
     <resource
             name="checkoutValidation"
             :data="{ gtc: { showError: false } }"></resource>
     
-    <div id="addAuctionVue">
         
         {#Zukunft ------------------------------------------------------- #}
         {% if (auction.tense == 'future') %}
