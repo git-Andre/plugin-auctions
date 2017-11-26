@@ -1,11 +1,11 @@
 {{ component( "Ceres::Checkout.Components.AcceptGtcCheck" ) }}
+
+<script type="x/template" id="vue-auction-bids">
+
 <resource
         name="checkoutValidation"
         :data="{ gtc: { showError: false } }"></resource>
 
-
-<script type="x/template" id="vue-auction-bids">
-    
     
     {#<h3>${ auction.expiryDate }</h3>#}
     <auction-countdown
@@ -43,6 +43,18 @@
             {#type="submit"#}
             {#@click="addBidTest"#}
             {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
+            
+            <h4>${isChecked}</h4>
+            <p>${ checkoutValidation | json_encode }</p>
+            
+            {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
+                <div class="form-check auction-gtc-check">
+            
+                    <accept-gtc-check template="#vue-accept-gtc-check"></accept-gtc-check>
+        
+                </div>
+            {#</div>#}
+
 
         </div>
     </div>
