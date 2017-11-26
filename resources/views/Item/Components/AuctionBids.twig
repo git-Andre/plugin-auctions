@@ -2,10 +2,6 @@
 
 <script type="x/template" id="vue-auction-bids">
     
-    <resource
-            name="checkoutValidation"
-            :data="{ gtc: { showError: false } }"></resource>
-    
     
     {#<h3>${ auction.expiryDate }</h3>#}
     <auction-countdown
@@ -33,7 +29,7 @@
             
             <button class="btn btn-primary btn-lg btn-block"
                     @click="confirmBid"
-                    :disabled="!isChecked"
+                    :disabled="!isInputValid"
                     {#:disabled="!isInputValid and ${isChecked}"#}
             >
                 <i class="fa fa-gavel p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
@@ -43,13 +39,6 @@
             {#type="submit"#}
             {#@click="addBidTest"#}
             {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
-    
-            <div class="form-check auction-gtc-check">
-        
-                <accept-gtc-check template="#vue-accept-gtc-check"></accept-gtc-check>
-    
-            </div>
-
 
         </div>
     </div>

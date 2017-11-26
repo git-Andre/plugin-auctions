@@ -3,7 +3,7 @@ const NotificationService = require( "services/NotificationService" );
 const AuctionConstants    = require( "constants/AuctionConstants" );
 // const ModalService        = require("services/ModalService");
 
-// const ResourceService     = require("services/ResourceService");
+const ResourceService     = require("services/ResourceService");
 
 const NOTIFY_TIME = 10000;
 
@@ -26,6 +26,7 @@ Vue.component( "auction-bids", {
     },
     created() {
         this.$options.template = this.template;
+        ResourceService.bind("checkoutValidation", this);
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
@@ -44,7 +45,6 @@ Vue.component( "auction-bids", {
                 this.liveEvaluateAndNotify();
             }
         }
-        ;
 
         // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
 
@@ -67,11 +67,16 @@ Vue.component( "auction-bids", {
             // $("#auctionBidConfirmModalContent").html( content );
             var self = this;
 
-            if ( self.validateCheckout() ) {
+            if ( self.validateGtcCheck() ) {
                 this.addBidTest();
-            } ;
+            }
+            else {
+                NotificationService.error("error");
+                // NotificationService.error(Translations.Template.generalCheckEntries);
 
+            }
         },
+
         addBidTest() {
             alert( 'addBidTest' );
         },
@@ -146,7 +151,7 @@ Vue.component( "auction-bids", {
                 );
         },
 
-        validateCheckout: function () {
+        validateGtcCheck: function () {
             for (var validator in this.checkoutValidation) {
                 if ( this.checkoutValidation[validator].validate ) {
                     this.checkoutValidation[validator].validate();
