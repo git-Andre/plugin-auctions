@@ -69,12 +69,12 @@ Vue.component("auction-bids", {
         return {
             isInputValid: false,
             maxCustomerBid: null,
-            checkoutValidation: { gtc: {} }
+            gtcValidation: { gtc: {} }
         };
     },
     created: function created() {
         this.$options.template = this.template;
-        // ResourceService.bind("checkoutValidation", this);
+        // ResourceService.bind("gtcValidation", this);
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
@@ -99,26 +99,13 @@ Vue.component("auction-bids", {
 
     methods: {
         confirmBid: function confirmBid() {
-            // const content = "<p>test 2</p>";
-            //
-            //
-            //
-            // // alert('ok - hier');
-            // // var $modal     = $( this.$els.auctionBidConfirmModal );
-            // // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
-            // //
-            // // $modalBody.html( "<p>test</p>" );
-            // //
-            // $("#auctionBidConfirmModal").modal( "show" );
-            //
-            // $("#auctionBidConfirmModalContent").html( content );
             var self = this;
 
             if (self.validateGtcCheck()) {
                 this.addBidTest();
             } else {
                 NotificationService.error("error");
-                NotificationService.error(Translations.Template.generalCheckEntries);
+                // NotificationService.error(Translations.Template.generalCheckEntries);
             }
         },
         addBidTest: function addBidTest() {
@@ -180,18 +167,18 @@ Vue.component("auction-bids", {
 
 
         validateGtcCheck: function validateGtcCheck() {
-            for (var validator in this.checkoutValidation) {
-                console.dir(this.checkoutValidation);
+            for (var validator in this.gtcValidation) {
+                console.dir(this.gtcValidation);
 
                 console.log('validator: ' + validator);
 
-                if (this.checkoutValidation[validator].validate) {
-                    this.checkoutValidation[validator].validate();
+                if (this.gtcValidation[validator].validate) {
+                    this.gtcValidation[validator].validate();
                 }
             }
 
-            for (var i in this.checkoutValidation) {
-                if (this.checkoutValidation[i].showError) {
+            for (var i in this.gtcValidation) {
+                if (this.gtcValidation[i].showError) {
                     return false;
                 }
             }
@@ -389,7 +376,7 @@ Vue.component("auction-bids", {
     }
 });
 
-},{"constants/AuctionConstants":7,"services/ApiService":8,"services/NotificationService":9,"services/ResourceService":10}],3:[function(require,module,exports){
+},{"constants/AuctionConstants":8,"services/ApiService":9,"services/NotificationService":10,"services/ResourceService":11}],3:[function(require,module,exports){
 "use strict";
 
 // const ApiService = require("services/ApiService");
@@ -451,7 +438,42 @@ Vue.component("auction-end", {
     }
 });
 
-},{"services/NotificationService":9}],4:[function(require,module,exports){
+},{"services/NotificationService":10}],4:[function(require,module,exports){
+"use strict";
+
+// var ResourceService = require("services/ResourceService");
+
+Vue.component("auction-gtc-check", {
+
+    props: ["template"],
+
+    data: function data() {
+        return {
+            isChecked: false,
+            gtcValidation: { gtc: {} }
+        };
+    },
+
+    created: function created() {
+        this.$options.template = this.template;
+        // ResourceService.bind("gtcValidation", this);
+        this.gtcValidation.gtc.validate = this.validate;
+    },
+
+    methods: {
+        validate: function validate() {
+            this.gtcValidation.gtc.showError = !this.isChecked;
+        }
+    },
+
+    watch: {
+        isChecked: function isChecked() {
+            this.gtcValidation.gtc.showError = false;
+        }
+    }
+});
+
+},{}],5:[function(require,module,exports){
 "use strict";
 
 var ApiService = require("services/ApiService");
@@ -513,7 +535,7 @@ Vue.component("auction-show-bidderlist", {
     }
 });
 
-},{"services/ApiService":8,"services/NotificationService":9}],5:[function(require,module,exports){
+},{"services/ApiService":9,"services/NotificationService":10}],6:[function(require,module,exports){
 "use strict";
 
 // import ExceptionMap from "exceptions/ExceptionMap";
@@ -581,7 +603,7 @@ Vue.component("notifications-plugin-auction", {
     }
 });
 
-},{"services/NotificationService":9}],6:[function(require,module,exports){
+},{"services/NotificationService":10}],7:[function(require,module,exports){
 "use strict";
 
 Vue.component("auction-countdown", {
@@ -641,7 +663,7 @@ Vue.component("auction-countdown", {
     }
 });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -672,7 +694,7 @@ var PRESENT = exports.PRESENT = "present";
 var PAST = exports.PAST = "past";
 var PAST_PERFECT = exports.PAST_PERFECT = "past-perfect";
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 var NotificationService = require("services/NotificationService");
@@ -808,7 +830,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/NotificationService":9,"services/WaitScreenService":11}],9:[function(require,module,exports){
+},{"services/NotificationService":10,"services/WaitScreenService":12}],10:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -966,7 +988,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -1431,7 +1453,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{"services/ApiService":8}],11:[function(require,module,exports){
+},{"services/ApiService":9}],12:[function(require,module,exports){
 "use strict";
 
 module.exports = function ($) {
@@ -1474,7 +1496,7 @@ module.exports = function ($) {
     }
 }(jQuery);
 
-},{}]},{},[2,3,4,5,6,1,7])
+},{}]},{},[2,3,4,5,6,7,1,8])
 
 
 // var ao = new Vue( {
