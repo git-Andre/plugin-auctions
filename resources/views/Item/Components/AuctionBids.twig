@@ -44,9 +44,6 @@
             {#@click="addBidTest"#}
             {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
             
-            <h4>${isChecked}</h4>
-            <p>${ checkoutValidation | json_encode }</p>
-            
             {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
                 <div class="form-check auction-gtc-check">
             
@@ -55,6 +52,11 @@
                 </div>
             {#</div>#}
 
+            <h4 if="${isChecked}">das ist ein Test</h4>
+            <h3 if="isChecked">das ist ein weiterer Test</h3>
+            <h4>h4: ${isChecked}</h4>
+            <p>${ checkoutValidation }</p>
+            
 
         </div>
     </div>

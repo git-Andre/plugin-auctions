@@ -21,12 +21,12 @@ Vue.component( "auction-bids", {
         return {
             isInputValid: false,
             maxCustomerBid: null,
-            checkoutValidation: {}
+            checkoutValidation: {gtc: {}}
         };
     },
     created() {
         this.$options.template = this.template;
-        ResourceService.bind("checkoutValidation", this);
+        // ResourceService.bind("checkoutValidation", this);
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
@@ -44,7 +44,7 @@ Vue.component( "auction-bids", {
             if ( this.hasLoggedInUserBiddenYet() || sessionStorage.getItem( "currentBidder" ) == this.userdata.id ) {
                 this.liveEvaluateAndNotify();
             }
-        }K
+        }
 
         // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
 

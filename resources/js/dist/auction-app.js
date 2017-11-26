@@ -69,12 +69,12 @@ Vue.component("auction-bids", {
         return {
             isInputValid: false,
             maxCustomerBid: null,
-            checkoutValidation: {}
+            checkoutValidation: { gtc: {} }
         };
     },
     created: function created() {
         this.$options.template = this.template;
-        ResourceService.bind("checkoutValidation", this);
+        // ResourceService.bind("checkoutValidation", this);
     },
     compiled: function compiled() {
         this.userdata = JSON.parse(this.userdata);
