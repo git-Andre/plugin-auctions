@@ -44,7 +44,8 @@
                 {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
                 <div class="form-check auction-gtc-check">
                     <auction-gtc-check
-                            v-if="isInputValid"
+                            v-show="isInputValid"
+                            :isGtcCheck="isChecked"
                             template="#vue-auction-gtc-check"></auction-gtc-check>
                 </div>
                 {#</div>#}
@@ -52,10 +53,8 @@
                 {#<h4 v-if="${isChecked}">das ist ein Test</h4>#}
                 {#<h3 v-if="isChecked">das ist ein weiterer Test</h3>#}
                 {#<h4>h4: ${isChecked}</h4>#}
-                <p>1: ${ gtcValidation.gtc.showError }</p>
+                <p>1: ${ isGtcCheck }</p>
                 
-                <p>3: ${isChecked}</p>
-            
             </div>
         </div>
     </div>
