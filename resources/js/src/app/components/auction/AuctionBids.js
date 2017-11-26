@@ -153,6 +153,10 @@ Vue.component( "auction-bids", {
 
         validateGtcCheck: function () {
             for (var validator in this.checkoutValidation) {
+                console.dir(this.checkoutValidation);
+
+                console.log( 'validator: ' + validator );
+
                 if ( this.checkoutValidation[validator].validate ) {
                     this.checkoutValidation[validator].validate();
                 }

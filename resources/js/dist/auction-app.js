@@ -118,7 +118,7 @@ Vue.component("auction-bids", {
                 this.addBidTest();
             } else {
                 NotificationService.error("error");
-                // NotificationService.error(Translations.Template.generalCheckEntries);
+                NotificationService.error(Translations.Template.generalCheckEntries);
             }
         },
         addBidTest: function addBidTest() {
@@ -181,6 +181,10 @@ Vue.component("auction-bids", {
 
         validateGtcCheck: function validateGtcCheck() {
             for (var validator in this.checkoutValidation) {
+                console.dir(this.checkoutValidation);
+
+                console.log('validator: ' + validator);
+
                 if (this.checkoutValidation[validator].validate) {
                     this.checkoutValidation[validator].validate();
                 }
