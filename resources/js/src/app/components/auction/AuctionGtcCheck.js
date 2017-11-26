@@ -3,7 +3,8 @@
 Vue.component("auction-gtc-check", {
 
     props: [
-        "template"
+        "template",
+        "gtcError"
     ],
 
     data: function()
@@ -17,6 +18,8 @@ Vue.component("auction-gtc-check", {
     created: function()
     {
         this.$options.template = this.template;
+
+        this.gtcError = true;
         // this.gtcValidation.gtc.validate = this.validate;
     },
 
