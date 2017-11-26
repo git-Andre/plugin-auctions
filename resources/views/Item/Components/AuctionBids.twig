@@ -43,7 +43,9 @@
                 
                 {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
                 <div class="form-check auction-gtc-check">
-                    <auction-gtc-check template="#vue-auction-gtc-check"></auction-gtc-check>
+                    <auction-gtc-check
+                            v-if="!isInputValid"
+                            template="#vue-auction-gtc-check"></auction-gtc-check>
                 </div>
                 {#</div>#}
                 
