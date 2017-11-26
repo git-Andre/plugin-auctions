@@ -15,7 +15,8 @@ Vue.component( "auction-bids", {
         "minbid",
         "auctionEnd",
         "item",
-        "deadline"
+        "deadline",
+        "isChecked"
     ],
     data() {
         return {
