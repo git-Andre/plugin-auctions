@@ -21,7 +21,6 @@ Vue.component( "auction-bids", {
         return {
             isInputValid: false,
             maxCustomerBid: null,
-            gtcValidation: {gtc: {}}
         };
     },
     created() {
@@ -139,9 +138,6 @@ Vue.component( "auction-bids", {
 
         validateGtcCheck: function () {
             for (var validator in this.gtcValidation) {
-                console.dir(this.gtcValidation);
-
-                console.log( 'validator: ' + validator );
 
                 if ( this.gtcValidation[validator].validate ) {
                     this.gtcValidation[validator].validate();

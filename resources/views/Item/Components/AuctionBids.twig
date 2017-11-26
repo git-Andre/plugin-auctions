@@ -31,7 +31,6 @@
                 <button class="btn btn-primary btn-lg btn-block"
                         @click="confirmBid"
                         :disabled="!isInputValid"
-                        {#:disabled="!isInputValid and ${isChecked}"#}
                 >
                     <i class="fa fa-check-square-o p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
                 </button>
@@ -45,16 +44,10 @@
                 <div class="form-check auction-gtc-check">
                     <auction-gtc-check
                             v-show="isInputValid"
-                            :isGtcCheck="isChecked"
                             template="#vue-auction-gtc-check"></auction-gtc-check>
                 </div>
                 {#</div>#}
                 
-                {#<h4 v-if="${isChecked}">das ist ein Test</h4>#}
-                {#<h3 v-if="isChecked">das ist ein weiterer Test</h3>#}
-                {#<h4>h4: ${isChecked}</h4>#}
-                <p>1: ${ isGtcCheck }</p>
-                <p>2: ${ isChecked }</p>
                 
             </div>
         </div>
