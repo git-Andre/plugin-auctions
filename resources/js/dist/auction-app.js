@@ -92,7 +92,7 @@ Vue.component("auction-bids", {
             if (this.hasLoggedInUserBiddenYet() || sessionStorage.getItem("currentBidder") == this.userdata.id) {
                 this.liveEvaluateAndNotify();
             }
-        }K;
+        }
 
         // this.bankInfoModal = ModalService.findModal(this.$els.bankInfoModal);
     },

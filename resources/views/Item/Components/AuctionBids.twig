@@ -52,10 +52,12 @@
                 </div>
             {#</div>#}
 
-            <h4 if="${isChecked}">das ist ein Test</h4>
-            <h3 if="isChecked">das ist ein weiterer Test</h3>
+            <h4 v-if="${isChecked}">das ist ein Test</h4>
+            <h3 v-if="isChecked">das ist ein weiterer Test</h3>
             <h4>h4: ${isChecked}</h4>
-            <p>${ checkoutValidation }</p>
+            <p>1: ${ checkoutValidation.showError }</p>
+            <p>2: ${ checkoutValidation.validation }</p>
+            <p>3: ${ checkoutValidation..validation() }</p>
             
 
         </div>
