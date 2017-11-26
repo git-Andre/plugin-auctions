@@ -21,12 +21,12 @@ Vue.component( "auction-bids", {
         return {
             isInputValid: false,
             maxCustomerBid: null,
-            checkoutValidation: {gtc: {}}
+            gtcValidation: {gtc: {}}
         };
     },
     created() {
         this.$options.template = this.template;
-        // ResourceService.bind("checkoutValidation", this);
+        // ResourceService.bind("gtcValidation", this);
     },
     compiled() {
         this.userdata = JSON.parse( this.userdata );
@@ -52,19 +52,6 @@ Vue.component( "auction-bids", {
     methods: {
 
         confirmBid() {
-            // const content = "<p>test 2</p>";
-            //
-            //
-            //
-            // // alert('ok - hier');
-            // // var $modal     = $( this.$els.auctionBidConfirmModal );
-            // // var $modalBody = $( this.$els.auctionBidConfirmModalContent );
-            // //
-            // // $modalBody.html( "<p>test</p>" );
-            // //
-            // $("#auctionBidConfirmModal").modal( "show" );
-            //
-            // $("#auctionBidConfirmModalContent").html( content );
             var self = this;
 
             if ( self.validateGtcCheck() ) {
@@ -72,8 +59,7 @@ Vue.component( "auction-bids", {
             }
             else {
                 NotificationService.error("error");
-                NotificationService.error(Translations.Template.generalCheckEntries);
-
+                // NotificationService.error(Translations.Template.generalCheckEntries);
             }
         },
 
@@ -152,18 +138,18 @@ Vue.component( "auction-bids", {
         },
 
         validateGtcCheck: function () {
-            for (var validator in this.checkoutValidation) {
-                console.dir(this.checkoutValidation);
+            for (var validator in this.gtcValidation) {
+                console.dir(this.gtcValidation);
 
                 console.log( 'validator: ' + validator );
 
-                if ( this.checkoutValidation[validator].validate ) {
-                    this.checkoutValidation[validator].validate();
+                if ( this.gtcValidation[validator].validate ) {
+                    this.gtcValidation[validator].validate();
                 }
             }
 
-            for (var i in this.checkoutValidation) {
-                if ( this.checkoutValidation[i].showError ) {
+            for (var i in this.gtcValidation) {
+                if ( this.gtcValidation[i].showError ) {
                     return false;
                 }
             }
