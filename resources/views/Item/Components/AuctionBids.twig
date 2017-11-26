@@ -47,14 +47,13 @@
                 </div>
                 {#</div>#}
                 
-                <h4 v-if="${isChecked}">das ist ein Test</h4>
-                <h3 v-if="isChecked">das ist ein weiterer Test</h3>
+                {#<h4 v-if="${isChecked}">das ist ein Test</h4>#}
+                {#<h3 v-if="isChecked">das ist ein weiterer Test</h3>#}
                 {#<h4>h4: ${isChecked}</h4>#}
                 <p>1: ${ gtcValidation.gtc.showError }</p>
-                <p>2: ${ gtcValidation.gtc.validate }</p>
+                <p>2: ${ gtcValidation.gtc.validate() }</p>
                 
-                <p></p>
-            
+                <p>3: ${isChecked}</p>
             
             </div>
         </div>
