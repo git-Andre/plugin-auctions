@@ -1,77 +1,75 @@
 {{ component( "Ceres::Checkout.Components.AcceptGtcCheck" ) }}
 
 <script type="x/template" id="vue-auction-bids">
-
-<resource
-        name="checkoutValidation"
-        :data="{ gtc: { showError: false } }"></resource>
-
     
-    {#<h3>${ auction.expiryDate }</h3>#}
-    <auction-countdown
-            template="#vue-auction-countdown"
-            :deadline="deadline"
-    >
-    </auction-countdown>
-    
-    
-    <div class="row container" id="auction-bidform">
+    <div class="auction-bid">
         
-        <div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">
-            <input class="form-control form-control-lg text-muted"
-                    v-model="maxCustomerBid" number
-                    min="${ minbid }"
-                    type="number"
-                    id="maximumBid"
-                    placeholder="{{ trans("PluginAuctions::Template.maxBid") }}"
-                    aria-describedby="maxBidHelpBlock"
-            >
-            <p id="maxBidHelpBlock"
-                    class="form-text text-muted text-center">{{ trans("PluginAuctions::Template.bidAtLeast") }}<span
-                        :class="{alarm: !isInputValid}">${ minbid | currency }</span>{{ trans("PluginAuctions::Template.bidAtLeastEnd") }}
-            </p>
+        {#<h3>${ auction.expiryDate }</h3>#}
+        <auction-countdown
+                template="#vue-auction-countdown"
+                :deadline="deadline"
+        >
+        </auction-countdown>
+        
+        
+        <div class="row container" id="auction-bidform">
             
-            <button class="btn btn-primary btn-lg btn-block"
-                    @click="confirmBid"
-                    :disabled="!isInputValid"
-                    {#:disabled="!isInputValid and ${isChecked}"#}
-            >
-                <i class="fa fa-check-square-o p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
-            </button>
-    
-            {#<button class="btn btn-primary btn-lg btn-block"#}
-            {#type="submit"#}
-            {#@click="addBidTest"#}
-            {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
-            
-            {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
+            <div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">
+                <input class="form-control form-control-lg text-muted"
+                        v-model="maxCustomerBid" number
+                        min="${ minbid }"
+                        type="number"
+                        id="maximumBid"
+                        placeholder="{{ trans("PluginAuctions::Template.maxBid") }}"
+                        aria-describedby="maxBidHelpBlock"
+                >
+                <p id="maxBidHelpBlock"
+                        class="form-text text-muted text-center">{{ trans("PluginAuctions::Template.bidAtLeast") }}<span
+                            :class="{alarm: !isInputValid}">${ minbid | currency }</span>{{ trans("PluginAuctions::Template.bidAtLeastEnd") }}
+                </p>
+                
+                <button class="btn btn-primary btn-lg btn-block"
+                        @click="confirmBid"
+                        :disabled="!isInputValid"
+                        {#:disabled="!isInputValid and ${isChecked}"#}
+                >
+                    <i class="fa fa-check-square-o p-r-1" aria-hidden="true"></i>{{ trans("PluginAuctions::Template.makeBid") }}
+                </button>
+                
+                {#<button class="btn btn-primary btn-lg btn-block"#}
+                {#type="submit"#}
+                {#@click="addBidTest"#}
+                {#>{{ trans("PluginAuctions::Template.makeBindingBid") }}</button>#}
+                
+                {#<div class="col-lg-8 offset-lg-3" formGroup="maxBidForm">#}
                 <div class="form-check auction-gtc-check">
-            
+                    
                     <accept-gtc-check template="#vue-accept-gtc-check"></accept-gtc-check>
-        
+                
                 </div>
-            {#</div>#}
-
-            <h4 v-if="${isChecked}">das ist ein Test</h4>
-            <h3 v-if="isChecked">das ist ein weiterer Test</h3>
-            <h4>h4: ${isChecked}</h4>
-            <p>1: ${ checkoutValidation.showError }</p>
-            <p>2: ${ checkoutValidation.validation }</p>
-            <p>3: ${ checkoutValidation..validation() }</p>
+                {#</div>#}
+                
+                <h4 v-if="${isChecked}">das ist ein Test</h4>
+                <h3 v-if="isChecked">das ist ein weiterer Test</h3>
+                <h4>h4: ${isChecked}</h4>
+                <p>1: ${ checkoutValidation.showError }</p>
+                <p>2: ${ checkoutValidation.validation }</p>
+                <p>3: ${ checkoutValidation..validation() }</p>
             
-
+            
+            </div>
         </div>
     </div>
 
 </script>
 <style>
     /*.alarm {*/
-        /*color: #c50000;*/
+    /*color: #c50000;*/
     /*}*/
-.auction-gtc-check {
-    font-family: 'Abel', sans-serif;
-    font-size: 1rem;
-    line-height: 1.28rem;
-    margin: 0.66rem 0 0 0.5rem;
-}
+    .auction-gtc-check {
+        font-family: 'Abel', sans-serif;
+        font-size: 1rem;
+        line-height: 1.28rem;
+        margin: 0.66rem 0 0 0.5rem;
+    }
 </style>

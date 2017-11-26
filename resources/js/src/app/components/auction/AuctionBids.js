@@ -72,7 +72,7 @@ Vue.component( "auction-bids", {
             }
             else {
                 NotificationService.error("error");
-                // NotificationService.error(Translations.Template.generalCheckEntries);
+                NotificationService.error(Translations.Template.generalCheckEntries);
 
             }
         },
