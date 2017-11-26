@@ -10,30 +10,29 @@ Vue.component("auction-gtc-check", {
     {
         return {
             isChecked: false,
-            gtcValidation: {gtc: {}}
+            // gtcValidation: {gtc: {}}
         };
     },
 
     created: function()
     {
         this.$options.template = this.template;
-        // ResourceService.bind("gtcValidation", this);
-        this.gtcValidation.gtc.validate = this.validate;
+        // this.gtcValidation.gtc.validate = this.validate;
     },
 
     methods:
     {
-        validate: function()
-        {
-            this.gtcValidation.gtc.showError = !this.isChecked;
-        }
+        // validate: function()
+        // {
+        //     this.gtcValidation.gtc.showError = !this.isChecked;
+        // }
     },
 
     watch:
     {
-        isChecked: function()
-        {
-            this.gtcValidation.gtc.showError = false;
-        }
+        // isChecked: function()
+        // {
+        //     this.gtcValidation.gtc.showError = false;
+        // }
     }
 });
