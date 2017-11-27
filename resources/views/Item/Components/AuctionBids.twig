@@ -47,7 +47,7 @@
                             {#template="#vue-auction-gtc-check"#}
                             {#v-show="isInputValid"#}
                             {#></auction-gtc-check>#}
-                    <label class="form-check-label" for="gtc-auction" v-bind:class="{ 'error': this.gtcError }">
+                    <label class="form-check-label" for="gtc-auction" v-bind:class="{ gtcError: !this.isChecked }">
                         <input class="form-check-input" type="checkbox" value="" id="gtc-auction" v-model="isChecked">
                         {% autoescape false %}
                             {% set gtcContent %}

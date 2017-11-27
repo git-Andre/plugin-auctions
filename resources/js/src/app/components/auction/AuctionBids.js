@@ -3,7 +3,7 @@ const NotificationService = require( "services/NotificationService" );
 const AuctionConstants    = require( "constants/AuctionConstants" );
 // const ModalService        = require("services/ModalService");
 
-const ResourceService     = require("services/ResourceService");
+const ResourceService = require( "services/ResourceService" );
 
 const NOTIFY_TIME = 10000;
 
@@ -58,8 +58,7 @@ Vue.component( "auction-bids", {
                 this.addBidTest();
             }
             else {
-                NotificationService.error("error");
-                // NotificationService.error(Translations.Template.generalCheckEntries);
+                NotificationService.error(TranslationsAo.Template.gtcError);
             }
         },
 
@@ -138,20 +137,15 @@ Vue.component( "auction-bids", {
         },
 
         validateGtcCheck: function () {
-            for (var validator in this.gtcValidation) {
-
-                if ( this.gtcValidation[validator].validate ) {
-                    this.gtcValidation[validator].validate();
-                }
+            if ( this.isChecked ) {
+                return true;
             }
 
-            for (var i in this.gtcValidation) {
-                if ( this.gtcValidation[i].showError ) {
-                    return false;
-                }
-            }
+            // if ( this.gtcValidation[i].showError ) {
+            //     return false;
+            // }
 
-            return true;
+            return false;
         },
 
         liveEvaluateAndNotify() {

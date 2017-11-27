@@ -64,7 +64,7 @@ var ResourceService = require("services/ResourceService");
 var NOTIFY_TIME = 10000;
 
 Vue.component("auction-bids", {
-    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item", "deadline"],
+    props: ["template", "userdata", "auction", "minbid", "auctionEnd", "item", "deadline", "isChecked"],
     data: function data() {
         return {
             isInputValid: false,
@@ -166,20 +166,15 @@ Vue.component("auction-bids", {
 
 
         validateGtcCheck: function validateGtcCheck() {
-            for (var validator in this.gtcValidation) {
-
-                if (this.gtcValidation[validator].validate) {
-                    this.gtcValidation[validator].validate();
-                }
+            if (this.isChecked) {
+                return true;
             }
 
-            for (var i in this.gtcValidation) {
-                if (this.gtcValidation[i].showError) {
-                    return false;
-                }
-            }
+            // if ( this.gtcValidation[i].showError ) {
+            //     return false;
+            // }
 
-            return true;
+            return false;
         },
 
         liveEvaluateAndNotify: function liveEvaluateAndNotify() {
@@ -441,7 +436,7 @@ Vue.component("auction-end", {
 
 Vue.component("auction-gtc-check", {
 
-    props: ["template"],
+    props: ["template", "gtcError"],
 
     data: function data() {
         return {
@@ -452,6 +447,8 @@ Vue.component("auction-gtc-check", {
 
     created: function created() {
         this.$options.template = this.template;
+
+        this.gtcError = true;
         // this.gtcValidation.gtc.validate = this.validate;
     },
 
