@@ -58,7 +58,8 @@ Vue.component( "auction-bids", {
                 this.addBidTest();
             }
             else {
-                NotificationService.error(TranslationsAo.Template.gtcError);
+                NotificationService.error("Bitte die AGBs bestätigen.");
+                // NotificationService.error(TranslationsAo.Template.gtcError);
             }
         },
 
