@@ -649,7 +649,7 @@
             if ($id && $id > 0)
             {
                 $auction = pluginApp(Auction_7::class);
-                $auction -> $this -> getAuction($id);
+                $auction = $this -> getAuction($id);
 
                 $visitorCounter = $this -> visitorCounterService -> getVisitorCounterForItemId($auction -> itemId );
 
