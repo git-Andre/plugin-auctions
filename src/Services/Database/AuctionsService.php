@@ -641,17 +641,27 @@
         }
 
         /**
-         * @param $auctionId
-         * @return bool|string
+         * @param $id
+         * @return string
          */
         public function deleteAuction($id)
         {
             if ($id && $id > 0)
             {
-                $auctionModel = pluginApp(Auction_7::class);
-                $auctionModel -> id = $id;
+                $auction = pluginApp(Auction_7::class);
+                $auction -> $this -> getAuction($id);
 
-                return json_encode($this -> deleteValue($auctionModel));
+                $visitorCounter = $this -> visitorCounterService -> getVisitorCounterForItemId($auction -> itemId );
+
+                $deleteVisitorCounter = $this -> visitorCounterService -> deleteVisitorCounter($visitorCounter -> id);
+
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($visitorCounter -> id)
+                      -> debug('PluginAuctions::Template.debugAfter', ['deleteVisitorCounter: ' => $deleteVisitorCounter, 'auction'=> $auction]);
+
+
+                return json_encode($this -> deleteValue($auction));
             }
 
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';

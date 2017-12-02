@@ -55,11 +55,10 @@ Vue.component( "auction-bids", {
             var self = this;
 
             if ( self.validateGtcCheck() ) {
-                this.addBidTest();
+                this.addBid();
             }
             else {
-                NotificationService.error("Bitte die AGBs bestätigen.");
-                // NotificationService.error(TranslationsAo.Template.gtcError);
+                NotificationService.error(TranslationsAo.Template.gtcError).closeAfter( 3000 );
             }
         },
 
@@ -141,11 +140,6 @@ Vue.component( "auction-bids", {
             if ( this.isChecked ) {
                 return true;
             }
-
-            // if ( this.gtcValidation[i].showError ) {
-            //     return false;
-            // }
-
             return false;
         },
 

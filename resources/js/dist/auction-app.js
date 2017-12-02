@@ -101,9 +101,9 @@ Vue.component("auction-bids", {
             var self = this;
 
             if (self.validateGtcCheck()) {
-                this.addBidTest();
+                this.addBid();
             } else {
-                NotificationService.error(TranslationsAo.Template.gtcError);
+                NotificationService.error(TranslationsAo.Template.gtcError).closeAfter(2500);
             }
         },
         addBidTest: function addBidTest() {
