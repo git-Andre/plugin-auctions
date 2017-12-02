@@ -552,8 +552,8 @@
 
                     $variationIds = $this -> itemService -> getVariationIds($auction -> itemId);
 
-                    $salesPriceData = ["variationId" => $variationIds[0],
-                                       "price" => $newEntry -> bidPrice,
+                    $salesPriceData = ["variationId"  => $variationIds[0],
+                                       "price"        => $newEntry -> bidPrice,
                                        "salesPriceId" => $salesPriceId
                     ];
 //
@@ -627,30 +627,22 @@
         {
             if ($id && $id > 0)
             {
-                $auction = pluginApp(Auction_7::class);
+//                $auction = pluginApp(Auction_7::class);
                 $auction = $this -> getAuction($id);
 
-                $visitorCounter = $this -> visitorCounterService -> getVisitorCounterForItemId($auction -> itemId);
-
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('testedId')
-                      -> setReferenceValue($auction -> id)
-                      -> debug('PluginAuctions::Template.debugBefor', ['auction: ' => $auction, 'visitorCounter' => $visitorCounter]);
-
-                if ($visitorCounter instanceof VisitorCounter_1)
+                if ($auction instanceof Auction_7)
                 {
-                    $deleteVisitorCounter = $this -> visitorCounterService -> deleteVisitorCounter($visitorCounter -> id);
+                    $visitorCounter = $this -> visitorCounterService -> getVisitorCounterForItemId($auction -> itemId);
+
+                    if ($visitorCounter instanceof VisitorCounter_1)
+                    {
+                        $deleteVisitorCounter = $this -> visitorCounterService -> deleteVisitorCounter($visitorCounter -> id);
+                    }
+
+                    $deleteAuction = $this -> deleteValue($auction);
+
+                    return json_encode(["auction deleted?" => $deleteAuction, 'visitorCounter deleted?' => $deleteVisitorCounter]);
                 }
-
-                $this -> getLogger(__METHOD__)
-                      -> setReferenceType('testedId')
-                      -> setReferenceValue($visitorCounter -> id)
-                      -> debug('PluginAuctions::Template.debugAfter', ['deleteVisitorCounter: ' => $deleteVisitorCounter,
-                                                                       'auction'                => $auction
-                      ]);
-
-
-                return json_encode($this -> deleteValue($auction));
             }
 
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
@@ -665,9 +657,6 @@
             if ($id > 0)
             {
                 $auction = $this -> getValue(Auction_7::class, $id);
-
-                $this -> getLogger(__METHOD__)
-                      -> debug('PluginAuctions::Template.debug', ['$auction: ' => $auction]);
 
                 if ($auction instanceof Auction_7)
                 {
