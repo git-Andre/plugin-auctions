@@ -211,11 +211,6 @@
          */
         public function deleteAuction(int $id)
         {
-            $this -> getLogger(__METHOD__)
-                  -> debug('PluginAuctions::Template.debug', [' (auctionId): ' => $id]);
-
-
-//            $id = (int)$request -> get ('auctionId');
             if ($id > 0)
             {
                 return $this -> auctionsService -> deleteAuction($id);

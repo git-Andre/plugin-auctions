@@ -653,6 +653,11 @@
 
                 $visitorCounter = $this -> visitorCounterService -> getVisitorCounterForItemId($auction -> itemId );
 
+                $this -> getLogger(__METHOD__)
+                      -> setReferenceType('testedId')
+                      -> setReferenceValue($auction -> id)
+                      -> debug('PluginAuctions::Template.debugBefor', ['auction: ' => $auction, 'visitorCounter' => $visitorCounter]);
+
                 $deleteVisitorCounter = $this -> visitorCounterService -> deleteVisitorCounter($visitorCounter -> id);
 
                 $this -> getLogger(__METHOD__)
@@ -661,7 +666,8 @@
                       -> debug('PluginAuctions::Template.debugAfter', ['deleteVisitorCounter: ' => $deleteVisitorCounter, 'auction'=> $auction]);
 
 
-                return json_encode($this -> deleteValue($auction));
+                return 'true';
+//                return json_encode($this -> deleteValue($auction));
             }
 
             return 'Auctionsservice - delete Auction - Bedingung nicht erfüllt';
