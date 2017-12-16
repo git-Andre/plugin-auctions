@@ -627,7 +627,6 @@
         {
             if ($id && $id > 0)
             {
-//                $auction = pluginApp(Auction_7::class);
                 $auction = $this -> getAuction($id);
 
                 if ($auction instanceof Auction_7)
